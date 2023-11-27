@@ -58,7 +58,7 @@ export const Language = () => {
                 >
                     <div className={cx("title")}>{language.title}</div>
                     <img src={language.icon} className={cx("language-icon")} />
-                    <img src="./images/angle-down.png" alt="agle down" />
+                    <img src="../../images/angle-down.png" alt="agle down" />
                 </div>
                 <Dropdown
                     items={languages}

@@ -5,11 +5,16 @@ import styles from "~/sass/Contract.module.scss";
 const cx = classNames.bind(styles);
 
 interface ContractProps {
+    title: string
     children?: ReactNode
     tabs?: boolean
 };
 
-export const Contract = ({ children, tabs = true }: ContractProps) => {
+export const Contract = ({
+    title,
+    children,
+    tabs = true
+}: ContractProps) => {
     return (
         <div className={cx("wrapper")}>
             <div className={cx("container")}>
@@ -19,14 +24,14 @@ export const Contract = ({ children, tabs = true }: ContractProps) => {
                     <div className={cx("current-page")}>Quản lý hợp đồng</div>
                 </div>
                 <div className={cx("title")}>
-                    <h2>Danh sách hợp đồng</h2>
+                    <h2>{title}</h2>
                 </div>
-                {tabs &&
+                {/* {tabs &&
                     <div className={cx("switch-tabs")}>
                         <div className={cx("tab", "active")}><p>Hợp đồng uỷ quyền</p></div>
                         <div className={cx("tab")}><p>Hợp đồng khai thác</p></div>
                     </div>
-                }
+                } */}
                 <div className={cx("content")}>{children}</div>
             </div>
         </div>

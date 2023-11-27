@@ -34,6 +34,23 @@
     }
 }
 
+.cus {
+    display: flex;
+    flex-direction: column;
+    gap: 1.6rem;
+    
+    .col_content {
+        display: flex;
+    }
+}
+
+.title-primary {
+    display: flex;
+    color: var(--orange-3);
+    letter-spacing: -0.032px;
+    gap: .8rem;
+}
+
 .col_right {
     width: max-content;
     margin-right: 2.8rem;
@@ -50,7 +67,7 @@
             margin-right: .4rem;
         }
     }
-    
+
     .password {
         background-color: var(--bg-color);
         outline: none;

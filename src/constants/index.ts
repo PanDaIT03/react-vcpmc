@@ -4,37 +4,41 @@ const LANGUAGE_ITEMS = [
     {
         id: 1,
         title: "Tiếng Việt",
-        icon: "../images/vietnam_flag.png"
+        icon: "../../images/vietnam_flag.png"
     },
     {
         id: 2,
         title: "English",
-        icon: "../images/uk_flag.png"
+        icon: "../../images/uk_flag.png"
     },
     {
         id: 3,
         title: "中國",
-        icon: "../images/china_flag.png"
+        icon: "../../images/china_flag.png"
     }
 ];
 
 const SIDEBAR_ITEMS = [
     {
+        id: 1,
         iconName: "../../images/ban_ghi_icon.png",
         title: "Kho bản ghi",
         isActive: false
     },
     {
+        id: 2,
         iconName: "../../images/playlist_icon.png",
         title: "Playlist",
         isActive: false
     },
     {
+        id: 3,
         iconName: "../../images/u_calendar-alt.png",
         title: "Lập lịch phát",
         isActive: false
     },
     {
+        id: 4,
         iconName: "../../images/hop_dong_icon.png",
         title: "Quản lý",
         isActive: false,
@@ -59,6 +63,7 @@ const SIDEBAR_ITEMS = [
         ]
     },
     {
+        id: 5,
         iconName: "../../images/group_icon.png",
         title: "Doanh thu",
         isActive: false,
@@ -78,6 +83,7 @@ const SIDEBAR_ITEMS = [
         ]
     },
     {
+        id: 6,
         iconName: "../../images/setting_icon.png",
         title: "Cài đặt",
         isActive: false,
@@ -105,6 +111,7 @@ const SIDEBAR_ITEMS = [
         ]
     },
     {
+        id: 7,
         iconName: "../../images/support_icon.png",
         title: "Hỗ trợ",
         isActive: false,

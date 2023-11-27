@@ -1,9 +1,16 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { getContract } from "~/api/contract";
+
+import { getContractDetails, getContracts } from "~/api/contract";
 
 export const getContractAction = createAsyncThunk(
     'contract/getContract',
     async (_, thunkAPI) => {
-        return await getContract();
+        const contracts = await getContracts();
+        const contractDetails = await getContractDetails();
+        
+        return {
+            contracts,
+            contractDetails
+        };
     }
 );

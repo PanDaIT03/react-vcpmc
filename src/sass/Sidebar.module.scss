@@ -64,6 +64,27 @@
             color: var(--orange-4-default);
         }
     }
+
+    &:has(.active) {
+        background-color: var(--white-transparent);
+
+        .menu-icon {
+            filter: invert(44%) sepia(99%) saturate(626%) hue-rotate(350deg) brightness(100%) contrast(110%);
+        }
+
+        .title {
+            color: var(--orange-4-default);
+        }
+    }
+
+    .active {
+        width: .8rem;
+        height: 7.9rem;
+        background-color: var(--orange-4-default);
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
 }
 
 .popup-item {
@@ -114,9 +135,3 @@
     opacity: 1 !important;
     pointer-events: all;
 }
-
-// .active {
-//     width: .8rem;
-//     height: 7.2rem;
-//     background: var(--orange-5);
-// }

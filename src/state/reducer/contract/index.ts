@@ -1,10 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 import { getContractAction } from "~/state/thunk/contract";
-import { IContract } from "~/types";
+import { IContract, IContractDetail } from "~/types";
 
 interface InitType {
-    contracts: IContract[]
+    contracts: (IContract & IContractDetail)[]
     loading: boolean
     status: string
 };
@@ -25,9 +25,23 @@ const contractSlice = createSlice({
                 state.loading = true;
             })
             .addCase(getContractAction.fulfilled, (state, action) => {
-                state.contracts = action.payload;
-                state.loading = false;
-                state.status = "get successfully";
+                if (action.payload !== null) {
+                    const contractArray: any[] = [];
+                    const { contracts, contractDetails } = action.payload;
+
+                    if (contracts && contractDetails) {
+                        contracts.map(contract => {
+                            const detail = contractDetails.find(item => {
+                                return item.docId === contract.contractDetailsId;
+                            });
+
+                            contractArray.push({ ...contract, ...detail });
+                        });
+                    }
+                    state.contracts = contractArray;
+                    state.loading = false;
+                    state.status = "get successfully";
+                }
             })
             .addCase(getContractAction.rejected, (state) => {
                 state.loading = true;

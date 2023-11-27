@@ -1,5 +1,5 @@
 import classNames from "classnames/bind";
-import { useCallback, useContext, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { Dropdown } from "~/component/Poper/Dropdown";
@@ -16,8 +16,9 @@ interface SidebarProps {
 };
 
 interface SidebarItemProps {
-    iconName: React.ReactNode
+    id: number
     title: string
+    iconName: React.ReactNode
     className?: string
     children?: React.ReactElement
     data?: IGlobalConstantsType[]
@@ -25,8 +26,9 @@ interface SidebarItemProps {
 };
 
 const SidebarItem = ({
-    iconName,
+    id,
     title,
+    iconName,
     className,
     children,
     data,
@@ -35,19 +37,24 @@ const SidebarItem = ({
     if (!className) className = "";
 
     const [visible, setVisible] = useState(false);
-    const [active, setActive] = useState(false);
+    const { currentPage, setCurrentPage } = useContext(SidebarContext);
 
     const classes = cx("item-wrapper", {
         [className]: className
     });
+
+    useEffect(() => {
+        setCurrentPage(4);
+    }, []);
 
     return (
         <div
             className={classes}
             onMouseEnter={() => setVisible(true)}
             onMouseLeave={() => setVisible(false)}
-            onClick={() => setActive(true)}
+            onClick={() => setCurrentPage(id)}
         >
+            {currentPage === id && <div className={cx("active")}></div>}
             <div className={cx("sidebar-item")}>
                 <img src={`${iconName}`} className={cx("menu-icon")} />
                 <p className={cx("title")}>{title}</p>
@@ -85,8 +92,9 @@ export const Sidebar = ({ sidebarRef, onClick }: SidebarProps) => {
                         {SIDEBAR_ITEMS.map((item, index) => (
                             <SidebarItem
                                 key={index}
-                                iconName={item.iconName}
+                                id={item.id}
                                 title={item.title}
+                                iconName={item.iconName}
                                 data={item.children}
                                 onClick={handleClickOption}
                             />

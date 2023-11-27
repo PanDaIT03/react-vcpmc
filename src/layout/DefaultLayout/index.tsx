@@ -45,7 +45,7 @@ export const DefaultLayout = ({ children }: DefaultLayoutProps) => {
                         <Header>
                             <div className={cx("account")} onClick={() => navigate("/basic-info")}>
                                 <div className={cx("avatar")}>
-                                    <img src={`./images/${currentUser.avatar}`} />
+                                    <img src={`../../images/${currentUser.avatar}`} />
                                 </div>
                                 <div className={cx("info")}>
                                     <p className={cx("name")}>{name}</p>

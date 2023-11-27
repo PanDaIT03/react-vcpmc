@@ -32,7 +32,7 @@ function ResetPasswordPage() {
     const [isPassword, setIsPassword] = useState(true);
     const [isConfirmPassword, setIsConfirmPassword] = useState(true);
     const [errorMessage, setErrorMessage] = useState('');
-    
+
     const userState = useSelector((state: RootState) => state.user);
     const { status, loading } = userState;
 

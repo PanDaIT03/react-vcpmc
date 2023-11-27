@@ -1,6 +1,7 @@
 import classNames from "classnames/bind";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 import { Table } from "~/component/Table";
 import { Input } from "~/component/Input";
@@ -8,9 +9,11 @@ import { ActionBar } from "~/component/ActionBar";
 import { OptionMenu } from "~/component/OptionMenu";
 import { IGlobalConstantsType } from "~/types";
 import { CB_OWNER_ITEMS, VALIDITY_CONTRACT_ITEMS } from "~/constants";
+import { ActionBarItem } from "~/component/ActionBar/ActionBarItem";
+import { getContractAction } from "~/state/thunk/contract";
+import { RootState, useAppDispatch } from "~/state";
 
 import styles from "~/sass/AuthorizationContractPage.module.scss";
-import { ActionBarItem } from "~/component/ActionBar/ActionBarItem";
 const cx = classNames.bind(styles);
 
 interface AuthorizationContractProps { };
@@ -22,16 +25,24 @@ const initialState = {
 
 function AuthorizationContractPage({ }: AuthorizationContractProps) {
     const navigate = useNavigate();
+    const dispatch = useAppDispatch();
 
     const [ownership, setOwnerShip] = useState<IGlobalConstantsType>(initialState);
     const [validity, setValidity] = useState<IGlobalConstantsType>(initialState);
     const [searchValue, setSearchValue] = useState('');
+
+    const contractState = useSelector((state: RootState) => state.contract);
+    const { contracts, loading } = contractState;
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSearchValue(event.target.value);
     };
 
     const handleClickSearch = () => { };
+
+    useEffect(() => {
+        dispatch(getContractAction());
+    }, []);
 
     return (
         <div className={cx("wrapper")}>
@@ -63,7 +74,7 @@ function AuthorizationContractPage({ }: AuthorizationContractProps) {
             </div>
             <Table
                 className="contract"
-                loading={false}
+                loading={loading}
             >
                 <tbody>
                     <tr className={cx("contract_title")}>
@@ -77,43 +88,29 @@ function AuthorizationContractPage({ }: AuthorizationContractProps) {
                         <th className={cx("action-detail", "title")}>&nbsp;</th>
                         <th className={cx("reason", "title")}>&nbsp;</th>
                     </tr>
-                    <tr className={cx("contract_item")}>
-                        <td className={cx("numerical-order", "content")}>1</td>
-                        <td className={cx("contract-code", "content")}>HD123</td>
-                        <td className={cx("contract-name", "content")}>Hợp đồng uỷ quyền bài hát</td>
-                        <td className={cx("authorized-person", "content")}>Vương Anh Tú</td>
-                        <td className={cx("ownership", "content")}>Người biểu diễn</td>
-                        <td className={cx("effective-contract", "content")}>
-                            <span className={cx("--center-flex")}>
-                                <img src="./images/ellipse_effect.png" />
-                                <p>Còn thời hạn</p>
-                            </span>
-                        </td>
-                        <td className={cx("date-created", "content")}>01/04/2021 15:53:13</td>
-                        <td
-                            className={cx("action-detail", "content")}
-                            onClick={() => navigate(`/contract-management/authorization-contract/HD123`)}
-                        >
-                            Xem chi tiết
-                        </td>
-                        <td className={cx("reason", "content")}>Lý do huỷ</td>
-                    </tr>
-                    <tr className={cx("contract_item")}>
-                        <td className={cx("numerical-order", "content")}>1</td>
-                        <td className={cx("contract-code", "content")}>HD123</td>
-                        <td className={cx("contract-name", "content")}>Hợp đồng uỷ quyền bài hát</td>
-                        <td className={cx("authorized-person", "content")}>Vương Anh Tú</td>
-                        <td className={cx("ownership", "content")}>Người biểu diễn</td>
-                        <td className={cx("effective-contract", "content")}>
-                            <span className={cx("--center-flex")}>
-                                <img src="./images/ellipse_effect.png" />
-                                <p>Còn thời hạn</p>
-                            </span>
-                        </td>
-                        <td className={cx("date-created", "content")}>01/04/2021 15:53:13</td>
-                        <td className={cx("action-detail", "content")}>Xem chi tiết</td>
-                        <td className={cx("reason", "content")}>Lý do huỷ</td>
-                    </tr>
+                    {contracts.map((contract, index) => (
+                        <tr className={cx("contract_item")} key={index}>
+                            <td className={cx("numerical-order", "content")}>{index + 1}</td>
+                            <td className={cx("contract-code", "content")}>{contract.contractCode}</td>
+                            <td className={cx("contract-name", "content")}>{contract.customer}</td>
+                            <td className={cx("authorized-person", "content")}>{contract.authorizedName}</td>
+                            <td className={cx("ownership", "content")}>{contract.ownerShip}</td>
+                            <td className={cx("effective-contract", "content")}>
+                                <span className={cx("--center-flex")}>
+                                    <img src="./images/ellipse_effect.png" />
+                                    <p>{contract.status}</p>
+                                </span>
+                            </td>
+                            <td className={cx("date-created", "content")}>{contract.dateCreated}</td>
+                            <td
+                                className={cx("action-detail", "content")}
+                                onClick={() => navigate(`/contract-management/authorization-contract/${contract.contractCode}`)}
+                            >
+                                Xem chi tiết
+                            </td>
+                            <td className={cx("reason", "content")}>Lý do huỷ</td>
+                        </tr>
+                    ))}
                 </tbody>
             </Table>
             <ActionBar visible={true}>
