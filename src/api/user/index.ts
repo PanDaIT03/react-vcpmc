@@ -48,10 +48,16 @@ export const resetPassword = async (id: string, password: string) => {
 };
 
 export const updateUser = async (data: Omit<IUser, "email" | "userName" |
-    "password" | "rolesId" | "role"> & { idCollection: string | undefined }) => {
+    "password" | "rolesId" | "role">) => {
     const collectionRef = collection(fireStoreDatabase, 'users');
-    const updateUser = data;
+    const updateUser = {
+        avatar: data.avatar,
+        firstName: data.firstName,
+        lastName: data.lastName,
+        dateOfBirth: data.dateOfBirth,
+        phoneNumber: data.phoneNumber,
+    };
 
-    const userRef = doc(collectionRef, data.idCollection);
+    const userRef = doc(collectionRef, data.id);
     await updateDoc(userRef, updateUser);
 };

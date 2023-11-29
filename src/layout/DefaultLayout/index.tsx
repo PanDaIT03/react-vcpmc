@@ -29,9 +29,16 @@ export const DefaultLayout = ({ children }: DefaultLayoutProps) => {
     const { name, role } = account;
 
     useEffect(() => {
-        let name = (typeof currentUser.firstName === "string"
-            ? currentUser.firstName.substring(0, 1) : "") + ". " + currentUser.lastName || "";
-        setAccount({ name: name, role: currentUser.role || "" });
+        if (!currentUser)
+            return;
+        
+        if (currentUser.firstName && currentUser.lastName) {
+            let firstName = currentUser.firstName.substring(0, 1),
+                lastName = currentUser.lastName.split(' '),
+                name = firstName.concat('. ', lastName[lastName.length - 1]);
+
+            setAccount({ name: name, role: currentUser.role || "" });
+        };
     }, [currentUser]);
 
     return (

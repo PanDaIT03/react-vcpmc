@@ -1,67 +1,60 @@
-import { collection, doc, getDoc, getDocs, query } from "firebase/firestore";
-
+import { collection, getDocs, orderBy, query } from "firebase/firestore";
 import { fireStoreDatabase } from "~/firebase-config";
-import { IContract, IContractDetail } from "~/types";
+import { IContract } from "~/types";
 
 export const getContracts = async () => {
-    const queryStmt = query(collection(
-        fireStoreDatabase,
-        'contract'
-    ));
+    const queryStmt = query(collection(fireStoreDatabase, 'contract'), orderBy("status", "asc"));
     const querySnapshot = await getDocs(queryStmt);
-    const contracts: IContract[] = [];
 
-    querySnapshot.docs.map(doc => {
-        contracts.push({
+    const contracts: IContract[] = querySnapshot.docs.map(doc => {
+        return {
             docId: doc.id,
+            authorized: doc.data().authorized,
+            authorizingLegalEntity: doc.data().authorizingLegalEntity,
             censored: doc.data().censored,
             contractCode: doc.data().contractCode,
-            contractDetailsId: doc.data().contractDetailsId,
             contractTypesId: doc.data().contractTypesId,
             createdBy: doc.data().createdBy,
             customer: doc.data().customer,
             dateCreated: doc.data().dateCreated,
             effectiveDate: doc.data().effectiveDate,
             expirationDate: doc.data().expirationDate,
-            ownerShip: doc.data().ownerShip,
+            ownerShips: doc.data().ownerShips,
             status: doc.data().status
-        });
+        };
     });
 
     return contracts;
 };
 
-export const getContractDetails = async () => {
+export const getUser = async () => {
     const queryStmt = query(collection(
         fireStoreDatabase,
-        'contractDetails'
+        'users'
     ));
     const querySnapshot = await getDocs(queryStmt);
-    const contractDetails: IContractDetail[] = [];
 
-    querySnapshot.docs.map(doc => {
-        contractDetails.push({
+    const contracts = querySnapshot.docs.map(doc => {
+        return {
             docId: doc.id,
-            authorizedName: doc.data().authorizedName,
-            authorizingLegalEntity: doc.data().authorizingLegalEntity,
-            citizenId: doc.data().citizenId,
+            firstName: doc.data().firstName,
+            lastName: doc.data().lastName,
+            dateOfBirth: doc.data().dateOfBirth,
+            gender: doc.data().gender,
+            nationality: doc.data().nationality,
+            phoneNumber: doc.data().phoneNumber,
+            idNumber: doc.data().idNumber,
             dateRange: doc.data().dateRange,
             issuedBy: doc.data().issuedBy,
-            nationality: doc.data().nationality,
-            note: doc.data().note,
-            phoneNumber: doc.data().phoneNumber,
-            position: doc.data().position,
-            representative: doc.data().representative,
+            taxCode: doc.data().taxCode,
             residence: doc.data().residence,
-            taxCode: doc.data().residence
-        });
+            bank: doc.data().bank,
+            bankNumber: doc.data().bankNumber,
+            email: doc.data().email,
+            userName: doc.data().userName,
+            password: doc.data().password,
+        };
     });
 
-    return contractDetails;
-};
-
-export const getContractDetailsByIdContract = async (param: string) => {
-    const contractDetails =
-        (await getDoc(doc(fireStoreDatabase, 'contractDetails', param))).data();
-    return contractDetails;
+    return contracts;
 };

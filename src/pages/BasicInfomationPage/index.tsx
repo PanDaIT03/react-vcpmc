@@ -7,7 +7,6 @@ import { useEffect, useRef, useState } from "react";
 import Button from "~/component/Button";
 import { IUser } from "~/types";
 import { Form } from "~/component/Form";
-import { formatDate } from "~/constants";
 import { Input } from "~/component/Input";
 import { ActionBar } from "~/component/ActionBar";
 import { RootState, useAppDispatch } from "~/state";
@@ -40,8 +39,6 @@ function BasicInfomationPage() {
     const [errorMessage, setErrorMessage] = useState('');
     const userState = useSelector((state: RootState) => state.user);
     const { currentUser, status, loading } = userState;
-
-    console.log(loading);
 
     const initialInfoVales = {
         id: currentUser.id,

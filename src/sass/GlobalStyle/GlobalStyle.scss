@@ -11,6 +11,7 @@
     --red: #FF4747;
     --blue: #347AFF;
     --emerald: #2ecc71;
+    --gray: #878890;
 
     ---bg-dark: #020220;
     --bg-color: #1E1E2E;
@@ -55,6 +56,11 @@ body {
 button {
     border: none;
     cursor: pointer;
+}
+
+textarea {
+    outline: none;
+    border: none;
 }
 
 ul {

@@ -18,6 +18,16 @@
     right: 0;
 }
 
+.disable {
+    img {
+        filter: invert(58%) sepia(7%) saturate(279%) hue-rotate(196deg) brightness(91%) contrast(91%);
+    }
+
+    .title {
+        color: var(--gray) !important;
+    }
+}
+
 .wrapper {
     display: flex;
     width: 11rem;
@@ -48,7 +58,7 @@
         letter-spacing: 0.06px;
     }
 
-    &:hover {
+    &:not(.disable):hover {
         opacity: 1;
         background-color: var(--white-transparent);
 

@@ -1,20 +1,31 @@
-import classNames from "classnames/bind";
+import { useRef, useState } from "react";
 
 import { Contract } from "~/component/Contract";
 import AuthorizationContractPage from "../AuthorizationContractPage";
-
-import styles from "~/sass/Contract.module.scss";
-import { Tabs } from "~/component/Tabs";
-import { useRef } from "react";
-const cx = classNames.bind(styles);
+import { Tab, Tabs } from "~/component/Tabs";
 
 function ContractPage() {
+    const [active, setActive] = useState(true);
+    
+    const firstRef = useRef<HTMLDivElement>(null);
+    const secondRef = useRef<HTMLDivElement>(null);
+
     return (
         <Contract title="Danh sách hợp đồng">
-            <Tabs
-                firstTab="Hợp đồng uỷ quyền"
-                secondTab="Hợp đồng khai thác"
-            />
+            <Tabs>
+                <Tab
+                    title="Hợp đồng uỷ quyền"
+                    pageRef={firstRef}
+                    status={active ? "active" : "inactive"}
+                    onClick={() => setActive(true)}
+                />
+                <Tab
+                    title="Hợp đồng khai thác"
+                    pageRef={secondRef}
+                    status={!active ? "active" : "inactive"}
+                    onClick={() => setActive(false)}
+                />
+            </Tabs>
             <AuthorizationContractPage />
         </Contract>
     )

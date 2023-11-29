@@ -27,14 +27,14 @@ const userSlice = createSlice({
             })
             .addCase(checkLoginAction.fulfilled, (state, action) => {
                 if (action.payload !== null) {
-                    const { roles, user } = action.payload;
+                    const { roles, user, userId } = action.payload;
                     if (roles && user) {
                         const userRole = roles.find((item) => {
                             return item.docId === user.rolesId;
                         });
 
                         state.currentUser = {
-                            id: user.id,
+                            id: userId,
                             avatar: user.avatar,
                             firstName: user.firstName,
                             lastName: user.lastName,
@@ -49,10 +49,6 @@ const userSlice = createSlice({
                         state.status = "loggin successfully";
                         state.loading = false;
                     };
-                } else {
-                    state.currentUser = {} as IUser;
-                    state.status = "loggin failed";
-                    state.loading = false;
                 };
             })
             .addCase(checkLoginAction.rejected, state => {
@@ -70,11 +66,7 @@ const userSlice = createSlice({
                     };
                     state.status = "updated";
                     state.loading = false;
-                } else {
-                    state.currentUser = {} as IUser;
-                    state.status = "update failed";
-                    state.loading = false;
-                }
+                };
             })
             .addCase(resetPasswordAction.rejected, state => {
                 state.status = "update failed";

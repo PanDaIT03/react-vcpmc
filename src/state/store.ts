@@ -9,7 +9,7 @@ export const store = configureStore({
     reducer: {
         user: userReducer,
         role: roleReducer,
-        contract: contractReducer
+        contract: contractReducer,
     }
 });
 

@@ -1,51 +1,53 @@
 import classNames from "classnames/bind";
+import { ReactNode } from "react";
 
-import styles from "~/sass/Contract.module.scss";
+import styles from "~/sass/Tabs.module.scss";
 const cx = classNames.bind(styles);
 
-interface TabProps {
+interface TabsProps {
     className?: string
-    firstTab: string
-    firstTabRef?: any
-    secondTab: string
-    secondTabRef?: any
-    handleClick?: (page: React.RefObject<HTMLDivElement>) => void
+    children?: ReactNode
 };
 
-export const Tabs = ({
-    className,
-    firstTab,
-    firstTabRef,
-    secondTab,
-    secondTabRef,
-    handleClick
-}: TabProps) => {
-    if (!className) className = "";
+interface TabProps {
+    title: string
+    pageRef?: any
+    status: "active" | "inactive"
+    onClick?: () => void
+};
 
+export const Tab = ({
+    title,
+    pageRef,
+    status,
+    onClick
+}: TabProps) => {
+    const classes = cx("tab", {
+        [status]: status
+    });
+
+    return (
+        <div
+            ref={pageRef}
+            className={classes}
+            onClick={onClick}
+        >
+            <p>{title}</p>
+        </div>
+    );
+};
+
+export const Tabs = ({ className, children }: TabsProps) => {
+    if (!className) className = "";
 
     const classes = cx("wrapper", {
         [className]: className
     });
 
-    const tabs = [
-        {
-            title: firstTab,
-            ref: firstTabRef
-        },
-        {
-            title: secondTab,
-            ref: secondTabRef
-        },
-    ];
-
     return (
         <div className={classes}>
             <div className={cx("switch-tabs")}>
-                {tabs && tabs.map((tab, index) => (
-                    <div key={index} className={cx("tab")}>
-                        <p>{tab.title}</p>
-                    </div>
-                ))}
+                {children}
             </div>
         </div>
     );

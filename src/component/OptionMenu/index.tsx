@@ -72,7 +72,7 @@ export const OptionMenu = ({
             <div className={cx('filter_ownership_cb')} onClick={() => setOpen(!open)} ref={menuRef}>
                 <div className={cx("choosen", boxSize)}>
                     {choosen.title}
-                    <img src="./images/u_angle-down.png" />
+                    <img src="../../images/u_angle-down.png" />
                 </div>
                 <Dropdown
                     items={option}

@@ -1,30 +1,15 @@
 export interface IContract {
     docId: string
-    censored: string
+    authorized: string
+    authorizingLegalEntity: string
+    censored: boolean
     contractCode: string
-    contractDetailsId: string
     contractTypesId: string
     createdBy: string
     customer: string
     dateCreated: string
     effectiveDate: string
     expirationDate: string
-    ownerShip: string
+    ownerShips: Array<string> | string
     status: string
-};
-
-export interface IContractDetail {
-    docId: string
-    authorizedName: string
-    authorizingLegalEntity: string
-    citizenId: string
-    dateRange: string
-    issuedBy: string
-    nationality: string
-    note: string
-    phoneNumber: string
-    position: string
-    representative: string
-    residence: string
-    taxCode: string
 };

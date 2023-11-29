@@ -204,19 +204,45 @@ const VALIDITY_CONTRACT_ITEMS = [
     },
     {
         id: 2,
-        title: "Mới"
+        title: "Mới",
+        icon: "./images/ellipse_new.png",
     },
     {
         id: 3,
-        title: "Còn thời hạn"
+        title: "Còn thời hạn" || "Còn hiệu lực",
+        icon: "./images/ellipse_effect.png",
     },
     {
         id: 4,
-        title: "Hết hạn"
+        title: "Hết hạn",
+        icon: "./images/ellipse_expire.png",
     },
     {
         id: 5,
-        title: "Huỷ"
+        title: "Đã huỷ",
+        icon: "./images/ellipse_cancel.png",
+    }
+];
+
+const CB_APPROVE_ITEMS = [
+    {
+        id: 1,
+        title: "Tất cả"
+    },
+    {
+        id: 2,
+        title: "Mới",
+        icon: "./images/ellipse_new.png",
+    },
+    {
+        id: 3,
+        title: "Đã phê duyệt",
+        icon: "./images/ellipse_effect.png",
+    },
+    {
+        id: 4,
+        title: "Bị từ chối",
+        icon: "./images/ellipse_cancel.png",
     }
 ];
 
@@ -231,5 +257,5 @@ const handleClickDropDown = (item: IGlobalConstantsType, data: IGlobalConstantsT
 
 export {
     formatDate, handleClickDropDown, validityContract,
-    LANGUAGE_ITEMS, SIDEBAR_ITEMS, ACTION_INFO_USER, CB_OWNER_ITEMS, VALIDITY_CONTRACT_ITEMS
+    LANGUAGE_ITEMS, SIDEBAR_ITEMS, ACTION_INFO_USER, CB_OWNER_ITEMS, VALIDITY_CONTRACT_ITEMS, CB_APPROVE_ITEMS
 };

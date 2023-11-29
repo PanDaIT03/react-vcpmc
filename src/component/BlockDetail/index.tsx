@@ -5,17 +5,17 @@ import styles from "~/sass/BlockDetail.module.scss";
 const cx = classNames.bind(styles);
 
 interface BlockDetailProps {
+    icon?: string
     title?: string
     className?: string
     data: IGlobalConstantsType[]
-    icon?: string
 };
 
 export const BlockDetail = ({
+    icon,
     title,
-    className,
     data,
-    icon
+    className
 }: BlockDetailProps) => {
     if (!className) className = "";
 
@@ -27,20 +27,25 @@ export const BlockDetail = ({
         <div className={classes}>
             {title && (
                 <div className={cx("title-primary")}>
-                    <img className={cx("icon")} src={icon} />
+                    {icon && <img className={cx("icon")} src={icon} />}
                     <div className={cx("text")}>{title}</div>
                 </div>
             )}
             <div className={cx("col_content")}>
                 <div className={cx("col_left")}>
                     {data.map(item => (
-                        <div className={cx("title", item.isActive && "active")}><span>{item.title}:</span></div>
+                        <div
+                            key={item.id}
+                            className={cx("title", item.isActive && "active")}
+                        >
+                            <span>{item.title}:</span>
+                        </div>
                     ))}
                 </div>
                 <div className={cx("col_right")}>
                     {data.map(item => {
                         return (typeof item.value === "string"
-                            ? <div className={cx("value", item.isActive && "active")}>{item.value}</div>
+                            ? <div key={item.id} className={cx("value", item.isActive && "active")}>{item.value}</div>
                             : item.value?.map((item, index) => (
                                 <div className={cx("value")} key={index}>
                                     <img src={item.icon} />

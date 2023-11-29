@@ -18,6 +18,7 @@ export const checkLoginAction = createAsyncThunk(
         if (userId) {
             const user = await getUserByDocId(userId);
             return {
+                userId,
                 user,
                 roles
             };
@@ -34,8 +35,8 @@ export const resetPasswordAction = createAsyncThunk(
 
         if (data.email)
             var docId = await getDocIdByField("email", data.email);
-        else if (data.id)
-            var docId = await getDocIdByField("id", parseInt(data.id));
+        else
+            var docId = data.id;
 
         let isUpdateSuccess = false;
         docId && await resetPassword(docId, data.password).then(() => {
@@ -51,19 +52,14 @@ export const updateUserAction = createAsyncThunk(
     'user/updateUser',
     async (data: Omit<IUser, "email" | "userName" |
         "password" | "rolesId" | "role">, thunkAPI) => {
-            console.log(data);
-            
-        const docId = await getDocIdByField("id", parseInt(data.id));
-        const userData = { ...data, idCollection: docId };
+        const userData = { ...data };
 
-        console.log(userData);
-        
         let isUpdateSuccess = false;
-        docId && await updateUser(userData).then(() => {
+        await updateUser(userData).then(() => {
             isUpdateSuccess = true;
         });
 
-        if (isUpdateSuccess && docId)
-            return await getUserByDocId(docId);
+        if (isUpdateSuccess)
+            return await getUserByDocId(data.id);
     }
 );

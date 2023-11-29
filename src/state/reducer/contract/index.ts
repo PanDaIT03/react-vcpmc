@@ -1,10 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 import { getContractAction } from "~/state/thunk/contract";
-import { IContract, IContractDetail } from "~/types";
+import { IContract, IUserDetail } from "~/types";
 
 interface InitType {
-    contracts: (IContract & IContractDetail)[]
+    contracts: (IContract & IUserDetail)[]
     loading: boolean
     status: string
 };
@@ -26,25 +26,23 @@ const contractSlice = createSlice({
             })
             .addCase(getContractAction.fulfilled, (state, action) => {
                 if (action.payload !== null) {
-                    const contractArray: any[] = [];
-                    const { contracts, contractDetails } = action.payload;
+                    let { contracts, users } = action.payload;
+                    const contractDetails: any[] = [];
 
-                    if (contracts && contractDetails) {
-                        contracts.map(contract => {
-                            const detail = contractDetails.find(item => {
-                                return item.docId === contract.contractDetailsId;
-                            });
-
-                            contractArray.push({ ...contract, ...detail });
+                    contracts.forEach((contract) => {
+                        users.forEach(user => {
+                            if (contract.createdBy === user.docId)
+                                contractDetails.push({ ...contract, ...user });
                         });
-                    }
-                    state.contracts = contractArray;
+                    });
+
+                    state.contracts = contractDetails;
                     state.loading = false;
                     state.status = "get successfully";
-                }
+                };
             })
             .addCase(getContractAction.rejected, (state) => {
-                state.loading = true;
+                state.loading = false;
                 state.status = "get failed";
             })
             .addDefaultCase(state => {

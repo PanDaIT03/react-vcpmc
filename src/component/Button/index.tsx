@@ -11,7 +11,7 @@ interface IButtonProps {
     primary?: boolean
     fill?: boolean
     className?: string
-    buttonType: "button" | "submit"
+    buttonType?: "button" | "submit"
     size?: "small" | "medium" | "large" | "extra large"
     leftIcon?: React.ReactNode
     rightIcon?: React.ReactNode
@@ -38,6 +38,7 @@ function Button({
 
     if (!className) className = "";
     if (!size) size = "medium";
+    if(!buttonType) buttonType = "button"
 
     const classes = cx("wrapper", {
         [className]: className,

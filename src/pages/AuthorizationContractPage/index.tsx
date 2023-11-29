@@ -7,11 +7,11 @@ import { Table } from "~/component/Table";
 import { Input } from "~/component/Input";
 import { ActionBar } from "~/component/ActionBar";
 import { OptionMenu } from "~/component/OptionMenu";
-import { IGlobalConstantsType } from "~/types";
+import { IContract, IGlobalConstantsType, IUserDetail } from "~/types";
 import { CB_OWNER_ITEMS, VALIDITY_CONTRACT_ITEMS } from "~/constants";
 import { ActionBarItem } from "~/component/ActionBar/ActionBarItem";
-import { getContractAction } from "~/state/thunk/contract";
 import { RootState, useAppDispatch } from "~/state";
+import { getContractAction } from "~/state/thunk/contract";
 
 import styles from "~/sass/AuthorizationContractPage.module.scss";
 const cx = classNames.bind(styles);
@@ -20,7 +20,7 @@ interface AuthorizationContractProps { };
 
 const initialState = {
     id: 1,
-    title: ""
+    title: "Tất cả"
 };
 
 function AuthorizationContractPage({ }: AuthorizationContractProps) {
@@ -30,6 +30,7 @@ function AuthorizationContractPage({ }: AuthorizationContractProps) {
     const [ownership, setOwnerShip] = useState<IGlobalConstantsType>(initialState);
     const [validity, setValidity] = useState<IGlobalConstantsType>(initialState);
     const [searchValue, setSearchValue] = useState('');
+    const [searchResult, setSearchResult] = useState<(IContract & IUserDetail)[]>([]);
 
     const contractState = useSelector((state: RootState) => state.contract);
     const { contracts, loading } = contractState;
@@ -43,6 +44,58 @@ function AuthorizationContractPage({ }: AuthorizationContractProps) {
     useEffect(() => {
         dispatch(getContractAction());
     }, []);
+
+    useEffect(() => {
+        setSearchResult(contracts);
+    }, [contractState]);
+
+    useEffect(() => {
+        const ownershipValue = ownership.title;
+        const validityValue = validity.title;
+        const search = searchValue.toLowerCase().trim();
+
+        if (ownershipValue && validityValue) {
+            const result = contracts.filter(contract => {
+                let itemResult;
+
+                if (ownershipValue === "Tất cả")
+                    itemResult = contract;
+                else if (contract.ownerShips.includes(ownershipValue)) {
+                    console.log("in");
+
+                    if (ownershipValue === "Người biểu diễn")
+                        itemResult = contract;
+                    else if (ownershipValue === "Nhà sản xuất")
+                        itemResult = contract;
+                };
+
+                if (validityValue === "Tất cả")
+                    return itemResult;
+                else if (itemResult?.status.includes(validityValue)) {
+                    if (contract.status === "Mới")
+                        itemResult = contract;
+                    else if (contract.status === "Còn thời hạn")
+                        itemResult = contract;
+                    else if (contract.status === "Đã huỷ")
+                        itemResult = contract;
+
+                    return itemResult;
+                };
+            });
+
+            setSearchResult(result.filter(item =>
+                item.contractCode.toLowerCase().includes(search) ||
+                item.customer.toLowerCase().includes(search) ||
+                item.authorized.toLowerCase().includes(search) ||
+                item.status.toLowerCase().includes(search) ||
+                item.dateCreated.toLowerCase().includes(search)
+                // || (typeof item.ownerShips === "string"
+                //     ? item.ownerShips.toLowerCase().includes(search)
+                //     : item.ownerShips.filter(ownership => ownership.toLowerCase().includes(search))
+                // )
+            ));
+        };
+    }, [ownership, validity, searchValue]);
 
     return (
         <div className={cx("wrapper")}>
@@ -88,18 +141,28 @@ function AuthorizationContractPage({ }: AuthorizationContractProps) {
                         <th className={cx("action-detail", "title")}>&nbsp;</th>
                         <th className={cx("reason", "title")}>&nbsp;</th>
                     </tr>
-                    {contracts.map((contract, index) => (
+                    {searchResult.map((contract, index) => (
                         <tr className={cx("contract_item")} key={index}>
                             <td className={cx("numerical-order", "content")}>{index + 1}</td>
                             <td className={cx("contract-code", "content")}>{contract.contractCode}</td>
                             <td className={cx("contract-name", "content")}>{contract.customer}</td>
-                            <td className={cx("authorized-person", "content")}>{contract.authorizedName}</td>
-                            <td className={cx("ownership", "content")}>{contract.ownerShip}</td>
+                            <td className={cx("authorized-person", "content")}>{contract.authorized}</td>
+                            <td className={cx("ownership", "content")}>
+                                {typeof contract.ownerShips === "string"
+                                    ? <p>{contract.ownerShips}</p>
+                                    : contract.ownerShips.map((ownership, index) => (
+                                        <p key={index}>{ownership}</p>
+                                    ))
+                                }
+                            </td>
                             <td className={cx("effective-contract", "content")}>
-                                <span className={cx("--center-flex")}>
-                                    <img src="./images/ellipse_effect.png" />
-                                    <p>{contract.status}</p>
-                                </span>
+                                {VALIDITY_CONTRACT_ITEMS.map(item => (
+                                    item.title === contract.status
+                                    && <span className={cx("--center-flex")} key={item.id}>
+                                        <img src={item.icon} />
+                                        <p>{item.title}</p>
+                                    </span>
+                                ))}
                             </td>
                             <td className={cx("date-created", "content")}>{contract.dateCreated}</td>
                             <td
@@ -108,7 +171,9 @@ function AuthorizationContractPage({ }: AuthorizationContractProps) {
                             >
                                 Xem chi tiết
                             </td>
-                            <td className={cx("reason", "content")}>Lý do huỷ</td>
+                            {contract.status === "Đã huỷ"
+                                && <td className={cx("reason", "content")}>Lý do huỷ</td>
+                            }
                         </tr>
                     ))}
                 </tbody>
