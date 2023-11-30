@@ -9,7 +9,7 @@ import { validityContract } from "~/constants";
 import { ActionBar } from "~/component/ActionBar";
 import { ActionBarItem } from "~/component/ActionBar/ActionBarItem";
 import { RootState, useAppDispatch } from "~/state";
-import { getContractAction } from "~/state/thunk/contract";
+import { getContractsAction } from "~/state/thunk/contract";
 
 import styles from "~/sass/EntrustmentContract.module.scss";
 const cx = classNames.bind(styles);
@@ -32,7 +32,7 @@ function EntrustmentContractPage() {
     };
 
     useEffect(() => {
-        dispatch(getContractAction());
+        dispatch(getContractsAction());
     }, []);
 
     return (

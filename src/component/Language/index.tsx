@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { Dropdown } from "../Poper/Dropdown";
 import { LANGUAGE_ITEMS, handleClickDropDown } from "~/constants";
 import { IGlobalConstantsType } from "~/types";
+import { images } from "~/assets";
 
 import styles from "~/sass/Language.module.scss";
 const cx = classNames.bind(styles);
@@ -11,7 +12,7 @@ const cx = classNames.bind(styles);
 const initStateLanguage = {
     id: 1,
     title: "Tiếng Việt",
-    icon: "./images/vietnam_flag.png"
+    icon: images.vietnamFlag
 };
 
 export const Language = () => {
@@ -58,7 +59,7 @@ export const Language = () => {
                 >
                     <div className={cx("title")}>{language.title}</div>
                     <img src={language.icon} className={cx("language-icon")} />
-                    <img src="../../images/angle-down.png" alt="agle down" />
+                    <img src={images.angleDown} alt="agle down" />
                 </div>
                 <Dropdown
                     items={languages}

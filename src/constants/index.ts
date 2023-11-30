@@ -1,45 +1,46 @@
 import { IGlobalConstantsType } from "~/types";
+import { images } from "~/assets";
 
 const LANGUAGE_ITEMS = [
     {
         id: 1,
         title: "Tiếng Việt",
-        icon: "../../images/vietnam_flag.png"
+        icon: images.vietnamFlag
     },
     {
         id: 2,
         title: "English",
-        icon: "../../images/uk_flag.png"
+        icon: images.ukFlag
     },
     {
         id: 3,
         title: "中國",
-        icon: "../../images/china_flag.png"
+        icon: images.chinaFlag
     }
 ];
 
 const SIDEBAR_ITEMS = [
     {
         id: 1,
-        iconName: "../../images/ban_ghi_icon.png",
+        icon: images.banGhi,
         title: "Kho bản ghi",
         isActive: false
     },
     {
         id: 2,
-        iconName: "../../images/playlist_icon.png",
+        icon: images.playlist,
         title: "Playlist",
         isActive: false
     },
     {
         id: 3,
-        iconName: "../../images/u_calendar-alt.png",
+        icon: images.calendarAlt,
         title: "Lập lịch phát",
         isActive: false
     },
     {
         id: 4,
-        iconName: "../../images/hop_dong_icon.png",
+        icon: images.contract,
         title: "Quản lý",
         isActive: false,
         children: [
@@ -64,7 +65,7 @@ const SIDEBAR_ITEMS = [
     },
     {
         id: 5,
-        iconName: "../../images/group_icon.png",
+        icon: images.group,
         title: "Doanh thu",
         isActive: false,
         children: [
@@ -84,7 +85,7 @@ const SIDEBAR_ITEMS = [
     },
     {
         id: 6,
-        iconName: "../../images/setting_icon.png",
+        icon: images.setting,
         title: "Cài đặt",
         isActive: false,
         children: [
@@ -112,7 +113,7 @@ const SIDEBAR_ITEMS = [
     },
     {
         id: 7,
-        iconName: "../../images/support_icon.png",
+        icon: images.support,
         title: "Hỗ trợ",
         isActive: false,
         children: [
@@ -135,17 +136,17 @@ const SIDEBAR_ITEMS = [
 const ACTION_INFO_USER = [
     {
         id: 1,
-        icon: "./images/fi_edit.png",
+        icon: images.edit,
         title: "Sửa thông tin",
     },
     {
         id: 2,
-        icon: "./images/fi_lock.png",
+        icon: images.lock,
         title: "Đổi mật khẩu",
     },
     {
         id: 3,
-        icon: "./images/fi_log-out.png",
+        icon: images.logOut,
         title: "Đăng xuất",
     }
 ];
@@ -167,17 +168,17 @@ const formatDate = (date: Date) => {
 const validityContract = [
     {
         id: 1,
-        icon: "./images/ellipse_effect.png",
+        icon: images.ellipseEffect,
         status: "Đang hiệu lực"
     },
     {
         id: 2,
-        icon: "./images/ellipse_expire.png",
+        icon: images.ellipseExpire,
         status: "Hết hiệu lực"
     },
     {
         id: 3,
-        icon: "./images/ellipse_cancel.png",
+        icon: images.ellipseCancel,
         status: "Đã huỷ"
     },
 ];
@@ -205,22 +206,22 @@ const VALIDITY_CONTRACT_ITEMS = [
     {
         id: 2,
         title: "Mới",
-        icon: "./images/ellipse_new.png",
+        icon: images.ellipseNew,
     },
     {
         id: 3,
         title: "Còn thời hạn" || "Còn hiệu lực",
-        icon: "./images/ellipse_effect.png",
+        icon: images.ellipseEffect,
     },
     {
         id: 4,
         title: "Hết hạn",
-        icon: "./images/ellipse_expire.png",
+        icon: images.ellipseExpire,
     },
     {
         id: 5,
         title: "Đã huỷ",
-        icon: "./images/ellipse_cancel.png",
+        icon: images.ellipseCancel,
     }
 ];
 
@@ -232,17 +233,17 @@ const CB_APPROVE_ITEMS = [
     {
         id: 2,
         title: "Mới",
-        icon: "./images/ellipse_new.png",
+        icon: images.ellipseNew
     },
     {
         id: 3,
         title: "Đã phê duyệt",
-        icon: "./images/ellipse_effect.png",
+        icon: images.ellipseEffect
     },
     {
         id: 4,
         title: "Bị từ chối",
-        icon: "./images/ellipse_cancel.png",
+        icon: images.ellipseCancel
     }
 ];
 
@@ -255,7 +256,59 @@ const handleClickDropDown = (item: IGlobalConstantsType, data: IGlobalConstantsT
     return newDropDown;
 };
 
+const getCurrentDate = () => {
+    let today = new Date();
+    let dd = String(today.getDate()).padStart(2, '0');
+    let mm = String(today.getMonth() + 1).padStart(2, '0');
+    let yyyy = today.getFullYear();
+
+    return mm + '/' + dd + '/' + yyyy;
+}
+
+const formatDateDMY = (date: Date) => {
+    let yyyy = date.getFullYear();
+    let mm = date.getMonth() + 1;
+    let dd = date.getDate();
+    let day = `${dd}`, month = `${mm}`;
+
+    if (dd < 10)
+        day = `0${dd}`;
+    if (mm < 10)
+        month = `0${mm}`;
+
+    return `${day}/${month}/${yyyy}`;
+}
+
+const formatDateMDY = (date: string) => {
+    let dateList = date.split('/');
+
+    return dateList[1] + '/' + dateList[0] + '/' + dateList[2];
+}
+
+const formatToLocalStringCurrentDate = () => {
+    let date = new Date();
+
+    return `${formatDateDMY(date)} - ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+}
+
+const formatTime = (time: number) => {
+    let minutes = Math.floor(time / 60);
+    let timeForSeconds = time - (minutes * 60);
+    let seconds = Math.floor(timeForSeconds);
+    let secondsReadable = seconds > 9 ? seconds : `0${seconds}`;
+
+    return `${minutes}:${secondsReadable}`;
+}
+
 export {
-    formatDate, handleClickDropDown, validityContract,
-    LANGUAGE_ITEMS, SIDEBAR_ITEMS, ACTION_INFO_USER, CB_OWNER_ITEMS, VALIDITY_CONTRACT_ITEMS, CB_APPROVE_ITEMS
+    formatDate,
+    formatTime,
+    handleClickDropDown,
+    validityContract,
+    LANGUAGE_ITEMS,
+    SIDEBAR_ITEMS,
+    ACTION_INFO_USER,
+    CB_OWNER_ITEMS,
+    VALIDITY_CONTRACT_ITEMS,
+    CB_APPROVE_ITEMS
 };

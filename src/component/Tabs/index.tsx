@@ -1,5 +1,5 @@
 import classNames from "classnames/bind";
-import { ReactNode } from "react";
+import { ReactNode, memo } from "react";
 
 import styles from "~/sass/Tabs.module.scss";
 const cx = classNames.bind(styles);
@@ -16,7 +16,7 @@ interface TabProps {
     onClick?: () => void
 };
 
-export const Tab = ({
+export const Tab = memo(({
     title,
     pageRef,
     status,
@@ -35,7 +35,7 @@ export const Tab = ({
             <p>{title}</p>
         </div>
     );
-};
+});
 
 export const Tabs = ({ className, children }: TabsProps) => {
     if (!className) className = "";

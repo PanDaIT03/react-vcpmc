@@ -1,9 +1,11 @@
 import classNames from "classnames/bind";
-import { useCallback, useState } from "react";
+import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 
 import Button from "~/component/Button";
+import { images } from "~/assets";
 import { Form } from "~/component/Form";
+
 import styles from "~/sass/Login.module.scss";
 const cx = classNames.bind(styles);
 
@@ -19,7 +21,7 @@ function ErrorConnectPage() {
         <div className={cx("container")}>
             <div className={cx("content")}>
                 <div className={cx("main-logo")}>
-                    <img src="../images/logo.png" alt="main_logo" />
+                    <img src={images.logo} alt="main_logo" />
                 </div>
 
                 <Form

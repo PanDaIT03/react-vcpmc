@@ -12,6 +12,7 @@ import { ActionBar } from "~/component/ActionBar";
 import { RootState, useAppDispatch } from "~/state";
 import { ActionBarItem } from "~/component/ActionBar/ActionBarItem";
 import { resetPasswordAction, updateUserAction } from "~/state/thunk/user/user";
+import { images } from "~/assets";
 
 import styles from "~/sass/BasicInfomation.module.scss";
 const cx = classNames.bind(styles);
@@ -156,7 +157,7 @@ function BasicInfomationPage() {
                         <div className={cx("user-info_left")}>
                             <div className={cx("avatar")}>
                                 <img src={`./images/${infoValues.avatar}`} className={cx("avatar-img")} alt="avatar" />
-                                <img src="./images/fi_camera.png" className={cx("icon-camera")} alt="camera" />
+                                <img src={images.camera} className={cx("icon-camera")} alt="camera" />
                             </div>
                             <p className={cx("user-name")}>{currentUser.firstName} {currentUser.lastName}</p>
                         </div>
@@ -245,7 +246,7 @@ function BasicInfomationPage() {
                         </div>
                         <ActionBar visible={!isEditInfo && !isChangePass}>
                             <ActionBarItem
-                                icon="./images/fi_edit.png"
+                                icon={images.edit}
                                 title="Sửa thông tin"
                                 onClick={() => {
                                     setIsEditInfo(true);
@@ -253,7 +254,7 @@ function BasicInfomationPage() {
                                 }}
                             />
                             <ActionBarItem
-                                icon="./images/fi_lock.png"
+                                icon={images.lock}
                                 title="Đổi mật khẩu"
                                 onClick={() => {
                                     setIsChangePass(true);
@@ -261,7 +262,7 @@ function BasicInfomationPage() {
                                 }}
                             />
                             <ActionBarItem
-                                icon="./images/fi_log-out.png"
+                                icon={images.logOut}
                                 title="Đăng xuất"
                             />
                         </ActionBar>
@@ -318,7 +319,7 @@ function BasicInfomationPage() {
                                 value={passwordValues.currentPassword}
                                 touched={passwordTouched.currentPassword}
                                 inputRef={passwordRef}
-                                iconRight="./images/eye.png"
+                                iconRight={images.eye}
                                 errorMessage={passwordErros.currentPassword}
                                 onChange={handleChangePasswordForm}
                                 onIconRightClick={() => setIsCurrentPassword(!isCurrentPassword)}
@@ -331,7 +332,7 @@ function BasicInfomationPage() {
                                 type={isNewPassword ? "password" : "text"}
                                 value={passwordValues.newPassword}
                                 touched={passwordTouched.newPassword}
-                                iconRight="./images/eye.png"
+                                iconRight={images.eye}
                                 errorMessage={passwordErros.newPassword}
                                 onChange={handleChangePasswordForm}
                                 onIconRightClick={() => setIsNewPassword(!isNewPassword)}
@@ -344,7 +345,7 @@ function BasicInfomationPage() {
                                 type={isConfirmPassword ? "password" : "text"}
                                 value={passwordValues.confirmPassword}
                                 touched={passwordTouched.confirmPassword}
-                                iconRight="./images/eye.png"
+                                iconRight={images.eye}
                                 errorMessage={passwordErros.confirmPassword}
                                 onChange={handleChangePasswordForm}
                                 onIconRightClick={() => setIsConfirmPassword(!isConfirmPassword)}

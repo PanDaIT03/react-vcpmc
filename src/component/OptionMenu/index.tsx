@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { IGlobalConstantsType } from "~/types";
 import { Dropdown } from "../Poper/Dropdown";
 import { handleClickDropDown } from "~/constants";
+import { images } from "~/assets";
 
 import styles from "~/sass/OptionMenu.module.scss";
 const cx = classNames.bind(styles);
@@ -72,7 +73,7 @@ export const OptionMenu = ({
             <div className={cx('filter_ownership_cb')} onClick={() => setOpen(!open)} ref={menuRef}>
                 <div className={cx("choosen", boxSize)}>
                     {choosen.title}
-                    <img src="../../images/u_angle-down.png" />
+                    <img src={images.angleDown} />
                 </div>
                 <Dropdown
                     items={option}

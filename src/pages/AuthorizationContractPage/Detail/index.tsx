@@ -12,6 +12,7 @@ import { ActionBar } from "~/component/ActionBar";
 import { ActionBarItem } from "~/component/ActionBar/ActionBarItem";
 import { CancleForm } from "~/component/CancelForm";
 import { Tab, Tabs } from "~/component/Tabs";
+import { images } from "~/assets";
 
 import styles from "~/sass/Detail.module.scss";
 const cx = classNames.bind(styles);
@@ -30,6 +31,13 @@ export const Detail = () => {
     const contractState = useSelector((state: RootState) => state.contract);
     const { contracts } = contractState;
 
+    const [basicInfo, setBasicInfo] = useState<IGlobalConstantsType[]>([]);
+    const [fileAttach, setFileAttach] = useState<IGlobalConstantsType[]>([]);
+    const [copyRight, setCopyRight] = useState<IGlobalConstantsType[]>([]);
+    const [authorInfomation, setAuthorInfomation] = useState<IGlobalConstantsType[]>([]);
+    const [residenceInfo, setResidenceInfo] = useState<IGlobalConstantsType[]>([]);
+    const [userName, setUserName] = useState<IGlobalConstantsType[]>([]);
+
     const textAreaRef = useRef<HTMLTextAreaElement>(null);
     const firstRef = useRef<HTMLDivElement>(null);
     const secondRef = useRef<HTMLDivElement>(null);
@@ -42,175 +50,173 @@ export const Detail = () => {
         setContractDetail(contract || initialState);
     }, [contractState]);
 
-    const basicInfo: IGlobalConstantsType[] = [
-        {
-            id: 1,
-            title: "Số hợp đồng",
-            value: contractDetail?.contractCode
-        },
-        {
-            id: 2,
-            title: "Tên hợp đồng",
-            value: contractDetail?.customer
-        },
-        {
-            id: 3,
-            title: "Ngày hiệu lực",
-            value: contractDetail?.effectiveDate || "Chưa có"
-        },
-        {
-            id: 4,
-            title: "Ngày hết hạn",
-            value: contractDetail?.expirationDate || "Chưa có"
-        },
-        {
-            id: 5,
-            title: "Tình trạng",
-            value: contractDetail?.status
-        }
-    ];
-
-    const fileAttach: IGlobalConstantsType[] = [
-        {
-            id: 1,
-            title: "Đính kèm tệp",
-            value: [
-                {
-                    id: 1,
-                    icon: "../../images/icon_file_word.png",
-                    title: "hetthuongcannho.doc"
-                },
-                {
-                    id: 2,
-                    icon: "../../images/icon_file.png",
-                    title: "hetthuongcannho.doc"
-                },
-            ]
-        },
-    ];
-
-    const copyRight: IGlobalConstantsType[] = [
-        {
-            id: 1,
-            title: "Quyền tác giả",
-            value: "0%"
-        },
-        {
-            id: 2,
-            title: "Quyền liên quan",
-            value: ""
-        },
-        {
-            id: 3,
-            title: "Quyền của người biểu diễn",
-            value: "50%",
-            isActive: true
-        },
-        {
-            id: 4,
-            title: "Quyền của nhà sản xuất: (Bản ghi/video)",
-            value: "50%",
-            isActive: true
-        },
-    ];
-
-    const authorInfomation = [
-        {
-            id: 1,
-            title: "Pháp nhân uỷ quyền",
-            value: contractDetail?.authorizingLegalEntity
-        },
-        {
-            id: 2,
-            title: "Tên người uỷ quyền",
-            value: contractDetail?.firstName + " " + contractDetail?.lastName
-        },
-        {
-            id: 3,
-            title: "Ngày sinh",
-            value: contractDetail?.dateOfBirth
-        },
-        {
-            id: 4,
-            title: "Giới tính",
-            value: contractDetail?.gender
-        },
-        {
-            id: 5,
-            title: "Quốc tịch",
-            value: contractDetail?.nationality
-        },
-        {
-            id: 6,
-            title: "Điện thoại",
-            value: contractDetail?.phoneNumber
-        }
-    ];
-
-    const residenceInfo = [
-        {
-            id: 1,
-            title: "Số CMND/ CCCD",
-            value: contractDetail?.idNumber
-        },
-        {
-            id: 2,
-            title: "Ngày cấp",
-            value: contractDetail?.dateRange
-        },
-        {
-            id: 3,
-            title: "Nơi cấp",
-            value: contractDetail?.issuedBy
-        },
-        {
-            id: 4,
-            title: "Mã số thuế",
-            value: contractDetail?.taxCode
-        },
-        {
-            id: 5,
-            title: "Nơi cư trú",
-            value: contractDetail?.residence
-        },
-    ];
-
-    const userName = [
-        {
-            id: 1,
-            title: "Email",
-            value: contractDetail?.email
-        },
-        {
-            id: 2,
-            title: "Tài khoản đăng nhập",
-            value: contractDetail?.userName
-        },
-        {
-            id: 3,
-            title: "Mật khẩu",
-            value: contractDetail?.password
-        },
-        {
-            id: 4,
-            title: "Số tài khoản",
-            value: contractDetail?.bankNumber
-        },
-        {
-            id: 5,
-            title: "Ngân hàng",
-            value: contractDetail?.bank
-        },
-    ];
-
     useEffect(() => {
         if (contracts.length <= 0)
             navigate("/contract-management");
     }, [contracts]);
 
-    const handleChangeCancleContract = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-        setCancleArea(event.target.value);
-    };
+    useEffect(() => {
+        setBasicInfo([
+            {
+                id: 1,
+                title: "Số hợp đồng",
+                value: contractDetail?.contractCode
+            },
+            {
+                id: 2,
+                title: "Tên hợp đồng",
+                value: contractDetail?.customer
+            },
+            {
+                id: 3,
+                title: "Ngày hiệu lực",
+                value: contractDetail?.effectiveDate || "Chưa có"
+            },
+            {
+                id: 4,
+                title: "Ngày hết hạn",
+                value: contractDetail?.expirationDate || "Chưa có"
+            },
+            {
+                id: 5,
+                title: "Tình trạng",
+                value: contractDetail?.status
+            }
+        ]);
+
+        setFileAttach([
+            {
+                id: 1,
+                title: "Đính kèm tệp",
+                value: [
+                    {
+                        id: 1,
+                        icon: images.iconFileWord,
+                        title: "hetthuongcannho.doc"
+                    },
+                    {
+                        id: 2,
+                        icon: images.iconFile,
+                        title: "hetthuongcannho.doc"
+                    }
+                ]
+            }
+        ]);
+
+        setCopyRight([
+            {
+                id: 1,
+                title: "Quyền tác giả",
+                value: "0%"
+            },
+            {
+                id: 2,
+                title: "Quyền liên quan",
+                value: ""
+            },
+            {
+                id: 3,
+                title: "Quyền của người biểu diễn",
+                value: "50%",
+                isActive: true
+            },
+            {
+                id: 4,
+                title: "Quyền của nhà sản xuất: (Bản ghi/video)",
+                value: "50%",
+                isActive: true
+            }
+        ]);
+
+        setAuthorInfomation([
+            {
+                id: 1,
+                title: "Pháp nhân uỷ quyền",
+                value: contractDetail?.authorizingLegalEntity
+            },
+            {
+                id: 2,
+                title: "Tên người uỷ quyền",
+                value: contractDetail?.firstName + " " + contractDetail?.lastName
+            },
+            {
+                id: 3,
+                title: "Ngày sinh",
+                value: contractDetail?.dateOfBirth
+            },
+            {
+                id: 4,
+                title: "Giới tính",
+                value: contractDetail?.gender
+            },
+            {
+                id: 5,
+                title: "Quốc tịch",
+                value: contractDetail?.nationality
+            },
+            {
+                id: 6,
+                title: "Điện thoại",
+                value: contractDetail?.phoneNumber
+            }
+        ]);
+
+        setResidenceInfo([
+            {
+                id: 1,
+                title: "Số CMND/ CCCD",
+                value: contractDetail?.idNumber
+            },
+            {
+                id: 2,
+                title: "Ngày cấp",
+                value: contractDetail?.dateRange
+            },
+            {
+                id: 3,
+                title: "Nơi cấp",
+                value: contractDetail?.issuedBy
+            },
+            {
+                id: 4,
+                title: "Mã số thuế",
+                value: contractDetail?.taxCode
+            },
+            {
+                id: 5,
+                title: "Nơi cư trú",
+                value: contractDetail?.residence
+            },
+        ]);
+
+        setUserName([
+            {
+                id: 1,
+                title: "Email",
+                value: contractDetail?.email
+            },
+            {
+                id: 2,
+                title: "Tài khoản đăng nhập",
+                value: contractDetail?.userName
+            },
+            {
+                id: 3,
+                title: "Mật khẩu",
+                value: contractDetail?.password
+            },
+            {
+                id: 4,
+                title: "Số tài khoản",
+                value: contractDetail?.bankNumber
+            },
+            {
+                id: 5,
+                title: "Ngân hàng",
+                value: contractDetail?.bank
+            },
+        ]);
+    }, [contractDetail]);
 
     const handleCancleContract = () => {
         console.log(cancleArea);
@@ -218,10 +224,7 @@ export const Detail = () => {
 
     return (
         <div className={cx("wrapper")}>
-            <Contract
-                title={`Chi tiết hợp đồng uỷ quyền bài hát - ${contractCode}`}
-                tabs={true}
-            >
+            <Contract title={`Chi tiết hợp đồng uỷ quyền bài hát - ${contractCode}`}>
                 <Tabs>
                     <Tab
                         title="Thông tin hợp đồng"
@@ -232,7 +235,7 @@ export const Detail = () => {
                         title="Tác phầm uỷ quyền"
                         pageRef={secondRef}
                         status={"inactive"}
-                        onClick={() => navigate(`/contract-management/authorization-product/${contractCode}`)}
+                        onClick={() => navigate(`/contract-management/authorization-product/${contractCode}/${contractDetail.docId}`)}
                     />
                 </Tabs>
                 <div className={cx("content")}>
@@ -243,7 +246,7 @@ export const Detail = () => {
                             title="Mức nhuận bút"
                             className={cx("author")}
                             data={copyRight}
-                            icon="../../images/u_info-circle.png"
+                            icon={images.infoCircle}
                         />
                     </div>
                     <div className={cx("col-bottom")}>
@@ -259,16 +262,16 @@ export const Detail = () => {
                 <ActionBar visible={true}>
                     <ActionBarItem
                         title="Chỉnh sửa hợp đồng"
-                        icon="../../images/fi_edit.png"
+                        icon={images.edit}
                         disable={contractDetail.censored === false}
                     />
                     <ActionBarItem
                         title="Gia hạn hợp đồng"
-                        icon="../../images/u_clipboard-notes.png"
+                        icon={images.clipboardNotes}
                     />
                     <ActionBarItem
                         title="Huỷ hợp đồng"
-                        icon="../../images/fi_x.png"
+                        icon={images.fiX}
                         onClick={() => {
                             setVisible(true);
                             textAreaRef.current?.focus();
@@ -281,7 +284,7 @@ export const Detail = () => {
                     placeholder="Cho chúng tôi biết lý do bạn muốn huỷ hợp đồng uỷ quyền này..."
                     status={visible ? "active" : "inactive"}
                     textareaRef={textAreaRef}
-                    onChange={(event) => handleChangeCancleContract(event)}
+                    onChange={(event) => setCancleArea(event.target.value)}
                 >
                     <div className={cx("action")}>
                         <Button

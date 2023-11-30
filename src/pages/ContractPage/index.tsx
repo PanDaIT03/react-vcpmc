@@ -6,7 +6,7 @@ import { Tab, Tabs } from "~/component/Tabs";
 
 function ContractPage() {
     const [active, setActive] = useState(true);
-    
+
     const firstRef = useRef<HTMLDivElement>(null);
     const secondRef = useRef<HTMLDivElement>(null);
 

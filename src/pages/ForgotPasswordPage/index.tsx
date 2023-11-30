@@ -11,6 +11,7 @@ import { forgotPassword } from "~/api/user";
 import { useState } from "react";
 import { Input } from "~/component/Input";
 import { RootState } from "~/state";
+import { images } from "~/assets";
 
 import styles from "~/sass/Login.module.scss";
 const cx = classNames.bind(styles);
@@ -59,7 +60,7 @@ function ForgotPasswordPage() {
         <div className={cx("container")}>
             <div className={cx("content")}>
                 <div className={cx("main-logo")}>
-                    <img src="../images/logo.png" alt="main_logo" />
+                    <img src={images.logo} alt="main_logo" />
                 </div>
                 <Form
                     title="Khôi phục mật khẩu"

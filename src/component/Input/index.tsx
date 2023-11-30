@@ -8,15 +8,18 @@ const cx = classNames.bind(styles);
 interface InputProps {
     id?: string
     name: string
-    value: string
+    value: string | number
     title?: string
     placeholder?: string
     className?: string
     errorMessage?: string
+    min?: number
+    max?: number
+    steps?: number
     iconLeft?: string //path
     iconRight?: string //path
     status?: "disable" | "editable"
-    type?: "text" | "password" | "number" | "date"
+    type?: "text" | "password" | "number" | "date" | "range"
     size?: "small" | "medium" | "large" | "extra-large" | "custom"
     onBlur?: any
     onFocus?: any
@@ -33,7 +36,6 @@ interface InputProps {
 export const Input = memo(({
     id,
     name,
-    type = "text",
     value,
     title,
     size,
@@ -46,7 +48,6 @@ export const Input = memo(({
     iconRight,
     iconLeftAwesome,
     iconRightAwesome,
-    onFocus,
     onBlur,
     inputRef,
     onChange,
@@ -60,10 +61,8 @@ export const Input = memo(({
 
     const props = {
         id: id,
-        type: type,
         name: name,
         value: value,
-        onFocus,
         onChange,
         ...passProps
     };

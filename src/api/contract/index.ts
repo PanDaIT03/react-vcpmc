@@ -1,4 +1,5 @@
 import { collection, getDocs, orderBy, query } from "firebase/firestore";
+
 import { fireStoreDatabase } from "~/firebase-config";
 import { IContract } from "~/types";
 

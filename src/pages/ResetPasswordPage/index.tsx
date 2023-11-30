@@ -4,7 +4,6 @@ import classNames from "classnames/bind";
 import { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import { useSelector } from "react-redux";
-import { PropagateLoader } from "react-spinners";
 import { useNavigate } from "react-router-dom";
 
 import useQuery from "~/hooks";
@@ -13,6 +12,7 @@ import { Form } from "~/component/Form";
 import { Input } from "~/component/Input";
 import { resetPasswordAction } from "~/state/thunk/user/user";
 import { RootState, useAppDispatch } from "~/state";
+import { images } from "~/assets";
 
 import styles from "~/sass/Login.module.scss";
 const cx = classNames.bind(styles);
@@ -100,7 +100,7 @@ function ResetPasswordPage() {
         <div className={cx("container")}>
             <div className={cx("content")}>
                 <div className={cx("main-logo")}>
-                    <img src="../images/logo.png" alt="main_logo" />
+                    <img src={images.logo} alt="main_logo" />
                 </div>
                 <Form
                     title="Đặt lại mật khẩu"
@@ -117,7 +117,7 @@ function ResetPasswordPage() {
                         value={values.password}
                         touched={touched.password}
                         errorMessage={errors.password}
-                        iconRight="./images/eye.png"
+                        iconRight={images.eye}
                         onFocus={() => handleFocus("password")}
                         onChange={handleChange}
                         onIconRightClick={() => setIsPassword(!isPassword)}
@@ -132,7 +132,7 @@ function ResetPasswordPage() {
                         value={values.confirmPassword}
                         touched={touched.confirmPassword}
                         errorMessage={errors.confirmPassword}
-                        iconRight="./images/eye.png"
+                        iconRight={images.eye}
                         onFocus={() => handleFocus("confirmPassword")}
                         onChange={handleChange}
                         onIconRightClick={() => setIsConfirmPassword(!isConfirmPassword)}

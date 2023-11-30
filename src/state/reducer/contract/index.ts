@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-import { getContractAction } from "~/state/thunk/contract";
+import { getContractsAction } from "~/state/thunk/contract";
 import { IContract, IUserDetail } from "~/types";
 
 interface InitType {
@@ -21,10 +21,10 @@ const contractSlice = createSlice({
     reducers: {},
     extraReducers(builder) {
         builder
-            .addCase(getContractAction.pending, (state) => {
+            .addCase(getContractsAction.pending, (state) => {
                 state.loading = true;
             })
-            .addCase(getContractAction.fulfilled, (state, action) => {
+            .addCase(getContractsAction.fulfilled, (state, action) => {
                 if (action.payload !== null) {
                     let { contracts, users } = action.payload;
                     const contractDetails: any[] = [];
@@ -32,7 +32,7 @@ const contractSlice = createSlice({
                     contracts.forEach((contract) => {
                         users.forEach(user => {
                             if (contract.createdBy === user.docId)
-                                contractDetails.push({ ...contract, ...user });
+                                contractDetails.push({ ...user, ...contract });
                         });
                     });
 
@@ -41,7 +41,7 @@ const contractSlice = createSlice({
                     state.status = "get successfully";
                 };
             })
-            .addCase(getContractAction.rejected, (state) => {
+            .addCase(getContractsAction.rejected, (state) => {
                 state.loading = false;
                 state.status = "get failed";
             })

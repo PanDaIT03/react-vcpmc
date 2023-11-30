@@ -71,6 +71,12 @@
     }
 }
 
+.contract_item {
+    &+& {
+        border-top: .1rem solid rgba(114, 114, 136, 1);
+    }
+}
+
 .contract_title,
 .contract_item {
     .contract-code {

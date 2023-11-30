@@ -19,7 +19,7 @@ const publicRoutes = [
     { path: '/forgot-password', component: ForgotPasswordPage },
     { path: '/contract-management', component: ContractPage, layout: DefaultLayout },
     { path: '/contract-management/authorization-contract/:contractCode', component: AuthorizationDetail, layout: DefaultLayout },
-    { path: '/contract-management/authorization-product/:contractCode', component: AuthorizationProduct, layout: DefaultLayout },
+    { path: '/contract-management/authorization-product/:contractCode/:contractId', component: AuthorizationProduct, layout: DefaultLayout },
 ];
 
 const protectedRoutes = [

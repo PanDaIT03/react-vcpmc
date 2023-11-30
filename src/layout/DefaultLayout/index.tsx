@@ -1,7 +1,7 @@
 import classNames from "classnames/bind";
 import { ReactNode, useContext, useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { Sidebar } from "../component/Sidebar";
 import { Header } from "../component/Header";
@@ -17,6 +17,7 @@ interface DefaultLayoutProps {
 
 export const DefaultLayout = ({ children }: DefaultLayoutProps) => {
     const navigate = useNavigate();
+    const sidebarRef = useRef<HTMLDivElement>(null);
 
     const { setActive } = useContext(SidebarContext);
     const userState = useSelector((state: RootState) => state.user);
@@ -28,10 +29,22 @@ export const DefaultLayout = ({ children }: DefaultLayoutProps) => {
     });
     const { name, role } = account;
 
+    // useEffect(() => {
+    //     let handler = (event: MouseEvent) => {
+    //         if (!sidebarRef.current?.contains(event.target as Node))
+    //             setActive(false);
+    //     };
+    //     document.addEventListener("mousedown", handler);
+
+    //     return () => {
+    //         document.removeEventListener("mousedown", handler);
+    //     };
+    // });
+
     useEffect(() => {
         if (!currentUser)
             return;
-        
+
         if (currentUser.firstName && currentUser.lastName) {
             let firstName = currentUser.firstName.substring(0, 1),
                 lastName = currentUser.lastName.split(' '),
@@ -45,7 +58,10 @@ export const DefaultLayout = ({ children }: DefaultLayoutProps) => {
         <div className={cx("wrapper")}>
             <div className={cx("container")}>
                 <div className={cx("container_left")}>
-                    <Sidebar onClick={() => setActive(true)} />
+                    <Sidebar
+                        sidebarRef={sidebarRef}
+                        onClick={() => setActive(true)}
+                    />
                 </div>
                 <div className={cx("container_right")}>
                     <div className={cx("header")}>

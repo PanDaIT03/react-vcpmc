@@ -11,6 +11,7 @@ import { Form } from "~/component/Form";
 import { RootState, useAppDispatch } from "~/state";
 import { checkLoginAction } from "~/state/thunk/user/user";
 import { getRoleAction } from "~/state/thunk/role/role";
+import { images } from "~/assets";
 
 import styles from "~/sass/Login.module.scss";
 const cx = classNames.bind(styles);
@@ -89,7 +90,7 @@ function LoginPage() {
         <div className={cx("container")}>
             <div className={cx("content")}>
                 <div className={cx("main-logo")}>
-                    <img src="../images/logo.png" alt="main_logo" />
+                    <img src={images.logo} alt="main_logo" />
                 </div>
                 <Form
                     title="Đăng nhập"
@@ -117,7 +118,7 @@ function LoginPage() {
                         value={loginValues.password}
                         touched={loginTouched.password}
                         errorMessage={loginErrors.password}
-                        iconRight="./images/eye.png"
+                        iconRight={images.eye}
                         onFocus={() => handleFocus("password")}
                         onChange={handleChangeLogin}
                         onIconRightClick={() => setIsPassword(!isPassword)}

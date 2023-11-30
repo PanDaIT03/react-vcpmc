@@ -1,0 +1,96 @@
+.wrapper {
+    width: 48rem;
+    height: 28rem;
+    padding: 1.7rem 1.4rem 1.6rem 1.4rem;
+    border-radius: 1.6rem;
+    background: var(--bg-lightest);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    opacity: 0;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: all .2s linear;
+    pointer-events: none;
+
+    .action-top {
+        position: absolute;
+        top: .8rem;
+        right: 0.8rem;
+        cursor: pointer;
+    }
+}
+
+.content {
+    width: 100%;
+    height: 24.7rem;
+    object-fit: cover;
+    border-radius: .8rem;
+    position: relative;
+    background-position-y: 50%;
+}
+
+.action-bottom {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 1.6rem;
+    gap: 1.6rem;
+    bottom: 1rem;
+    position: absolute;
+
+    .action-right {
+        cursor: pointer;
+    }
+}
+
+.action-left {
+    color: var(--white);
+    font-size: 1.2rem;
+    font-weight: 400;
+    line-height: 1.8rem;
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+
+    .play-pause {
+        width: 1.5rem;
+        font-size: 2rem;
+    }
+    
+    .mute {
+        width: 2.25rem;
+        font-size: 2rem;
+        cursor: pointer;
+    }
+    
+    .play-pause {
+        font-size: 2rem;
+        cursor: pointer;
+    }
+}
+
+.progress {
+    width: 42rem;
+    left: 1.6rem;
+    bottom: 3.4rem;
+    position: absolute;
+
+    input {
+        height: .2rem;
+        padding: 0;
+        -webkit-appearance: none;
+
+        &:focus {
+            border: none;
+        }
+    }
+}
+
+.active {
+    top: 50%;
+    opacity: 1;
+    pointer-events: all;
+}

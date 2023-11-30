@@ -1,7 +1,7 @@
 .wrapper {
     display: flex;
-    width: 17rem;
-    height: 108rem;
+    // width: 17rem;
+    // height: 108rem;
     background-color: var(---bg-dark);
     padding: 3.9rem 0 18.7rem 0;
     flex-direction: column;
@@ -134,4 +134,19 @@
     top: 0 !important;
     opacity: 1 !important;
     pointer-events: all;
+}
+
+.active {
+    width: 17rem;
+    height: 108rem;
+}
+
+.inactive {
+    display: flex;
+    width: 4rem;
+    height: 108rem;
+    padding: 0;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }

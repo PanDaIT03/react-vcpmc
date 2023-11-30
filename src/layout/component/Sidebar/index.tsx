@@ -6,6 +6,7 @@ import { Dropdown } from "~/component/Poper/Dropdown";
 import { IGlobalConstantsType } from "~/types/GlobalConstantsType";
 import { SIDEBAR_ITEMS } from "~/constants";
 import { SidebarContext } from "~/context/SidebarContext";
+import { images } from "~/assets";
 
 import styles from "~/sass/Sidebar.module.scss";
 const cx = classNames.bind(styles);
@@ -18,7 +19,7 @@ interface SidebarProps {
 interface SidebarItemProps {
     id: number
     title: string
-    iconName: React.ReactNode
+    icon: string
     className?: string
     children?: React.ReactElement
     data?: IGlobalConstantsType[]
@@ -28,7 +29,7 @@ interface SidebarItemProps {
 const SidebarItem = ({
     id,
     title,
-    iconName,
+    icon,
     className,
     children,
     data,
@@ -56,12 +57,12 @@ const SidebarItem = ({
         >
             {currentPage === id && <div className={cx("active")}></div>}
             <div className={cx("sidebar-item")}>
-                <img src={`${iconName}`} className={cx("menu-icon")} />
+                <img src={icon} className={cx("menu-icon")} />
                 <p className={cx("title")}>{title}</p>
             </div>
             {data && <div className={cx("popup-item")}>
                 <p className={cx("ellipsis")}>
-                    <img src="../../images/u_ellipsis-v.png" />
+                    <img src={images.ellipsisV} />
                 </p>
                 <Dropdown
                     items={data}
@@ -82,11 +83,15 @@ export const Sidebar = ({ sidebarRef, onClick }: SidebarProps) => {
     }, []);
 
     return (
-        <div className={cx("wrapper", !active && "inactive")} onClick={onClick} ref={sidebarRef}>
+        <div
+            ref={sidebarRef}
+            className={cx("wrapper", active ? "active" : "inactive")}
+            onClick={onClick}
+        >
             {active ?
                 <>
                     <div className={cx("logo")}>
-                        <img src="../../images/logo.png" />
+                        <img src={images.logo} />
                     </div>
                     <div className={cx("sidebar-items")}>
                         {SIDEBAR_ITEMS.map((item, index) => (
@@ -94,14 +99,14 @@ export const Sidebar = ({ sidebarRef, onClick }: SidebarProps) => {
                                 key={index}
                                 id={item.id}
                                 title={item.title}
-                                iconName={item.iconName}
+                                icon={item.icon}
                                 data={item.children}
                                 onClick={handleClickOption}
                             />
                         ))}
                     </div>
                 </>
-                : <img src="../../images/u_angle-right.png" />
+                : <img src={images.angleRight} />
             }
         </div>
     )

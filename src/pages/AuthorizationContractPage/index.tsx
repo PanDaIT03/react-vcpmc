@@ -11,7 +11,8 @@ import { IContract, IGlobalConstantsType, IUserDetail } from "~/types";
 import { CB_OWNER_ITEMS, VALIDITY_CONTRACT_ITEMS } from "~/constants";
 import { ActionBarItem } from "~/component/ActionBar/ActionBarItem";
 import { RootState, useAppDispatch } from "~/state";
-import { getContractAction } from "~/state/thunk/contract";
+import { getContractsAction } from "~/state/thunk/contract";
+import { images } from "~/assets";
 
 import styles from "~/sass/AuthorizationContractPage.module.scss";
 const cx = classNames.bind(styles);
@@ -42,7 +43,7 @@ function AuthorizationContractPage({ }: AuthorizationContractProps) {
     const handleClickSearch = () => { };
 
     useEffect(() => {
-        dispatch(getContractAction());
+        dispatch(getContractsAction());
     }, []);
 
     useEffect(() => {
@@ -61,8 +62,6 @@ function AuthorizationContractPage({ }: AuthorizationContractProps) {
                 if (ownershipValue === "Tất cả")
                     itemResult = contract;
                 else if (contract.ownerShips.includes(ownershipValue)) {
-                    console.log("in");
-
                     if (ownershipValue === "Người biểu diễn")
                         itemResult = contract;
                     else if (ownershipValue === "Nhà sản xuất")
@@ -119,7 +118,7 @@ function AuthorizationContractPage({ }: AuthorizationContractProps) {
                         value={searchValue}
                         placeholder="Tên hợp đồng, số hợp đồng, người uỷ quyền..."
                         size="custom"
-                        iconRight="./images/search_icon.png"
+                        iconRight={images.search}
                         onChange={(event) => handleChange(event)}
                         onIconRightClick={handleClickSearch}
                     />
@@ -179,7 +178,7 @@ function AuthorizationContractPage({ }: AuthorizationContractProps) {
                 </tbody>
             </Table>
             <ActionBar visible={true}>
-                <ActionBarItem title="Thêm hợp đồng" icon="./images/u_plus.png" />
+                <ActionBarItem title="Thêm hợp đồng" icon={images.uPlus} />
             </ActionBar>
         </div>
     );
