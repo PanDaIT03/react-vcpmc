@@ -7,88 +7,88 @@
 @import "@fontsource/source-sans-pro/400-italic.css"; // Specify weight and style
 
 :root {
-    --white: #FFF;
-    --red: #FF4747;
-    --blue: #347AFF;
-    --emerald: #2ecc71;
-    --gray: #878890;
+  --white: #fff;
+  --red: #ff4747;
+  --blue: #347aff;
+  --emerald: #2ecc71;
+  --gray: #878890;
 
-    ---bg-dark: #020220;
-    --bg-color: #1E1E2E;
-    --bg-color-2: #30303F;
-    ---bg-lighter: #2B2B3F;
-    --bg-lightest: #3E3E5B;
+  ---bg-dark: #020220;
+  --bg-color: #1e1e2e;
+  --bg-color-2: #30303f;
+  ---bg-lighter: #2b2b3f;
+  --bg-lightest: #3e3e5b;
 
-    --white-transparent: rgba(255, 255, 255, 0.15);
-    
-    --orange-3: #FFAC69;
-    --orange-4-default: #FF7506;
-    --orange-5: #B65100;
+  --white-transparent: rgba(255, 255, 255, 0.15);
 
-    --text-stroke-3: #C8C8DB;
-    --text-stroke-fill: #2F2F41;
-    --text-stroke-text-and-stroke: #F5F5FF;
-    --text-stroke-text-and-stroke-2: #727288;
-    
-    --disabled-state: #3E3E50;
+  --orange-3: #ffac69;
+  --orange-4-default: #ff7506;
+  --orange-5: #b65100;
+
+  --text-stroke-3: #c8c8db;
+  --text-stroke-fill: #2f2f41;
+  --text-stroke-text-and-stroke: #f5f5ff;
+  --text-stroke-text-and-stroke-2: #727288;
+
+  --disabled-state: #3e3e50;
 }
 
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 html {
-    font-size: 62.5%;
+  font-size: 62.5%;
 }
 
 body {
-    height: 108rem;
-    color: var(--text-color);
-    font: normal 600 1.6rem/1.8em Montserrat;
-    line-height: 2.4rem;
-    text-rendering: optimizeSpeed;
-    background-color: var(--bg-color);
-    position: relative;
+  height: 108rem;
+  color: var(--text-color);
+  font: normal 600 1.6rem/1.8em Montserrat;
+  line-height: 2.4rem;
+  text-rendering: optimizeSpeed;
+  background-color: var(--bg-color);
+  position: relative;
 }
 
 button {
-    border: none;
-    cursor: pointer;
+  border: none;
+  cursor: pointer;
 }
 
 textarea {
-    outline: none;
-    border: none;
+  outline: none;
+  border: none;
 }
 
 ul {
-    list-style: none;
+  list-style: none;
 }
 
 .--center-flex {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .--m-top-2rem {
-    margin-top: 2rem;
+  margin-top: 2rem;
 }
 
 .--m-top-1rem {
-    margin-top: 1rem;
+  margin-top: 1rem;
 }
 
 .--cursor-pointer {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .w-585 {
-    width: 58.5rem;
+  width: 58.5rem;
 }
 
-.--capitalize input{
-    text-transform: capitalize;
+.--capitalize input {
+  text-transform: capitalize;
 }

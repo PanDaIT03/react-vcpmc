@@ -27,14 +27,15 @@ export const BlockDetail = ({
         <div className={classes}>
             {title && (
                 <div className={cx("title-primary")}>
-                    {icon && <img className={cx("icon")} src={icon} />}
+                    {icon && <img className={cx("icon")} src={icon} alt="icon" />}
                     <div className={cx("text")}>{title}</div>
                 </div>
             )}
             <div className={cx("col_content")}>
                 <div className={cx("col_left")}>
                     {data.map(item => (
-                        <div
+                        typeof item.title === "string" && item.title !== ""
+                        && <div
                             key={item.id}
                             className={cx("title", item.isActive && "active")}
                         >
@@ -48,7 +49,7 @@ export const BlockDetail = ({
                             ? <div key={item.id} className={cx("value", item.isActive && "active")}>{item.value}</div>
                             : item.value?.map((item, index) => (
                                 <div className={cx("value")} key={index}>
-                                    <img src={item.icon} />
+                                    <img src={item.icon} alt="icon" />
                                     <p>{item.title}</p>
                                 </div>
                             )))

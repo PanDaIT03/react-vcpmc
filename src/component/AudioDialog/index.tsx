@@ -12,68 +12,99 @@ const cx = classNames.bind(styles);
 
 interface AudioDialogProps {
     source: string
-    visible: boolean
     setVisible: Dispatch<SetStateAction<boolean>>
     className?: string
 };
 
 const backgroundURL =
-    "https://res.cloudinary.com/dis180ycw/image/upload/c_scale,w_452/v1701317096/pexels-daniel-reche-3721941_n2uhdn.jpg"
+    "https://res.cloudinary.com/dis180ycw/image/upload/c_scale,w_452/v1701317096/pexels-daniel-reche-3721941_n2uhdn.jpg";
+const backgroundFullScreenURL =
+    "https://res.cloudinary.com/dis180ycw/image/upload/c_scale,w_1920/v1701317096/pexels-daniel-reche-3721941_n2uhdn.jpg";
 
-export const AudioDialog = memo(({ source, visible, setVisible, className }: AudioDialogProps) => {
+export const AudioDialog = memo(({ source, setVisible, className }: AudioDialogProps) => {
     if (!className) className = "";
 
-    const classes = cx("wrapper", visible && "active", {
+    const classes = cx("wrapper", {
         [className]: className
     });
 
     const audioRef = useRef<HTMLAudioElement>(null);
     const inputRef = useRef<HTMLInputElement>(null);
+    const containerRef = useRef<HTMLDivElement>(null);
+    const progressRef = useRef<HTMLDivElement>(null);
 
-    const [play, setPlay] = useState(false);
-    const [inputValue, setInputValue] = useState(0);
-    const [currentTime, setCurrentTime] = useState(0);
+    const [isPlaying, setAudioPlaying] = useState(false);
+    const [isFullScreen, setIsFullScreen] = useState(false);
     const [muted, setMuted] = useState(false);
+    const [currentTime, setCurrentTime] = useState(0);
+    const [rewind, setRewind] = useState(0);
 
     useEffect(() => {
-        if (!play)
+        if (!isPlaying)
             audioRef.current?.pause();
         else
             audioRef.current?.play();
-    }, [play]);
+    }, [isPlaying]);
 
     useEffect(() => {
-        setInputValue(currentTime);
-    }, [currentTime]);
+        if (audioRef.current) {
+            audioRef.current.currentTime = rewind;
+            setAudioPlaying(true);
+        }
+    }, [rewind]);
+
+    useEffect(() => {
+        let bgURL;
+        if (isFullScreen) {
+            containerRef.current?.requestFullscreen();
+            bgURL = backgroundFullScreenURL;
+        } else {
+            document.fullscreenElement && document.exitFullscreen();
+            bgURL = backgroundURL;
+        };
+
+        containerRef.current?.setAttribute('style', `
+            background: url(${bgURL});
+            background-position-y: 50%;
+        `);
+    }, [isFullScreen]);
+
+    const handleClickFullScreen = () => {
+        const current = document.fullscreenElement;
+        setIsFullScreen(current ? false : true);
+    };
 
     return (
         <div className={classes}>
             <div
                 className={cx("content")}
                 style={{ background: `url(${backgroundURL})` }}
+                ref={containerRef}
             >
                 <audio
+                    autoPlay
+                    src={source}
                     muted={muted}
                     ref={audioRef}
-                    autoPlay
+                    // controls
+                    onPlay={() => setAudioPlaying(true)}
                     onTimeUpdate={() => setCurrentTime(audioRef.current?.currentTime || 0)}
-                >
-                    <source src={source} type="audio/mpeg" />
-                </audio>
+                />
                 <div className="actions">
                     <div className={cx("action-top")}>
                         <img
                             src={images.xCircle}
                             onClick={() => setVisible(false)}
+                            alt="x-icon"
                         />
                     </div>
                     <div className={cx("action-bottom")}>
                         <div className={cx("action-left")}>
                             <div
                                 className={cx("play-pause")}
-                                onClick={() => setPlay(!play)}
+                                onClick={() => setAudioPlaying(!isPlaying)}
                             >
-                                {play
+                                {isPlaying
                                     ? <FontAwesomeIcon icon={faPlay} />
                                     : <FontAwesomeIcon icon={faPause} />
                                 }
@@ -97,21 +128,25 @@ export const AudioDialog = memo(({ source, visible, setVisible, className }: Aud
                             </div>
                         </div>
                         <div className={cx("action-right")}>
-                            <img src={images.maximize} />
+                            <img
+                                src={images.maximize}
+                                alt="maximize-icon"
+                                onClick={() => handleClickFullScreen()}
+                            />
                         </div>
                     </div>
                 </div>
-                <div className={cx("progress")}>
+                <div className={cx("progress")} ref={progressRef}>
                     <Input
                         type="range"
                         name="progess"
-                        value={inputValue}
                         size="custom"
+                        value={currentTime}
                         inputRef={inputRef}
                         min={0}
-                        max={audioRef.current?.duration}
+                        max={audioRef.current?.duration || 0}
                         steps={1}
-                        onChange={(event) => setCurrentTime(parseInt(event.target.value))}
+                        onChange={(event) => setRewind(parseInt(event.target.value))}
                     />
                 </div>
             </div>

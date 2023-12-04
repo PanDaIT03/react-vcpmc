@@ -1,0 +1,47 @@
+.wrapper {
+  color: var(--text-stroke-text-and-stroke);
+  background: var(--bg-lightest);
+  border-radius: 1.6rem;
+  display: flex;
+  opacity: 0;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  position: fixed;
+  pointer-events: none;
+  transition: all 0.2s linear;
+}
+
+.active {
+  top: 50%;
+  opacity: 1;
+  pointer-events: all;
+}
+
+.primary {
+  padding: 1.7rem 1.4rem 1.6rem 1.4rem;
+}
+
+// Size
+.custom {
+  width: max-content;
+}
+
+// Align
+.vertical {
+  align-items: center;
+}
+
+.horizontal {
+  justify-content: center;
+}
+
+.all {
+  align-items: center;
+  justify-content: center;
+}
+
+.not-aligned {
+  align-items: unset;
+  justify-content: unset;
+}

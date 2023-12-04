@@ -8,6 +8,7 @@ export type IRecord = {
     author: string
     categoriesId: string
     contractId: string
+    contractStatus: string
     createdBy: string
     createdDate: string
     format: string

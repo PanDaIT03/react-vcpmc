@@ -36,5 +36,8 @@ export const images = {
     play: require('./images/fi_play.png'),
     volume1: require('./images/fi_volume-1.png'),
     maximize: require('./images/fi_maximize.png'),
+    check: require('./images/fi_check.png'),
+    force: require('./images/icon_force.png'),
+    cloudUpload: require('./images/u_cloud-upload.png'),
     // aaaa: require('./images/aaaa.png'),
 };

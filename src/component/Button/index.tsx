@@ -12,10 +12,11 @@ interface IButtonProps {
     fill?: boolean
     className?: string
     buttonType?: "button" | "submit"
-    size?: "small" | "medium" | "large" | "extra large"
+    size?: "small" | "medium" | "large" | "extra large" | "custom"
     leftIcon?: React.ReactNode
     rightIcon?: React.ReactNode
     loading?: boolean
+    buttonref?: any
     onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void
 }
 
@@ -29,11 +30,13 @@ function Button({
     className,
     buttonType = "button",
     loading = false,
-    onClick
+    onClick,
+    ...passProps
 }: IButtonProps) {
     const props = {
         onClick,
         type: buttonType,
+        ...passProps
     };
 
     if (!className) className = "";

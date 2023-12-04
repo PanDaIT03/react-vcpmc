@@ -1,5 +1,5 @@
 import classNames from "classnames/bind";
-import { memo, useEffect, useState } from "react";
+import { ReactNode, memo, useEffect, useState } from "react";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 
 import styles from "~/sass/Input.module.scss";
@@ -8,18 +8,19 @@ const cx = classNames.bind(styles);
 interface InputProps {
     id?: string
     name: string
-    value: string | number
+    value?: string | number
     title?: string
+    checked?: boolean
     placeholder?: string
     className?: string
     errorMessage?: string
-    min?: number
-    max?: number
+    min?: any
+    max?: any
     steps?: number
     iconLeft?: string //path
     iconRight?: string //path
     status?: "disable" | "editable"
-    type?: "text" | "password" | "number" | "date" | "range"
+    type?: "text" | "password" | "number" | "date" | "range" | "checkbox"
     size?: "small" | "medium" | "large" | "extra-large" | "custom"
     onBlur?: any
     onFocus?: any
@@ -28,6 +29,7 @@ interface InputProps {
     readOnly?: boolean
     iconLeftAwesome?: IconProp
     iconRightAwesome?: IconProp
+    children?: ReactNode
     onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
     onIconLeftClick?: (event: React.MouseEvent<HTMLImageElement>) => void
     onIconRightClick?: (event: React.MouseEvent<HTMLImageElement>) => void
@@ -50,6 +52,7 @@ export const Input = memo(({
     iconRightAwesome,
     onBlur,
     inputRef,
+    children,
     onChange,
     onIconLeftClick,
     onIconRightClick,
@@ -107,6 +110,7 @@ export const Input = memo(({
                         onClick={iconLeft ? onIconLeftClick : onIconRightClick}
                     />
                 }
+                {children}
             </div>
         </div>
     );
