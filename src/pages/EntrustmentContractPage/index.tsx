@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 
 import { Input } from "~/component/Input";
 import { Table } from "~/component/Table";
-import { validityContract } from "~/constants";
 import { ActionBar } from "~/component/ActionBar";
 import { ActionBarItem } from "~/component/ActionBar/ActionBarItem";
 import { RootState, useAppDispatch } from "~/state";

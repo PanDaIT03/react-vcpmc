@@ -10,7 +10,6 @@ interface DialogProps {
     visible: boolean
     className?: string
     children: ReactNode
-    setVisible: Dispatch<SetStateAction<boolean>>
     alignCenter?: "vertical" | "horizontal" | "all" | "not-aligned"
 };
 
@@ -20,22 +19,24 @@ export const Dialog = memo(({
     visible,
     className,
     children,
-    alignCenter
+    alignCenter,
+    ...passProps
 }: DialogProps) => {
     if (!className) className = "";
     if (!size) size = "custom";
     if (!alignCenter) alignCenter = "not-aligned";
 
-    const classes = cx("wrapper", visible && "active", {
+    const classes = cx("content", visible && "active", {
         [className]: className,
         [alignCenter]: alignCenter,
-        size,
-        primary,
+        [size]: size
     });
 
     return (
-        <div className={classes}>
-            {visible && children}
+        <div className={cx("wrapper")}>
+            <div className={classes}>
+                {children}
+            </div>
         </div>
     );
 });

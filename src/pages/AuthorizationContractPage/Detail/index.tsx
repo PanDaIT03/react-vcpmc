@@ -12,7 +12,10 @@ import { ActionBar } from "~/component/ActionBar";
 import { ActionBarItem } from "~/component/ActionBar/ActionBarItem";
 import { CancleForm } from "~/component/CancelForm";
 import { Tab, Tabs } from "~/component/Tabs";
+import { RenewalAuthorization } from "~/component/RenewalAuthorization";
+import { Dialog } from "~/component/Dialog";
 import { images } from "~/assets";
+import { CAPABILITY } from "~/constants";
 
 import styles from "~/sass/Detail.module.scss";
 const cx = classNames.bind(styles);
@@ -24,13 +27,16 @@ export const Detail = () => {
     const params = useParams();
     const { contractCode } = params;
 
+    const [renewalVisible, setRenewalVisible] = useState(false);
     const [visible, setVisible] = useState(false);
+
     const [cancleArea, setCancleArea] = useState('');
 
     const [contractDetail, setContractDetail] = useState<(IContract & IUserDetail)>(initialState);
     const contractState = useSelector((state: RootState) => state.contract);
-    const { contracts } = contractState;
+    const { contracts, status } = contractState;
 
+    const [ownerShip, setOwnerShip] = useState<IGlobalConstantsType[]>([]);
     const [basicInfo, setBasicInfo] = useState<IGlobalConstantsType[]>([]);
     const [fileAttach, setFileAttach] = useState<IGlobalConstantsType[]>([]);
     const [copyRight, setCopyRight] = useState<IGlobalConstantsType[]>([]);
@@ -43,17 +49,20 @@ export const Detail = () => {
     const secondRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
+        if (contracts.length <= 0) {
+            navigate("/contract-management");
+            return;
+        };
+
+        if (status === "get successfully")
+            setRenewalVisible(false);
+
         const contract = contracts.find(item => {
             return contractCode === item.contractCode;
         });
 
         setContractDetail(contract || initialState);
     }, [contractState]);
-
-    useEffect(() => {
-        if (contracts.length <= 0)
-            navigate("/contract-management");
-    }, [contracts]);
 
     useEffect(() => {
         setBasicInfo([
@@ -218,8 +227,34 @@ export const Detail = () => {
         ]);
     }, [contractDetail]);
 
+    useEffect(() => {
+        setOwnerShip([]);
+    }, [renewalVisible]);
+
     const handleCancleContract = () => {
         console.log(cancleArea);
+    };
+
+    const handleClick = () => {
+        setRenewalVisible(true);
+
+        if (typeof contractDetail.ownerShips === "string") {
+            setOwnerShip(() => CAPABILITY.filter(item => item.title.toLowerCase().includes(contractDetail.ownerShips.toString().toLowerCase())))
+        } else {
+            let result: IGlobalConstantsType[] = contractDetail.ownerShips.map(item => {
+                let itemCAPABILITY = CAPABILITY.find(i => i.title.toLowerCase().includes(item.toLowerCase()));
+                if (typeof itemCAPABILITY !== 'undefined')
+                    return {
+                        id: itemCAPABILITY.id,
+                        title: itemCAPABILITY.title
+                    };
+                else return {
+                    id: 0,
+                    title: ''
+                };
+            });
+            setOwnerShip(result);
+        };
     };
 
     return (
@@ -268,6 +303,7 @@ export const Detail = () => {
                     <ActionBarItem
                         title="Gia hạn hợp đồng"
                         icon={images.clipboardNotes}
+                        onClick={handleClick}
                     />
                     <ActionBarItem
                         title="Huỷ hợp đồng"
@@ -278,28 +314,44 @@ export const Detail = () => {
                         }}
                     />
                 </ActionBar>
-                <CancleForm
-                    name="cancelContract"
-                    title="Hủy hợp đồng uỷ quyền"
-                    placeholder="Cho chúng tôi biết lý do bạn muốn huỷ hợp đồng uỷ quyền này..."
-                    status={visible ? "active" : "inactive"}
-                    textareaRef={textAreaRef}
-                    onChange={(event) => setCancleArea(event.target.value)}
+                <Dialog
+                    visible={visible}
+                    className={cx("cancel")}
                 >
-                    <div className={cx("action")}>
-                        <Button
-                            primary
-                            value="Quay lại"
-                            onClick={() => setVisible(false)}
-                        />
-                        <Button
-                            primary
-                            value="Huỷ hợp đồng"
-                            fill
-                            onClick={handleCancleContract}
-                        />
-                    </div>
-                </CancleForm>
+                    <CancleForm
+                        name="cancelContract"
+                        title="Hủy hợp đồng uỷ quyền"
+                        placeholder="Cho chúng tôi biết lý do bạn muốn huỷ hợp đồng uỷ quyền này..."
+                        textareaRef={textAreaRef}
+                        onChange={(event) => setCancleArea(event.target.value)}
+                    >
+                        <div className={cx("action")}>
+                            <Button
+                                primary
+                                value="Quay lại"
+                                onClick={() => setVisible(false)}
+                            />
+                            <Button
+                                primary
+                                value="Huỷ hợp đồng"
+                                fill
+                                onClick={handleCancleContract}
+                            />
+                        </div>
+                    </CancleForm>
+                </Dialog>
+                <Dialog
+                    visible={renewalVisible}
+                    className={cx("renewal")}
+                >
+                    <RenewalAuthorization
+                        title="Gia hạn uỷ quyền tác phẩm"
+                        from={contractDetail.expirationDate}
+                        ownerShips={ownerShip}
+                        contractId={contractDetail.docId}
+                        setVisible={setRenewalVisible}
+                    />
+                </Dialog>
             </Contract>
         </div>
     );

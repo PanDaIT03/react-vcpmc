@@ -81,15 +81,16 @@ export const AudioDialog = memo(({ source, setVisible, className }: AudioDialogP
                 style={{ background: `url(${backgroundURL})` }}
                 ref={containerRef}
             >
-                <audio
-                    autoPlay
-                    src={source}
-                    muted={muted}
-                    ref={audioRef}
-                    // controls
-                    onPlay={() => setAudioPlaying(true)}
-                    onTimeUpdate={() => setCurrentTime(audioRef.current?.currentTime || 0)}
-                />
+                {source !== ""
+                    && <audio
+                        autoPlay
+                        src={source}
+                        muted={muted}
+                        ref={audioRef}
+                        // controls
+                        onPlay={() => setAudioPlaying(true)}
+                        onTimeUpdate={() => setCurrentTime(audioRef.current?.currentTime || 0)}
+                    />}
                 <div className="actions">
                     <div className={cx("action-top")}>
                         <img

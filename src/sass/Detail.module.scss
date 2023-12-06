@@ -1,27 +1,38 @@
 .wrapper {
-    .content {
-        width: 150rem;
-        margin-top: 4rem;
-    }
+  .content {
+    width: 150rem;
+    margin-top: 4rem;
+  }
 }
 
 .col-top,
 .col-bottom {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 
-    .col {
-        display: flex;
-        align-items: flex-start;
-    }
+  .col {
+    display: flex;
+    align-items: flex-start;
+  }
 }
 
 .col-bottom {
-    margin-top: 16.4rem;
+  margin-top: 16.4rem;
 }
 
 .action {
-    button+button {
-        margin-left: 3.2rem;
-    }
+  button + button {
+    margin-left: 3.2rem;
+  }
+}
+
+.renewal {
+  width: 90.8rem;
+  height: 62.3rem;
+  padding: 4rem 3.2rem;
+}
+
+.cancel {
+  width: 72rem;
+  padding: 3.2rem 4rem 3.7rem 4rem;
 }

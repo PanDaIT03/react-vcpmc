@@ -13,6 +13,10 @@
     background-color: var(--blue);
   }
 
+  label {
+    user-select: none;
+  }
+
   p {
     width: max-content;
   }

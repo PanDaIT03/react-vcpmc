@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 import { approvalRecords, getCategories, getRecords } from "~/api/record";
-import { ICategory, IRecord } from "~/types";
+import { IRecord } from "~/types";
 
 interface IRecords {
   records: IRecord[];
@@ -27,11 +27,11 @@ export const getRecordsAction = createAsyncThunk(
 export const updateRecordsAction = createAsyncThunk(
   "record/updateRecords",
   async ({ records, status, contractId }: IRecords, thunkAPI) => {
-    if (records && contractId) {
+    if (records && contractId)
       records.map(async (record) => {
-        await approvalRecords(record.docId, status);
+        await approvalRecords(record.docId, status).then(
+          async () => await thunkAPI.dispatch(getRecordsAction(contractId))
+        );
       });
-    }
-    await thunkAPI.dispatch(getRecordsAction(contractId));
   }
 );

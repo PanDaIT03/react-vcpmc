@@ -1,5 +1,6 @@
 import { IGlobalConstantsType } from "~/types";
 import { images } from "~/assets";
+import moment from "moment";
 
 const LANGUAGE_ITEMS = [
   {
@@ -164,24 +165,6 @@ const formatDate = (date: Date) => {
   return `${day}/${month}/${yyyy}`;
 };
 
-const validityContract = [
-  {
-    id: 1,
-    icon: images.ellipseEffect,
-    status: "Đang hiệu lực",
-  },
-  {
-    id: 2,
-    icon: images.ellipseExpire,
-    status: "Hết hiệu lực",
-  },
-  {
-    id: 3,
-    icon: images.ellipseCancel,
-    status: "Đã huỷ",
-  },
-];
-
 const CB_OWNER_ITEMS = [
   {
     id: 1,
@@ -246,6 +229,17 @@ const CB_APPROVE_ITEMS = [
   },
 ];
 
+const CAPABILITY = [
+  {
+    id: 1,
+    title: "Quyền của người biểu diễn",
+  },
+  {
+    id: 2,
+    title: "Quyền của nhà sản xuất (bản ghi/video)",
+  },
+];
+
 const handleClickDropDown = (
   item: IGlobalConstantsType,
   data: IGlobalConstantsType[]
@@ -267,18 +261,18 @@ const getCurrentDate = () => {
   return mm + "/" + dd + "/" + yyyy;
 };
 
-const formatDateDMY = (date: Date) => {
-  let yyyy = date.getFullYear();
-  let mm = date.getMonth() + 1;
-  let dd = date.getDate();
-  let day = `${dd}`,
-    month = `${mm}`;
+// const formatDateDMY = (date: Date) => {
+//   let yyyy = date.getFullYear();
+//   let mm = date.getMonth() + 1;
+//   let dd = date.getDate();
+//   let day = `${dd}`,
+//     month = `${mm}`;
 
-  if (dd < 10) day = `0${dd}`;
-  if (mm < 10) month = `0${mm}`;
+//   if (dd < 10) day = `0${dd}`;
+//   if (mm < 10) month = `0${mm}`;
 
-  return `${day}/${month}/${yyyy}`;
-};
+//   return `${day}/${month}/${yyyy}`;
+// };
 
 const formatDateMDY = (date: string) => {
   let dateList = date.split("/");
@@ -286,12 +280,19 @@ const formatDateMDY = (date: string) => {
   return dateList[1] + "/" + dateList[0] + "/" + dateList[2];
 };
 
-const formatToLocalStringCurrentDate = () => {
-  let date = new Date();
+// const formatToLocalStringCurrentDate = () => {
+//   let date = new Date();
 
-  return `${formatDateDMY(
-    date
-  )} - ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+//   return `${formatDateDMY(
+//     date
+//   )} - ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+// };
+
+const formatDateYMD = (date: string) => {
+  if (typeof date === "undefined" || date === "") return;
+  let dateList = date.split("/");
+
+  return dateList[2] + "-" + dateList[1] + "-" + dateList[0];
 };
 
 const formatTime = (time: number) => {
@@ -303,15 +304,40 @@ const formatTime = (time: number) => {
   return `${minutes}:${secondsReadable}`;
 };
 
+const formatDateDMY = (date: string) => {
+  if (typeof date === "undefined" || date === "") return;
+  let dateList = date.split("-");
+
+  return dateList[2] + "/" + dateList[1] + "/" + dateList[0];
+};
+
+const theFollowingDays = (date: string, next: number) => {
+  if (typeof date === "undefined" || date === "") return;
+  let today = moment(date, "DD/MM/YYYY");
+  return today.add(next, "days").format("DD/MM/YYYY").toString();
+};
+
+const regexOnlyNumer = (value: string) => {
+  const re = /^[0-9\b]+$/,
+    regex = /^[1-9]?[0-9]{1}$|^100$/;
+
+  if (value === "" || (re.test(value) && regex.test(value))) return true;
+  else return false;
+};
+
 export {
   formatDate,
   formatTime,
   handleClickDropDown,
-  validityContract,
+  theFollowingDays,
+  formatDateYMD,
+  formatDateDMY,
+  regexOnlyNumer,
   LANGUAGE_ITEMS,
   SIDEBAR_ITEMS,
   ACTION_INFO_USER,
-  CB_OWNER_ITEMS,
   VALIDITY_CONTRACT_ITEMS,
+  CAPABILITY,
+  CB_OWNER_ITEMS,
   CB_APPROVE_ITEMS,
 };

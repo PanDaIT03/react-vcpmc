@@ -10,7 +10,7 @@ interface LoadingProps {
     className?: string
 };
 
-export const Loading = ({ loading, className }: LoadingProps) => {
+export const Loading = ({ className }: LoadingProps) => {
     if (!className) className = "";
 
     const classes = cx("loading", {
@@ -23,5 +23,5 @@ export const Loading = ({ loading, className }: LoadingProps) => {
                 <FontAwesomeIcon icon={faCircleNotch} spin />
             </div>
         </div>
-    )
+    );
 };

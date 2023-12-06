@@ -46,6 +46,7 @@ const SidebarItem = ({
 
     useEffect(() => {
         setCurrentPage(4);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (
@@ -57,12 +58,12 @@ const SidebarItem = ({
         >
             {currentPage === id && <div className={cx("active")}></div>}
             <div className={cx("sidebar-item")}>
-                <img src={icon} className={cx("menu-icon")} />
+                <img src={icon} className={cx("menu-icon")} alt="menuIcon" />
                 <p className={cx("title")}>{title}</p>
             </div>
             {data && <div className={cx("popup-item")}>
                 <p className={cx("ellipsis")}>
-                    <img src={images.ellipsisV} />
+                    <img src={images.ellipsisV} alt="ellipsisIcon" />
                 </p>
                 <Dropdown
                     items={data}
@@ -80,6 +81,7 @@ export const Sidebar = ({ sidebarRef, onClick }: SidebarProps) => {
 
     const handleClickOption = useCallback((item: IGlobalConstantsType) => {
         item.to && navigate(`${item.to}`);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (
@@ -91,7 +93,7 @@ export const Sidebar = ({ sidebarRef, onClick }: SidebarProps) => {
             {active ?
                 <>
                     <div className={cx("logo")}>
-                        <img src={images.logo} />
+                        <img src={images.logo} alt="logo" />
                     </div>
                     <div className={cx("sidebar-items")}>
                         {SIDEBAR_ITEMS.map((item, index) => (
@@ -106,7 +108,7 @@ export const Sidebar = ({ sidebarRef, onClick }: SidebarProps) => {
                         ))}
                     </div>
                 </>
-                : <img src={images.angleRight} />
+                : <img src={images.angleRight} alt="angleRight" />
             }
         </div>
     )

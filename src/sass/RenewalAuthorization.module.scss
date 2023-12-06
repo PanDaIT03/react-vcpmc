@@ -1,7 +1,5 @@
 .wrapper {
-  width: 90.8rem;
-  height: 62.3rem;
-  padding: 4rem 3.2rem;
+  width: 100%;
 
   .title {
     font-size: 2.4rem;
@@ -111,10 +109,11 @@
     color: rgba(0, 0, 0, 0);
     opacity: 1;
     display: block;
-    background: url("../assets//images//u_calendar-alt.png") no-repeat;
+    background: url("../assets//images//u_calendar-alt-orange.png") no-repeat;
     width: 20px;
     height: 20px;
     border-width: thin;
+    cursor: pointer;
   }
 }
 
@@ -124,6 +123,15 @@
     padding: 1.1rem 2.4rem 1.3rem 1.6rem;
     display: flex;
     align-items: center;
+  }
+
+  .inactive input {
+    pointer-events: none;
+    color: var(--text-stroke-text-and-stroke-2);
+  }
+
+  .active {
+    pointer-events: all;
   }
 }
 

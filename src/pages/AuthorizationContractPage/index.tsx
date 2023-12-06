@@ -158,7 +158,7 @@ function AuthorizationContractPage({ }: AuthorizationContractProps) {
                                 {VALIDITY_CONTRACT_ITEMS.map(item => (
                                     item.title === contract.status
                                     && <span className={cx("--center-flex")} key={item.id}>
-                                        <img src={item.icon} />
+                                        <img src={item.icon} alt="icon" />
                                         <p>{item.title}</p>
                                     </span>
                                 ))}

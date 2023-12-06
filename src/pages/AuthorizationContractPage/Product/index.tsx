@@ -10,8 +10,8 @@ import { Contract } from "~/component/Contract";
 import { Input } from "~/component/Input";
 import { OptionMenu } from "~/component/OptionMenu";
 import { Tab, Tabs } from "~/component/Tabs";
-import { CB_APPROVE_ITEMS } from "~/constants";
-import { IGlobalConstantsType, IRecord } from "~/types";
+import { CAPABILITY, CB_APPROVE_ITEMS } from "~/constants";
+import { IContract, IGlobalConstantsType, IRecord, IUserDetail } from "~/types";
 import { Table } from "~/component/Table";
 import { SidebarContext } from "~/context/SidebarContext";
 import { RootState, useAppDispatch } from "~/state";
@@ -29,6 +29,8 @@ const initialState = {
   id: 1,
   title: "Tất cả",
 };
+
+const initialContractState = {} as (IContract & IUserDetail);
 
 interface ProductItemProps {
   data: IRecord[]
@@ -116,8 +118,13 @@ export const Product = () => {
   const [audioSource, setAudioSource] = useState("");
   const [searchValue, setSearchValue] = useState("");
 
+  const [contractDetail, setContractDetail] = useState<(IContract & IUserDetail)>(initialContractState);
   const recordState = useSelector((state: RootState) => state.record);
   const { records, loading } = recordState;
+  const contractState = useSelector((state: RootState) => state.contract);
+  const { contracts, status } = contractState;
+
+  const [ownerShip, setOwnerShip] = useState<IGlobalConstantsType[]>([]);
   const [recordArray, setRecordArray] = useState<IRecord[]>([] as IRecord[]);
   const [editRecords, setEditRecords] = useState<IRecord[]>([] as IRecord[]);
   const [searchResult, setSearchResult] = useState<IRecord[]>([] as IRecord[]);
@@ -131,8 +138,23 @@ export const Product = () => {
   }, []);
 
   useEffect(() => {
-    console.log(records);
+    if (contracts.length <= 0) {
+      navigate("/contract-management");
+      return;
+    };
 
+    if (status === "get successfully")
+      setRenewalVisible(false);
+
+    const contract = contracts.find(item => {
+      return contractCode === item.contractCode;
+    });
+
+    setContractDetail(contract || initialContractState);
+  }, [contractState]);
+
+
+  useEffect(() => {
     setSearchResult(records);
   }, [records]);
 
@@ -157,6 +179,10 @@ export const Product = () => {
       setIsCheckedAll(false);
     };
   }, [approve]);
+
+  useEffect(() => {
+    !audioVisible && setAudioSource("");
+  }, [audioVisible]);
 
   const handleCheckBox = (record: IRecord, isChecked: boolean) => {
     !isChecked
@@ -196,7 +222,35 @@ export const Product = () => {
     };
   }, [searchValue, approveOption]);
 
+  useEffect(() => {
+    setOwnerShip([]);
+  }, [renewalVisible]);
+
+  const handleClick = () => {
+    setRenewalVisible(true);
+
+    if (typeof contractDetail.ownerShips === "string") {
+      setOwnerShip(() => CAPABILITY.filter(item => item.title.toLowerCase().includes(contractDetail.ownerShips.toString().toLowerCase())))
+    } else {
+      let result: IGlobalConstantsType[] = contractDetail.ownerShips.map(item => {
+        let itemCAPABILITY = CAPABILITY.find(i => i.title.toLowerCase().includes(item.toLowerCase()));
+        if (typeof itemCAPABILITY !== 'undefined')
+          return {
+            id: itemCAPABILITY.id,
+            title: itemCAPABILITY.title
+          };
+        else return {
+          id: 0,
+          title: ''
+        };
+      });
+      setOwnerShip(result);
+    };
+  };
+
   const handleClickApproval = (status: string) => {
+    console.log(status, recordArray);
+
     dispatch(updateRecordsAction({ records: recordArray, status: status, contractId: contractId || "" }));
     setApprove(false);
   };
@@ -281,7 +335,7 @@ export const Product = () => {
               <ActionBarItem
                 title="Gia hạn hợp đồng"
                 icon={images.clipboardNotes}
-                onClick={() => setRenewalVisible(true)}
+                onClick={handleClick}
               />
               <ActionBarItem title="Huỷ hợp đồng" icon={images.history} />
               <ActionBarItem title="Thêm bản ghi" icon={images.uPlus} />
@@ -292,7 +346,7 @@ export const Product = () => {
         <Dialog
           primary
           visible={audioVisible}
-          setVisible={setAudioVisible}
+          className={cx("audio")}
           alignCenter="all"
         >
           <AudioDialog
@@ -303,11 +357,12 @@ export const Product = () => {
         <Dialog
           visible={renewalVisible}
           className={cx("renewal")}
-          setVisible={setRenewalVisible}
         >
           <RenewalAuthorization
             title="Gia hạn uỷ quyền tác phẩm"
-            from="02/12/2023"
+            from={contractDetail.expirationDate}
+            ownerShips={ownerShip}
+            contractId={contractDetail.docId}
             setVisible={setRenewalVisible}
           />
         </Dialog>
