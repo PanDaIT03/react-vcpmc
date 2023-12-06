@@ -1,0 +1,55 @@
+.wrapper {
+    .title {
+        color: var(--white);
+        font-size: 3.6rem;
+        font-weight: 700;
+        line-height: 4.8rem;
+        letter-spacing: -0.072px;
+        margin: 2rem 0;
+    }
+}
+
+// form types
+.form-error {
+    .title {
+        color: var(--red);
+    }
+}
+
+.form-change-password {
+    width: 55.2rem;
+    height: 51.2rem;
+    padding: 3.2rem 4rem;
+    border-radius: 1.6rem;
+    background-color: var(--bg-lightest);
+
+    input {
+        background-color: var(--bg-lighter);
+    }
+}
+
+// type
+.dialog {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+// visible
+.visible,
+.invisible {
+    transition: all .2s linear;
+}
+
+.invisible {
+    top: 55%;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.visible {
+    top: 50%;
+    opacity: 1;
+    pointer-events: all;
+}
