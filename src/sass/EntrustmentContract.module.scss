@@ -1,0 +1,89 @@
+.search {
+    width: 41.8rem;
+    margin-top: 2.4rem;
+}
+
+// Table
+.contract_title,
+.contract_item {
+    display: flex;
+    height: 4.8rem;
+    font-size: 1.4rem;
+    font-weight: 400;
+    line-height: 2rem;
+}
+
+.title {
+    color: var(--orange-3);
+    display: flex;
+    align-items: flex-start;
+    align-self: stretch;
+    letter-spacing: 0.028px;
+}
+
+.content {
+    color: var(--white);
+    display: flex;
+    align-items: center;
+    letter-spacing: 0.21px;
+}
+
+.contract_item {
+    cursor: pointer;
+
+    .numerical-order {
+        display: flex;
+        justify-content: center;
+    }
+
+    .action-detail,
+    .action-copy {
+        font-size: 1.2rem;
+        color: var(--orange-4-default);
+        display: flex;
+        justify-content: center;
+        text-decoration-line: underline;
+        cursor: pointer;
+        letter-spacing: -0.024px;
+    }
+
+    &:hover {
+        background-color: var(--white-transparent);
+    }
+}
+
+.contract_title,
+.contract_item {
+    .numerical-order {
+        width: 8rem;
+        padding: .8rem 0 .8rem .8rem;
+    }
+
+    .customer {
+        width: 26.4rem;
+        padding: .8rem 0;
+    }
+
+    .contract-code,
+    .date-created,
+    .effective-date,
+    .expiration-date,
+    .validity-contract {
+        width: 15.8rem;
+        padding: .8rem .8rem .8rem 0;
+    }
+
+    .validity-contract {
+        img {
+            margin-right: .5rem;
+        }
+    }
+
+    .action-detail {
+        width: 19.3rem;
+    }
+
+    .action-copy {
+        width: 15.8rem;
+    }
+}

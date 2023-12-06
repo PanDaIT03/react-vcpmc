@@ -1,0 +1,169 @@
+.wrapper {
+  width: 100%;
+
+  .title {
+    font-size: 2.4rem;
+    text-align: center;
+    letter-spacing: -0.048px;
+  }
+}
+
+.content {
+  margin-top: 4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+
+  .content_top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+}
+
+.right,
+.left {
+  display: flex;
+  flex-direction: column;
+  color: var(--white);
+  font-size: 1.6rem;
+  font-weight: 400;
+  letter-spacing: -0.032px;
+
+  .left_title,
+  .right_title {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+
+    h3 {
+      font-size: 1.6rem;
+      letter-spacing: -0.032px;
+    }
+  }
+}
+
+.left {
+  gap: 1.6rem;
+
+  .to {
+    display: flex;
+    gap: 0.8rem;
+    align-items: center;
+  }
+
+  .note {
+    width: 26.7rem;
+    color: var(--orange-2);
+    font-size: 1.2rem;
+    font-weight: 400;
+    line-height: 1.8rem;
+    opacity: 0.5;
+  }
+}
+
+.right {
+  width: 38.3rem;
+
+  .content_row {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+
+  .items {
+    align-items: unset;
+    flex-direction: column;
+  }
+}
+
+.item {
+  margin-left: 2.4rem;
+  display: flex;
+  align-items: center;
+
+  .line {
+    margin-right: 0.7rem;
+    width: 0.1rem;
+    height: 10.1rem;
+    opacity: 0.5;
+    background: #727288;
+  }
+}
+
+.calendar-picker {
+  width: 15.5rem;
+  color: var(--text-stroke-text-and-stroke);
+  font-size: 1.6rem;
+  font-weight: 400;
+  letter-spacing: -0.032px;
+
+  input {
+    display: flex;
+    padding: 1.1rem 1.6rem 1.3rem 1.6rem;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    color: rgba(0, 0, 0, 0);
+    opacity: 1;
+    display: block;
+    background: url("../assets//images//u_calendar-alt-orange.png") no-repeat;
+    width: 20px;
+    height: 20px;
+    border-width: thin;
+    cursor: pointer;
+  }
+}
+
+.author {
+  input {
+    width: 6.4rem;
+    padding: 1.1rem 2.4rem 1.3rem 1.6rem;
+    display: flex;
+    align-items: center;
+  }
+
+  .inactive input {
+    pointer-events: none;
+    color: var(--text-stroke-text-and-stroke-2);
+  }
+
+  .active {
+    pointer-events: all;
+  }
+}
+
+.content_bottom {
+  display: flex;
+  gap: 1.2rem;
+
+  .content_bottom_left {
+    margin-top: 0.8rem;
+  }
+
+  .content_bottom_right {
+    display: flex;
+    flex-direction: column;
+    gap: 1.6rem;
+  }
+
+  .title h3 {
+    color: var(--White, #fff);
+    font-size: 1.6rem;
+    letter-spacing: -0.032px;
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.actions {
+  margin-top: 4rem;
+  display: flex;
+  gap: 3.2rem;
+  justify-content: center;
+}
