@@ -7,7 +7,7 @@ import {
   updateDoc,
 } from "firebase/firestore";
 
-import { fireStoreDatabase } from "~/firebase-config";
+import { fireStoreDatabase } from "~/config/firebase";
 import { IContract } from "~/types";
 
 export const getContracts = async () => {
@@ -31,6 +31,7 @@ export const getContracts = async () => {
       effectiveDate: doc.data().effectiveDate,
       expirationDate: doc.data().expirationDate,
       ownerShips: doc.data().ownerShips,
+      reason: doc.data().reason,
       status: doc.data().status,
     };
   });
@@ -46,9 +47,24 @@ export const editContract = async (
   const collectionRef = collection(fireStoreDatabase, "contract");
   const updateExpire = {
     expirationDate: toDate,
-    status: status
+    status: status,
   };
 
   const contractRef = doc(collectionRef, id);
   await updateDoc(contractRef, updateExpire);
+};
+
+export const cancleContract = async (
+  id: string,
+  reason: string,
+  status: string
+) => {
+  const collectionRef = collection(fireStoreDatabase, "contract");
+  const cancleContract = {
+    reason: reason,
+    status: status
+  };
+
+  const contractRef = doc(collectionRef, id);
+  await updateDoc(contractRef, cancleContract);
 };

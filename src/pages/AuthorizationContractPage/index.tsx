@@ -3,36 +3,40 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
-import { Table } from "~/component/Table";
-import { Input } from "~/component/Input";
-import { ActionBar } from "~/component/ActionBar";
-import { OptionMenu } from "~/component/OptionMenu";
+import Button from "~/components/Button";
+import { Table } from "~/components/Table";
+import { Input } from "~/components/Input";
+import { ActionBar } from "~/components/ActionBar";
+import { OptionMenu } from "~/components/OptionMenu";
 import { IContract, IGlobalConstantsType, IUserDetail } from "~/types";
 import { CB_OWNER_ITEMS, VALIDITY_CONTRACT_ITEMS } from "~/constants";
-import { ActionBarItem } from "~/component/ActionBar/ActionBarItem";
+import { ActionBarItem } from "~/components/ActionBar/ActionBarItem";
 import { RootState, useAppDispatch } from "~/state";
 import { getContractsAction } from "~/state/thunk/contract";
 import { images } from "~/assets";
+import { Dialog } from "~/components/Dialog";
+import { CancleForm } from "~/components/CancelForm";
 
-import styles from "~/sass/AuthorizationContractPage.module.scss";
+import styles from "~/sass/AuthorizationContract.module.scss";
 const cx = classNames.bind(styles);
-
-interface AuthorizationContractProps { };
 
 const initialState = {
     id: 1,
     title: "Tất cả"
 };
 
-function AuthorizationContractPage({ }: AuthorizationContractProps) {
+function AuthorizationContractPage() {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
 
+    const [visible, setVisible] = useState(false);
+    const [searchValue, setSearchValue] = useState('');
     const [ownership, setOwnerShip] = useState<IGlobalConstantsType>(initialState);
     const [validity, setValidity] = useState<IGlobalConstantsType>(initialState);
-    const [searchValue, setSearchValue] = useState('');
     const [searchResult, setSearchResult] = useState<(IContract & IUserDetail)[]>([]);
 
+    const [contractId, setContractId] = useState('');
+    const [contractReason, setContractReason] = useState('');
     const contractState = useSelector((state: RootState) => state.contract);
     const { contracts, loading } = contractState;
 
@@ -49,6 +53,10 @@ function AuthorizationContractPage({ }: AuthorizationContractProps) {
     useEffect(() => {
         setSearchResult(contracts);
     }, [contractState]);
+
+    useEffect(() => {
+        contractId !== '' && setVisible(true);
+    }, [contractId]);
 
     useEffect(() => {
         const ownershipValue = ownership.title;
@@ -166,20 +174,52 @@ function AuthorizationContractPage({ }: AuthorizationContractProps) {
                             <td className={cx("date-created", "content")}>{contract.dateCreated}</td>
                             <td
                                 className={cx("action-detail", "content")}
-                                onClick={() => navigate(`/contract-management/authorization-contract/${contract.contractCode}`)}
+                                onClick={() => navigate(`/contract-management/detail/${contract.contractCode}`)}
                             >
                                 Xem chi tiết
                             </td>
                             {contract.status === "Đã huỷ"
-                                && <td className={cx("reason", "content")}>Lý do huỷ</td>
+                                && <td
+                                    className={cx("reason", "content")}
+                                    onClick={() => {
+                                        setContractId(contract.contractCode);
+                                        setContractReason(contract.reason);
+                                    }}
+                                >
+                                    Lý do huỷ
+                                </td>
                             }
                         </tr>
                     ))}
                 </tbody>
             </Table>
             <ActionBar visible={true}>
-                <ActionBarItem title="Thêm hợp đồng" icon={images.uPlus} />
+                <ActionBarItem
+                    title="Thêm hợp đồng"
+                    icon={images.uPlus}
+                // onClick={()}
+                />
             </ActionBar>
+            <Dialog
+                visible={visible}
+                className={cx("cancel")}
+            >
+                <CancleForm
+                    id="cancelContract"
+                    name="cancelContract"
+                    title={`Lý do hủy hợp đồng uỷ quyền ${contractId}`}
+                    value={contractReason}
+                >
+                    <div className={cx("action")}>
+                        <Button
+                            primary
+                            fill
+                            value="Đóng"
+                            onClick={() => setVisible(false)}
+                        />
+                    </div>
+                </CancleForm>
+            </Dialog>
         </div>
     );
 };

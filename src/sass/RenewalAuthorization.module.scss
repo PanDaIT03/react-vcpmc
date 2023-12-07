@@ -104,17 +104,6 @@
     justify-content: space-between;
     align-items: center;
   }
-
-  input[type="date"]::-webkit-calendar-picker-indicator {
-    color: rgba(0, 0, 0, 0);
-    opacity: 1;
-    display: block;
-    background: url("../assets//images//u_calendar-alt-orange.png") no-repeat;
-    width: 20px;
-    height: 20px;
-    border-width: thin;
-    cursor: pointer;
-  }
 }
 
 .author {

@@ -1,6 +1,6 @@
 import { collection, getDocs, query } from "firebase/firestore";
 
-import { fireStoreDatabase } from "~/firebase-config";
+import { fireStoreDatabase } from "~/config/firebase";
 import { IRole } from "~/types/RoleType";
 
 export const getRoles = async () => {

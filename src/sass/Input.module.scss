@@ -1,96 +1,115 @@
 .wrapper {
-    gap: .8rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
+  gap: 0.8rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
 
-    &:focus {
-        border: .1rem solid #347AFF;
-    }
+  &:focus {
+    border: 0.1rem solid #347aff;
+  }
 
-    label {
-        color: #FFF;
-        font-size: 1.6rem;
-        line-height: 2.4rem;
-        letter-spacing: -0.032px;
-    }
+  label {
+    color: #fff;
+    font-size: 1.6rem;
+    line-height: 2.4rem;
+    letter-spacing: -0.032px;
+  }
 
-    &+& {
-        margin-top: 2rem;
-    }
+  & + & {
+    margin-top: 2rem;
+  }
 }
 
 .form-input {
+  width: 100%;
+  position: relative;
+  text-align: left;
+
+  input {
     width: 100%;
-    position: relative;
-    text-align: left;
+    height: 4.8rem;
+    background-color: var(---bg-lighter);
+    border: 0.1rem solid var(--text-stroke-text-and-stroke-2);
+    border-radius: 0.8rem;
+    padding: 1.1rem 2.4rem 1.3rem 1.6rem;
+    align-items: center;
+    color: white;
+    outline: none;
+  }
 
-    input {
-        width: 100%;
-        height: 4.8rem;
-        background-color: var(---bg-lighter);
-        border: .1rem solid var(--text-stroke-text-and-stroke-2);
-        border-radius: .8rem;
-        padding: 1.1rem 2.4rem 1.3rem 1.6rem;
-        align-items: center;
-        color: white;
-        outline: none;
-    }
+  input[type="date"] {
+    padding: 1.1rem 1.6rem 1.3rem 1.6rem;
+  }
 
-    input:focus {
-        border: .1rem solid var(--blue);
-    }
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    color: rgba(0, 0, 0, 0);
+    opacity: 1;
+    display: block;
+    background: url("../assets/images/u_calendar-alt-orange.png") no-repeat;
+    width: 2rem;
+    height: 2rem;
+    border-width: thin;
+    cursor: pointer;
+  }
 
-    .icon {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-    }
+  input:focus {
+    border: 0.1rem solid var(--blue);
+  }
 
-    .left {
-        left: 5%;
-    }
+  .icon {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+  }
 
-    .right {
-        right: 5%;
-    }
+  .left {
+    left: 5%;
+  }
+
+  .right {
+    right: 5%;
+  }
 }
 
 .error {
-    input {
-        border: .1rem solid var(--red);
-    }
+  input {
+    border: 0.1rem solid var(--red);
+  }
 }
 
 .recover {
-    width: 100%;
+  width: 100%;
 }
 
 // size
+.extra-small {
+  width: 15.4rem;
+}
+
 .small {
-    width: 27.6rem;
+  width: 27.6rem;
 }
 
 .medium {
-    width: 47.1rem;
+  width: 47.1rem;
 }
 
 .large {
-    width: 57.3rem;
+  width: 57.3rem;
 }
 
 .extra-large {
-    width: 60rem;
+  width: 60rem;
 }
 
 .custom {
-    width: 100%;
+  width: 100%;
 }
 
 //status
 
 .disable input {
-    background-color: var(--disabled-state);
-    pointer-events: none;
+  background-color: var(--disabled-state);
+  pointer-events: none;
 }

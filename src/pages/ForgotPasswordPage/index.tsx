@@ -5,13 +5,14 @@ import { useSelector } from "react-redux";
 import { useFormik } from "formik";
 import PropagateLoader from "react-spinners/PropagateLoader";
 
-import Button from "~/component/Button";
-import { Form } from "~/component/Form";
+import Button from "~/components/Button";
+import { Form } from "~/components/Form";
 import { forgotPassword } from "~/api/user";
 import { useState } from "react";
-import { Input } from "~/component/Input";
+import { Input } from "~/components/Input";
 import { RootState } from "~/state";
 import { images } from "~/assets";
+import { Loading } from "~/components/Loading";
 
 import styles from "~/sass/Login.module.scss";
 const cx = classNames.bind(styles);
@@ -99,10 +100,7 @@ function ForgotPasswordPage() {
                     />}
                 </Form>
                 <div className={cx("action")} onClick={handleClickAction}>Quay lại đăng nhập</div>
-
-                {loading && <p className={cx("loading-spinner")}>
-                    <PropagateLoader color="#36d7b7" />
-                </p>}
+                <Loading loading={loading}/>
             </div>
         </div>
     );

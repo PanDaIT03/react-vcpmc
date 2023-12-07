@@ -7,7 +7,7 @@ import {
   where,
 } from "firebase/firestore";
 
-import { fireStoreDatabase } from "~/firebase-config";
+import { fireStoreDatabase } from "~/config/firebase";
 import { ICategory, IRecord } from "~/types";
 
 export const getRecords = async (contractId: string) => {

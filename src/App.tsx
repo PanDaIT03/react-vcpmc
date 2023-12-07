@@ -42,7 +42,7 @@ function App() {
               Layout = layout;
             else if (layout == null)
               Layout = HeaderOnly;
-            
+
             return <Route key={index} path={path} element={
               <ProtectedRoute path={path}>
                 <Layout>

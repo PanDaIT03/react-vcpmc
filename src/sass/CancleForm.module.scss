@@ -25,4 +25,15 @@
     display: flex;
     align-items: flex-start;
   }
+
+  .text {
+    display: flex;
+    width: 64rem;
+    height: 20.8rem;
+    padding: 1.2rem 2.4rem 1.2rem 1.6rem;
+    align-items: center;
+    border-radius: 0.8rem;
+    border: 0.1rem solid var(--text-stroke-text-and-stroke-2);
+    background: var(--bg-lightest);
+  }
 }

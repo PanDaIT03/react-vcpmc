@@ -53,6 +53,7 @@ const recordSlice = createSlice({
       })
       .addCase(updateRecordsAction.fulfilled, (state, action) => {
         state.loading = false;
+        
         state.status = "update successfully";
       })
       .addCase(updateRecordsAction.rejected, (state) => {

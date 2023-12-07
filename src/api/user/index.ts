@@ -2,7 +2,7 @@ import { collection, doc, getDoc, getDocs, query, updateDoc, where } from "fireb
 import { sendPasswordResetEmail } from "firebase/auth";
 
 import { IUser } from "../../types";
-import { auth, fireStoreDatabase } from "../../firebase-config";
+import { auth, fireStoreDatabase } from "../../config/firebase";
 
 export const checkLogin =
     async ({ userName, password }: Pick<IUser, "userName" | "password">) => {

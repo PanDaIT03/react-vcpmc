@@ -1,6 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-import { editContractAction, getContractsAction } from "~/state/thunk/contract";
+import {
+  cancelContractAction,
+  editContractAction,
+  getContractsAction,
+} from "~/state/thunk/contract";
 import { IContract, IUserDetail } from "~/types";
 
 interface InitType {
@@ -45,17 +49,27 @@ const contractSlice = createSlice({
         state.loading = false;
         state.status = "get failed";
       })
-    //   .addCase(editContractAction.pending, (state) => {
-    //     state.loading = true;
-    //   })
-    //   .addCase(editContractAction.fulfilled, (state) => {
-    //     state.loading = false;
-    //     state.status = "updated";
-    //   })
-    //   .addCase(editContractAction.rejected, (state) => {
-    //     state.loading = false;
-    //     state.status = "update failed";
-    //   })
+      .addCase(cancelContractAction.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(cancelContractAction.fulfilled, (state) => {
+        state.loading = false;
+        state.status = "updated";
+      })
+      .addCase(cancelContractAction.rejected, (state) => {
+        state.loading = false;
+      })
+      // .addCase(editContractAction.pending, (state) => {
+      //   state.loading = true;
+      // })
+      // .addCase(editContractAction.fulfilled, (state) => {
+      //   state.loading = false;
+      //   state.status = "updated";
+      // })
+      // .addCase(editContractAction.rejected, (state) => {
+      //   state.loading = false;
+      //   state.status = "update failed";
+      // })
       .addDefaultCase((state) => {
         return state;
       });

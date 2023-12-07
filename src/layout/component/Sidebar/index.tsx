@@ -2,10 +2,10 @@ import classNames from "classnames/bind";
 import { useCallback, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { Dropdown } from "~/component/Poper/Dropdown";
+import { Dropdown } from "~/components/Poper/Dropdown";
 import { IGlobalConstantsType } from "~/types/GlobalConstantsType";
 import { SIDEBAR_ITEMS } from "~/constants";
-import { SidebarContext } from "~/context/SidebarContext";
+import { SidebarContext } from "~/context/Sidebar/SidebarContext.index";
 import { images } from "~/assets";
 
 import styles from "~/sass/Sidebar.module.scss";

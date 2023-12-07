@@ -28,10 +28,11 @@ export const updateRecordsAction = createAsyncThunk(
   "record/updateRecords",
   async ({ records, status, contractId }: IRecords, thunkAPI) => {
     if (records && contractId)
-      records.map(async (record) => {
-        await approvalRecords(record.docId, status).then(
-          async () => await thunkAPI.dispatch(getRecordsAction(contractId))
-        );
-      });
+      records.map(
+        async (record) =>
+          await approvalRecords(record.docId, status).then(() =>
+            thunkAPI.dispatch(getRecordsAction(contractId))
+          )
+      );
   }
 );

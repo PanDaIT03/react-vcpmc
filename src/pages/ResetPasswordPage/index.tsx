@@ -7,9 +7,9 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import useQuery from "~/hooks";
-import Button from "~/component/Button";
-import { Form } from "~/component/Form";
-import { Input } from "~/component/Input";
+import Button from "~/components/Button";
+import { Form } from "~/components/Form";
+import { Input } from "~/components/Input";
 import { resetPasswordAction } from "~/state/thunk/user/user";
 import { RootState, useAppDispatch } from "~/state";
 import { images } from "~/assets";

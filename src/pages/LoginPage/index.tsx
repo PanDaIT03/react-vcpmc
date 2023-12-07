@@ -5,13 +5,14 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 
-import Button from "~/component/Button";
-import { Input } from "~/component/Input";
-import { Form } from "~/component/Form";
+import Button from "~/components/Button";
+import { Input } from "~/components/Input";
+import { Form } from "~/components/Form";
 import { RootState, useAppDispatch } from "~/state";
 import { checkLoginAction } from "~/state/thunk/user/user";
 import { getRoleAction } from "~/state/thunk/role/role";
 import { images } from "~/assets";
+import { Loading } from "~/components/Loading";
 
 import styles from "~/sass/Login.module.scss";
 const cx = classNames.bind(styles);
@@ -27,6 +28,7 @@ function LoginPage() {
     const userState = useSelector((state: RootState) => state.user);
     const { loading, status, currentUser } = userState;
     const roleState = useSelector((state: RootState) => state.role);
+    const { loading: roleLoading, roles } = roleState;
 
     const initialValuesLogin = {
         name: currentUser.userName || 'daiphucduongvinh203@gmail.com',
@@ -41,7 +43,7 @@ function LoginPage() {
         }),
         onSubmit: (values) => {
             const { name, password } = values;
-            dispatch(checkLoginAction({ userName: name, password: password, roles: roleState.roles }));
+            dispatch(checkLoginAction({ userName: name, password: password, roles: roles }));
         }
     });
     const {
@@ -137,6 +139,7 @@ function LoginPage() {
                     />
                 </Form>
                 <div className={cx("action")} onClick={handleClickAction}>Quên mật khẩu</div>
+                <Loading loading={roleLoading} />
             </div>
         </div>
     );

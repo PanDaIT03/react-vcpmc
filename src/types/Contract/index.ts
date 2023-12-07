@@ -11,5 +11,6 @@ export interface IContract {
     effectiveDate: string
     expirationDate: string
     ownerShips: Array<string> | string
+    reason: string
     status: string
 };

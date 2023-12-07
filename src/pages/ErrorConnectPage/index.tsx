@@ -2,9 +2,9 @@ import classNames from "classnames/bind";
 import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 
-import Button from "~/component/Button";
+import Button from "~/components/Button";
 import { images } from "~/assets";
-import { Form } from "~/component/Form";
+import { Form } from "~/components/Form";
 
 import styles from "~/sass/Login.module.scss";
 const cx = classNames.bind(styles);

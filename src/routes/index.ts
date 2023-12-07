@@ -2,30 +2,30 @@
 import { DefaultLayout } from "../layout/DefaultLayout";
 import { HeaderOnly } from "../layout/HeaderOnly";
 
+import { routes } from "~/config/routes";
+
 // Pages
 import LoginPage from "../pages/LoginPage";
 import ErrorConnectPage from "../pages/ErrorConnectPage";
 import ResetPasswordPage from "../pages/ResetPasswordPage";
 import ForgotPasswordPage from "../pages/ForgotPasswordPage";
-import BasicInfomationPage from "../pages/BasicInfomationPage";
+import ProfilePage from "../pages/ProfilePage";
 import ContractPage from "~/pages/ContractPage";
-import { Detail as AuthorizationDetail } from "~/pages/AuthorizationContractPage/Detail";
-import { Product as AuthorizationProduct } from "~/pages/AuthorizationContractPage/Product";
+import DetailPage from "~/pages/AuthorizationContractPage/DetailPage";
+import EditPage from "~/pages/AuthorizationContractPage/EditPage";
 
 const publicRoutes = [
-    { path: '/login', component: LoginPage },
-    { path: '/error', component: ErrorConnectPage, layout: HeaderOnly },
-    { path: '/reset-password', component: ResetPasswordPage },
-    { path: '/forgot-password', component: ForgotPasswordPage },
-    { path: '/contract-management', component: ContractPage, layout: DefaultLayout },
-    { path: '/contract-management/authorization-contract/:contractCode', component: AuthorizationDetail, layout: DefaultLayout },
-    { path: '/contract-management/authorization-product/:contractCode/:contractId', component: AuthorizationProduct, layout: DefaultLayout },
+    { path: routes.LoginPage, component: LoginPage },
+    { path: routes.ErrorConnectPage, component: ErrorConnectPage, layout: HeaderOnly },
+    { path: routes.ResetPasswordPage, component: ResetPasswordPage },
+    { path: routes.ForgotPasswordPage, component: ForgotPasswordPage },
+    { path: routes.EditPage, component: EditPage, layout: DefaultLayout },
 ];
 
 const protectedRoutes = [
-    { path: '/basic-info', component: BasicInfomationPage, layout: DefaultLayout },
-    // { path: '/contract-management', component: ContractPage, layout: DefaultLayout },
-    // { path: '/contract-management/detail/:contractCode', component: DetailPage, layout: DefaultLayout }
+    { path: routes.ProfilePage, component: ProfilePage, layout: DefaultLayout },
+    { path: routes.ContractPage, component: ContractPage, layout: DefaultLayout },
+    { path: routes.DetailPage, component: DetailPage, layout: DefaultLayout },
 ];
 
 export { publicRoutes, protectedRoutes };

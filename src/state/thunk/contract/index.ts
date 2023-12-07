@@ -1,12 +1,13 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
-import { editContract, getContracts } from "~/api/contract";
+import { cancleContract, editContract, getContracts } from "~/api/contract";
 import { getUser } from "~/api/user";
 
 interface IEditContract {
-  date: string;
-  status: string;
   id: string;
+  date?: string;
+  reason?: string;
+  status?: string;
 }
 
 export const getContractsAction = createAsyncThunk(
@@ -26,10 +27,17 @@ export const getContractsAction = createAsyncThunk(
 );
 
 export const editContractAction = createAsyncThunk(
-  "contract/editContracts",
+  "contract/editContract",
   async ({ date, status, id }: IEditContract, thunkAPI) => {
-    editContract(date, status, id).then(
-      async () => await thunkAPI.dispatch(getContractsAction())
-    );
+    if (typeof date !== "undefined" && typeof status !== "undefined")
+      editContract(date, status, id);
+  }
+);
+
+export const cancelContractAction = createAsyncThunk(
+  "contract/cancelContract",
+  async ({ reason, status, id }: IEditContract, thunkAPI) => {
+    if (typeof status !== "undefined" && typeof reason !== "undefined")
+      cancleContract(id, reason, status);
   }
 );

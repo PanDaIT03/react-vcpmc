@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { Sidebar } from "../component/Sidebar";
 import { Header } from "../component/Header";
 import { RootState } from "~/state";
-import { SidebarContext } from "~/context/SidebarContext";
+import { SidebarContext } from "~/context/Sidebar/SidebarContext.index";
 
 import styles from "~/sass/DefaultLayout.module.scss";
 const cx = classNames.bind(styles);

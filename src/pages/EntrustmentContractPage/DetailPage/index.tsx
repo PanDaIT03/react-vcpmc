@@ -1,10 +1,10 @@
 import classNames from "classnames/bind";
 import { useContext, useEffect, useRef } from "react";
 
-import { ActionBar } from "~/component/ActionBar";
-import { ActionBarItem } from "~/component/ActionBar/ActionBarItem";
+import { ActionBar } from "~/components/ActionBar";
+import { ActionBarItem } from "~/components/ActionBar/ActionBarItem";
 // import { Contract } from "~/component/Contract";
-import { SidebarContext } from "~/context/SidebarContext";
+import { SidebarContext } from "~/context/Sidebar/SidebarContext.index";
 
 import styles from "~/sass/ContractAction.module.scss";
 const cx = classNames.bind(styles);

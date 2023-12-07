@@ -3,10 +3,10 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import { Input } from "~/component/Input";
-import { Table } from "~/component/Table";
-import { ActionBar } from "~/component/ActionBar";
-import { ActionBarItem } from "~/component/ActionBar/ActionBarItem";
+import { Input } from "~/components/Input";
+import { Table } from "~/components/Table";
+import { ActionBar } from "~/components/ActionBar";
+import { ActionBarItem } from "~/components/ActionBar/ActionBarItem";
 import { RootState, useAppDispatch } from "~/state";
 import { getContractsAction } from "~/state/thunk/contract";
 
