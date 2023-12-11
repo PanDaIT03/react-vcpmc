@@ -11,7 +11,7 @@ interface FormProps {
     type?: "dialog" | "normal"
     visible?: "visible" | "invisible" | ""
     handleFormSubmit?: (event: React.MouseEvent<HTMLFormElement>) => void
-}
+};
 
 export const Form = memo(({
     title,

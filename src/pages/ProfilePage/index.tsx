@@ -2,9 +2,10 @@ import classNames from "classnames/bind";
 import * as Yup from "yup";
 import { useSelector } from "react-redux";
 import { useFormik } from "formik";
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 
 import Button from "~/components/Button";
+import { images } from "~/assets";
 import { IUser } from "~/types";
 import { Form } from "~/components/Form";
 import { Input } from "~/components/Input";
@@ -12,7 +13,7 @@ import { ActionBar } from "~/components/ActionBar";
 import { RootState, useAppDispatch } from "~/state";
 import { ActionBarItem } from "~/components/ActionBar/ActionBarItem";
 import { resetPasswordAction, updateUserAction } from "~/state/thunk/user/user";
-import { images } from "~/assets";
+import { SidebarContext } from "~/context/Sidebar/SidebarContext.index";
 
 import styles from "~/sass/BasicInfomation.module.scss";
 const cx = classNames.bind(styles);
@@ -29,8 +30,9 @@ function ProfilePage() {
     const firstNameRef = useRef<HTMLDivElement>(null);
     const passwordRef = useRef<HTMLDivElement>(null);
 
-    const [isCurrentPassword, setIsCurrentPassword] = useState(true);
+    const { setActive } = useContext(SidebarContext);
     const [isNewPassword, setIsNewPassword] = useState(true);
+    const [isCurrentPassword, setIsCurrentPassword] = useState(true);
     const [isConfirmPassword, setIsConfirmPassword] = useState(true);
 
     const [isChangePass, setIsChangePass] = useState(false);
@@ -42,7 +44,7 @@ function ProfilePage() {
     const { currentUser, status, loading } = userState;
 
     const initialInfoVales = {
-        id: currentUser.id,
+        id: currentUser.docId,
         avatar: currentUser.avatar,
         firstName: currentUser.firstName,
         lastName: currentUser.lastName,
@@ -63,11 +65,9 @@ function ProfilePage() {
             phoneNumber: Yup.string().required().matches(/(84|0[3|5|7|8|9])+([0-9]{8})\b/g, "phone not match"),
         }),
         onSubmit: (values) => {
-            console.log(values);
-
             const data: Omit<IUser, "email" | "userName" |
                 "password" | "rolesId" | "role"> = {
-                id: values.id,
+                docId: values.id,
                 avatar: values.avatar,
                 firstName: values.firstName,
                 lastName: values.lastName,
@@ -100,7 +100,7 @@ function ProfilePage() {
                 return;
             };
 
-            dispatch(resetPasswordAction({ id: currentUser.id, password: values.confirmPassword }));
+            dispatch(resetPasswordAction({ id: currentUser.docId, password: values.confirmPassword }));
             setErrorMessage('');
         }
     });
@@ -112,12 +112,16 @@ function ProfilePage() {
         handleSubmit: handleSubmitPasswordForm } = passwordFormik;
 
     useEffect(() => {
-        if (status === "updated")
+        setActive(true);
+    }, []);
+
+    useEffect(() => {
+        if (status === "user updated")
             setIsEditInfo(false);
     }, [userState]);
 
     useEffect(() => {
-        if (status === "updated") {
+        if (status === "user updated") {
             setIsChangePassSuccess(true);
             setIsChangePass(false);
         };
@@ -156,7 +160,7 @@ function ProfilePage() {
                     <div className={cx("user-info")}>
                         <div className={cx("user-info_left")}>
                             <div className={cx("avatar")}>
-                                <img src={`./images/${infoValues.avatar}`} className={cx("avatar-img")} alt="avatar" />
+                                <img src={`${infoValues.avatar}`} className={cx("avatar-img")} alt="avatar" />
                                 <img src={images.camera} className={cx("icon-camera")} alt="camera" />
                             </div>
                             <p className={cx("user-name")}>{currentUser.firstName} {currentUser.lastName}</p>

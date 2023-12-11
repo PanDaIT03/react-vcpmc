@@ -20,6 +20,17 @@ const LANGUAGE_ITEMS = [
   },
 ];
 
+const CB_NATIONALITY = [
+  {
+    id: 1,
+    title: "Việt Nam",
+  },
+  {
+    id: 2,
+    title: "Mỹ",
+  },
+];
+
 const SIDEBAR_ITEMS = [
   {
     id: 1,
@@ -337,6 +348,7 @@ export {
   SIDEBAR_ITEMS,
   ACTION_INFO_USER,
   VALIDITY_CONTRACT_ITEMS,
+  CB_NATIONALITY,
   CAPABILITY,
   CB_OWNER_ITEMS,
   CB_APPROVE_ITEMS,

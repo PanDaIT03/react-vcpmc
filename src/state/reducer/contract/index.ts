@@ -2,7 +2,6 @@ import { createSlice } from "@reduxjs/toolkit";
 
 import {
   cancelContractAction,
-  editContractAction,
   getContractsAction,
 } from "~/state/thunk/contract";
 import { IContract, IUserDetail } from "~/types";
@@ -35,7 +34,7 @@ const contractSlice = createSlice({
 
           contracts.forEach((contract) => {
             users.forEach((user) => {
-              if (contract.createdBy === user.docId)
+              if (contract.authorizedPerson === user.docId)
                 contractDetails.push({ ...user, ...contract });
             });
           });
@@ -59,17 +58,6 @@ const contractSlice = createSlice({
       .addCase(cancelContractAction.rejected, (state) => {
         state.loading = false;
       })
-      // .addCase(editContractAction.pending, (state) => {
-      //   state.loading = true;
-      // })
-      // .addCase(editContractAction.fulfilled, (state) => {
-      //   state.loading = false;
-      //   state.status = "updated";
-      // })
-      // .addCase(editContractAction.rejected, (state) => {
-      //   state.loading = false;
-      //   state.status = "update failed";
-      // })
       .addDefaultCase((state) => {
         return state;
       });

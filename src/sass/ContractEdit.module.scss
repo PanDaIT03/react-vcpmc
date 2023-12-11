@@ -1,87 +1,52 @@
-.content-container {
-  & > .content-edit > button {
-    margin: 76px 0;
-
-    & + button {
-      margin-left: 40px !important;
-    }
-  }
+.wrapper {
+  width: 100%;
+  padding-right: 8rem;
 }
 
-.gender-group {
-  height: 48px;
-  display: flex;
-}
-
-// block input
-.content-edit__box {
-  max-width: 1691px;
-  display: flex;
-  flex-wrap: wrap;
-  row-gap: 99px;
-}
-
-.content__type {
+.content {
+  width: 100%;
+  margin-top: 4rem;
   display: flex;
   flex-direction: column;
+  gap: 8.7rem;
 
-  & > p {
-    text-align: start;
-    padding-bottom: 18px;
+  &:has(.line) {
+    gap: 3.2rem;
   }
 
-  & > .content__type__all {
-    display: inline-flex;
+  .line {
+    width: 100%;
+    height: 0.1rem;
+    opacity: 0.5;
+    background: #727288;
+  }
+}
+
+.col-top,
+.col-bottom {
+  display: flex;
+  justify-content: space-between;
+
+  .list-item {
+    display: flex;
     justify-content: space-between;
-    gap: 42px;
-
-    & input[type="text"] {
-      width: 169px !important;
-    }
-
-    & > div + div {
-      width: 1px;
-      height: auto;
-      padding-left: 13px;
-      border-left: 1px solid #727288;
-    }
   }
 
-  & > div + div {
-    margin-top: 17px;
+  .col {
+    display: flex;
+    align-items: flex-start;
+  }
+
+  .title {
+    color: var(--orange-3);
+    font-size: 1.8rem;
+    letter-spacing: -0.036px;
+    margin-bottom: 3.6rem;
   }
 }
 
-.all__value-input {
-  & > div {
-    gap: 12px;
+.col-bottom {
+  &:has(.title) {
+    flex-direction: column;
   }
-}
-
-.nationality-combo-box {
-  & > li {
-    padding-top: 0 !important;
-
-    & > div {
-      height: 48px;
-      width: 311px;
-      z-index: 2 !important;
-      border-color: #727288;
-      background-color: rgb(43 43 63);
-
-      & > div > input {
-        width: 267px !important;
-      }
-    }
-
-    & > ul {
-      width: 311px !important;
-      z-index: 1 !important;
-    }
-  }
-}
-
-.status .choosen {
-  height: 4.8rem;
-  padding: 1.1rem 1.6rem 1.3rem 1.6rem;
 }

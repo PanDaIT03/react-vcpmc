@@ -12,10 +12,11 @@ const cx = classNames.bind(styles);
 interface OptionMenuProps {
     data: IGlobalConstantsType[]
     title?: string
-    className?: string
     boxSize?: "small" | "medium" | "large" | "extra-large" | "custom"
     customDrop?: string
     editable?: boolean
+    border?: boolean
+    className?: string
     setState?: React.Dispatch<React.SetStateAction<IGlobalConstantsType>>
 };
 
@@ -25,21 +26,19 @@ export const OptionMenu = ({
     boxSize = "medium",
     customDrop = "primary",
     editable = true,
+    border = true,
     className,
     setState
 }: OptionMenuProps) => {
     if (!className) className = "";
 
-    console.log(data);
-
-    const classes = cx("wrapper", {
+    const classes = cx("wrapper", !border && "none-border", {
         [className]: className,
-        editable
+        editable,
     });
 
     const menuRef = useRef<HTMLDivElement>(null);
-
-    const initialState = data[0];
+    let initialState = data[0];
 
     const [open, setOpen] = useState(false);
     const [option, setOption] = useState<IGlobalConstantsType[]>(data);
@@ -67,7 +66,8 @@ export const OptionMenu = ({
 
     useEffect(() => {
         handleOption(initialState);
-    }, []);
+        setChoosen(data[0]);
+    }, [data]);
 
     const handleItemClick = useCallback((item: IGlobalConstantsType) => {
         handleOption(item);

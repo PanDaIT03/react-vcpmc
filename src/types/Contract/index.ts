@@ -1,6 +1,7 @@
 export interface IContract {
     docId: string
     authorized: string
+    authorizedPerson: string
     authorizingLegalEntity: string
     censored: boolean
     contractCode: string

@@ -40,5 +40,6 @@ export const images = {
     force: require('./images/icon_force.png'),
     cloudUpload: require('./images/u_cloud-upload.png'),
     calendarAltOrange: require('./images/u_calendar-alt-orange.png'),
+    radioButton: require('./images/radio_button.png'),
     // aaaa: require('./images/aaaa.png'),
 };

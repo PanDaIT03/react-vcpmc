@@ -1,11 +1,11 @@
 import classNames from "classnames/bind";
-import { ReactNode, memo, useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 
 import styles from "~/sass/Input.module.scss";
 const cx = classNames.bind(styles);
 
-interface InputProps {
+interface InputOwnProps<E extends React.ElementType> {
     id?: string
     name: string
     value?: string | number
@@ -14,14 +14,16 @@ interface InputProps {
     placeholder?: string
     className?: string
     errorMessage?: string
+    isRequire?: boolean
     min?: any
     max?: any
     steps?: number
     iconLeft?: string //path
     iconRight?: string //path
     status?: "disable" | "editable"
-    type?: "text" | "password" | "number" | "date" | "range" | "checkbox" | "textarea"
-    size?: "extra-small" | "small" | "medium" | "large" | "extra-large" | "custom"
+    as?: E
+    type?: "text" | "password" | "number" | "date" | "range"
+    size?: "extra-small" | "small" | "small-pl" | "medium" | "large" | "extra-large" | "custom"
     onBlur?: any
     onFocus?: any
     inputRef?: any
@@ -35,17 +37,22 @@ interface InputProps {
     onIconRightClick?: (event: React.MouseEvent<HTMLImageElement>) => void
 };
 
-export const Input = memo(({
+type InputProps<E extends React.ElementType> = InputOwnProps<E> &
+    Omit<React.ComponentProps<E>, keyof InputOwnProps<E>>
+
+export const Input = <E extends React.ElementType = 'input'>({
     id,
     name,
     value,
     title,
+    as,
     size,
     readOnly,
     status,
     className,
     touched = false,
     errorMessage,
+    isRequire = false,
     iconLeft,
     iconRight,
     iconLeftAwesome,
@@ -57,7 +64,9 @@ export const Input = memo(({
     onIconLeftClick,
     onIconRightClick,
     ...passProps
-}: InputProps) => {
+}: InputProps<E>) => {
+    let Component = as || 'input';
+
     if (!size) size = "medium";
     if (!status) status = "editable";
     if (!className) className = "";
@@ -71,9 +80,9 @@ export const Input = memo(({
     };
 
     const classes = cx("wrapper", {
-        [className]: className,
         [size]: size,
-        [status]: status
+        [status]: status,
+        [className]: className
     });
     const [isInValid, setIsInValid] = useState(false);
 
@@ -96,13 +105,14 @@ export const Input = memo(({
         <div className={classes}>
             {title && <label htmlFor={id}>{title}:</label>}
             <div className={cx("form-input", isInValid ? "error" : "")}>
-                <input
+                <Component
                     {...props}
+                    ref={inputRef}
                     onBlur={handleBlur}
                     readOnly={readOnly ? true : false}
-                    ref={inputRef}
+                    className={cx("text")}
                 />
-                {(iconLeft || iconRight && value !== "") &&
+                {((iconLeft || iconRight) && value !== "") &&
                     <img
                         className={cx("icon", `${iconLeft ? "left" : "right"}`, "--cursor-pointer")}
                         src={iconLeft ? iconLeft : iconRight}
@@ -114,4 +124,4 @@ export const Input = memo(({
             </div>
         </div>
     );
-});
+};

@@ -47,8 +47,8 @@ const ProductItem = memo(({
 
       return (
         <tr
-          className={cx("product_item")}
           key={index}
+          className={cx("product_item")}
           onClick={() => handleCheckBox(record, isChecked)}
         >
           {approve
@@ -71,9 +71,9 @@ const ProductItem = memo(({
           <td className={cx("authorized", "content")}>{record.author}</td>
           <td className={cx("download-date", "content")}>{record.createdDate}</td>
           <td className={cx("status", "content")}>
-            {CB_APPROVE_ITEMS.map((item) => item.title === record.contractStatus
+            {CB_APPROVE_ITEMS.map((item, index) => item.title === record.contractStatus
               && (
-                <span className={cx("--center-flex")} key={item.id}>
+                <span className={cx("--center-flex")} key={index}>
                   <img className={cx("icon")} src={item.icon} alt="icon" />
                   <p>{item.title}</p>
                 </span>

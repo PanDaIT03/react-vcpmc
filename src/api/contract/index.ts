@@ -1,4 +1,5 @@
 import {
+  addDoc,
   collection,
   doc,
   getDocs,
@@ -9,6 +10,7 @@ import {
 
 import { fireStoreDatabase } from "~/config/firebase";
 import { IContract } from "~/types";
+import { checkUserIsExisted } from "../user";
 
 export const getContracts = async () => {
   const queryStmt = query(
@@ -20,6 +22,7 @@ export const getContracts = async () => {
   const contracts: IContract[] = querySnapshot.docs.map((doc) => {
     return {
       docId: doc.id,
+      authorizedPerson: doc.data().authorizedPerson,
       authorized: doc.data().authorized,
       authorizingLegalEntity: doc.data().authorizingLegalEntity,
       censored: doc.data().censored,
@@ -62,9 +65,24 @@ export const cancleContract = async (
   const collectionRef = collection(fireStoreDatabase, "contract");
   const cancleContract = {
     reason: reason,
-    status: status
+    status: status,
   };
 
   const contractRef = doc(collectionRef, id);
   await updateDoc(contractRef, cancleContract);
+};
+
+export const saveContract = async (contract: any) => {
+  const collectionRef = collection(fireStoreDatabase, "contract");
+  const updateContract = { ...contract };
+
+  const userRef = doc(collectionRef, contract.docId);
+  if (contract.docId !== "") return await updateDoc(userRef, updateContract);
+};
+
+export const addContract = async (contract: any) => {
+  const collectionRef = collection(fireStoreDatabase, "contract");
+  const data = { ...contract };
+
+  return await addDoc(collectionRef, data);
 };

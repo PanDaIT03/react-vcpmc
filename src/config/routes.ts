@@ -7,4 +7,5 @@ export const routes = {
   ProfilePage: "/profile",
   ContractPage: "/contract-management",
   DetailPage: "/contract-management/detail/:contractCode",
+  AddPage: "/contract-management/add",
 };

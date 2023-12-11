@@ -1,16 +1,30 @@
 .wrapper {
+  width: 100%;
   display: flex;
   align-items: center;
+  pointer-events: none;
 
   .title {
+    width: max-content;
     color: var(--white, #fff);
     letter-spacing: -0.032px;
     margin-right: 1.6rem;
   }
 }
 
-.editable .choosen {
-  background-color: var(--bg-color);
+.editable {
+  pointer-events: all;
+
+  .choosen {
+    color: var(--text-stroke-text-and-stroke) !important;
+    background: var(---bg-lighter) !important;
+  }
+}
+
+.none-border {
+  .choosen {
+    border: none !important;
+  }
 }
 
 .filter_ownership_cb {
@@ -18,7 +32,7 @@
   position: relative;
 
   .choosen {
-    color: var(--text-stroke-text-and-stroke);
+    color: var(--gray, #878890);
     height: 4rem;
     padding: 1.2rem 1.2rem 1.2rem 1.6rem;
     letter-spacing: -0.032px;
@@ -26,11 +40,10 @@
     align-items: center;
     justify-content: space-between;
     border-radius: 0.8rem;
-    border: 0.1rem solid var(--orange-4-default);
-    // background-color: var(--bg-color);
     background: var(--disabled-state);
+    border: 0.1rem solid var(--orange-4-default);
     position: relative;
-    z-index: 1;
+    z-index: 2;
   }
 }
 
@@ -54,6 +67,17 @@
   width: 13.5rem;
 }
 
+.large {
+  width: 27.9rem;
+  height: 100% !important;
+}
+
 .extra-large {
   width: 37.4rem;
+  height: 100% !important;
+}
+
+.custom {
+  width: 100%;
+  height: 100% !important;
 }

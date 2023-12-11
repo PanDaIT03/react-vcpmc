@@ -13,18 +13,20 @@ import ProfilePage from "../pages/ProfilePage";
 import ContractPage from "~/pages/ContractPage";
 import DetailPage from "~/pages/AuthorizationContractPage/DetailPage";
 import EditPage from "~/pages/AuthorizationContractPage/EditPage";
+import AddPage from "~/pages/AuthorizationContractPage/AddPage";
 
 const publicRoutes = [
     { path: routes.LoginPage, component: LoginPage },
     { path: routes.ErrorConnectPage, component: ErrorConnectPage, layout: HeaderOnly },
     { path: routes.ResetPasswordPage, component: ResetPasswordPage },
     { path: routes.ForgotPasswordPage, component: ForgotPasswordPage },
-    { path: routes.EditPage, component: EditPage, layout: DefaultLayout },
+    { path: routes.AddPage, component: AddPage, layout: DefaultLayout },
 ];
 
 const protectedRoutes = [
     { path: routes.ProfilePage, component: ProfilePage, layout: DefaultLayout },
     { path: routes.ContractPage, component: ContractPage, layout: DefaultLayout },
+    { path: routes.EditPage, component: EditPage, layout: DefaultLayout },
     { path: routes.DetailPage, component: DetailPage, layout: DefaultLayout },
 ];
 

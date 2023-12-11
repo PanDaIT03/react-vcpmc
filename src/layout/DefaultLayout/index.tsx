@@ -7,6 +7,7 @@ import { Sidebar } from "../component/Sidebar";
 import { Header } from "../component/Header";
 import { RootState } from "~/state";
 import { SidebarContext } from "~/context/Sidebar/SidebarContext.index";
+import { routes } from "~/config/routes";
 
 import styles from "~/sass/DefaultLayout.module.scss";
 const cx = classNames.bind(styles);
@@ -66,9 +67,9 @@ export const DefaultLayout = ({ children }: DefaultLayoutProps) => {
                 <div className={cx("container_right")}>
                     <div className={cx("header")}>
                         <Header>
-                            <div className={cx("account")} onClick={() => navigate("/basic-info")}>
+                            <div className={cx("account")} onClick={() => navigate(routes.ProfilePage)}>
                                 <div className={cx("avatar")}>
-                                    <img src={`../../images/${currentUser.avatar}`} />
+                                    <img src={`${currentUser.avatar}`} alt="avatar"/>
                                 </div>
                                 <div className={cx("info")}>
                                     <p className={cx("name")}>{name}</p>

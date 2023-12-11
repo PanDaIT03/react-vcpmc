@@ -19,7 +19,7 @@ const PAGING_ITEMS: Array<PagingItemType> = [
 
 function ContractPage() {
     const { setActive } = useContext(SidebarContext);
-    const [switchPage, setSwitchPage] = useState(false);
+    const [switchPage, setSwitchPage] = useState(true);
 
     useEffect(() => {
         setActive(true);

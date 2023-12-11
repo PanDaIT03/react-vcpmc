@@ -74,7 +74,7 @@ function ResetPasswordPage() {
     }, [errors, touched]);
 
     useEffect(() => {
-        if (status === "updated")
+        if (status === "user updated")
             Swal.fire({
                 title: "Khôi phục mật khẩu thành công",
                 text: "Dùng mật khẩu mới của bạn để đăng nhập",

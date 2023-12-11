@@ -15,9 +15,10 @@ import { RootState, useAppDispatch } from "~/state";
 import { getContractsAction } from "~/state/thunk/contract";
 import { images } from "~/assets";
 import { Dialog } from "~/components/Dialog";
+import styles from "~/sass/AuthorizationContract.module.scss";
 import { CancleForm } from "~/components/CancelForm";
 
-import styles from "~/sass/AuthorizationContract.module.scss";
+import { routes } from "~/config/routes";
 const cx = classNames.bind(styles);
 
 const initialState = {
@@ -154,7 +155,7 @@ function AuthorizationContractPage() {
                             <td className={cx("contract-code", "content")}>{contract.contractCode}</td>
                             <td className={cx("contract-name", "content")}>{contract.customer}</td>
                             <td className={cx("authorized-person", "content")}>{contract.authorized}</td>
-                            <td className={cx("ownership", "content")}>
+                            <td className={cx("ownership", "content", "--center-flex")}>
                                 {typeof contract.ownerShips === "string"
                                     ? <p>{contract.ownerShips}</p>
                                     : contract.ownerShips.map((ownership, index) => (
@@ -163,9 +164,9 @@ function AuthorizationContractPage() {
                                 }
                             </td>
                             <td className={cx("effective-contract", "content")}>
-                                {VALIDITY_CONTRACT_ITEMS.map(item => (
+                                {VALIDITY_CONTRACT_ITEMS.map((item, index) => (
                                     item.title === contract.status
-                                    && <span className={cx("--center-flex")} key={item.id}>
+                                    && <span className={cx("--center-flex")} key={index}>
                                         <img src={item.icon} alt="icon" />
                                         <p>{item.title}</p>
                                     </span>
@@ -197,7 +198,7 @@ function AuthorizationContractPage() {
                 <ActionBarItem
                     title="Thêm hợp đồng"
                     icon={images.uPlus}
-                // onClick={()}
+                    onClick={() => navigate(routes.AddPage)}
                 />
             </ActionBar>
             <Dialog

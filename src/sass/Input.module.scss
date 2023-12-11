@@ -26,7 +26,12 @@
   position: relative;
   text-align: left;
 
-  input {
+  .text {
+    color: var(--white);
+    font-size: 1.6rem;
+    font-weight: 400;
+    line-height: 2.4rem;
+    letter-spacing: -0.032px;
     width: 100%;
     height: 4.8rem;
     background-color: var(---bg-lighter);
@@ -34,12 +39,16 @@
     border-radius: 0.8rem;
     padding: 1.1rem 2.4rem 1.3rem 1.6rem;
     align-items: center;
-    color: white;
     outline: none;
+
+    &:focus {
+      border: 0.1rem solid var(--blue);
+    }
   }
 
-  input[type="date"] {
+  textarea {
     padding: 1.1rem 1.6rem 1.3rem 1.6rem;
+    resize: none;
   }
 
   input[type="date"]::-webkit-calendar-picker-indicator {
@@ -51,10 +60,6 @@
     height: 2rem;
     border-width: thin;
     cursor: pointer;
-  }
-
-  input:focus {
-    border: 0.1rem solid var(--blue);
   }
 
   .icon {
@@ -74,7 +79,7 @@
 
 .error {
   input {
-    border: 0.1rem solid var(--red);
+    border: 0.1rem solid var(--red) !important;
   }
 }
 
@@ -82,13 +87,22 @@
   width: 100%;
 }
 
+.primary {
+  height: 4.8rem;
+  padding: 1.1rem 2.4rem 1.3rem 1.6rem;
+}
+
 // size
 .extra-small {
-  width: 15.4rem;
+  width: 16.8rem;
 }
 
 .small {
   width: 27.6rem;
+}
+
+.small-pl {
+  width: 37.4rem;
 }
 
 .medium {

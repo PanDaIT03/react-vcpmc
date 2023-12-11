@@ -1,9 +1,4 @@
 .wrapper {
-  // width: 48rem;
-  // height: 24.7rem;
-  // border-radius: 1.6rem;
-  // padding: 1.7rem 1.4rem 1.6rem 1.4rem;
-
   .action-top {
     position: absolute;
     top: 0.8rem;
@@ -67,13 +62,13 @@
   position: absolute;
 
   input {
-    padding: 0;
-    height: 0.2rem;
+    padding: 0 !important;
+    height: 0.2rem !important;
     cursor: pointer;
     -webkit-appearance: none;
 
     &:focus {
-      border: none;
+      border: none !important;
     }
   }
 }

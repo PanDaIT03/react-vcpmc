@@ -1,5 +1,6 @@
 import classNames from "classnames/bind";
 import { memo } from 'react';
+import { images } from "~/assets";
 
 import styles from '~/sass/RadioButton.module.scss';
 const cx = classNames.bind(styles);
@@ -7,26 +8,28 @@ const cx = classNames.bind(styles);
 interface RadioButtonProps {
     title?: string
     checked: boolean
-    onChange: (event: React.ChangeEvent<HTMLInputElement>) => void
+    onClick: () => void
 };
 
 export const RadioButton = memo(({
     title,
     checked,
-    onChange,
+    onClick,
     ...passProps
 }: RadioButtonProps) => {
     return (
-        <div className={cx('form-group')}>
-            <input
-                type="radio"
-                id={title}
-                value={title}
-                onChange={onChange}
-                checked={checked}
-                {...passProps}
-            />
-            {title && <label htmlFor={title}>{title}</label>}
+        <div className={cx('form-group')} onClick={onClick}>
+            {!checked
+                ? <>
+                    <div className={cx("radio")} ></div>
+                    {title && <div className={cx("title")}>{title}</div>}
+                </>
+                : <>
+                    <div className={cx("radio-checked")} >
+                        <img src={images.radioButton} alt="checked" />
+                    </div>
+                    {title && <div className={cx("title")}>{title}</div>}
+                </>}
         </div>
     );
 })

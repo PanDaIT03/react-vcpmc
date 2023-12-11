@@ -3,8 +3,8 @@ import { useContext, useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-import { images } from "~/assets";
 import Button from "~/components/Button";
+import { images } from "~/assets";
 import { Contract } from "~/components/Contract";
 import { Tab, Tabs } from "~/components/Tabs";
 import { ActionBar } from "~/components/ActionBar";
@@ -32,7 +32,7 @@ const initialState = {} as (IContract & IUserDetail);
 const PAGING_ITEMS: Array<PagingItemType> = [
     {
         title: 'Quản lý',
-        to: '#'
+        to: routes.ContractPage
     }, {
         title: 'Quản lý hợp đồng',
         to: routes.ContractPage
@@ -81,7 +81,7 @@ function DetailPage() {
         if (contracts.length <= 0)
             navigate("/contract-management")
         if (status === "updated")
-            navigate("/contract-management")
+            navigate("/contract-management");
 
         if (status === "get successfully")
             setRenewalVisible(false);
@@ -148,6 +148,7 @@ function DetailPage() {
                 {!switchPage
                     && <Detail
                         contractDetail={contractDetail}
+                        loading={loading}
                     />}
                 {switchPage
                     && <Product

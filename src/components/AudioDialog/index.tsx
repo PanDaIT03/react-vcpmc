@@ -151,9 +151,10 @@ export const AudioDialog = memo(({
                         size="custom"
                         value={currentTime}
                         inputRef={inputRef}
+                        steps={1}
                         min={0}
                         max={audioRef.current?.duration || 0}
-                        steps={1}
+                        className={cx("audio")}
                         onChange={(event) => setRewind(parseInt(event.target.value))}
                     />
                 </div>
