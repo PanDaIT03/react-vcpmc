@@ -20,7 +20,7 @@ interface IButtonProps {
     onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void
 }
 
-function Button({
+export const Button = ({
     primary,
     fill = false,
     size = "medium",
@@ -32,7 +32,7 @@ function Button({
     loading = false,
     onClick,
     ...passProps
-}: IButtonProps) {
+}: IButtonProps) => {
     const props = {
         onClick,
         type: buttonType,
@@ -41,7 +41,7 @@ function Button({
 
     if (!className) className = "";
     if (!size) size = "medium";
-    if(!buttonType) buttonType = "button"
+    if (!buttonType) buttonType = "button"
 
     const classes = cx("wrapper", {
         [className]: className,

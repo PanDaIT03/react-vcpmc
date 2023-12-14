@@ -17,102 +17,18 @@
   }
 }
 
-.contract_title,
 .contract_item {
-  display: flex;
-  height: 4.8rem;
-  font-size: 1.4rem;
-  font-weight: 400;
-  line-height: 2rem;
-}
-
-.title {
-  color: var(--orange-3);
-  display: flex;
-  align-items: flex-start;
-  align-self: stretch;
-  letter-spacing: 0.028px;
-  padding: 0.8rem 0.8rem 0.8rem 0;
-}
-
-.content {
-  color: var(--white);
-  display: flex;
-  align-items: center;
-  letter-spacing: 0.21px;
-}
-
-.contract_item {
-  cursor: pointer;
-
-  .numerical-order {
-    padding-left: 2rem;
-  }
-
-  .action-detail,
-  .reason {
-    font-size: 1.2rem;
+  .detail {
     color: var(--orange-4-default);
-    display: flex;
-    justify-content: center;
-    text-decoration-line: underline;
-    cursor: pointer;
+    font-size: 1.2rem;
     letter-spacing: -0.024px;
+    text-decoration-line: underline;
   }
 
-  .effective-contract {
-    img {
-      margin-right: 0.4rem;
-    }
-  }
-
-  &:hover {
-    background-color: var(--white-transparent);
-  }
-}
-
-.contract_item {
-  & + & {
-    border-top: 0.1rem solid rgba(114, 114, 136, 1);
-  }
-}
-
-.contract_title,
-.contract_item {
-  .contract-code {
-    width: 15.8rem;
-  }
-
-  .numerical-order {
-    width: 8rem;
-  }
-
-  .contract-name {
-    width: 30.9rem;
-  }
-
-  .authorized-person {
-    width: 21.9rem;
-  }
-
-  .ownership {
-    width: 20.7rem;
+  .vadility {
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .effective-contract {
-    width: 15.9rem;
-  }
-
-  .date-created {
-    width: 15.2rem;
-  }
-
-  .action-detail,
-  .reason {
-    width: 10rem;
+    align-items: center;
+    gap: .4rem;
   }
 }
 

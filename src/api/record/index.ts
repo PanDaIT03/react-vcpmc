@@ -10,12 +10,17 @@ import {
 import { fireStoreDatabase } from "~/config/firebase";
 import { ICategory, IRecord } from "~/types";
 
-export const getRecords = async (contractId: string) => {
-  const queryStmt = query(
+export const getRecords = async (contractId?: string) => {
+  let queryStmt;
+
+  if (contractId) {
+    queryStmt = query(
       collection(fireStoreDatabase, "records"),
       where("contractId", "==", `${contractId}`)
-    ),
-    querySnapshot = await getDocs(queryStmt);
+    );
+  } else queryStmt = query(collection(fireStoreDatabase, "records"));
+
+  const querySnapshot = await getDocs(queryStmt);
 
   const records: IRecord[] = querySnapshot.docs.map((doc) => {
     return {
@@ -58,12 +63,39 @@ export const getCategories = async () => {
   return categories;
 };
 
-export const approvalRecords = async (recordId: string, status: string) => {
+export const approvalRecords = async (
+  recordId: string,
+  status: string,
+  type: string
+) => {
   const collectionRef = collection(fireStoreDatabase, "records");
-  const updateRecords = {
-    contractStatus: status,
-  };
 
-  const userRef = doc(collectionRef, recordId);
-  await updateDoc(userRef, updateRecords);
+  let updateRecords = {};
+  if (type === "records")
+    updateRecords = {
+      status: status,
+    };
+  else
+    updateRecords = {
+      contractStatus: status,
+    };
+
+  const recordRef = doc(collectionRef, recordId);
+  await updateDoc(recordRef, updateRecords);
+};
+
+export const updateRecord = async (
+  recordId: string,
+  data: Pick<
+    IRecord,
+    "nameRecord" | "ISRCCode" | "singer" | "author" | "producer"
+  >
+) => {
+  if (recordId === "") return;
+
+  const collectionRef = collection(fireStoreDatabase, "records");
+  const updateRecord = { ...data };
+
+  const recordRef = doc(collectionRef, recordId);
+  await updateDoc(recordRef, updateRecord);
 };

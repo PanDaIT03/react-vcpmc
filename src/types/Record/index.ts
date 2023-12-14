@@ -1,3 +1,5 @@
+import { IContract } from "../Contract";
+
 export type IRecord = {
     docId: string
     imageURL: string
@@ -19,6 +21,7 @@ export type IRecord = {
     expirationDate: string
     status: string
     category?: string
+    contract?: IContract
 };
 
 export interface ICategory {

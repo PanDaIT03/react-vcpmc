@@ -41,5 +41,10 @@ export const images = {
     cloudUpload: require('./images/u_cloud-upload.png'),
     calendarAltOrange: require('./images/u_calendar-alt-orange.png'),
     radioButton: require('./images/radio_button.png'),
+    list: require('./images/fi_list.png'),
+    grid: require('./images/fi_grid.png'),
+    polygon1: require('./images/polygon_1.png'),
+    musicIcon: require('./images/music_icon.png'),
+    checkGreen: require('./images/u_check_green.png'),
     // aaaa: require('./images/aaaa.png'),
 };

@@ -30,13 +30,22 @@ const recordSlice = createSlice({
       })
       .addCase(getRecordsAction.fulfilled, (state, action) => {
         if (action.payload !== null) {
-          const { records, categories } = action.payload;
+          const { records, categories, contracts } = action.payload;
           const authorizedSongs: IRecord[] = [];
 
           records.forEach((record) => {
-            categories.forEach((category) => {
-              if (record.categoriesId === category.docId)
-                authorizedSongs.push({ ...record, category: category.name });
+            contracts.forEach((contract) => {
+              categories.forEach((category) => {
+                if (
+                  record.categoriesId === category.docId &&
+                  record.contractId === contract.docId
+                )
+                  authorizedSongs.push({
+                    ...record,
+                    category: category.name,
+                    contract: { ...contract },
+                  });
+              });
             });
           });
           state.records = authorizedSongs;
@@ -53,7 +62,6 @@ const recordSlice = createSlice({
       })
       .addCase(updateRecordsAction.fulfilled, (state, action) => {
         state.loading = false;
-        
         state.status = "update successfully";
       })
       .addCase(updateRecordsAction.rejected, (state) => {

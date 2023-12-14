@@ -15,10 +15,10 @@ import { RootState, useAppDispatch } from "~/state";
 import { getContractsAction } from "~/state/thunk/contract";
 import { images } from "~/assets";
 import { Dialog } from "~/components/Dialog";
-import styles from "~/sass/AuthorizationContract.module.scss";
 import { CancleForm } from "~/components/CancelForm";
-
 import { routes } from "~/config/routes";
+
+import styles from "~/sass/AuthorizationContract.module.scss";
 const cx = classNames.bind(styles);
 
 const initialState = {
@@ -134,65 +134,55 @@ function AuthorizationContractPage() {
                 </div>
             </div>
             <Table
-                className="contract"
+                className={cx("contract")}
                 loading={loading}
+                thead={["STT", "Số hợp đồng", "Tên hợp đồng", "Người uỷ quyền",
+                    "Quyền sở hữu", "Hiệu lực hợp đồng", "Ngày tạo", '', '']}
             >
-                <tbody>
-                    <tr className={cx("contract_title")}>
-                        <th className={cx("numerical-order", "title")}>STT</th>
-                        <th className={cx("contract-code", "title")}>Số hợp đồng</th>
-                        <th className={cx("contract-name", "title")}>Tên hợp đồng</th>
-                        <th className={cx("authorized-person", "title")}>Người uỷ quyền</th>
-                        <th className={cx("ownership", "title")}>Quyền sở hữu</th>
-                        <th className={cx("effective-contract", "title")}>Hiệu lực hợp đồng</th>
-                        <th className={cx("date-created", "title")}>Ngày tạo</th>
-                        <th className={cx("action-detail", "title")}>&nbsp;</th>
-                        <th className={cx("reason", "title")}>&nbsp;</th>
-                    </tr>
-                    {searchResult.map((contract, index) => (
-                        <tr className={cx("contract_item")} key={index}>
-                            <td className={cx("numerical-order", "content")}>{index + 1}</td>
-                            <td className={cx("contract-code", "content")}>{contract.contractCode}</td>
-                            <td className={cx("contract-name", "content")}>{contract.customer}</td>
-                            <td className={cx("authorized-person", "content")}>{contract.authorized}</td>
-                            <td className={cx("ownership", "content", "--center-flex")}>
-                                {typeof contract.ownerShips === "string"
-                                    ? <p>{contract.ownerShips}</p>
-                                    : contract.ownerShips.map((ownership, index) => (
-                                        <p key={index}>{ownership}</p>
-                                    ))
-                                }
-                            </td>
-                            <td className={cx("effective-contract", "content")}>
-                                {VALIDITY_CONTRACT_ITEMS.map((item, index) => (
-                                    item.title === contract.status
-                                    && <span className={cx("--center-flex")} key={index}>
-                                        <img src={item.icon} alt="icon" />
-                                        <p>{item.title}</p>
-                                    </span>
-                                ))}
-                            </td>
-                            <td className={cx("date-created", "content")}>{contract.dateCreated}</td>
-                            <td
-                                className={cx("action-detail", "content")}
-                                onClick={() => navigate(`/contract-management/detail/${contract.contractCode}`)}
-                            >
-                                Xem chi tiết
-                            </td>
-                            {contract.status === "Đã huỷ"
-                                && <td
-                                    className={cx("reason", "content")}
-                                    onClick={() => {
-                                        setContractId(contract.contractCode);
-                                        setContractReason(contract.reason);
-                                    }}
-                                >
-                                    Lý do huỷ
-                                </td>
+                {searchResult.map((contract, index) => (
+                    <tr className={cx("contract_item")} key={index}>
+                        <td >{index + 1}</td>
+                        <td >{contract.contractCode}</td>
+                        <td >{contract.customer}</td>
+                        <td >{contract.authorized}</td>
+                        <td>
+                            {typeof contract.ownerShips === "string"
+                                ? <p>{contract.ownerShips}</p>
+                                : contract.ownerShips.map((ownership, index) => (
+                                    <p key={index}>{ownership}</p>
+                                ))
                             }
-                        </tr>
-                    ))}
-                </tbody>
+                        </td>
+                        <td>
+                            {VALIDITY_CONTRACT_ITEMS.map((item, index) => (
+                                item.title === contract.status
+                                && <span
+                                    key={index}
+                                    className={cx("vadility")}
+                                >
+                                    <img src={item.icon} alt="icon" />
+                                    <p>{item.title}</p>
+                                </span>
+                            ))}
+                        </td>
+                        <td>{contract.dateCreated}</td>
+                        <td
+                            className={cx("detail")}
+                            onClick={() => navigate(`/contract-management/detail/${contract.contractCode}`)}
+                        >
+                            <p>Xem chi tiết</p>
+                        </td>
+                        <td
+                            className={cx("detail")}
+                            onClick={() => {
+                                setContractId(contract.contractCode);
+                                setContractReason(contract.reason);
+                            }}
+                        >
+                            {contract.status === "Đã huỷ" && <p>Lý do huỷ</p>}
+                        </td>
+                    </tr>
+                ))}
             </Table>
             <ActionBar visible={true}>
                 <ActionBarItem
@@ -221,7 +211,7 @@ function AuthorizationContractPage() {
                     </div>
                 </CancleForm>
             </Dialog>
-        </div>
+        </div >
     );
 };
 

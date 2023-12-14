@@ -12,23 +12,30 @@ const cx = classNames.bind(styles);
 interface OptionMenuProps {
     data: IGlobalConstantsType[]
     title?: string
-    boxSize?: "small" | "medium" | "large" | "extra-large" | "custom"
+    titlePosition?: "top" | "left"
+    boxSize?: "small" | "medium" | "large" | "small-pl" | "extra-large" | "extra-extra-large" | "custom"
     customDrop?: string
     editable?: boolean
     border?: boolean
+    borderColor?: string
     className?: string
+    state?: IGlobalConstantsType
     setState?: React.Dispatch<React.SetStateAction<IGlobalConstantsType>>
 };
 
 export const OptionMenu = ({
     data,
     title,
+    titlePosition = "left",
     boxSize = "medium",
     customDrop = "primary",
     editable = true,
     border = true,
+    borderColor,
     className,
-    setState
+    state,
+    setState,
+    ...passProps
 }: OptionMenuProps) => {
     if (!className) className = "";
 
@@ -37,8 +44,12 @@ export const OptionMenu = ({
         editable,
     });
 
+    const titleRef = useRef<HTMLDivElement>(null);
     const menuRef = useRef<HTMLDivElement>(null);
+
     let initialState = data[0];
+    if (state)
+        initialState = state;
 
     const [open, setOpen] = useState(false);
     const [option, setOption] = useState<IGlobalConstantsType[]>(data);
@@ -56,28 +67,43 @@ export const OptionMenu = ({
         };
     });
 
+    useEffect(() => {
+        const wrapperHeight = menuRef.current?.clientHeight || 0;
+
+        if (titlePosition === "top") {
+            titleRef.current?.setAttribute("style",
+                `position: absolute;
+                z-index: 3;
+                bottom: ${wrapperHeight + 8}px;
+            `);
+        };
+    }, []);
+
+    useEffect(() => {
+        handleOption(initialState);
+    }, [data, state]);
+
+    const handleItemClick = useCallback((item: IGlobalConstantsType) => {
+        handleOption(item);
+        setState && setState(item);
+    }, []);
+
     const handleOption = (item: IGlobalConstantsType) => {
         let newOption = handleClickDropDown(item, data);
 
         setOption(newOption);
         setChoosen(item || initialState);
-        setState && setState(item);
     };
-
-    useEffect(() => {
-        handleOption(initialState);
-        setChoosen(data[0]);
-    }, [data]);
-
-    const handleItemClick = useCallback((item: IGlobalConstantsType) => {
-        handleOption(item);
-    }, []);
 
     return (
         <div className={classes}>
-            {title && <div className={cx("title")}>{title}:</div>}
+            {title
+                && <div className={cx("title")} ref={titleRef}>{title}:</div>}
             <div className={cx('filter_ownership_cb')} onClick={() => setOpen(!open)} ref={menuRef}>
-                <div className={cx("choosen", boxSize)}>
+                <div
+                    className={cx("choosen", boxSize)}
+                    style={{ borderColor: `${borderColor}` }}
+                >
                     {choosen.title}
                     <img src={images.angleDown} alt="angle-down" />
                 </div>

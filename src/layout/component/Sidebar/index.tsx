@@ -20,6 +20,7 @@ interface SidebarItemProps {
     id: number
     title: string
     icon: string
+    to?: string
     className?: string
     children?: React.ReactElement
     data?: IGlobalConstantsType[]
@@ -30,6 +31,7 @@ const SidebarItem = ({
     id,
     title,
     icon,
+    to,
     className,
     children,
     data,
@@ -37,6 +39,7 @@ const SidebarItem = ({
 }: SidebarItemProps) => {
     if (!className) className = "";
 
+    const navigate = useNavigate();
     const [visible, setVisible] = useState(false);
     const { currentPage, setCurrentPage } = useContext(SidebarContext);
 
@@ -46,7 +49,6 @@ const SidebarItem = ({
 
     useEffect(() => {
         setCurrentPage(4);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (
@@ -54,7 +56,10 @@ const SidebarItem = ({
             className={classes}
             onMouseEnter={() => setVisible(true)}
             onMouseLeave={() => setVisible(false)}
-            onClick={() => setCurrentPage(id)}
+            onClick={() => {
+                setCurrentPage(id);
+                to && navigate(to);
+            }}
         >
             {currentPage === id && <div className={cx("active")}></div>}
             <div className={cx("sidebar-item")}>
@@ -81,7 +86,6 @@ export const Sidebar = ({ sidebarRef, onClick }: SidebarProps) => {
 
     const handleClickOption = useCallback((item: IGlobalConstantsType) => {
         item.to && navigate(`${item.to}`);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (
@@ -101,6 +105,7 @@ export const Sidebar = ({ sidebarRef, onClick }: SidebarProps) => {
                                 key={index}
                                 id={item.id}
                                 title={item.title}
+                                to={item.to}
                                 icon={item.icon}
                                 data={item.children}
                                 onClick={handleClickOption}

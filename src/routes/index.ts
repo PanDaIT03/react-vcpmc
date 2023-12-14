@@ -14,6 +14,8 @@ import ContractPage from "~/pages/ContractPage";
 import DetailPage from "~/pages/AuthorizationContractPage/DetailPage";
 import EditPage from "~/pages/AuthorizationContractPage/EditPage";
 import AddPage from "~/pages/AuthorizationContractPage/AddPage";
+import RecordPage from "~/pages/RecordPage";
+import EditRecordPage from "~/pages/EditRecordPage";
 
 const publicRoutes = [
     { path: routes.LoginPage, component: LoginPage },
@@ -21,6 +23,8 @@ const publicRoutes = [
     { path: routes.ResetPasswordPage, component: ResetPasswordPage },
     { path: routes.ForgotPasswordPage, component: ForgotPasswordPage },
     { path: routes.AddPage, component: AddPage, layout: DefaultLayout },
+    { path: routes.EditRecordPage, component: EditRecordPage, layout: DefaultLayout },
+    // { path: routes.RecordPage, component: RecordPage, layout: DefaultLayout },
 ];
 
 const protectedRoutes = [
@@ -28,6 +32,7 @@ const protectedRoutes = [
     { path: routes.ContractPage, component: ContractPage, layout: DefaultLayout },
     { path: routes.EditPage, component: EditPage, layout: DefaultLayout },
     { path: routes.DetailPage, component: DetailPage, layout: DefaultLayout },
+    { path: routes.RecordPage, component: RecordPage, layout: DefaultLayout },
 ];
 
 export { publicRoutes, protectedRoutes };

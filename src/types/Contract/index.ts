@@ -3,6 +3,7 @@ export interface IContract {
     authorized: string
     authorizedPerson: string
     authorizingLegalEntity: string
+    approvalDate: string
     censored: boolean
     contractCode: string
     contractTypesId: string

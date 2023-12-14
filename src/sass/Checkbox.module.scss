@@ -1,10 +1,8 @@
 .wrapper {
-  width: 0;
-  opacity: 0;
+  width: max-content;
   display: flex;
   align-items: center;
   gap: 0.8rem;
-  transition: all 0.1s linear;
 
   .checkbox-checked {
     width: 2.4rem;
@@ -20,9 +18,4 @@
   p {
     width: max-content;
   }
-}
-
-.active {
-  width: max-content;
-  opacity: 1;
 }

@@ -1,0 +1,145 @@
+.wrapper {
+  width: 154.1rem;
+}
+
+.action {
+  margin-top: 3.2rem;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  gap: 2.4rem;
+
+  .search {
+    width: 50.1rem;
+  }
+}
+
+.actions-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 6.4rem;
+
+  .approve {
+    flex: auto;
+    gap: 6.4rem;
+    justify-content: flex-start;
+  }
+}
+
+.view {
+  display: flex;
+  gap: 1.6rem;
+
+  .list,
+  .grid {
+    cursor: pointer;
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+}
+
+.filter {
+  display: flex;
+  justify-content: space-between;
+  flex: 1;
+
+  .checked-all {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--white);
+    font-weight: 400;
+    letter-spacing: -0.032px;
+    cursor: pointer;
+    user-select: none;
+  }
+}
+
+.record {
+  .edit {
+    color: var(--orange-4-default);
+    font-size: 1.2rem;
+    letter-spacing: -0.024px;
+    text-decoration-line: underline;
+  }
+
+  .status {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .date {
+    opacity: 0.5;
+  }
+}
+
+.audio {
+  width: 48rem;
+  height: 28rem;
+  padding: 1.7rem 1.4rem 1.6rem 1.4rem;
+}
+
+.active {
+  filter: invert(47%) sepia(95%) saturate(2076%) hue-rotate(356deg)
+    brightness(104%) contrast(103%);
+}
+
+.inactive {
+  filter: invert(60%) sepia(6%) saturate(364%) hue-rotate(196deg)
+    brightness(89%) contrast(80%);
+}
+
+.action-bottom {
+  margin-top: 5.6rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  align-self: stretch;
+}
+
+.show {
+  color: var(--text-stroke-text-and-stroke);
+  font-size: 1.4rem;
+  font-weight: 400;
+  line-height: 2rem;
+  letter-spacing: 0.21px;
+  gap: 0.8rem;
+
+  input {
+    color: var(--text-stroke-text-and-stroke);
+    font-family: Source Sans Pro;
+    font-size: 1.6rem;
+    font-weight: 400;
+    line-height: 130%;
+
+    width: 5rem;
+    padding: 0.6rem 1.6rem 0.5rem 1.6rem;
+    background: rgba(47, 47, 65, 0.7);
+    border: 0.1rem solid var(--orange-4-default);
+    border-radius: 0.4rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.pagination {
+  width: 20.3rem;
+  height: 2.6rem;
+  color: var(--white);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .page-num {
+    margin: 0 1.6rem;
+    gap: 2rem;
+  }
+}
+
+.vadility {
+  width: 16.5rem;
+}

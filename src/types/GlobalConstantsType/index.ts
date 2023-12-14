@@ -1,4 +1,4 @@
-import { Dispatch, ReactNode } from "react";
+import { ReactNode } from "react";
 
 export interface IGlobalConstantsType {
   id: number;

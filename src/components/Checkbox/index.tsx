@@ -1,5 +1,4 @@
 import classNames from "classnames/bind";
-import { wrap } from "module";
 import { memo } from "react";
 
 import { images } from "~/assets";
@@ -7,7 +6,6 @@ import styles from "~/sass/Checkbox.module.scss";
 const cx = classNames.bind(styles);
 
 interface CheckboxProps {
-    visible: boolean
     checked?: boolean
     label?: string
     labelMaxWidth?: string
@@ -16,7 +14,6 @@ interface CheckboxProps {
 };
 
 export const Checkbox = memo(({
-    visible,
     checked,
     label,
     labelMaxWidth,
@@ -32,13 +29,13 @@ export const Checkbox = memo(({
         ...passProps
     };
 
-    const classes = cx("wrapper", visible && "active", {
+    const classes = cx("wrapper", {
         [className]: className
     });
 
     return (
         <div className={classes} {...props}>
-            {visible && !checked
+            {!checked
                 ? <img src={images.checkbox} alt="checkbox" />
                 : (
                     <p className={cx("checkbox-checked")}>

@@ -130,7 +130,6 @@ export const RenewalAuthorization = ({
                             <div className={cx("content_row")}>
                                 <Checkbox
                                     checked={isAuthor}
-                                    visible={true}
                                     label="Quyền tác giả"
                                     onClick={() => setIsAuthor(!isAuthor)}
                                 />
@@ -154,7 +153,6 @@ export const RenewalAuthorization = ({
                             <div className={cx("items", "content_row")}>
                                 <Checkbox
                                     checked={checked}
-                                    visible={true}
                                     label="Quyền liên quan"
                                 />
                                 <div className={cx("item")}>
@@ -172,7 +170,6 @@ export const RenewalAuthorization = ({
                                                 <div className={cx("content_row")} key={item.id}>
                                                     <Checkbox
                                                         checked={isChecked}
-                                                        visible={true}
                                                         label={item.title}
                                                         labelMaxWidth="217"
                                                         onClick={() => handleCheckbox(item, isChecked)}

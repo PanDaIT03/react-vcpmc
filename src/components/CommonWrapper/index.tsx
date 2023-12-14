@@ -8,17 +8,17 @@ import { PagingItemType } from "../Paging";
 import styles from "~/sass/Contract.module.scss";
 const cx = classNames.bind(styles);
 
-interface ContractProps {
+interface CommonWrapperProps {
     title: string
     children?: ReactNode
-    paging: PagingItemType[]
+    paging?: PagingItemType[]
 };
 
-export const Contract = ({
+export const CommonWrapper = ({
     title,
     children,
     paging
-}: ContractProps) => {
+}: CommonWrapperProps) => {
     return (
         <div className={cx("wrapper")}>
             <div className={cx("container")}>

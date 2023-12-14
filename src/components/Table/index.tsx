@@ -1,23 +1,32 @@
 import classNames from "classnames/bind";
-import { ReactNode } from "react";
+import { Dispatch, ReactNode, SetStateAction } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 
 import { Loading } from "../Loading";
+import { Checkbox } from "../Checkbox";
 
 import styles from "~/sass/Table.module.scss";
 const cx = classNames.bind(styles);
 
 interface TableProps {
     loading: boolean
+    thead: string[]
+    isCheckedAll?: boolean
+    isApprove?: boolean
     className?: string
     children?: ReactNode
+    setIsCheckedAll?: Dispatch<SetStateAction<boolean>>
 };
 
 export const Table = ({
     loading,
+    thead,
+    isApprove = false,
+    isCheckedAll = false,
     className,
-    children
+    children,
+    setIsCheckedAll
 }: TableProps) => {
     if (!className) className = "";
 
@@ -30,7 +39,22 @@ export const Table = ({
     return (
         <div className={classes}>
             <table>
-                {children}
+                <thead>
+                    <tr className={cx("title")}>
+                        {isApprove && <th>
+                            <Checkbox
+                                checked={isCheckedAll}
+                                onClick={() => setIsCheckedAll && setIsCheckedAll(!isCheckedAll)}
+                            />
+                        </th>}
+                        {thead.map((item, index) => (
+                            <th key={index}><p>{item}</p></th>
+                        ))}
+                    </tr>
+                </thead>
+                <tbody>
+                    {children}
+                </tbody>
             </table>
             <div className={cx("action-bottom")}>
                 <div className={cx("show", "--center-flex")}>

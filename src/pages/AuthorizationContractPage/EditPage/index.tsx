@@ -8,7 +8,7 @@ import * as Yup from "yup";
 
 import { PagingItemType } from "~/components/Paging";
 import { IContract, IUserDetail } from "~/types";
-import { Contract } from "~/components/Contract";
+import { CommonWrapper } from "~/components/CommonWrapper";
 import { RootState, useAppDispatch } from "~/state";
 import { routes } from "~/config/routes";
 import { SidebarContext } from "~/context/Sidebar/SidebarContext.index";
@@ -142,7 +142,7 @@ function EditPage() {
 
     return (
         <div className={cx("wrapper")}>
-            <Contract
+            <CommonWrapper
                 title={`Hợp đồng uỷ quyền bài hát - ${code}`}
                 paging={PAGING_ITEMS}
             >
@@ -152,7 +152,7 @@ function EditPage() {
                     loading={loading}
                     type="edit"
                 />
-            </Contract>
+            </CommonWrapper>
         </div >
     );
 };

@@ -48,38 +48,38 @@ const ProductItem = memo(({
       return (
         <tr
           key={index}
-          className={cx("product_item")}
           onClick={() => handleCheckBox(record, isChecked)}
         >
           {approve
-            && <td className={cx("check", "content")}>
-              <Checkbox checked={isChecked} visible={approve} />
+            && <td>
+              <Checkbox checked={isChecked} />
             </td>}
-          <td className={cx("numerical-order", "content")}>{index + 1}</td>
-          <td className={cx("record-name", "content")}>
-            <div className={cx("product-title")}>{record.nameRecord}</div>
-            <div className={cx("sub-title")}>
-              <div className={cx("category")}>{record.category}</div>
-              <img className={cx("icon")} src={images.ellipseEffect} alt="icon" />
-              <div className={cx("format")}>{record.format}</div>
-              <img className={cx("icon")} src={images.ellipseEffect} alt="icon" />
-              <div className={cx("duration")}>{record.time}</div>
+          <td>{index + 1}</td>
+          <td>
+            <div>{record.nameRecord}</div>
+            <div className={cx("subtitle")}>
+              <div>{record.category}</div>
+              <img src={images.ellipseEffect} alt="icon" />
+              <div>{record.format}</div>
+              <img src={images.ellipseEffect} alt="icon" />
+              <div>{record.time}</div>
             </div>
           </td>
-          <td className={cx("isrc-code", "content")}>{record.ISRCCode}</td>
-          <td className={cx("single-name", "content")}>{record.singer}</td>
-          <td className={cx("authorized", "content")}>{record.author}</td>
-          <td className={cx("download-date", "content")}>{record.createdDate}</td>
-          <td className={cx("status", "content")}>
+          <td>{record.ISRCCode}</td>
+          <td>{record.singer}</td>
+          <td>{record.author}</td>
+          <td>{record.createdDate}</td>
+          <td>
             {CB_APPROVE_ITEMS.map((item, index) => item.title === record.contractStatus
               && (
-                <span className={cx("--center-flex")} key={index}>
+                <span key={index} className={cx("approved")}>
                   <img className={cx("icon")} src={item.icon} alt="icon" />
                   <p>{item.title}</p>
                 </span>
               ))}
           </td>
-          <td className={cx("listening", "content")}
+          <td
+            className={cx("listening")}
             onClick={() => {
               setVisible(true);
               setAudioSource(record.audioLink);
@@ -132,15 +132,14 @@ export const Product = ({
   }, [records]);
 
   useEffect(() => {
-    const isAll = records.length > 0 && recordArray.length === editRecords.length;
-    setIsCheckedAll(isAll);
-  }, [recordArray]);
-
-  useEffect(() => {
     checked
       ? setRecordArray(!approve ? records : editRecords)
       : setRecordArray([]);
   }, [checked]);
+
+  useEffect(() => {
+    isCheckedAll ? setRecordArray(editRecords) : setRecordArray([]);
+  }, [isCheckedAll]);
 
   useEffect(() => {
     if (approve) {
@@ -218,37 +217,22 @@ export const Product = ({
         </div>
       </div>
       <Table
-        className={cx("contract")}
         loading={loading}
+        isApprove={approve}
+        isCheckedAll={isCheckedAll}
+        thead={["STT", "Tên bản ghi", "Mã ISRC", "Ca sĩ", "Tác giả", "Ngày tải",
+          "Tình trạng", '']}
+        className={cx("contract")}
+        setIsCheckedAll={setIsCheckedAll}
       >
-        <tbody>
-          <tr className={cx("product_title")}>
-            {approve
-              && <th className={cx("check", "title")}>
-                <Checkbox
-                  checked={isCheckedAll}
-                  visible={approve}
-                  onClick={() => setChecked(!checked)}
-                />
-              </th>}
-            <th className={cx("numerical-order", "title")}>STT</th>
-            <th className={cx("record-name", "title")}>Tên bản ghi</th>
-            <th className={cx("isrc-code", "title")}>Mã ISRC</th>
-            <th className={cx("single-name", "title")}>Ca sĩ</th>
-            <th className={cx("authorized", "title")}>Tác giả</th>
-            <th className={cx("download-date", "title")}>Ngày tải</th>
-            <th className={cx("status", "title")}>Tình trạng</th>
-            <th className={cx("listening", "title")}>&nbsp;</th>
-          </tr>
-          <ProductItem
-            data={!approve ? searchResult : editRecords}
-            recordArray={recordArray}
-            handleCheckBox={handleCheckBox}
-            approve={approve}
-            setVisible={setAudioVisible}
-            setAudioSource={setAudioSource}
-          />
-        </tbody>
+        <ProductItem
+          data={!approve ? searchResult : editRecords}
+          recordArray={recordArray}
+          handleCheckBox={handleCheckBox}
+          approve={approve}
+          setVisible={setAudioVisible}
+          setAudioSource={setAudioSource}
+        />
       </Table>
       <Dialog
         primary

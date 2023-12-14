@@ -10,7 +10,6 @@ import {
 
 import { fireStoreDatabase } from "~/config/firebase";
 import { IContract } from "~/types";
-import { checkUserIsExisted } from "../user";
 
 export const getContracts = async () => {
   const queryStmt = query(
@@ -25,6 +24,7 @@ export const getContracts = async () => {
       authorizedPerson: doc.data().authorizedPerson,
       authorized: doc.data().authorized,
       authorizingLegalEntity: doc.data().authorizingLegalEntity,
+      approvalDate: doc.data().approvalDate,
       censored: doc.data().censored,
       contractCode: doc.data().contractCode,
       contractTypesId: doc.data().contractTypesId,

@@ -1,8 +1,9 @@
 .wrapper {
-  width: 100%;
+  width: max-content;
   display: flex;
   align-items: center;
   pointer-events: none;
+  position: relative;
 
   .title {
     width: max-content;
@@ -64,7 +65,11 @@
 }
 
 .small {
-  width: 13.5rem;
+  width: 14rem;
+}
+
+.small-pl {
+  width: 25.9rem;
 }
 
 .large {
@@ -74,6 +79,11 @@
 
 .extra-large {
   width: 37.4rem;
+  height: 100% !important;
+}
+
+.extra-extra-large {
+  width: 69.5rem;
   height: 100% !important;
 }
 

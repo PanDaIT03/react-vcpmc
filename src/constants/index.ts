@@ -1,6 +1,8 @@
+import moment from "moment";
+
 import { IGlobalConstantsType } from "~/types";
 import { images } from "~/assets";
-import moment from "moment";
+import { routes } from "~/config/routes";
 
 const LANGUAGE_ITEMS = [
   {
@@ -37,6 +39,7 @@ const SIDEBAR_ITEMS = [
     icon: images.banGhi,
     title: "Kho bản ghi",
     isActive: false,
+    to: routes.RecordPage,
   },
   {
     id: 2,
@@ -55,6 +58,7 @@ const SIDEBAR_ITEMS = [
     icon: images.contract,
     title: "Quản lý",
     isActive: false,
+    to: "/contract-management",
     children: [
       {
         id: 1,
@@ -251,6 +255,74 @@ const CAPABILITY = [
   },
 ];
 
+const CB_MUSIC_KIND = [
+  {
+    id: 1,
+    title: "Tất cả",
+  },
+  {
+    id: 2,
+    title: "Pop",
+  },
+  {
+    id: 3,
+    title: "EDM",
+  },
+  {
+    id: 4,
+    title: "Rock",
+  },
+  {
+    id: 5,
+    title: "Ballad",
+  },
+];
+
+const CB_FORMAT = [
+  {
+    id: 1,
+    title: "Tất cả",
+  },
+  {
+    id: 2,
+    title: "Audio",
+  },
+  {
+    id: 3,
+    title: "Video",
+  },
+];
+
+const CB_VADILITY_MUSIC = [
+  {
+    id: 1,
+    title: "Tất cả",
+  },
+  {
+    id: 2,
+    title: "Còn thời hạn",
+  },
+  {
+    id: 3,
+    title: "Hết hạn",
+  },
+];
+
+const CB_APPROVE = [
+  {
+    id: 1,
+    title: "Tất cả",
+  },
+  {
+    id: 2,
+    title: "Duyệt bởi người dùng",
+  },
+  {
+    id: 3,
+    title: "Duyệt tự động",
+  },
+];
+
 const handleClickDropDown = (
   item: IGlobalConstantsType,
   data: IGlobalConstantsType[]
@@ -339,10 +411,12 @@ const regexOnlyNumer = (value: string) => {
 export {
   formatDate,
   formatTime,
-  handleClickDropDown,
+  getCurrentDate,
   theFollowingDays,
   formatDateYMD,
   formatDateDMY,
+  formatDateMDY,
+  handleClickDropDown,
   regexOnlyNumer,
   LANGUAGE_ITEMS,
   SIDEBAR_ITEMS,
@@ -352,4 +426,8 @@ export {
   CAPABILITY,
   CB_OWNER_ITEMS,
   CB_APPROVE_ITEMS,
+  CB_MUSIC_KIND,
+  CB_FORMAT,
+  CB_VADILITY_MUSIC,
+  CB_APPROVE,
 };

@@ -8,4 +8,6 @@ export const routes = {
   ContractPage: "/contract-management",
   DetailPage: "/contract-management/detail/:contractCode",
   AddPage: "/contract-management/add",
+  RecordPage: "/record",
+  EditRecordPage: "/record/edit/:recordId",
 };

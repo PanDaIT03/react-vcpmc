@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import * as Yup from "yup";
 
 import { routes } from "~/config/routes";
-import { Contract } from "~/components/Contract";
+import { CommonWrapper } from "~/components/CommonWrapper";
 import { PagingItemType } from "~/components/Paging";
 import { IContract, IUserDetail } from "~/types";
 import { formatDateDMY } from "~/constants";
@@ -92,6 +92,7 @@ function AddPage() {
                 authorized: "KEYO",
                 authorizedPerson: "",
                 authorizingLegalEntity: "",
+                approvalDate: "",
                 censored: false,
                 contractCode: contractCode,
                 contractTypesId: "",
@@ -147,7 +148,7 @@ function AddPage() {
 
     return (
         <div className={cx("wrapper")}>
-            <Contract
+            <CommonWrapper
                 title="Thêm hợp đồng ủy quyền mới"
                 paging={PAGING_ITEMS}
             >
@@ -157,7 +158,7 @@ function AddPage() {
                     loading={loading}
                     type="add"
                 />
-            </Contract>
+            </CommonWrapper>
         </div>
     );
 };

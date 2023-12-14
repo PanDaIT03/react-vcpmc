@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 
-import { Contract } from "~/components/Contract";
+import { CommonWrapper } from "~/components/CommonWrapper";
 import { Tab, Tabs } from "~/components/Tabs";
 import { SidebarContext } from "~/context/Sidebar/SidebarContext.index";
 import { PagingItemType } from "~/components/Paging";
@@ -26,7 +26,7 @@ function ContractPage() {
     }, []);
 
     return (
-        <Contract
+        <CommonWrapper
             title="Danh sách hợp đồng"
             paging={PAGING_ITEMS}
         >
@@ -43,7 +43,7 @@ function ContractPage() {
                 />
             </Tabs>
             <AuthorizationContractPage />
-        </Contract>
+        </CommonWrapper>
     )
 };
 

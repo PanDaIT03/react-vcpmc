@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 
 import Button from "~/components/Button";
 import { images } from "~/assets";
-import { Contract } from "~/components/Contract";
+import { CommonWrapper } from "~/components/CommonWrapper";
 import { Tab, Tabs } from "~/components/Tabs";
 import { ActionBar } from "~/components/ActionBar";
 import { ActionBarItem } from "~/components/ActionBar/ActionBarItem";
@@ -116,20 +116,24 @@ function DetailPage() {
     };
 
     const handleCancleContract = (id: string, reason: string, status: string) => {
-        console.log(cancleArea);
         dispatch(cancelContractAction({ id: id, reason: reason, status: status }));
     };
 
     const handleClickApproval = (status: string) => {
         if (recordArray.length > 0) {
-            dispatch(updateRecordsAction({ records: recordArray, status: status, contractId: contractDetail.docId || "" }));
+            dispatch(updateRecordsAction({
+                records: recordArray,
+                status: status,
+                contractId: contractDetail.docId || "",
+                type: "contracts"
+            }));
             setApprove(false);
         };
     };
 
     return (
         <div className={cx("wrapper")}>
-            <Contract
+            <CommonWrapper
                 title={`Chi tiết hợp đồng uỷ quyền bài hát - ${contractCode}`}
                 paging={PAGING_ITEMS}
             >
@@ -235,7 +239,7 @@ function DetailPage() {
                     />
                 </Dialog>
                 <Loading loading={loading} />
-            </Contract>
+            </CommonWrapper>
         </div>
     );
 };
