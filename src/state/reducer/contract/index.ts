@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 import {
+  addContractAction,
   cancelContractAction,
   getContractsAction,
 } from "~/state/thunk/contract";
@@ -15,7 +16,14 @@ interface InitType {
 const initialState: InitType = {
   contracts: [],
   loading: false,
-  status: "get successfully" || "get failed" || "updated" || "update failed",
+  status:
+    "get successfully" ||
+    "get failed" ||
+    "updated" ||
+    "update failed" ||
+    "insert successfully" ||
+    "insert failed" ||
+    "",
 };
 
 const contractSlice = createSlice({
@@ -57,6 +65,17 @@ const contractSlice = createSlice({
       })
       .addCase(cancelContractAction.rejected, (state) => {
         state.loading = false;
+      })
+      .addCase(addContractAction.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(addContractAction.fulfilled, (state) => {
+        state.loading = false;
+        state.status = "insert success";
+      })
+      .addCase(addContractAction.rejected, (state) => {
+        state.loading = false;
+        state.status = "insert failed";
       })
       .addDefaultCase((state) => {
         return state;

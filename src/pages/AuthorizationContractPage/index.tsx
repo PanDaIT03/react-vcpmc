@@ -144,7 +144,11 @@ function AuthorizationContractPage() {
                         <td >{index + 1}</td>
                         <td >{contract.contractCode}</td>
                         <td >{contract.customer}</td>
-                        <td >{contract.authorized}</td>
+                        <td >
+                            {contract.authorized !== ""
+                                ? contract.authorized
+                                : "Chưa có"
+                            }</td>
                         <td>
                             {typeof contract.ownerShips === "string"
                                 ? <p>{contract.ownerShips}</p>

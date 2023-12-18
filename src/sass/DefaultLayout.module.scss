@@ -61,6 +61,7 @@
     position: fixed;
     background-color: var(--white-transparent);
     opacity: .4;
+    z-index: 99;
 }
 
 .loading-spinner {

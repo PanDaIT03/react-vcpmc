@@ -100,7 +100,7 @@ function EditPage() {
                 status: status
             };
 
-            const user: IUserDetail = {
+            const user: Omit<IUserDetail, "companyName" | "position"> = {
                 docId: contractDetail.createdBy,
                 firstName: fNameList[0],
                 lastName: fNameList[fNameList.length - 1],

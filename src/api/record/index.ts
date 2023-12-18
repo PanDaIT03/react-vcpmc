@@ -66,19 +66,28 @@ export const getCategories = async () => {
 export const approvalRecords = async (
   recordId: string,
   status: string,
-  type: string
+  approvalBy: string,
+  approvalDate: string
 ) => {
   const collectionRef = collection(fireStoreDatabase, "records");
+  const updateRecords = {
+    status: status,
+    approvalBy: approvalBy,
+    approvalDate: approvalDate,
+  };
 
-  let updateRecords = {};
-  if (type === "records")
-    updateRecords = {
-      status: status,
-    };
-  else
-    updateRecords = {
-      contractStatus: status,
-    };
+  const recordRef = doc(collectionRef, recordId);
+  await updateDoc(recordRef, updateRecords);
+};
+
+export const approvalContractRecords = async (
+  recordId: string,
+  status: string
+) => {
+  const collectionRef = collection(fireStoreDatabase, "records");
+  const updateRecords = {
+    contractStatus: status,
+  };
 
   const recordRef = doc(collectionRef, recordId);
   await updateDoc(recordRef, updateRecords);

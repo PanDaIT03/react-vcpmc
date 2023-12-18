@@ -9,11 +9,15 @@ import { routes } from "~/config/routes";
 import { CommonWrapper } from "~/components/CommonWrapper";
 import { PagingItemType } from "~/components/Paging";
 import { IContract, IUserDetail } from "~/types";
-import { formatDateDMY } from "~/constants";
+import { formatDateDMY, getCurrentDateTimeDMY, getCurrentDate } from "~/constants";
 import { SidebarContext } from "~/context/Sidebar/SidebarContext.index";
 import { RootState, useAppDispatch } from "~/state";
 import { ActionContract } from "~/components/ActionContract";
 import { addContractAction } from "~/state/thunk/contract";
+import { Loading } from "~/components/Loading";
+import { AddContractSuccess } from "~/components/AddContractSuccess";
+import { Dialog } from "~/components/Dialog";
+import { AddRecord } from "~/components/AddRecord";
 
 import styles from "~/sass/ActionContract.module.scss";
 const cx = classNames.bind(styles);
@@ -31,10 +35,10 @@ const PAGING_ITEMS: Array<PagingItemType> = [
     }
 ];
 
-type InitType = { fullName: string } & Pick<IContract, "contractCode" | "customer" | "authorizingLegalEntity" | "effectiveDate" |
-    "expirationDate" | "status"> & Omit<IUserDetail, "docId" | "firstName" | "lastName">;
-
-const initialValues: InitType = {} as InitType;
+type InitType =
+    { fullName: string, companyName: string, position: string }
+    & Pick<IContract, "contractCode" | "authorizingLegalEntity" | "customer" | "effectiveDate" | "expirationDate">
+    & Omit<IUserDetail, "docId" | "firstName" | "lastName">;
 
 function AddPage() {
     const dispatch = useAppDispatch();
@@ -43,79 +47,133 @@ function AddPage() {
     const { contractCode: code } = params;
 
     const { setActive } = useContext(SidebarContext);
+    const [isAddSuccess, setIsAddSuccess] = useState(false);
 
     const contractState = useSelector((state: RootState) => state.contract);
-    const { contracts, loading } = contractState;
+    const { contracts, loading, status } = contractState;
     const userState = useSelector((state: RootState) => state.user);
     const { currentUser } = userState;
 
     const [contractDetail, setContractDetail] = useState<IContract & IUserDetail>({} as IContract & IUserDetail);
 
+    const initialValues: InitType = {
+        // contractCode: "",
+        // customer: "",
+        // companyName: "",
+        // position: "",
+        // authorizingLegalEntity: "Cá nhân",
+        // effectiveDate: getCurrentDate("yyyy-mm-dd"),
+        // expirationDate: "",
+        // fullName: "",
+        // dateOfBirth: "",
+        // gender: "Nam",
+        // nationality: "",
+        // phoneNumber: "",
+        // idNumber: "",
+        // dateRange: "",
+        // issuedBy: "",
+        // taxCode: "",
+        // residence: "",
+        // email: "",
+        // userName: "",
+        // password: "",
+        // bankNumber: "",
+        // bank: ""
+        contractCode: "HDA",
+        customer: "Hợp đồng uỷ quyền bài hát",
+        companyName: "PD Software",
+        position: "Chủ tịch",
+        authorizingLegalEntity: "Tổ chức",
+        effectiveDate: getCurrentDate("yyyy-mm-dd"),
+        expirationDate: getCurrentDate("yyyy-mm-dd"),
+        fullName: "Dương Đại",
+        dateOfBirth: "2003-10-05",
+        gender: "Nam",
+        nationality: "Việt Nam",
+        phoneNumber: "0987164519",
+        idNumber: "123123123123",
+        dateRange: getCurrentDate("yyyy-mm-dd"),
+        issuedBy: "TP. Sadec",
+        taxCode: "123123123123",
+        residence: "Sadec",
+        email: "pandaid03@gmail.com",
+        userName: "pandaid03@gmail.com",
+        password: "12345678",
+        bankNumber: "123123123123",
+        bank: "Agribank"
+    };
+
     const formik = useFormik({
         initialValues: initialValues,
         validationSchema: Yup.object({
-            // contractCode: Yup.string().required(),
-            // customer: Yup.string().required(),
-            // effectiveDate: Yup.string().required(),
-            // expirationDate: Yup.string().required(),
-            // status: Yup.string().required(),
-            // fullName: Yup.string().required(),
-            // dateOfBirth: Yup.string().required(),
-            // gender: Yup.string().required(),
-            // nationality: Yup.string().required(),
-            // phoneNumber: Yup.string().required().matches(/(84|0[3|5|7|8|9])+([0-9]{8})\b/g),
-            // idNumber: Yup.string().required(),
-            // dateRange: Yup.string().required(),
-            // issuedBy: Yup.string().required(),
+            contractCode: Yup.string().required(),
+            customer: Yup.string().required(),
+            authorizingLegalEntity: Yup.string().required(),
+            effectiveDate: Yup.string().required(),
+            expirationDate: Yup.string().required(),
+            fullName: Yup.string().required(),
+            dateOfBirth: Yup.string().required(),
+            gender: Yup.string().required(),
+            nationality: Yup.string().required(),
+            // phoneNumber: Yup.string()
+            //     .required()
+            //     .matches(/(84|0[3|5|7|8|9])+([0-9]{8})\b/g),
+            idNumber: Yup.string().required(),
+            dateRange: Yup.string().required(),
+            issuedBy: Yup.string().required(),
             // taxCode: Yup.string().required(),
             // residence: Yup.string().required(),
             email: Yup.string()
                 .required("Không được để trống")
                 .matches(/^\S+@\S+\.\S+$/, "Vui lòng nhập địa chỉ đúng định dạng"),
-            // userName: Yup.string()
-            //     .required("Không được để trống")
-            //     .matches(/^\S+@\S+\.\S+$/, "Vui lòng nhập địa chỉ đúng định dạng"),
-            // password: Yup.string().required(),
-            // bankNumber: Yup.string().required().matches(/^[0-9]*$/),
-            // bank: Yup.string().required(),
+            userName: Yup.string()
+                .required("Không được để trống")
+                .matches(/^\S+@\S+\.\S+$/, "Vui lòng nhập địa chỉ đúng định dạng"),
+            password: Yup.string()
+                .required()
+                .min(8),
+            // bankNumber: Yup.string()
+            //     .required()
+            //     .matches(/^[0-9]*$/),
+            // bank: Yup.string().required()
         }),
         onSubmit: values => {
-            const { contractCode, customer, authorizingLegalEntity, effectiveDate, expirationDate, status } = values,
+            const { contractCode, authorizingLegalEntity, customer,
+                effectiveDate, expirationDate } = values,
 
-                { fullName, dateOfBirth, gender, nationality, phoneNumber, idNumber, dateRange,
-                    issuedBy, taxCode, residence, email, userName, password, bankNumber, bank } = values;
+                { fullName, dateOfBirth, gender, nationality, phoneNumber, idNumber,
+                    dateRange, issuedBy, taxCode, residence, email, userName, password,
+                    bankNumber, bank, companyName, position } = values;
 
             const fNameList = fullName.split(' ');
 
-            const contract: IContract = {
-                docId: "",
-                authorized: "KEYO",
+            const contract: Omit<IContract, "docId"> = {
+                authorized: "",
                 authorizedPerson: "",
-                authorizingLegalEntity: "",
+                authorizingLegalEntity: authorizingLegalEntity,
                 approvalDate: "",
                 censored: false,
                 contractCode: contractCode,
-                contractTypesId: "",
+                contractTypesId: "3z6uY6aNa7aqt682G3u5",
                 createdBy: currentUser.docId,
                 customer: customer,
-                dateCreated: "",
-                effectiveDate: effectiveDate,
-                expirationDate: expirationDate,
-                ownerShips: "",
+                dateCreated: getCurrentDateTimeDMY(),
+                effectiveDate: formatDateDMY(effectiveDate),
+                expirationDate: formatDateDMY(expirationDate),
+                ownerShips: "Người biểu diễn",
                 reason: "",
                 status: "Mới"
-            }
+            };
 
-            const user: IUserDetail = {
-                docId: "",
+            const user: Omit<IUserDetail, "docId"> = {
                 firstName: fNameList[0],
                 lastName: fNameList[fNameList.length - 1],
-                dateOfBirth: formatDateDMY(dateOfBirth) || "",
+                dateOfBirth: formatDateDMY(dateOfBirth),
                 gender: gender,
                 nationality: nationality,
                 phoneNumber: phoneNumber,
                 idNumber: idNumber,
-                dateRange: formatDateDMY(dateRange) || "",
+                dateRange: formatDateDMY(dateRange),
                 issuedBy: issuedBy,
                 taxCode: taxCode,
                 residence: residence,
@@ -124,12 +182,13 @@ function AddPage() {
                 password: password,
                 bankNumber: bankNumber,
                 bank: bank,
+                companyName: companyName,
+                position: position
             };
 
-            console.log("contract", contract);
-            console.log("user", user);
-
-            dispatch(addContractAction({ contract: contract, user: user }));
+            dispatch(addContractAction({ contract: contract, user: user })).then(() =>
+                setIsAddSuccess(true)
+            );
         }
     });
 
@@ -138,13 +197,12 @@ function AddPage() {
     }, []);
 
     useEffect(() => {
-        if (contracts.length <= 0)
-            navigate(routes.ContractPage);
+        // if (contracts.length <= 0 || status === "insert successfully")
+        //     navigate(routes.ContractPage);
 
         const contract = contracts.find(contract => contract.contractCode === code)
         setContractDetail(contract || {} as IContract & IUserDetail);
-    }, [contracts]);
-
+    }, [contractState]);
 
     return (
         <div className={cx("wrapper")}>
@@ -152,13 +210,23 @@ function AddPage() {
                 title="Thêm hợp đồng ủy quyền mới"
                 paging={PAGING_ITEMS}
             >
-                <ActionContract
-                    formik={formik}
-                    contractDetail={contractDetail}
-                    loading={loading}
-                    type="add"
-                />
-            </CommonWrapper>
+                <>
+                    {/* <div className={cx(!isAddSuccess ? "active" : "inactive")}> */}
+                    <div className={cx(isAddSuccess ? "active" : "inactive")}>
+                        <ActionContract
+                            formik={formik}
+                            contractDetail={contractDetail}
+                            loading={loading}
+                            type="add"
+                        />
+                    </div>
+                    <div className={cx("contract-success", isAddSuccess ? "active" : "inactive")}>
+                        <AddContractSuccess />
+                    </div>
+                    <AddRecord />
+                    <Loading loading={loading} />
+                </>
+            </CommonWrapper >
         </div>
     );
 };

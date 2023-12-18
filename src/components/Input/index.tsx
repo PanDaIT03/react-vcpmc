@@ -23,7 +23,7 @@ interface InputOwnProps<E extends React.ElementType> {
     status?: "disable" | "editable"
     as?: E
     type?: "text" | "password" | "number" | "date" | "range"
-    size?: "extra-small" | "small" | "small-pl" | "medium" | "large" | "extra-large" | "custom"
+    size?: "extra-small" | "small" | "small-pl" | "medium" | "large" | "extra-large" | "custom" | "none"
     onBlur?: any
     onFocus?: any
     inputRef?: any

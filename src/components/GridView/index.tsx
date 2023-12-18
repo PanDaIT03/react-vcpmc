@@ -52,8 +52,6 @@ const GridItem = memo(({
     const [boxItem, setBoxItem] = useState<IGlobalConstantsType[]>([] as IGlobalConstantsType[]);
 
     useEffect(() => {
-        console.log(approveArray);
-
         setBoxItem([
             {
                 id: 1,

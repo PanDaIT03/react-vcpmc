@@ -3,6 +3,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import {
   addContract,
   cancleContract,
+  checkContractIsExisted,
   editContract,
   getContracts,
   saveContract,
@@ -65,10 +66,25 @@ export const saveContractAction = createAsyncThunk(
 export const addContractAction = createAsyncThunk(
   "contract/addContract",
   async ({ contract, user }: IAddContract, thunkAPI) => {
-    const isUserExisted = (await checkUserIsExisted(user.email)) !== null;
+    console.log("contract", contract);
+    console.log("user", user);
 
-    if (!isUserExisted) {
-      const userId = (await addUser(user));
-    };
+    const isUserExisted = (await checkUserIsExisted(user.email)) !== null;
+    const isContractExisted =
+      (await checkContractIsExisted(contract.contractCode)) !== null;
+
+    const isValid = !isUserExisted && !isContractExisted;
+    if (isValid) {
+      const userId = await addUser(user).then();
+      console.log(userId);
+
+      const contractData = {
+        ...contract,
+        authorizedPerson: userId,
+      };
+      return await addContract(contractData).then(() =>
+        thunkAPI.dispatch(getContractsAction())
+      );
+    }
   }
 );

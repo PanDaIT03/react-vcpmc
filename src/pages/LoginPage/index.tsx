@@ -130,13 +130,15 @@ function LoginPage() {
                         <input id="cb-remember" type="checkbox" />
                         <label htmlFor="cb-remember">Ghi nhớ đăng nhập</label>
                     </div>
-                    <Button
-                        primary
-                        fill
-                        loading={loading}
-                        value="Đăng nhập"
-                        buttonType="submit"
-                    />
+                    <div className={cx("btn-login")}>
+                        <Button
+                            primary
+                            fill
+                            loading={loading}
+                            value="Đăng nhập"
+                            buttonType="submit"
+                        />
+                    </div>
                 </Form>
                 <div className={cx("action")} onClick={handleClickAction}>Quên mật khẩu</div>
                 <Loading loading={roleLoading} />

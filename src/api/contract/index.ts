@@ -6,6 +6,7 @@ import {
   orderBy,
   query,
   updateDoc,
+  where,
 } from "firebase/firestore";
 
 import { fireStoreDatabase } from "~/config/firebase";
@@ -85,4 +86,16 @@ export const addContract = async (contract: any) => {
   const data = { ...contract };
 
   return await addDoc(collectionRef, data);
+};
+
+export const checkContractIsExisted = async (contractCode: string) => {
+  const queryStmt = query(
+      collection(fireStoreDatabase, "contract"),
+      where("contractCode", "==", `${contractCode}`)
+    ),
+    querySnapshot = await getDocs(queryStmt);
+
+  if (querySnapshot.docs.map((doc) => doc.data()).length !== 0)
+    return querySnapshot.docs.map((doc) => doc.id)[0];
+  return null;
 };

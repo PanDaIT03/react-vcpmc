@@ -156,12 +156,6 @@ export const Product = ({
     !audioVisible && setAudioSource("");
   }, [audioVisible]);
 
-  const handleCheckBox = (record: IRecord, isChecked: boolean) => {
-    !isChecked
-      ? setRecordArray([...recordArray, { ...record }])
-      : setRecordArray(() => recordArray.filter(item => item.docId !== record.docId))
-  };
-
   useEffect(() => {
     const approveStateOption = approveOption.title;
     const search = searchValue.toLowerCase().trim();
@@ -193,6 +187,12 @@ export const Product = ({
       ));
     };
   }, [searchValue, approveOption]);
+
+  const handleCheckBox = (record: IRecord, isChecked: boolean) => {
+    !isChecked
+      ? setRecordArray([...recordArray, { ...record }])
+      : setRecordArray(() => recordArray.filter(item => item.docId !== record.docId))
+  };
 
   return (
     <div className={cx("wrapper")}>

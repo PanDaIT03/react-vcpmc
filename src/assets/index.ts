@@ -46,5 +46,7 @@ export const images = {
     polygon1: require('./images/polygon_1.png'),
     musicIcon: require('./images/music_icon.png'),
     checkGreen: require('./images/u_check_green.png'),
+    require: require('./images/require_icon.png'),
+    checkCircle: require('./images/u_check-circle.png'),
     // aaaa: require('./images/aaaa.png'),
 };

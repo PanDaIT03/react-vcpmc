@@ -1,11 +1,14 @@
 import classNames from "classnames/bind";
 
 import { IGlobalConstantsType } from "~/types";
-import styles from "~/sass/BlockDetail.module.scss";
 import { Upload } from "../Upload";
 import { RadioButton } from "../RadioButton";
 import { memo } from "react";
+import { images } from "~/assets";
+
+import styles from "~/sass/BlockDetail.module.scss";
 const cx = classNames.bind(styles);
+
 interface BlockDetailProps {
     icon?: string
     title?: string
@@ -48,27 +51,39 @@ const BlockInput = memo(({
             let title = item.radioTitle?.split(",") || [];
             const { id, tag, isActive, setState, isChecked = true } = item;
 
-            return (
-                <div
-                    key={id}
-                    className={cx("value", maxWidth, isActive && "active")}
-                >
-                    {tag === "radio"
-                        ? <div className={cx("radio-group")}>
-                            <RadioButton
-                                title={title.length > 0 ? title[0] : ""}
-                                checked={isChecked}
-                                onClick={() => setState()}
-                            />
-                            <RadioButton
-                                title={title.length > 0 ? title[1] : ""}
-                                checked={!isChecked}
-                                onClick={() => setState()}
-                            />
+            const render = (tag: React.ReactNode | string) => {
+                if (tag === "radio")
+                    return (
+                        <div
+                            key={id}
+                            className={cx("value", maxWidth, isActive && "active")}
+                        >
+                            <div className={cx("radio-group")}>
+                                <RadioButton
+                                    title={title.length > 0 ? title[0] : ""}
+                                    checked={isChecked}
+                                    onClick={() => setState()}
+                                />
+                                <RadioButton
+                                    title={title.length > 0 ? title[1] : ""}
+                                    checked={!isChecked}
+                                    onClick={() => setState()}
+                                />
+                            </div>
                         </div>
-                        : tag}
-                </div>
-            );
+                    );
+                else if (tag === "none") return;
+                else return (
+                    <div
+                        key={id}
+                        className={cx("value", maxWidth, isActive && "active")}
+                    >
+                        {tag}
+                    </div>
+                );
+            };
+
+            return render(tag);
         })}
     </>
 });
@@ -107,6 +122,8 @@ export const BlockDetail = memo(({
                             className={cx("title", item.isActive && "active")}
                         >
                             <div>{item.title}:</div>
+                            {item.isRequired
+                                && <img src={images.require} alt="require" className={cx("require")} />}
                         </div>
                     ))}
                 </div>

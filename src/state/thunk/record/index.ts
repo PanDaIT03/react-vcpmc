@@ -1,8 +1,9 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { getCategoryId } from "~/api/category";
 
+import { getCategoryId } from "~/api/category";
 import { getContracts } from "~/api/contract";
 import {
+  approvalContractRecords,
   approvalRecords,
   getCategories,
   getRecords,
@@ -15,6 +16,8 @@ interface IRecords {
   status: string;
   contractId: string;
   type: "contracts" | "records";
+  approvalBy?: string;
+  approvalDate?: string;
 }
 
 export const getRecordsAction = createAsyncThunk(
@@ -39,13 +42,27 @@ export const getRecordsAction = createAsyncThunk(
 
 export const updateRecordsAction = createAsyncThunk(
   "record/updateRecords",
-  async ({ records, status, contractId, type }: IRecords, thunkAPI) => {
-    records.map(
-      async (record) =>
-        await approvalRecords(record.docId, status, type).then(() =>
+  async (
+    { records, status, contractId, type, approvalDate, approvalBy }: IRecords,
+    thunkAPI
+  ) => {
+    records.map(async (record) => {
+      if (type === "contracts")
+        return await approvalContractRecords(record.docId, status).then(() =>
           thunkAPI.dispatch(getRecordsAction(contractId))
-        )
-    );
+        );
+
+      if (
+        typeof approvalDate !== "undefined" &&
+        typeof approvalBy !== "undefined"
+      )
+        return await approvalRecords(
+          record.docId,
+          status,
+          approvalBy,
+          approvalDate
+        ).then(() => thunkAPI.dispatch(getRecordsAction(contractId)));
+    });
   }
 );
 

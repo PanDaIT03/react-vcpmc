@@ -138,13 +138,15 @@ function ResetPasswordPage() {
                         onIconRightClick={() => setIsConfirmPassword(!isConfirmPassword)}
                     />
                     <p className={cx("error-message")}>{errorMessage && errorMessage}</p>
-                    <Button
-                        primary
-                        fill
-                        value="Xác nhận"
-                        buttonType="submit"
-                        loading={loading}
-                    />
+                    <div className={cx("btn-reset")}>
+                        <Button
+                            primary
+                            fill
+                            value="Xác nhận"
+                            buttonType="submit"
+                            loading={loading}
+                        />
+                    </div>
                 </Form>
             </div>
         </div>

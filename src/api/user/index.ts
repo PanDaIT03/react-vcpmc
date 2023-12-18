@@ -64,7 +64,6 @@ export const resetPassword = async (id: string, password: string) => {
 export const updateUser = async (data: any) => {
   const collectionRef = collection(fireStoreDatabase, "users");
   const updateUser = { ...data };
-  console.log(updateUser);
 
   const userRef = doc(collectionRef, data.docId);
   await updateDoc(userRef, updateUser);
@@ -93,6 +92,8 @@ export const getUser = async () => {
       email: doc.data().email,
       userName: doc.data().userName,
       password: doc.data().password,
+      companyName: doc.data().companyName,
+      position: doc.data().position,
     };
   });
 

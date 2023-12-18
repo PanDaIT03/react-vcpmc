@@ -17,7 +17,7 @@ import { Form } from "~/components/Form";
 import { OptionMenu } from "~/components/OptionMenu";
 import Button from "~/components/Button";
 import { updateRecordAction } from "~/state/thunk/record";
-import { VALIDITY_CONTRACT_ITEMS, CB_MUSIC_KIND, formatDateMDY, getCurrentDate } from "~/constants";
+import { VALIDITY_CONTRACT_ITEMS, CB_MUSIC_KIND, getCurrentDate, formatDateMDY } from "~/constants";
 import { SidebarContext } from "~/context/Sidebar/SidebarContext.index";
 
 import styles from "~/sass/EditRecord.module.scss";
@@ -286,14 +286,14 @@ function EditRecordPage() {
                                 </div>
                                 <div className={cx("detail_item")}>
                                     <div className={cx("title")}>Ngày hết hạn:</div>
-                                    <div className={cx("text")}>{record.contract?.expirationDate}</div>
+                                    <div className={cx("text")}>{record.expirationDate}</div>
                                 </div>
                                 <div className={cx("detail_item")}>
                                     <div className={cx("title")}>Trạng thái:</div>
                                     <div className={cx("text")}>
                                         {VALIDITY_CONTRACT_ITEMS.map(item => {
-                                            let expiryDateRecord = new Date(formatDateMDY(record.expirationDate || ""));
-                                            let currentDate = new Date(getCurrentDate());
+                                            let expiryDateRecord = new Date(formatDateMDY(record.expirationDate) || "");
+                                            let currentDate = new Date(getCurrentDate("mm/dd/yyyy"));
                                             let status = !(expiryDateRecord < currentDate) ? "Còn thời hạn" : "Hết hạn";
 
                                             return (

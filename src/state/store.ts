@@ -1,18 +1,22 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { useDispatch } from "react-redux";
 
-import { userReducer } from "./reducer/user";
 import { roleReducer } from "./reducer/role";
-import { contractReducer } from "./reducer/contract";
+import { userReducer } from "./reducer/user";
 import { recordReducer } from "./reducer/record";
+import { contractReducer } from "./reducer/contract";
 
 export const store = configureStore({
-    reducer: {
-        user: userReducer,
-        role: roleReducer,
-        contract: contractReducer,
-        record: recordReducer
-    }
+  reducer: {
+    user: userReducer,
+    role: roleReducer,
+    contract: contractReducer,
+    record: recordReducer,
+  },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

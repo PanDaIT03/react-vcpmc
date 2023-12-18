@@ -1,5 +1,5 @@
 import classNames from "classnames/bind";
-import { Dispatch, ReactNode, SetStateAction, memo } from "react";
+import { ReactNode, memo } from "react";
 
 import styles from "~/sass/Dialog.module.scss";
 const cx = classNames.bind(styles);
@@ -22,14 +22,15 @@ export const Dialog = memo(({
     alignCenter,
     ...passProps
 }: DialogProps) => {
-    if (!className) className = "";
     if (!size) size = "custom";
+    if (!className) className = "";
     if (!alignCenter) alignCenter = "not-aligned";
 
     const classes = cx("content", visible && "active", {
         [className]: className,
         [alignCenter]: alignCenter,
-        [size]: size
+        [size]: size,
+        primary
     });
 
     return (

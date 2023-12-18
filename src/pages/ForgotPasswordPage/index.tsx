@@ -92,15 +92,18 @@ function ForgotPasswordPage() {
                             <p className={cx("error-message")}>{recoverErrors && recoverErrors.email}</p>
                         </>
                     }
-                    {!recover && <Button
-                        primary
-                        fill
-                        value="Xác nhận"
-                        buttonType="submit"
-                    />}
+                    {!recover &&
+                        <div className={cx("btn-submit")}>
+                            <Button
+                                primary
+                                fill
+                                value="Xác nhận"
+                                buttonType="submit"
+                            />
+                        </div>}
                 </Form>
                 <div className={cx("action")} onClick={handleClickAction}>Quay lại đăng nhập</div>
-                <Loading loading={loading}/>
+                <Loading loading={loading} />
             </div>
         </div>
     );

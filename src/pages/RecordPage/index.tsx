@@ -21,6 +21,8 @@ import { IGlobalConstantsType, IRecord } from "~/types";
 import { GridView } from "~/components/GridView";
 import { Checkbox } from "~/components/Checkbox";
 import { updateRecordsAction } from "~/state/thunk/record";
+import { CancleForm } from "~/components/CancelForm";
+import Button from "~/components/Button";
 import {
     CB_FORMAT,
     CB_MUSIC_KIND,
@@ -31,6 +33,8 @@ import {
 } from "~/constants";
 
 import styles from "~/sass/Record.module.scss";
+import { useNavigate } from "react-router-dom";
+import { routes } from "~/config/routes";
 const cx = classNames.bind(styles);
 
 const initialState = {
@@ -40,18 +44,22 @@ const initialState = {
 
 function RecordPage() {
     const dispatch = useAppDispatch();
+    const navigate = useNavigate();
 
     const { setCurrentPage } = useContext(SidebarContext);
     const [isGridView, setIsGridView] = useState(true);
     const [audioVisible, setAudioVisible] = useState(false);
+    const [cancelVisible, setCancelVisible] = useState(false);
 
     const [approveOption, setApproveOption] = useState(false);
     const [isCheckedAll, setIsCheckedAll] = useState(false);
 
+    const [cancel, setCancel] = useState('');
     const [audioSource, setAudioSource] = useState('');
     const [searchValue, setSearchValue] = useState('');
     const [approveArr, setApproveArr] = useState<IRecord[]>([]);
     const [searchResult, setSearchResult] = useState<IRecord[]>([]);
+    const [editRecords, setEditRecords] = useState<IRecord[]>([]);
 
     const [format, setFormat] = useState<IGlobalConstantsType>(initialState);
     const [approve, setApprove] = useState<IGlobalConstantsType>(initialState);
@@ -60,6 +68,8 @@ function RecordPage() {
 
     const recordState = useSelector((state: RootState) => state.record);
     const { records, loading } = recordState;
+    const userState = useSelector((state: RootState) => state.user);
+    const { currentUser } = userState;
 
     useEffect(() => {
         setCurrentPage(1);
@@ -107,15 +117,15 @@ function RecordPage() {
                 item.format.toLowerCase().includes(search)
             ));
         };
-    }, [musicKind, audioVisible, audioSource, searchValue]);
+    }, [musicKind, searchValue]);
 
     useEffect(() => {
         isCheckedAll ? setApproveArr(records) : setApproveArr([]);
     }, [isCheckedAll]);
 
     useEffect(() => {
-        console.log(approveArr);
-    }, [approveArr]);
+        setEditRecords(records.filter(record => record.status === "Chưa phê duyệt"));
+    }, [approveOption]);
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSearchValue(event.target.value);
@@ -131,8 +141,10 @@ function RecordPage() {
         dispatch(updateRecordsAction({
             records: approveArr,
             status: status,
+            approvalBy: currentUser.docId,
             contractId: "",
-            type: "records"
+            type: "records",
+            approvalDate: getCurrentDate("mm/dd/yyyy")
         })).then(() => {
             setApproveOption(false);
             setIsCheckedAll(false);
@@ -221,9 +233,9 @@ function RecordPage() {
                             className={cx("record")}
                             setIsCheckedAll={setIsCheckedAll}
                         >
-                            {searchResult.map((record, index) => {
-                                let expiryDateRecord = new Date(formatDateMDY(record.expirationDate));
-                                let currentDate = new Date(getCurrentDate());
+                            {(approveOption ? editRecords : searchResult).map((record, index) => {
+                                let expiryDateRecord = new Date(formatDateMDY(record.expirationDate) || "");
+                                let currentDate = new Date(getCurrentDate("mm/dd/yyyy"));
                                 let isExpiry = expiryDateRecord < currentDate;
 
                                 let isItemExisted = approveArr.filter(item => item.docId === record.docId);
@@ -260,12 +272,16 @@ function RecordPage() {
                                                 <p className={cx("date")}>{record.expirationDate}</p>
                                             </>
                                         }</td>
-                                        <td className={cx("edit")}>Cập nhật</td>
+                                        <td
+                                            className={cx("edit")}
+                                            onClick={() => navigate(`/record/edit/${record.docId}`)}
+                                        >
+                                            Cập nhật</td>
                                         <td
                                             className={cx("edit")}
                                             onClick={() => {
-                                                setAudioSource(record.audioLink);
                                                 setAudioVisible(true);
+                                                setAudioSource(record.audioLink);
                                             }}
                                         >Nghe</td>
                                     </tr>
@@ -274,7 +290,7 @@ function RecordPage() {
                         </Table>
                         : <div>
                             <GridView
-                                records={searchResult}
+                                records={approveOption ? editRecords : searchResult}
                                 isApprove={approveOption}
                                 setAudioSource={setAudioSource}
                                 approveArray={approveArr}
@@ -316,7 +332,7 @@ function RecordPage() {
                             <ActionBarItem
                                 title="Từ chối"
                                 icon={images.fiX}
-                                onClick={() => handleClickApprove("Bị từ chối")}
+                                onClick={() => setCancelVisible(true)}
                             />
                         </>}
                 </ActionBar>
@@ -330,6 +346,33 @@ function RecordPage() {
                         source={audioSource}
                         setVisible={setAudioVisible}
                     />
+                </Dialog>
+                <Dialog
+                    primary
+                    visible={cancelVisible}
+                    className={cx("cancel")}
+                    alignCenter="all"
+                >
+                    <CancleForm
+                        id="cancel"
+                        name="cancel"
+                        title="Lý do từ chối phê duyệt"
+                        onChange={(e) => setCancel(e.target.value)}
+                    >
+                        <div className={cx("cancel-action")}>
+                            <Button
+                                primary
+                                value="Huỷ"
+                                onClick={() => setCancelVisible(false)}
+                            />
+                            <Button
+                                fill
+                                primary
+                                value="Từ chối"
+                                onClick={() => handleClickApprove("Bị từ chối")}
+                            />
+                        </div>
+                    </CancleForm>
                 </Dialog>
             </CommonWrapper >
             <Loading loading={loading} />

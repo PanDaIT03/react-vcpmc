@@ -45,3 +45,16 @@
     max-width: 22.1rem;
   }
 }
+
+.contract-success {
+  width: 100%;
+  position: relative;
+}
+
+.inactive {
+  display: none;
+}
+
+.active {
+  display: block;
+}

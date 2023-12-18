@@ -4,6 +4,8 @@ import { IGlobalConstantsType } from "~/types";
 import { images } from "~/assets";
 import { routes } from "~/config/routes";
 
+const regexIsSlash = /^[a-zA-Z0-9/]+$/;
+
 const LANGUAGE_ITEMS = [
   {
     id: 1,
@@ -335,13 +337,45 @@ const handleClickDropDown = (
   return newDropDown;
 };
 
-const getCurrentDate = () => {
+const getCurrentDate = (format: string) => {
+  const isSlash = regexIsSlash.test(format);
+
   let today = new Date();
   let dd = String(today.getDate()).padStart(2, "0");
   let mm = String(today.getMonth() + 1).padStart(2, "0");
   let yyyy = today.getFullYear();
 
-  return mm + "/" + dd + "/" + yyyy;
+  if (isSlash) {
+    if (format === "dd/mm/yyyy") return dd + "/" + mm + "/" + yyyy;
+    else if (format === "mm/dd/yyyy") return mm + "/" + dd + "/" + yyyy;
+    else return yyyy + "/" + mm + "/" + dd;
+  } else {
+    if (format === "dd-mm-yyyy") return dd + "-" + mm + "-" + yyyy;
+    else if (format === "mm-dd-yyyy") return mm + "-" + dd + "-" + yyyy;
+    else return yyyy + "-" + mm + "-" + dd;
+  }
+};
+
+const getCurrentDateDMY = () => {
+  let today = new Date();
+  let dd = String(today.getDate()).padStart(2, "0");
+  let mm = String(today.getMonth() + 1).padStart(2, "0");
+  let yyyy = today.getFullYear();
+
+  return dd + "/" + mm + "/" + yyyy;
+};
+
+const getCurrentDateTimeDMY = () => {
+  let today = new Date();
+  let dd = String(today.getDate()).padStart(2, "0");
+  let mm = String(today.getMonth() + 1).padStart(2, "0");
+  let yyyy = today.getFullYear();
+
+  let hours = today.getHours();
+  let minutes = today.getMinutes();
+  let seconds = today.getSeconds();
+
+  return dd + "/" + mm + "/" + yyyy + ` ${hours}:${minutes}:${seconds}`;
 };
 
 // const formatDateDMY = (date: Date) => {
@@ -358,6 +392,7 @@ const getCurrentDate = () => {
 // };
 
 const formatDateMDY = (date: string) => {
+  if (typeof date === "undefined" || date === "") return;
   let dateList = date.split("/");
 
   return dateList[1] + "/" + dateList[0] + "/" + dateList[2];
@@ -372,7 +407,12 @@ const formatDateMDY = (date: string) => {
 // };
 
 const formatDateYMD = (date: string) => {
-  if (typeof date === "undefined" || date === "") return;
+  let dateList = date.split("/");
+
+  return dateList[2] + "-" + dateList[1] + "-" + dateList[0];
+};
+
+const formatDateTimeYMD = (date: string) => {
   let dateList = date.split("/");
 
   return dateList[2] + "-" + dateList[1] + "-" + dateList[0];
@@ -388,8 +428,10 @@ const formatTime = (time: number) => {
 };
 
 const formatDateDMY = (date: string) => {
-  if (typeof date === "undefined" || date === "") return;
-  let dateList = date.split("-");
+  let isSlash = regexIsSlash.test(date);
+  let dateList;
+  if (isSlash) dateList = date.split("/");
+  else dateList = date.split("-");
 
   return dateList[2] + "/" + dateList[1] + "/" + dateList[0];
 };
@@ -412,6 +454,8 @@ export {
   formatDate,
   formatTime,
   getCurrentDate,
+  getCurrentDateDMY,
+  getCurrentDateTimeDMY,
   theFollowingDays,
   formatDateYMD,
   formatDateDMY,

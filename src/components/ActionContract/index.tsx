@@ -23,11 +23,6 @@ interface ActionContractProps {
     className?: string
 };
 
-const initState = {
-    id: 0,
-    title: ""
-};
-
 export const ActionContract = memo(({
     formik,
     contractDetail,
@@ -44,7 +39,7 @@ export const ActionContract = memo(({
 
     const navigate = useNavigate();
 
-    const [national, setNational] = useState<IGlobalConstantsType>(initState);
+    const [national, setNational] = useState<IGlobalConstantsType>(CB_NATIONALITY[0]);
     const [isPassword, setIsPassword] = useState(true);
 
     const [block1, setBlock1] = useState<IGlobalConstantsType[]>([]);
@@ -64,15 +59,17 @@ export const ActionContract = memo(({
         setValues,
         setFieldValue } = formik;
 
-    const { contractCode, customer, authorizingLegalEntity, effectiveDate, expirationDate,
-        status, fullName, dateOfBirth, gender, phoneNumber, idNumber, dateRange,
-        issuedBy, taxCode, residence, email, userName, password, bankNumber, bank } = values;
+    const { contractCode, customer, companyName, position, authorizingLegalEntity,
+        effectiveDate, expirationDate, status, fullName, dateOfBirth, gender, phoneNumber,
+        idNumber, dateRange, issuedBy, taxCode, residence, email, userName, password, bankNumber, bank } = values;
 
     useEffect(() => {
         if (type === "edit" && contractDetail && Object.keys(contractDetail).length > 0) {
             setValues({
                 contractCode: contractDetail.contractCode || "",
                 customer: contractDetail.customer || "",
+                companyName: contractDetail.companyName || "",
+                position: contractDetail.position || "",
                 authorizingLegalEntity: contractDetail.authorizingLegalEntity || "Cá nhân",
                 effectiveDate: formatDateYMD(contractDetail.effectiveDate) || "",
                 expirationDate: formatDateYMD(contractDetail.expirationDate) || "",
@@ -101,6 +98,7 @@ export const ActionContract = memo(({
             {
                 id: 1,
                 title: 'Số hợp đồng',
+                isRequired: type !== "detail",
                 tag: isEdit
                     ? <Input
                         id="contractCode"
@@ -118,6 +116,7 @@ export const ActionContract = memo(({
             }, {
                 id: 2,
                 title: 'Tên hợp đồng',
+                isRequired: type !== "detail",
                 tag: isEdit
                     ? <Input
                         id="customer"
@@ -135,6 +134,7 @@ export const ActionContract = memo(({
             }, {
                 id: 3,
                 title: 'Ngày hiệu lực',
+                isRequired: type !== "detail",
                 tag: isEdit
                     ? <Input
                         id="effectiveDate"
@@ -152,6 +152,7 @@ export const ActionContract = memo(({
             }, {
                 id: 4,
                 title: 'Ngày hết hạn',
+                isRequired: type !== "detail",
                 tag: isEdit
                     ? <Input
                         id="expirationDate"
@@ -166,7 +167,7 @@ export const ActionContract = memo(({
                         onBlur={() => setFieldTouched('expirationDate', false)}
                     />
                     : <div>{contractDetail?.expirationDate}</div>
-            }, {
+            }, !(type === "add") ? {
                 id: 5,
                 title: 'Tình trạng',
                 tag: isEdit
@@ -196,7 +197,7 @@ export const ActionContract = memo(({
                             );
                         })}
                     </>
-            }
+            } : { id: 0 }
         ]);
 
         setFileAttach([
@@ -239,7 +240,9 @@ export const ActionContract = memo(({
                 isActive: true
             }
         ]);
+    }, [values, errors, touched, contractDetail]);
 
+    useEffect(() => {
         setBlock4([
             {
                 id: 1,
@@ -250,9 +253,35 @@ export const ActionContract = memo(({
                 radioTitle: "Cá nhân, Tổ chức",
                 isChecked: authorizingLegalEntity === "Cá nhân",
                 setState: () => setFieldValue("authorizingLegalEntity", authorizingLegalEntity === "Cá nhân" ? "Tổ chúc" : "Cá nhân")
-            }, {
-                id: 2,
-                title: 'Tên người uỷ quyền',
+            }, authorizingLegalEntity === "Cá nhân"
+                ? {
+                    id: 2,
+                    title: '',
+                    isRequired: type !== "detail",
+                    tag: "none"
+                } : {
+                    id: 2,
+                    title: 'Tên tổ chức',
+                    isRequired: type !== "detail",
+                    tag: isEdit
+                        ? <Input
+                            id="companyName"
+                            type='text'
+                            name='companyName'
+                            size="small-pl"
+                            value={companyName}
+                            errorMessage={errors.companyName}
+                            touched={touched.companyName}
+                            onChange={handleChange}
+                            onFocus={() => setFieldTouched('companyName', true)}
+                            onBlur={() => setFieldTouched('companyName', false)}
+                        />
+                        : <div>{contractDetail?.companyName}</div>
+                },
+            {
+                id: 3,
+                title: authorizingLegalEntity !== "Tổ chúc" ? 'Tên người uỷ quyền' : "Người đại diện",
+                isRequired: type !== "detail",
                 tag: isEdit
                     ? <Input
                         id="fullName"
@@ -268,8 +297,9 @@ export const ActionContract = memo(({
                     />
                     : <div>{contractDetail?.firstName + " " + contractDetail?.lastName}</div>
             }, {
-                id: 3,
+                id: 4,
                 title: 'Ngày sinh',
+                isRequired: type !== "detail",
                 tag: isEdit
                     ? <Input
                         id="dateOfBirth"
@@ -285,8 +315,9 @@ export const ActionContract = memo(({
                     />
                     : <div>{contractDetail?.dateOfBirth}</div>
             }, {
-                id: 4,
+                id: 5,
                 title: 'Giới tính',
+                isRequired: type !== "detail",
                 tag: isEdit
                     ? "radio"
                     : <div>{contractDetail?.gender}</div>,
@@ -294,8 +325,9 @@ export const ActionContract = memo(({
                 isChecked: gender ? gender.toLowerCase() === "nam" : false,
                 setState: () => setFieldValue("gender", gender && gender.toLowerCase() === "nam" ? "Nữ" : "Nam")
             }, {
-                id: 5,
+                id: 6,
                 title: 'Quốc tịch',
+                isRequired: type !== "detail",
                 tag: isEdit
                     ? <OptionMenu
                         data={CB_NATIONALITY}
@@ -305,7 +337,7 @@ export const ActionContract = memo(({
                     />
                     : <div>{contractDetail?.nationality}</div>
             }, {
-                id: 6,
+                id: 7,
                 title: 'Số điện thoại',
                 tag: isEdit
                     ? <Input
@@ -325,9 +357,33 @@ export const ActionContract = memo(({
         ]);
 
         setBlock5([
+            authorizingLegalEntity === "Cá nhân"
+                ? {
+                    id: 1,
+                    title: '',
+                    tag: "none"
+                } : {
+                    id: 1,
+                    title: 'Chức vụ',
+                    tag: isEdit
+                        ? <Input
+                            id="position"
+                            type='text'
+                            name='position'
+                            size="small-pl"
+                            value={position}
+                            errorMessage={errors.position}
+                            touched={touched.position}
+                            onChange={handleChange}
+                            onFocus={() => setFieldTouched('position', true)}
+                            onBlur={() => setFieldTouched('position', false)}
+                        />
+                        : <div>{contractDetail?.position}</div>
+                },
             {
-                id: 1,
+                id: 2,
                 title: 'CMND/ CCCD',
+                isRequired: type !== "detail",
                 tag: isEdit
                     ? <Input
                         id="idNumber"
@@ -343,8 +399,9 @@ export const ActionContract = memo(({
                     />
                     : <div>{contractDetail?.idNumber}</div>
             }, {
-                id: 2,
+                id: 3,
                 title: 'Ngày cấp',
+                isRequired: type !== "detail",
                 tag: isEdit
                     ? <Input
                         id="dateRange"
@@ -360,8 +417,9 @@ export const ActionContract = memo(({
                     />
                     : <div>{contractDetail?.dateRange}</div>
             }, {
-                id: 3,
+                id: 4,
                 title: 'Nơi cấp:',
+                isRequired: type !== "detail",
                 tag: isEdit
                     ? <Input
                         id="issuedBy"
@@ -377,7 +435,7 @@ export const ActionContract = memo(({
                     />
                     : <div>{contractDetail?.issuedBy}</div>
             }, {
-                id: 4,
+                id: 5,
                 title: 'Mã số thuế',
                 tag: isEdit
                     ? <Input
@@ -395,7 +453,7 @@ export const ActionContract = memo(({
                     />
                     : <div>{contractDetail?.taxCode}</div>
             }, {
-                id: 5,
+                id: 6,
                 title: 'Nơi cư trú',
                 tag: isEdit
                     ? <div className={cx("residence")}>
@@ -416,11 +474,14 @@ export const ActionContract = memo(({
                     : <div>{contractDetail?.residence}</div>
             }
         ]);
+    }, [values, errors, touched, contractDetail]);
 
+    useEffect(() => {
         setBlock6([
             {
                 id: 1,
                 title: 'Email',
+                isRequired: type !== "detail",
                 tag: isEdit
                     ? <Input
                         id="email"
@@ -438,6 +499,7 @@ export const ActionContract = memo(({
             }, {
                 id: 2,
                 title: 'Tên đăng nhập',
+                isRequired: type !== "detail",
                 tag: isEdit
                     ? <Input
                         id="userName"
@@ -455,6 +517,7 @@ export const ActionContract = memo(({
             }, {
                 id: 3,
                 title: 'Mật khẩu',
+                isRequired: type !== "detail",
                 tag: isEdit
                     ? <Input
                         id="password"
@@ -508,6 +571,10 @@ export const ActionContract = memo(({
             }
         ]);
     }, [values, errors, touched, isPassword, contractDetail]);
+
+    useEffect(() => {
+        setFieldValue("userName", email);
+    }, [email]);
 
     useEffect(() => {
         setFieldValue("nationality", national.title);
