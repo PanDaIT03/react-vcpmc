@@ -1,0 +1,91 @@
+.wrapper {
+  width: 100%;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+  padding-bottom: 4rem;
+
+  .title-primary {
+    display: flex;
+    flex-direction: column;
+    gap: 1.6rem;
+  }
+
+  .description {
+    color: var(--white);
+    width: 27.4rem;
+    letter-spacing: -0.032px;
+
+    p {
+      display: flex;
+      align-items: center;
+      color: var(--text-stroke-text-and-stroke);
+      font-size: 1.6rem;
+      letter-spacing: -0.032px;
+      gap: 0.4rem;
+      margin-bottom: 1.6rem;
+    }
+
+    .textarea-description textarea {
+      height: 10.1rem;
+    }
+  }
+
+  .line {
+    border-top: 0.1rem solid var(--text-stroke-text-and-stroke-2);
+    opacity: 0.6;
+  }
+}
+
+.infomation-records {
+  display: flex;
+  color: var(--white);
+  font-size: 1.6rem;
+  letter-spacing: -0.032px;
+  flex-direction: column;
+  gap: 1.6rem;
+
+  .row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .title {
+    font-weight: 700;
+  }
+
+  .content {
+    text-align: right;
+    font-weight: 400;
+  }
+}
+
+.topics {
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+
+  p {
+    color: var(--white);
+    font-size: 1.6rem;
+    font-weight: 700;
+    letter-spacing: -0.032px;
+  }
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  color: var(--white);
+  font-size: 1.6rem;
+
+  label {
+    user-select: none;
+    cursor: pointer;
+  }
+}

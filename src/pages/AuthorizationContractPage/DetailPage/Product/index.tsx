@@ -14,6 +14,7 @@ import { AudioDialog } from "~/components/AudioDialog";
 import { Dialog } from "~/components/Dialog";
 import { Checkbox } from "~/components/Checkbox";
 import { images } from "~/assets";
+import { Loading } from "~/components/Loading";
 
 import styles from "~/sass/Product.module.scss";
 const cx = classNames.bind(styles);
@@ -56,7 +57,7 @@ const ProductItem = memo(({
             </td>}
           <td>{index + 1}</td>
           <td>
-            <div>{record.nameRecord}</div>
+            <div>{record.title}</div>
             <div className={cx("subtitle")}>
               <div>{record.category}</div>
               <img src={images.ellipseEffect} alt="icon" />
@@ -179,7 +180,7 @@ export const Product = ({
       });
 
       setSearchResult(result.filter(item =>
-        item.nameRecord.toLowerCase().includes(search) ||
+        item.title.toLowerCase().includes(search) ||
         item.ISRCCode.toLowerCase().includes(search) ||
         item.singer.toLowerCase().includes(search) ||
         item.author.toLowerCase().includes(search) ||
@@ -217,7 +218,6 @@ export const Product = ({
         </div>
       </div>
       <Table
-        loading={loading}
         isApprove={approve}
         isCheckedAll={isCheckedAll}
         thead={["STT", "Tên bản ghi", "Mã ISRC", "Ca sĩ", "Tác giả", "Ngày tải",
@@ -249,6 +249,7 @@ export const Product = ({
         <Button primary value="Huỷ" onClick={() => setApprove(false)} />
         <Button primary fill value="Lưu" onClick={() => handleClickApprove("Đã phê duyệt")} />
       </div>
+      <Loading loading={loading} />
     </div>
   );
 };

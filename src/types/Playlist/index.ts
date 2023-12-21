@@ -1,0 +1,21 @@
+import { IRecord } from "../Record";
+
+export interface IPLaylist {
+  docId: string;
+  playlistsRecordsId?: string;
+  categoriesId: Array<string>;
+  records: IRecord[];
+  createdBy: string;
+  createdDate: string;
+  description: string;
+  imageURL: string;
+  mode: string;
+  title: string;
+  categories: Array<string>;
+}
+
+export interface PlaylistRecords {
+  docId: string;
+  playlistsId: string;
+  recordsId: Array<string>;
+}

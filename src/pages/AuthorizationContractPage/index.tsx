@@ -17,6 +17,7 @@ import { images } from "~/assets";
 import { Dialog } from "~/components/Dialog";
 import { CancleForm } from "~/components/CancelForm";
 import { routes } from "~/config/routes";
+import { Loading } from "~/components/Loading";
 
 import styles from "~/sass/AuthorizationContract.module.scss";
 const cx = classNames.bind(styles);
@@ -135,7 +136,6 @@ function AuthorizationContractPage() {
             </div>
             <Table
                 className={cx("contract")}
-                loading={loading}
                 thead={["STT", "Số hợp đồng", "Tên hợp đồng", "Người uỷ quyền",
                     "Quyền sở hữu", "Hiệu lực hợp đồng", "Ngày tạo", '', '']}
             >
@@ -215,6 +215,7 @@ function AuthorizationContractPage() {
                     </div>
                 </CancleForm>
             </Dialog>
+            <Loading loading={loading} />
         </div >
     );
 };

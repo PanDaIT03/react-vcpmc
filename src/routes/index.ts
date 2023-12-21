@@ -15,7 +15,10 @@ import DetailPage from "~/pages/AuthorizationContractPage/DetailPage";
 import EditPage from "~/pages/AuthorizationContractPage/EditPage";
 import AddPage from "~/pages/AuthorizationContractPage/AddPage";
 import RecordPage from "~/pages/RecordPage";
-import EditRecordPage from "~/pages/EditRecordPage";
+import EditRecordPage from "~/pages/RecordPage/EditPage";
+import PlayListPage from "~/pages/PlayListPage";
+import PlaylistDetailPage from "~/pages/PlayListPage/PlaylistDetailPage";
+import AddPlaylistPage from "~/pages/PlayListPage/AddPlaylistPage";
 
 const publicRoutes = [
     { path: routes.LoginPage, component: LoginPage },
@@ -24,7 +27,7 @@ const publicRoutes = [
     { path: routes.ForgotPasswordPage, component: ForgotPasswordPage },
     { path: routes.AddPage, component: AddPage, layout: DefaultLayout },
     { path: routes.EditRecordPage, component: EditRecordPage, layout: DefaultLayout },
-    // { path: routes.RecordPage, component: RecordPage, layout: DefaultLayout },
+    { path: routes.AddPlaylistPage, component: AddPlaylistPage, layout: DefaultLayout },
 ];
 
 const protectedRoutes = [
@@ -33,6 +36,8 @@ const protectedRoutes = [
     { path: routes.EditPage, component: EditPage, layout: DefaultLayout },
     { path: routes.DetailPage, component: DetailPage, layout: DefaultLayout },
     { path: routes.RecordPage, component: RecordPage, layout: DefaultLayout },
+    { path: routes.PlaylistPage, component: PlayListPage, layout: DefaultLayout },
+    { path: routes.PlaylistDetailPage, component: PlaylistDetailPage, layout: DefaultLayout },
 ];
 
 export { publicRoutes, protectedRoutes };

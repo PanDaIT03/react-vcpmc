@@ -1,5 +1,5 @@
 import classNames from "classnames/bind";
-import { ReactNode, memo } from "react";
+import { Dispatch, ReactNode, SetStateAction, memo } from "react";
 
 import { images } from "~/assets";
 import Button from "../Button";
@@ -8,7 +8,9 @@ import styles from "~/sass/AddContractSuccess.module.scss";
 const cx = classNames.bind(styles);
 
 interface AddContractSuccessProps {
+    visible: boolean
     className?: string
+    setState: Dispatch<SetStateAction<boolean>>
 };
 
 interface AddContractSuccessItemProps {
@@ -45,7 +47,9 @@ const AddContractSuccessItem = memo(({
 });
 
 export const AddContractSuccess = memo(({
-    className
+    visible,
+    className,
+    setState
 }: AddContractSuccessProps) => {
     if (!className) className = "";
 
@@ -55,7 +59,7 @@ export const AddContractSuccess = memo(({
 
     return (
         <div className={classes}>
-            <div className={cx("container")}>
+            {visible && <div className={cx("container")}>
                 <div className={cx("title")}>
                     <img src={images.checkCircle} alt="success" />
                     <h1>Hợp đồng đã được tạo thành công</h1>
@@ -77,7 +81,7 @@ export const AddContractSuccess = memo(({
                                     fill
                                     value="Thêm bản ghi trực tiếp"
                                     size="custom"
-                                    // onClick={ }
+                                    onClick={() => setState(true)}
                                 />
                             </div>
                         </AddContractSuccessItem>
@@ -87,13 +91,13 @@ export const AddContractSuccess = memo(({
                             subTitle="Bạn có thể thêm bản ghi bằng tool"
                         >
                             <div className={cx("btn-upload")}>
-                                <Button primary value="Thêm bản ghi trực tiếp" size="custom" />
+                                <Button primary value="Thêm bản ghi bằng tool" size="custom" />
                             </div>
                         </AddContractSuccessItem>
                     </div>
                     <div className={cx("note")}>Lưu ý: Hợp đồng chỉ có hiệu lực khi thêm bản ghi thành công.</div>
                 </div>
-            </div>
+            </div>}
         </div>
     );
 });

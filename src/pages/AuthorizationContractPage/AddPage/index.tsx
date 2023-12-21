@@ -16,7 +16,6 @@ import { ActionContract } from "~/components/ActionContract";
 import { addContractAction } from "~/state/thunk/contract";
 import { Loading } from "~/components/Loading";
 import { AddContractSuccess } from "~/components/AddContractSuccess";
-import { Dialog } from "~/components/Dialog";
 import { AddRecord } from "~/components/AddRecord";
 
 import styles from "~/sass/ActionContract.module.scss";
@@ -48,6 +47,7 @@ function AddPage() {
 
     const { setActive } = useContext(SidebarContext);
     const [isAddSuccess, setIsAddSuccess] = useState(false);
+    const [addRecordVisible, setAddRecordVisible] = useState(false);
 
     const contractState = useSelector((state: RootState) => state.contract);
     const { contracts, loading, status } = contractState;
@@ -57,50 +57,50 @@ function AddPage() {
     const [contractDetail, setContractDetail] = useState<IContract & IUserDetail>({} as IContract & IUserDetail);
 
     const initialValues: InitType = {
-        // contractCode: "",
-        // customer: "",
-        // companyName: "",
-        // position: "",
-        // authorizingLegalEntity: "Cá nhân",
-        // effectiveDate: getCurrentDate("yyyy-mm-dd"),
-        // expirationDate: "",
-        // fullName: "",
-        // dateOfBirth: "",
-        // gender: "Nam",
-        // nationality: "",
-        // phoneNumber: "",
-        // idNumber: "",
-        // dateRange: "",
-        // issuedBy: "",
-        // taxCode: "",
-        // residence: "",
-        // email: "",
-        // userName: "",
-        // password: "",
-        // bankNumber: "",
-        // bank: ""
-        contractCode: "HDA",
-        customer: "Hợp đồng uỷ quyền bài hát",
-        companyName: "PD Software",
-        position: "Chủ tịch",
-        authorizingLegalEntity: "Tổ chức",
+        contractCode: "",
+        customer: "",
+        companyName: "",
+        position: "",
+        authorizingLegalEntity: "Cá nhân",
         effectiveDate: getCurrentDate("yyyy-mm-dd"),
-        expirationDate: getCurrentDate("yyyy-mm-dd"),
-        fullName: "Dương Đại",
-        dateOfBirth: "2003-10-05",
+        expirationDate: "",
+        fullName: "",
+        dateOfBirth: "",
         gender: "Nam",
-        nationality: "Việt Nam",
-        phoneNumber: "0987164519",
-        idNumber: "123123123123",
-        dateRange: getCurrentDate("yyyy-mm-dd"),
-        issuedBy: "TP. Sadec",
-        taxCode: "123123123123",
-        residence: "Sadec",
-        email: "pandaid03@gmail.com",
-        userName: "pandaid03@gmail.com",
-        password: "12345678",
-        bankNumber: "123123123123",
-        bank: "Agribank"
+        nationality: "",
+        phoneNumber: "",
+        idNumber: "",
+        dateRange: "",
+        issuedBy: "",
+        taxCode: "",
+        residence: "",
+        email: "",
+        userName: "",
+        password: "",
+        bankNumber: "",
+        bank: ""
+        // contractCode: "HDA",
+        // customer: "Hợp đồng uỷ quyền bài hát",
+        // companyName: "PD Software",
+        // position: "Chủ tịch",
+        // authorizingLegalEntity: "Tổ chức",
+        // effectiveDate: getCurrentDate("yyyy-mm-dd"),
+        // expirationDate: getCurrentDate("yyyy-mm-dd"),
+        // fullName: "Dương Đại",
+        // dateOfBirth: "2003-10-05",
+        // gender: "Nam",
+        // nationality: "Việt Nam",
+        // phoneNumber: "0987164519",
+        // idNumber: "123123123123",
+        // dateRange: getCurrentDate("yyyy-mm-dd"),
+        // issuedBy: "TP. Sadec",
+        // taxCode: "123123123123",
+        // residence: "Sadec",
+        // email: "pandaid03@gmail.com",
+        // userName: "pandaid03@gmail.com",
+        // password: "12345678",
+        // bankNumber: "123123123123",
+        // bank: "Agribank"
     };
 
     const formik = useFormik({
@@ -186,9 +186,7 @@ function AddPage() {
                 position: position
             };
 
-            dispatch(addContractAction({ contract: contract, user: user })).then(() =>
-                setIsAddSuccess(true)
-            );
+            dispatch(addContractAction({ contract: contract, user: user }));
         }
     });
 
@@ -197,8 +195,8 @@ function AddPage() {
     }, []);
 
     useEffect(() => {
-        // if (contracts.length <= 0 || status === "insert successfully")
-        //     navigate(routes.ContractPage);
+        if (status === "insert success")
+            setIsAddSuccess(true);
 
         const contract = contracts.find(contract => contract.contractCode === code)
         setContractDetail(contract || {} as IContract & IUserDetail);
@@ -211,8 +209,7 @@ function AddPage() {
                 paging={PAGING_ITEMS}
             >
                 <>
-                    {/* <div className={cx(!isAddSuccess ? "active" : "inactive")}> */}
-                    <div className={cx(isAddSuccess ? "active" : "inactive")}>
+                    <div className={cx(!isAddSuccess ? "active" : "inactive")}>
                         <ActionContract
                             formik={formik}
                             contractDetail={contractDetail}
@@ -221,9 +218,15 @@ function AddPage() {
                         />
                     </div>
                     <div className={cx("contract-success", isAddSuccess ? "active" : "inactive")}>
-                        <AddContractSuccess />
+                        <AddContractSuccess
+                            visible={!addRecordVisible}
+                            setState={setAddRecordVisible}
+                        />
                     </div>
-                    <AddRecord />
+                    <AddRecord
+                        visible={addRecordVisible}
+                        setState={setAddRecordVisible}
+                    />
                     <Loading loading={loading} />
                 </>
             </CommonWrapper >

@@ -1,0 +1,73 @@
+.wrapper {
+  width: 100%;
+
+  .audio {
+    width: 48rem;
+    height: 28rem;
+    padding: 1.7rem 1.4rem 1.6rem 1.4rem;
+  }
+
+  .button-actions {
+    display: flex;
+    flex-direction: row;
+    margin: 4rem 0 5.6rem 0;
+    margin-top: 4rem;
+    gap: 3.2rem;
+    justify-content: center;
+  }
+}
+
+.container {
+  width: 169rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 2.4rem;
+  margin-top: 2.4rem;
+}
+
+.container-left {
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+  width: 27.4rem;
+
+  .bg {
+    width: 27.4rem;
+    height: 27.4rem;
+    position: relative;
+
+    .upload-icon {
+      width: 3.2rem;
+      height: 3.2rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 50%;
+      background-color: var(--orange-4-default);
+      position: absolute;
+      right: 0.8rem;
+      top: 0.8rem;
+      cursor: pointer;
+    }
+  }
+}
+
+.container-right {
+  flex: 1;
+}
+
+.playlist_item {
+  .subtitle {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    opacity: 0.5;
+  }
+
+  .edit {
+    color: var(--orange-4-default);
+    font-size: 1.2rem;
+    letter-spacing: -0.024px;
+    text-decoration-line: underline;
+  }
+}

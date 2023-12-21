@@ -1,0 +1,27 @@
+.wrapper {
+  width: 154.1rem;
+
+  .playlist {
+    margin-top: 2.4rem;
+  }
+}
+
+.action {
+  margin-top: 3.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  .search {
+    width: 50.1rem;
+  }
+}
+
+.playlist_item {
+  .edit {
+    color: var(--orange-4-default);
+    font-size: 1.2rem;
+    letter-spacing: -0.024px;
+    text-decoration-line: underline;
+  }
+}

@@ -71,7 +71,7 @@ export const updateRecordAction = createAsyncThunk(
   async (
     data: Pick<
       IRecord,
-      "nameRecord" | "ISRCCode" | "singer" | "author" | "producer" | "category"
+      "title" | "ISRCCode" | "singer" | "author" | "producer" | "category"
     > & { docId?: string },
     thunkAPI
   ) => {

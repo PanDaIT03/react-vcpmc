@@ -3,14 +3,11 @@ import { Dispatch, ReactNode, SetStateAction } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 
-import { Loading } from "../Loading";
 import { Checkbox } from "../Checkbox";
-
 import styles from "~/sass/Table.module.scss";
 const cx = classNames.bind(styles);
 
 interface TableProps {
-    loading: boolean
     thead: string[]
     isCheckedAll?: boolean
     isApprove?: boolean
@@ -20,7 +17,6 @@ interface TableProps {
 };
 
 export const Table = ({
-    loading,
     thead,
     isApprove = false,
     isCheckedAll = false,
@@ -73,7 +69,6 @@ export const Table = ({
                     <FontAwesomeIcon icon={faChevronRight} />
                 </div>
             </div>
-            <Loading loading={loading} />
         </div>
     );
 };

@@ -8,6 +8,7 @@
 
 :root {
   --white: #fff;
+  --white2: #fff9f4;
   --red: #ff4747;
   --blue: #347aff;
   --emerald: #2ecc71;
@@ -52,6 +53,11 @@ body {
   text-rendering: optimizeSpeed;
   background-color: var(--bg-color);
   position: relative;
+}
+
+input {
+  outline: none;
+  border: none;
 }
 
 button {

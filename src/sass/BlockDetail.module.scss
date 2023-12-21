@@ -4,9 +4,23 @@
     align-items: flex-start;
   }
 
-  .col_left,
-  .col_right {
+  .col_left {
     width: max-content;
+  }
+
+  .col_right {
+    width: 100%;
+  }
+
+  .horizontal {
+    display: flex;
+    align-items: center;
+    gap: 2.6rem;
+    margin-top: 1.6rem;
+
+    .value {
+      margin-top: 0 !important;
+    }
   }
 }
 
@@ -20,10 +34,6 @@
 
   .title + .title {
     margin-top: 4.1rem;
-  }
-
-  .value {
-    height: 4.8rem;
   }
 }
 
@@ -101,6 +111,7 @@
 }
 
 .radio-group {
+  min-height: 4.8rem;
   display: flex;
 
   div + div {
@@ -125,9 +136,9 @@
 //max width
 .mw-medium {
   max-width: 27.9rem;
-  height: 100%;
+  min-height: 4.8rem !important;
 }
 
 .custom {
-  width: max-content;
+  width: 100%;
 }

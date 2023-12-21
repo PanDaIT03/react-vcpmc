@@ -1,5 +1,7 @@
 .wrapper {
   width: 100%;
+  text-align: center;
+  margin-top: 7rem;
 }
 
 .container {
@@ -16,5 +18,36 @@
   .title {
     color: var(--white);
     letter-spacing: -0.048px;
+  }
+}
+
+.record {
+  width: 100%;
+  height: 100%;
+
+  .button-actions {
+    margin-top: 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2.4rem;
+  }
+}
+
+.attach-file {
+  margin-top: 3.2rem;
+  display: flex;
+  align-items: center;
+  gap: 8rem;
+
+  .item {
+    display: flex;
+    align-items: center;
+    gap: 2.4rem;
+
+    p {
+      color: var(--white);
+      letter-spacing: -0.032px;
+    }
   }
 }

@@ -2,6 +2,7 @@ import classNames from "classnames/bind";
 import { ReactNode, useEffect, useState } from "react";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 
+import { images } from "~/assets";
 import styles from "~/sass/Input.module.scss";
 const cx = classNames.bind(styles);
 
@@ -15,6 +16,7 @@ interface InputOwnProps<E extends React.ElementType> {
     className?: string
     errorMessage?: string
     isRequire?: boolean
+    border?: boolean
     min?: any
     max?: any
     steps?: number
@@ -46,13 +48,14 @@ export const Input = <E extends React.ElementType = 'input'>({
     value,
     title,
     as,
+    isRequire = false,
+    border = true,
     size,
     readOnly,
     status,
     className,
     touched = false,
     errorMessage,
-    isRequire = false,
     iconLeft,
     iconRight,
     iconLeftAwesome,
@@ -103,14 +106,18 @@ export const Input = <E extends React.ElementType = 'input'>({
 
     return (
         <div className={classes}>
-            {title && <label htmlFor={id}>{title}:</label>}
+            {title
+                && <div className={cx("title")}>
+                    <label htmlFor={id}>{title}:</label>
+                    {isRequire && <img src={images.require} alt="require" />}
+                </div>}
             <div className={cx("form-input", isInValid ? "error" : "")}>
                 <Component
                     {...props}
                     ref={inputRef}
                     onBlur={handleBlur}
                     readOnly={readOnly ? true : false}
-                    className={cx("text")}
+                    className={cx("text", border && "border")}
                 />
                 {((iconLeft || iconRight) && value !== "") &&
                     <img

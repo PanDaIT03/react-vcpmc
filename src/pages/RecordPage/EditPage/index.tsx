@@ -25,7 +25,7 @@ const cx = classNames.bind(styles);
 
 interface InitType {
     docId: string
-    nameRecord: string
+    title: string
     ISRCCode: string
     singer: string
     author: string
@@ -45,7 +45,7 @@ const PAGING_ITEMS: Array<PagingItemType> = [
 
 const initialValues: InitType = {
     docId: "",
-    nameRecord: "",
+    title: "",
     ISRCCode: "",
     singer: "",
     author: "",
@@ -86,7 +86,7 @@ function EditRecordPage() {
             initialValues: initialValues,
             validationSchema: Yup.object({
                 docId: Yup.string().required(),
-                nameRecord: Yup.string().required(),
+                title: Yup.string().required(),
                 ISRCCode: Yup.string().required(),
                 singer: Yup.string().required(),
                 author: Yup.string().required(),
@@ -97,7 +97,7 @@ function EditRecordPage() {
                 dispatch(updateRecordAction(values)).then(() => navigate(routes.RecordPage));
             }
         });
-    const { nameRecord, ISRCCode, singer, author, producer } = values;
+    const { title, ISRCCode, singer, author, producer } = values;
 
     useEffect(() => {
         if (Object.keys(records).length <= 0)
@@ -115,7 +115,7 @@ function EditRecordPage() {
 
         setValues({
             docId: recordId || "",
-            nameRecord: record.nameRecord,
+            title: record.title,
             ISRCCode: record.ISRCCode,
             singer: record.singer,
             author: record.author,
@@ -132,17 +132,17 @@ function EditRecordPage() {
             {
                 id: 1,
                 tag: <Input
-                    id="nameRecord"
+                    id="title"
                     type='text'
-                    name='nameRecord'
+                    name='title'
                     title='Tên bản ghi'
                     size="custom"
-                    value={nameRecord}
-                    errorMessage={errors.nameRecord}
-                    touched={touched.nameRecord}
+                    value={title}
+                    errorMessage={errors.title}
+                    touched={touched.title}
                     onChange={handleChange}
-                    onFocus={() => setFieldTouched('nameRecord', true)}
-                    onBlur={() => setFieldTouched('nameRecord', false)}
+                    onFocus={() => setFieldTouched('title', true)}
+                    onBlur={() => setFieldTouched('title', false)}
                 />
             }, {
                 id: 2,
@@ -227,7 +227,7 @@ function EditRecordPage() {
     return (
         <div className={cx("wrapper")}>
             <CommonWrapper
-                title={`Bản ghi - ${record.nameRecord}`}
+                title={`Bản ghi - ${record.title}`}
                 paging={PAGING_ITEMS}
             >
                 <div className={cx("content")}>

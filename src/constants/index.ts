@@ -48,6 +48,7 @@ const SIDEBAR_ITEMS = [
     icon: images.playlist,
     title: "Playlist",
     isActive: false,
+    to: routes.PlaylistPage,
   },
   {
     id: 3,
@@ -450,6 +451,20 @@ const regexOnlyNumer = (value: string) => {
   else return false;
 };
 
+const getTotalMoment = (array: Array<any>) => {
+  let momentTime = moment
+      ("00000000", "hh:mm:ss")
+      .utcOffset(0)
+      .set({ hour: 0, minute: 0, second: 0, millisecond: 0 });
+
+  array.filter(item => {
+      let timeSplit = item.split(':');
+      momentTime.add("minutes", timeSplit[0]).add("seconds", timeSplit[1]);
+  });
+
+  return momentTime.toISOString();
+}
+
 export {
   formatDate,
   formatTime,
@@ -462,6 +477,7 @@ export {
   formatDateMDY,
   handleClickDropDown,
   regexOnlyNumer,
+  getTotalMoment,
   LANGUAGE_ITEMS,
   SIDEBAR_ITEMS,
   ACTION_INFO_USER,

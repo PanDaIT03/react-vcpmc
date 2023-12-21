@@ -3,6 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
+import { useNavigate } from "react-router-dom";
 
 import { images } from "~/assets";
 import { CommonWrapper } from "~/components/CommonWrapper";
@@ -23,6 +24,7 @@ import { Checkbox } from "~/components/Checkbox";
 import { updateRecordsAction } from "~/state/thunk/record";
 import { CancleForm } from "~/components/CancelForm";
 import Button from "~/components/Button";
+import { SwitchViewButton } from "~/components/SwitchViewButtons";
 import {
     CB_FORMAT,
     CB_MUSIC_KIND,
@@ -33,8 +35,6 @@ import {
 } from "~/constants";
 
 import styles from "~/sass/Record.module.scss";
-import { useNavigate } from "react-router-dom";
-import { routes } from "~/config/routes";
 const cx = classNames.bind(styles);
 
 const initialState = {
@@ -109,7 +109,7 @@ function RecordPage() {
             });
 
             setSearchResult(result.filter(item =>
-                item.nameRecord.toLowerCase().includes(search) ||
+                item.title.toLowerCase().includes(search) ||
                 item.singer.toLowerCase().includes(search) ||
                 item.ISRCCode.toLowerCase().includes(search) ||
                 item.author.toLowerCase().includes(search) ||
@@ -204,28 +204,12 @@ function RecordPage() {
                                     <p>Chọn tất cả</p>
                                 </div>}
                         </div>
-                        <div className={cx("view")}>
-                            <div className={cx("list")} onClick={() => setIsGridView(false)}>
-                                <img
-                                    src={images.list}
-                                    className={cx(!isGridView ? "active" : "inactive")}
-                                    alt="list"
-                                />
-                            </div>
-                            <div className={cx("grid")} onClick={() => setIsGridView(true)}>
-                                <img
-                                    src={images.grid}
-                                    className={cx(isGridView ? "active" : "inactive")}
-                                    alt="grid"
-                                />
-                            </div>
-                        </div>
+                        <SwitchViewButton state={isGridView} setState={setIsGridView} />
                     </div>
                 </div>
                 {
                     !isGridView
                         ? <Table
-                            loading={false}
                             isApprove={approveOption}
                             isCheckedAll={isCheckedAll}
                             thead={["STT", "Tên bản ghi", "Mã ISRC", "Thời lượng", "Ca sĩ", "Tác giả",
@@ -251,7 +235,7 @@ function RecordPage() {
                                                 <Checkbox checked={isChecked} />
                                             </td>}
                                         <td>{index + 1}</td>
-                                        <td>{record.nameRecord}</td>
+                                        <td>{record.title}</td>
                                         <td>{record.ISRCCode}</td>
                                         <td>{record.time}</td>
                                         <td>{record.singer}</td>
@@ -290,12 +274,12 @@ function RecordPage() {
                         </Table>
                         : <div>
                             <GridView
-                                records={approveOption ? editRecords : searchResult}
+                                data={approveOption ? editRecords : searchResult}
                                 isApprove={approveOption}
                                 setAudioSource={setAudioSource}
                                 approveArray={approveArr}
                                 setState={setAudioVisible}
-                                handleClickApprove={handleClickApproveArr}
+                                handleClick={handleClickApproveArr}
                             />
                             <div className={cx("action-bottom")}>
                                 <div className={cx("show", "--center-flex")}>

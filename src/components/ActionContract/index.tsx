@@ -580,6 +580,8 @@ export const ActionContract = memo(({
         setFieldValue("nationality", national.title);
     }, [national]);
 
+    console.log(errors);
+
     return (
         <div className={classes}>
             <ContractEdit
@@ -589,7 +591,7 @@ export const ActionContract = memo(({
                         value: <BlockDetail
                             data={block1}
                             editable
-                            maxWidth="custom"
+                            maxWidth="mw-medium"
                         />
                     }, {
                         value: <BlockDetail data={fileAttach} upload={type !== "detail"} />
@@ -599,6 +601,7 @@ export const ActionContract = memo(({
                             className={cx("author")}
                             data={copyRight}
                             icon={images.infoCircle}
+                            maxWidth="custom"
                         />
                     }
                 ]}

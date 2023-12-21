@@ -10,4 +10,7 @@ export const routes = {
   AddPage: "/contract-management/add",
   RecordPage: "/record",
   EditRecordPage: "/record/edit/:recordId",
+  PlaylistPage: "/playlist",
+  PlaylistDetailPage: "/playlist/detail/:playlistId",
+  AddPlaylistPage: "/playlist/add-playlist",
 };

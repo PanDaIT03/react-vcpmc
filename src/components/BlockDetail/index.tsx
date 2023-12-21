@@ -16,12 +16,13 @@ interface BlockDetailProps {
     data: IGlobalConstantsType[]
     maxWidth?: "mw-medium" | "custom"
     upload?: boolean
+    isHorizontal?: boolean
     className?: string
 };
 
 const BlockInfo = memo(({
     data,
-    maxWidth
+    maxWidth,
 }: Pick<BlockDetailProps, "data" | "maxWidth">) => {
     return <>
         {data.map(item => {
@@ -44,7 +45,7 @@ const BlockInfo = memo(({
 
 const BlockInput = memo(({
     data,
-    maxWidth
+    maxWidth,
 }: Pick<BlockDetailProps, "data" | "maxWidth">) => {
     return <>
         {data.map(item => {
@@ -52,11 +53,16 @@ const BlockInput = memo(({
             const { id, tag, isActive, setState, isChecked = true } = item;
 
             const render = (tag: React.ReactNode | string) => {
+                let classes = cx("value",
+                    isActive && "active", {
+                    maxWidth,
+                });
+
                 if (tag === "radio")
                     return (
                         <div
                             key={id}
-                            className={cx("value", maxWidth, isActive && "active")}
+                            className={classes}
                         >
                             <div className={cx("radio-group")}>
                                 <RadioButton
@@ -95,6 +101,7 @@ export const BlockDetail = memo(({
     data,
     maxWidth = "mw-medium",
     upload = false,
+    isHorizontal = false,
     className,
 }: BlockDetailProps) => {
     if (!className) className = "";
@@ -127,7 +134,7 @@ export const BlockDetail = memo(({
                         </div>
                     ))}
                 </div>
-                <div className={cx("col_right")}>
+                <div className={cx("col_right", isHorizontal && "horizontal")}>
                     {upload && <Upload />}
                     {!editable
                         ? <BlockInfo data={data} maxWidth={maxWidth} />

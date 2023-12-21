@@ -1,0 +1,23 @@
+.wrapper {
+  display: flex;
+  gap: 1.6rem;
+
+  .list,
+  .grid {
+    cursor: pointer;
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+}
+
+.active {
+  filter: invert(47%) sepia(95%) saturate(2076%) hue-rotate(356deg)
+    brightness(104%) contrast(103%);
+}
+
+.inactive {
+  filter: invert(60%) sepia(6%) saturate(364%) hue-rotate(196deg)
+    brightness(89%) contrast(80%);
+}

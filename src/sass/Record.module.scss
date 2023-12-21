@@ -26,20 +26,6 @@
   }
 }
 
-.view {
-  display: flex;
-  gap: 1.6rem;
-
-  .list,
-  .grid {
-    cursor: pointer;
-
-    &:hover {
-      opacity: 0.8;
-    }
-  }
-}
-
 .filter {
   display: flex;
   justify-content: space-between;
@@ -58,6 +44,8 @@
 }
 
 .record {
+  margin-top: 2.4rem;
+  
   .edit {
     color: var(--orange-4-default);
     font-size: 1.2rem;
@@ -80,16 +68,6 @@
   width: 48rem;
   height: 28rem;
   padding: 1.7rem 1.4rem 1.6rem 1.4rem;
-}
-
-.active {
-  filter: invert(47%) sepia(95%) saturate(2076%) hue-rotate(356deg)
-    brightness(104%) contrast(103%);
-}
-
-.inactive {
-  filter: invert(60%) sepia(6%) saturate(364%) hue-rotate(196deg)
-    brightness(89%) contrast(80%);
 }
 
 .action-bottom {

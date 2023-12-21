@@ -48,5 +48,12 @@ export const images = {
     checkGreen: require('./images/u_check_green.png'),
     require: require('./images/require_icon.png'),
     checkCircle: require('./images/u_check-circle.png'),
+    addPlaylistIcon: require('./images/add_playlist_icon.png'),
+    alertCircle: require('./images/fi_alert-circle.png'),
+    publicIcon: require('./images/public_icon.png'),
+    randomIcon: require('./images/random_icon.png'),
+    repeat: require('./images/fi_repeat.png'),
+    trash: require('./images/u_trash-alt.png'),
+    moreVertical: require('./images/fi_more-vertical.png'),
     // aaaa: require('./images/aaaa.png'),
 };
