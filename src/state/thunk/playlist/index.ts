@@ -1,10 +1,15 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 import {
+  addPlaylist,
+  addPlaylistsRecords,
   getPlaylist,
   getPlaylistRecords,
+  removePlaylist,
   removePlaylistRecord,
+  removePlaylistsRecords,
   updatePlaylist,
+  updatePlaylistsRecords,
 } from "~/api/playlist";
 import { getCategories, getRecords } from "~/api/record";
 import { getUser } from "~/api/user";
@@ -93,8 +98,72 @@ export const removePlaylistRecordAction = createAsyncThunk(
 export const updatePlaylistAction = createAsyncThunk(
   "playlist/updatePlaylist",
   async (data: UpdatePlaylist, thunkAPI) => {
-    return await updatePlaylist(data).then(() =>
-      thunkAPI.dispatch(getPlayListAction())
-    );
+    return await updatePlaylist(data);
+  }
+);
+
+export const addPlaylistAction = createAsyncThunk(
+  "playlist/addPlaylistRecord",
+  async (data: Omit<IPLaylist, "categories" | "docId">) => {
+    const {
+      title,
+      records,
+      categoriesId,
+      createdBy,
+      createdDate,
+      description,
+      imageURL,
+      mode,
+    } = data;
+
+    let addPlaylistData = {
+        title: title,
+        categoriesId: categoriesId,
+        createdBy: createdBy,
+        createdDate: createdDate,
+        description: description,
+        imageURL: imageURL,
+        mode: mode,
+      },
+      recordsId: string[] = [];
+    records.map((record) => recordsId.push(record.docId));
+
+    let newPlaylistId = await addPlaylist(addPlaylistData);
+
+    if (newPlaylistId)
+      await addPlaylistsRecords({
+        playlistsId: newPlaylistId,
+        recordsId: recordsId,
+      });
+  }
+);
+
+export const updatePlaylistsRecordsAction = createAsyncThunk(
+  "playlist/updatePlaylistsRecords",
+  async (
+    data: {
+      playlistsId: string;
+      records: IRecord[];
+    },
+    thunkAPI
+  ) => {
+    const { playlistsId, records } = data;
+
+    let recordsId: string[] = [];
+    records.map((record) => recordsId.push(record.docId));
+
+    return await updatePlaylistsRecords({
+      playlistsId: playlistsId,
+      recordsId: recordsId,
+    });
+  }
+);
+
+export const deletePlaylistAction = createAsyncThunk(
+  "playlist/deletePlaylistsRecords",
+  async (docId: string) => {
+    if (docId === "") return;
+    await removePlaylist(docId);
+    await removePlaylistsRecords(docId);
   }
 );

@@ -7,15 +7,17 @@ const cx = classNames.bind(styles);
 interface DialogProps {
     primary?: boolean
     size?: "small" | "custom"
+    content?: "audio" | "none"
     visible: boolean
-    className?: string
     children: ReactNode
     alignCenter?: "vertical" | "horizontal" | "all" | "not-aligned"
+    className?: string
 };
 
 export const Dialog = memo(({
     primary,
     size,
+    content = "none",
     visible,
     className,
     children,
@@ -30,6 +32,7 @@ export const Dialog = memo(({
         [className]: className,
         [alignCenter]: alignCenter,
         [size]: size,
+        [content]: content,
         primary
     });
 

@@ -1,16 +1,24 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { updatePlaylistsRecordsAction } from "~/state/thunk/playlist";
 
-import { getRecordsAction, updateRecordsAction } from "~/state/thunk/record";
+import {
+  addPlaylistRecordsAction,
+  getRecordsAction,
+  resetNewRecordsAction,
+  updateRecordsAction,
+} from "~/state/thunk/record";
 import { IRecord } from "~/types";
 
 interface InitType {
   records: IRecord[];
+  newRecords: IRecord[];
   loading: boolean;
   status: string;
 }
 
 const initialState: InitType = {
   records: [],
+  newRecords: [],
   loading: false,
   status:
     "get successfully" ||
@@ -67,6 +75,22 @@ const recordSlice = createSlice({
       .addCase(updateRecordsAction.rejected, (state) => {
         state.loading = false;
         state.status = "update failed";
+      })
+      .addCase(addPlaylistRecordsAction.fulfilled, (state, action) => {
+        state.newRecords = action.payload;
+      })
+      .addCase(resetNewRecordsAction.fulfilled, (state, action) => {
+        state.newRecords = action.payload;
+      })
+      .addCase(updatePlaylistsRecordsAction.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(updatePlaylistsRecordsAction.fulfilled, (state, action) => {
+        state.loading = false;
+        state.status = "update successfully";
+      })
+      .addCase(updatePlaylistsRecordsAction.rejected, (state, action) => {
+        state.loading = false;
       })
       .addDefaultCase((state) => {
         return state;

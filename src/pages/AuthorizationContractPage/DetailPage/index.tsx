@@ -78,9 +78,7 @@ function DetailPage() {
     }, [renewalVisible]);
 
     useEffect(() => {
-        if (contracts.length <= 0)
-            navigate("/contract-management")
-        if (status === "updated")
+        if (contracts.length <= 0 || status === "updated")
             navigate("/contract-management");
 
         if (status === "get successfully")

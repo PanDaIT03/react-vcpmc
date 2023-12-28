@@ -94,3 +94,17 @@ export const updateRecordAction = createAsyncThunk(
     return await updateRecord(docId, recordUpdate);
   }
 );
+
+export const addPlaylistRecordsAction = createAsyncThunk(
+  "record/addPlaylistsRecords",
+  async (records: IRecord[], thunkAPI) => {
+    return records;
+  }
+);
+
+export const resetNewRecordsAction = createAsyncThunk(
+  "record/resetNewRecords",
+  async () => {
+    return [];
+  }
+);

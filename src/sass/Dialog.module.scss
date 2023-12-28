@@ -9,6 +9,7 @@
   pointer-events: none;
 
   .content {
+    width: max-content;
     color: var(--text-stroke-text-and-stroke);
     background: var(--bg-lightest);
     border-radius: 1.6rem;
@@ -27,6 +28,12 @@
     height: 1100%;
     pointer-events: all;
     z-index: 2;
+  }
+
+  .audio {
+    width: 48rem;
+    height: 28rem;
+    padding: 1.7rem 1.4rem 1.6rem 1.4rem;
   }
 }
 

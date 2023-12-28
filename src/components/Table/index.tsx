@@ -13,6 +13,8 @@ interface TableProps {
     isApprove?: boolean
     className?: string
     children?: ReactNode
+    isScroll?: boolean
+    border?: "none" | "default-border"
     setIsCheckedAll?: Dispatch<SetStateAction<boolean>>
 };
 
@@ -22,6 +24,8 @@ export const Table = ({
     isCheckedAll = false,
     className,
     children,
+    isScroll = false,
+    border = "default-border",
     setIsCheckedAll
 }: TableProps) => {
     if (!className) className = "";
@@ -34,40 +38,43 @@ export const Table = ({
 
     return (
         <div className={classes}>
-            <table>
-                <thead>
-                    <tr className={cx("title")}>
-                        {isApprove && <th>
-                            <Checkbox
-                                checked={isCheckedAll}
-                                onClick={() => setIsCheckedAll && setIsCheckedAll(!isCheckedAll)}
-                            />
-                        </th>}
-                        {thead.map((item, index) => (
-                            <th key={index}><p>{item}</p></th>
-                        ))}
-                    </tr>
-                </thead>
-                <tbody>
-                    {children}
-                </tbody>
-            </table>
-            <div className={cx("action-bottom")}>
-                <div className={cx("show", "--center-flex")}>
-                    <div className={cx("title")}>Hiển thị</div>
-                    <input name="pageNumber" value="13" onChange={handleChange} />
-                    <div className={cx("sub-title")}>hàng trong mỗi trang</div>
-                </div>
-                <div className={cx("pagination")}>
-                    <FontAwesomeIcon icon={faChevronLeft} />
-                    <div className={cx("page-num", "--center-flex")}>
-                        <div className={cx("active", "--center-flex")}>1</div>
-                        <div>2</div>
-                        <div>...</div>
-                        <div>10</div>
-                    </div>
-                    <FontAwesomeIcon icon={faChevronRight} />
-                </div>
+            <div className={cx("content")}>
+                <table>
+                    <thead>
+                        <tr className={cx("title")}>
+                            {isApprove && <th>
+                                <Checkbox
+                                    checked={isCheckedAll}
+                                    onClick={() => setIsCheckedAll && setIsCheckedAll(!isCheckedAll)}
+                                />
+                            </th>}
+                            {thead.map((item, index) => (
+                                <th key={index}><p>{item}</p></th>
+                            ))}
+                        </tr>
+                    </thead>
+                    <tbody className={cx(isScroll && "scroll", border)}>
+                        {children}
+                    </tbody>
+                </table>
+                {!isScroll
+                    && <div className={cx("action-bottom")}>
+                        <div className={cx("show", "--center-flex")}>
+                            <div className={cx("title")}>Hiển thị</div>
+                            <input name="pageNumber" value="13" onChange={handleChange} />
+                            <div className={cx("sub-title")}>hàng trong mỗi trang</div>
+                        </div>
+                        <div className={cx("pagination")}>
+                            <FontAwesomeIcon icon={faChevronLeft} />
+                            <div className={cx("page-num", "--center-flex")}>
+                                <div className={cx("active", "--center-flex")}>1</div>
+                                <div>2</div>
+                                <div>...</div>
+                                <div>10</div>
+                            </div>
+                            <FontAwesomeIcon icon={faChevronRight} />
+                        </div>
+                    </div>}
             </div>
         </div>
     );

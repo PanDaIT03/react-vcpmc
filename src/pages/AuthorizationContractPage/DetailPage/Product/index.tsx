@@ -237,7 +237,7 @@ export const Product = ({
       <Dialog
         primary
         visible={audioVisible}
-        className={cx("audio")}
+        content="audio"
         alignCenter="all"
       >
         <AudioDialog

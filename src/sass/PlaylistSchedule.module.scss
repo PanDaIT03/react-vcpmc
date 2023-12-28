@@ -1,0 +1,23 @@
+.wrapper {
+  width: 154.1rem;
+}
+
+.playlist-schedule {
+  margin-top: 2.4rem;
+
+  .details,
+  .delete {
+    font-size: 1.2rem;
+    font-weight: 600;
+    letter-spacing: -0.024px;
+    text-decoration-line: underline;
+  }
+
+  .details {
+    color: var(--orange-4-default);
+  }
+
+  .delete {
+    color: var(--red);
+  }
+}

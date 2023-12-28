@@ -42,7 +42,7 @@ export const Topic = memo(({
                     id="topic"
                     name="topic"
                     size="custom"
-                    border={false}
+                    border="none"
                     className={cx("topic")}
                     value={topicValue}
                     onChange={(e) => setTopicValue(e.target.value)}

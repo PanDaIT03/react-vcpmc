@@ -16,7 +16,8 @@ interface InputOwnProps<E extends React.ElementType> {
     className?: string
     errorMessage?: string
     isRequire?: boolean
-    border?: boolean
+    // border?: boolean
+    border?: "orange-4-default" | "default-border" | "none"
     min?: any
     max?: any
     steps?: number
@@ -49,7 +50,7 @@ export const Input = <E extends React.ElementType = 'input'>({
     title,
     as,
     isRequire = false,
-    border = true,
+    border = "default-border",
     size,
     readOnly,
     status,
@@ -117,7 +118,8 @@ export const Input = <E extends React.ElementType = 'input'>({
                     ref={inputRef}
                     onBlur={handleBlur}
                     readOnly={readOnly ? true : false}
-                    className={cx("text", border && "border")}
+                    // className={cx("text", border && "border", borderColor)}
+                    className={cx("text", border)}
                 />
                 {((iconLeft || iconRight) && value !== "") &&
                     <img

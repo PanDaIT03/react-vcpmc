@@ -55,6 +55,7 @@ const SIDEBAR_ITEMS = [
     icon: images.calendarAlt,
     title: "Lập lịch phát",
     isActive: false,
+    to: routes.PlaylistSchedulePage
   },
   {
     id: 4,
@@ -326,6 +327,25 @@ const CB_APPROVE = [
   },
 ];
 
+const CB_PLAYLIST = [
+  {
+    id: 1,
+    title: "Top ca khúc 2023",
+  },
+  {
+    id: 2,
+    title: "Top musics chill 2023",
+  },
+  {
+    id: 3,
+    title: "Nhạc lofi 2023",
+  },
+  {
+    id: 4,
+    title: "Top musics 2023",
+  },
+];
+
 const handleClickDropDown = (
   item: IGlobalConstantsType,
   data: IGlobalConstantsType[]
@@ -452,18 +472,17 @@ const regexOnlyNumer = (value: string) => {
 };
 
 const getTotalMoment = (array: Array<any>) => {
-  let momentTime = moment
-      ("00000000", "hh:mm:ss")
-      .utcOffset(0)
-      .set({ hour: 0, minute: 0, second: 0, millisecond: 0 });
+  let momentTime = moment("00000000", "hh:mm:ss")
+    .utcOffset(0)
+    .set({ hour: 0, minute: 0, second: 0, millisecond: 0 });
 
-  array.filter(item => {
-      let timeSplit = item.split(':');
-      momentTime.add("minutes", timeSplit[0]).add("seconds", timeSplit[1]);
+  array.filter((item) => {
+    let timeSplit = item.split(":");
+    momentTime.add("minutes", timeSplit[0]).add("seconds", timeSplit[1]);
   });
 
   return momentTime.toISOString();
-}
+};
 
 export {
   formatDate,
@@ -490,4 +509,5 @@ export {
   CB_FORMAT,
   CB_VADILITY_MUSIC,
   CB_APPROVE,
+  CB_PLAYLIST,
 };

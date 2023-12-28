@@ -18,6 +18,8 @@ import { BoxItem } from "~/components/BoxItem";
 import { GridView } from "~/components/GridView";
 import { Loading } from "~/components/Loading";
 import { SidebarContext } from "~/context/Sidebar/SidebarContext.index";
+import { routes } from "~/config/routes";
+import { resetNewRecordsAction } from "~/state/thunk/record";
 
 import styles from "~/sass/PlayList.module.scss";
 const cx = classNames.bind(styles);
@@ -37,12 +39,9 @@ function PlayListPage() {
 
     useEffect(() => {
         dispatch(getPlayListAction());
+        dispatch(resetNewRecordsAction());
         setActive(true);
     }, []);
-
-    useEffect(() => {
-        console.log(playList);
-    }, [playList]);
 
     const totalPlaylistTime = (records: IRecord[]) => {
         let timeArray: string[] = ["00:00"];
@@ -103,10 +102,11 @@ function PlayListPage() {
                         type="playlist"
                         handleClick={() => console.log("clicked")}
                     />}
-                <ActionBar visible={true}>
+                <ActionBar>
                     <ActionBarItem
                         icon={images.addPlaylistIcon}
                         title="Thêm Playlist"
+                        onClick={() => navigate(routes.AddPlaylistPage)}
                     />
                 </ActionBar>
                 <Loading loading={loading} />

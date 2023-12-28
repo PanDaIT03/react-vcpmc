@@ -11,10 +11,10 @@
 .cancel {
   width: 72rem;
   padding: 3.2rem 4rem 3.7rem 4rem;
-}
 
-.action {
-  button + button {
-    margin-left: 3.2rem;
+  .action {
+    display: flex;
+    align-items: center;
+    gap: 3.2rem;
   }
 }

@@ -19,15 +19,17 @@ import EditRecordPage from "~/pages/RecordPage/EditPage";
 import PlayListPage from "~/pages/PlayListPage";
 import PlaylistDetailPage from "~/pages/PlayListPage/PlaylistDetailPage";
 import AddPlaylistPage from "~/pages/PlayListPage/AddPlaylistPage";
+import AddPlaylistRecordPage from "~/pages/PlayListPage/AddPlaylistRecordPage";
+import PlaylistSchedulePage from "~/pages/PlaylistSchedulePage"
+import PlaylistScheduleDetailPage from "~/pages/PlaylistSchedulePage/PlaylistScheduleDetailPage";
+import EditPlaylistSchedulePage from "~/pages/PlaylistSchedulePage/EditPlaylistSchedulePage";
 
 const publicRoutes = [
     { path: routes.LoginPage, component: LoginPage },
     { path: routes.ErrorConnectPage, component: ErrorConnectPage, layout: HeaderOnly },
     { path: routes.ResetPasswordPage, component: ResetPasswordPage },
     { path: routes.ForgotPasswordPage, component: ForgotPasswordPage },
-    { path: routes.AddPage, component: AddPage, layout: DefaultLayout },
-    { path: routes.EditRecordPage, component: EditRecordPage, layout: DefaultLayout },
-    { path: routes.AddPlaylistPage, component: AddPlaylistPage, layout: DefaultLayout },
+    { path: routes.EditPlaylistSchedulePage, component: EditPlaylistSchedulePage, layout: DefaultLayout },
 ];
 
 const protectedRoutes = [
@@ -36,8 +38,15 @@ const protectedRoutes = [
     { path: routes.EditPage, component: EditPage, layout: DefaultLayout },
     { path: routes.DetailPage, component: DetailPage, layout: DefaultLayout },
     { path: routes.RecordPage, component: RecordPage, layout: DefaultLayout },
+    { path: routes.AddPage, component: AddPage, layout: DefaultLayout },
+    { path: routes.EditRecordPage, component: EditRecordPage, layout: DefaultLayout },
     { path: routes.PlaylistPage, component: PlayListPage, layout: DefaultLayout },
     { path: routes.PlaylistDetailPage, component: PlaylistDetailPage, layout: DefaultLayout },
+    { path: routes.AddPlaylistPage, component: AddPlaylistPage, layout: DefaultLayout },
+    { path: routes.AddPlaylistRecordPage, component: AddPlaylistRecordPage, layout: DefaultLayout },
+    { path: routes.PlaylistSchedulePage, component: PlaylistSchedulePage, layout: DefaultLayout },
+    { path: routes.PlaylistScheduleDetailPage, component: PlaylistScheduleDetailPage, layout: DefaultLayout },
+    // { path: routes.EditPlaylistSchedulePage, component: EditPlaylistSchedulePage, layout: DefaultLayout },
 ];
 
 export { publicRoutes, protectedRoutes };

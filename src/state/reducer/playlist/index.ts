@@ -1,6 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 import {
+  addPlaylistAction,
+  deletePlaylistAction,
   getPlayListAction,
   updatePlaylistAction,
 } from "~/state/thunk/playlist";
@@ -20,6 +22,10 @@ const initialState: InitType = {
     "get failed" ||
     "update successfully" ||
     "update failed" ||
+    "delete successfully" ||
+    "delete failed" ||
+    "insert successfully" ||
+    "insert failed" ||
     "",
 };
 
@@ -41,6 +47,17 @@ const playListSlice = createSlice({
         state.loading = false;
         state.status = "get failed";
       })
+      .addCase(addPlaylistAction.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(addPlaylistAction.fulfilled, (state) => {
+        state.loading = false;
+        state.status = "insert successfully";
+      })
+      .addCase(addPlaylistAction.rejected, (state) => {
+        state.loading = false;
+        state.status = "insert failed";
+      })
       .addCase(updatePlaylistAction.pending, (state) => {
         state.loading = true;
       })
@@ -51,6 +68,16 @@ const playListSlice = createSlice({
       .addCase(updatePlaylistAction.rejected, (state) => {
         state.loading = false;
         state.status = "update failed";
+      })
+      .addCase(deletePlaylistAction.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(deletePlaylistAction.fulfilled, (state) => {
+        state.status = "delete successfully";
+      })
+      .addCase(deletePlaylistAction.rejected, (state) => {
+        state.loading = false;
+        state.status = "delete failed";
       })
       .addDefaultCase((state) => {
         return state;

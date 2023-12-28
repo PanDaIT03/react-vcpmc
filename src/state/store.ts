@@ -6,6 +6,7 @@ import { userReducer } from "./reducer/user";
 import { recordReducer } from "./reducer/record";
 import { contractReducer } from "./reducer/contract";
 import { playListReducer } from "./reducer/playlist";
+import { playlistScheduleReducer } from "./reducer/playlistSchedule";
 
 export const store = configureStore({
   reducer: {
@@ -14,6 +15,7 @@ export const store = configureStore({
     contract: contractReducer,
     record: recordReducer,
     playlist: playListReducer,
+    playlistSchedule: playlistScheduleReducer
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

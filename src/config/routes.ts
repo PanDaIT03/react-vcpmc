@@ -13,4 +13,8 @@ export const routes = {
   PlaylistPage: "/playlist",
   PlaylistDetailPage: "/playlist/detail/:playlistId",
   AddPlaylistPage: "/playlist/add-playlist",
+  AddPlaylistRecordPage: "/playlist/add-playlist/add-records",
+  PlaylistSchedulePage: "/playlist-schedule",
+  PlaylistScheduleDetailPage: "/playlist-schedule/detail/:playlistScheduleCode",
+  EditPlaylistSchedulePage: "/playlist-schedule/detail/edit/:playlistScheduleCode",
 };

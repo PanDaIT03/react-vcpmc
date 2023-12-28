@@ -1,3 +1,108 @@
 .wrapper {
-    width: 169rem;
+  width: 169rem;
+
+  .container {
+    display: flex;
+    gap: 2.4rem;
+    margin-top: 2.4rem;
+
+    .line {
+      height: 0.1rem;
+      background-color: var(--text-stroke-text-and-stroke-2);
+      opacity: 0.6;
+    }
+
+    .action {
+      color: var(--orange-4-default);
+      text-align: center;
+      font-size: 1.2rem;
+      font-weight: 600;
+      letter-spacing: -0.024px;
+      text-decoration-line: underline;
+      user-select: none;
+    }
+  }
+}
+
+.container-left {
+  display: flex;
+  flex-direction: column;
+  width: 27.4rem;
+  color: var(--white);
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: -0.032px;
+  gap: 1.6rem;
+
+  .playlist-background {
+    .title {
+      margin-bottom: 1.6rem;
+    }
+  }
+
+  .total-record,
+  .total-time {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: var(--white);
+    font-size: 1.6rem;
+    letter-spacing: -0.032px;
+    gap: 3.2rem;
+
+    .title {
+      font-weight: 700;
+    }
+
+    .content {
+      font-weight: 400;
+      opacity: 0.7;
+    }
+  }
+
+  .description textarea {
+    height: 10.1rem;
+  }
+
+  .public {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    color: var(--white);
+    font-size: 1.6rem;
+
+    label {
+      user-select: none;
+      cursor: pointer;
+    }
+  }
+}
+
+.container-right {
+  flex: 1;
+
+  .reminder {
+    color: var(--text-stroke-text-and-stroke);
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: -0.032px;
+    pointer-events: none;
+    user-select: none;
+
+    .content {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0.4rem;
+    }
+  }
+
+  .button-actions {
+    display: flex;
+    flex-direction: row;
+    margin: 4rem 0 5.6rem 0;
+    margin-top: 4rem;
+    gap: 3.2rem;
+    justify-content: center;
+  }
 }

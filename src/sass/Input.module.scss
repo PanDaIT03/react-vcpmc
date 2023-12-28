@@ -46,13 +46,13 @@
     align-items: center;
   }
 
-  .border {
-    border: 0.1rem solid var(--text-stroke-text-and-stroke-2);
+  // .border {
+  //   border: 0.1rem solid var(--text-stroke-text-and-stroke-2);
 
-    &:focus {
-      border: 0.1rem solid var(--blue);
-    }
-  }
+  //   &:focus {
+  //     border: 0.1rem solid var(--blue);
+  //   }
+  // }
 
   textarea {
     padding: 1.1rem 1.6rem 1.3rem 1.6rem;
@@ -143,4 +143,17 @@
 .disable input {
   background-color: var(--disabled-state);
   pointer-events: none;
+}
+
+//border
+.default-border {
+  border: 0.1rem solid var(--text-stroke-text-and-stroke-2);
+
+  &:focus {
+    border: 0.1rem solid var(--blue);
+  }
+}
+
+.orange-4-default {
+  border: 0.1rem solid var(--orange-4-default);
 }

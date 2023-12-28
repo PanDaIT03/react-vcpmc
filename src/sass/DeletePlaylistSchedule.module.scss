@@ -1,0 +1,34 @@
+.wrapper {
+  width: 41.6rem;
+  border-radius: 1.6rem;
+  background: var(--bg-lightest);
+  padding: 3.2rem;
+
+  .actions {
+    margin-top: 4rem;
+    display: flex;
+    align-items: center;
+    gap: 1.6rem;
+  }
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 2.4rem;
+
+  h2 {
+    color: var(--text-stroke-text-and-stroke);
+    text-align: center;
+    letter-spacing: -0.048px;
+  }
+
+  .description {
+    color: var(--white);
+    text-align: center;
+    font-size: 1.4rem;
+    font-weight: 500;
+    line-height: normal;
+    letter-spacing: 0.21px;
+  }
+}

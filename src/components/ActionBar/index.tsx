@@ -9,7 +9,7 @@ interface ActionBarProps {
     children: ReactNode
 };
 
-export const ActionBar = ({ visible, children }: ActionBarProps) => {
+export const ActionBar = ({ visible = true, children }: ActionBarProps) => {
     return (
         <div className={cx("container", visible && "active")}>
             <div className={cx("action-bar-items")}>

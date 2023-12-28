@@ -1,0 +1,27 @@
+.wrapper {
+  width: 169rem;
+
+  .playlist-schedule-detail {
+    margin-top: 2.4rem;
+  }
+}
+
+.playback-cycle,
+.devices {
+  display: flex;
+  align-items: center;
+
+  .item {
+    display: flex;
+
+    p {
+      margin: 0 0.4rem;
+    }
+
+    &:last-child {
+      p {
+        display: none;
+      }
+    }
+  }
+}

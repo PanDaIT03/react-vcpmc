@@ -1,0 +1,117 @@
+.wrapper {
+  width: 100%;
+
+  .button-actions {
+    display: flex;
+    flex-direction: row;
+    margin: 4rem 0 5.6rem 0;
+    margin-top: 4rem;
+    gap: 3.2rem;
+    justify-content: center;
+  }
+}
+
+.container {
+  width: 176rem;
+  display: flex;
+  gap: 2.4rem;
+  margin-top: 2.4rem;
+
+  .container-left {
+    width: 50%;
+  }
+
+  .container-right {
+    flex: 1;
+  }
+
+  .container-left,
+  .container-right {
+    display: flex;
+    width: 86.8rem;
+    height: 72.2rem;
+    padding: 1.6rem 2.4rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.6rem;
+    border-radius: 1.6rem;
+    background: var(--middle-bg);
+  }
+
+  .title {
+    color: var(--white);
+    font-size: 1.8rem;
+    font-weight: 700;
+    letter-spacing: -0.036px;
+  }
+
+  .search {
+    width: 63.5rem;
+  }
+
+  .playlist-records {
+    background-color: transparent;
+  }
+
+  .action {
+    color: var(--orange-4-default);
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: 600;
+    letter-spacing: -0.024px;
+    text-decoration-line: underline;
+    user-select: none;
+  }
+}
+
+.container-left {
+  .filter {
+    display: flex;
+    align-items: center;
+    gap: 6.3rem;
+  }
+}
+
+.container-right {
+  .total {
+    line-height: 4rem;
+    display: flex;
+    align-items: center;
+    gap: 23.9rem;
+  }
+
+  .total-record,
+  .total-time {
+    display: flex;
+    align-items: center;
+    color: var(--white);
+    font-size: 1.6rem;
+    letter-spacing: -0.032px;
+    gap: 3.2rem;
+
+    .title {
+      font-weight: 700;
+    }
+
+    .content {
+      font-weight: 400;
+      opacity: 0.7;
+    }
+  }
+
+  .reminder {
+    color: var(--text-stroke-text-and-stroke);
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: -0.032px;
+    pointer-events: none;
+    user-select: none;
+
+    .content {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0.4rem;
+    }
+  }
+}

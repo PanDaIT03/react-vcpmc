@@ -3,6 +3,7 @@ import { useFormik } from "formik";
 
 import { IContract, IUserDetail } from "~/types";
 import { ActionContract } from "~/components/ActionContract";
+
 import styles from "~/sass/Detail.module.scss";
 const cx = classNames.bind(styles);
 
