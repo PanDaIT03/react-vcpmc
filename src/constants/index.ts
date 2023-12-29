@@ -221,7 +221,7 @@ const VALIDITY_CONTRACT_ITEMS = [
   },
   {
     id: 5,
-    title: "Đã huỷ",
+    title: "Đã hủy",
     icon: images.ellipseCancel,
   },
 ];
@@ -484,6 +484,31 @@ const getTotalMoment = (array: Array<any>) => {
   return momentTime.toISOString();
 };
 
+const formatDateDMYHPTS = (date: string) => {
+  let dateList = date.split('-');
+  return dateList[2] + '/' + dateList[1] + '/' + dateList[0];
+};
+
+const DAYS = [
+  "Thứ hai",
+  "Thứ ba",
+  "Thứ tư",
+  "Thứ năm",
+  "Thứ sáu",
+  "Thứ bảy",
+  "Chủ nhật",
+];
+
+const DAYSNUM = [
+  "Thứ 2",
+  "Thứ 3",
+  "Thứ 4",
+  "Thứ 5",
+  "Thứ 6",
+  "Thứ 7",
+  "Chủ nhật",
+];
+
 export {
   formatDate,
   formatTime,
@@ -497,6 +522,7 @@ export {
   handleClickDropDown,
   regexOnlyNumer,
   getTotalMoment,
+  formatDateDMYHPTS,
   LANGUAGE_ITEMS,
   SIDEBAR_ITEMS,
   ACTION_INFO_USER,
@@ -510,4 +536,6 @@ export {
   CB_VADILITY_MUSIC,
   CB_APPROVE,
   CB_PLAYLIST,
+  DAYS,
+  DAYSNUM,
 };

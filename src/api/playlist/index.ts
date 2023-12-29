@@ -11,7 +11,7 @@ import { fireStoreDatabase } from "~/config/firebase";
 import * as firebase from "firebase/firestore";
 
 import { UpdatePlaylist } from "~/state/thunk/playlist";
-import { IPLaylist, PlaylistRecords } from "~/types/Playlist";
+import { IPLaylist, IPlaylistRecords } from "~/types/Playlist";
 
 const getDocIdByField = async (field: string, param: number | string) => {
   const queryStmt = query(
@@ -28,19 +28,21 @@ export const getPlaylist = async () => {
   const queryStmt = query(collection(fireStoreDatabase, "playlists"));
   const querySnapshot = await getDocs(queryStmt);
 
-  const playlist: Omit<IPLaylist, "categories" | "records">[] =
-    querySnapshot.docs.map((doc) => {
-      return {
-        docId: doc.id,
-        categoriesId: doc.data().categories,
-        createdBy: doc.data().createdBy,
-        createdDate: doc.data().createdDate,
-        description: doc.data().description,
-        imageURL: doc.data().imageURL,
-        mode: doc.data().mode,
-        title: doc.data().title,
-      };
-    });
+  const playlist: Omit<
+    IPLaylist,
+    "categories" | "records" | "playlistsRecordsId"
+  >[] = querySnapshot.docs.map((doc) => {
+    return {
+      docId: doc.id,
+      categoriesId: doc.data().categories,
+      createdBy: doc.data().createdBy,
+      createdDate: doc.data().createdDate,
+      description: doc.data().description,
+      imageURL: doc.data().imageURL,
+      mode: doc.data().mode,
+      title: doc.data().title,
+    };
+  });
 
   return playlist;
 };
@@ -49,7 +51,7 @@ export const getPlaylistRecords = async () => {
   const queryStmt = query(collection(fireStoreDatabase, "playlists_records"));
   const querySnapshot = await getDocs(queryStmt);
 
-  const playlistRecords: PlaylistRecords[] = querySnapshot.docs.map((doc) => {
+  const playlistRecords: IPlaylistRecords[] = querySnapshot.docs.map((doc) => {
     return {
       docId: doc.id,
       playlistsId: doc.data().playlistsId,
@@ -107,7 +109,7 @@ export const updatePlaylistsRecords = async (data: {
 };
 
 export const addPlaylist = async (
-  data: Omit<IPLaylist, "categories" | "docId" | "records">
+  data: Omit<IPLaylist, "categories" | "docId" | "records" | "playlistsRecordsId">
 ) => {
   const collectionRef = collection(fireStoreDatabase, "playlists");
   const playlistData = {
@@ -119,7 +121,7 @@ export const addPlaylist = async (
 };
 
 export const addPlaylistsRecords = async (
-  data: Omit<PlaylistRecords, "docId">
+  data: Omit<IPlaylistRecords, "docId">
 ) => {
   const collectionRef = collection(fireStoreDatabase, "playlists_records");
   const playlistData = { ...data };

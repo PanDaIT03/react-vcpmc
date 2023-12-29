@@ -4,8 +4,8 @@ import { useSelector } from 'react-redux';
 import './App.css';
 import { RootState } from './state';
 import { protectedRoutes, publicRoutes } from './routes';
-import { DefaultLayout } from './layout/DefaultLayout';
-import { HeaderOnly } from './layout/HeaderOnly';
+import { DefaultLayout } from './layouts/DefaultLayout';
+import { HeaderOnly } from './layouts/HeaderOnly';
 
 interface ProtectedRouteProps {
   path: string

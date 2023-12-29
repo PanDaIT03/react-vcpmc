@@ -4,15 +4,15 @@ import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 
 import { images } from "~/assets";
-import { RootState } from "~/state";
-import { CommonWrapper } from "~/components/CommonWrapper";
-import { PagingItemType } from "~/components/Paging";
-import { routes } from "~/config/routes";
-import { IPlaylistSchedule } from "~/types/PlaylistSchedule";
-import { Loading } from "~/components/Loading";
-import { Table } from "~/components/Table";
 import { ActionBar } from "~/components/ActionBar";
 import { ActionBarItem } from "~/components/ActionBar/ActionBarItem";
+import { CommonWrapper } from "~/components/CommonWrapper";
+import { Loading } from "~/components/Loading";
+import { PagingItemType } from "~/components/Paging";
+import { Table } from "~/components/Table";
+import { routes } from "~/config/routes";
+import { RootState, useAppDispatch } from "~/state";
+import { IPlaylistSchedule } from "~/types/PlaylistSchedule";
 import { SidebarContext } from "~/context/Sidebar/SidebarContext.index";
 
 import styles from "~/sass/PlaylistScheduleDetail.module.scss";
@@ -20,11 +20,13 @@ const cx = classNames.bind(styles);
 
 const PAGING_ITEMS: Array<PagingItemType> = [
     {
-        title: "Lập lịch phát",
-        to: routes.PlaylistSchedulePage
+        title: 'Lập lịch phát',
+        to: routes.PlaylistSchedulePage,
+        active: true
     }, {
-        title: "Chi tiết",
-        to: "#"
+        title: 'Chi tiết',
+        to: `#`,
+        active: false
     }
 ];
 
@@ -37,6 +39,7 @@ const initialState: IPlaylistSchedule = {
 };
 
 function PlaylistScheduleDetailPage() {
+    const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const { playlistScheduleCode } = useParams();
 
@@ -56,12 +59,8 @@ function PlaylistScheduleDetailPage() {
         );
     }, [playlistSchedules]);
 
-    useEffect(() => {
-        console.log(playlistScheduleDetails);
-    }, [playlistScheduleDetails]);
-
     return (
-        <div className={cx("wrapper")}>
+        <div className={cx('wrapper')}>
             <CommonWrapper
                 title={playlistScheduleDetails.name}
                 paging={PAGING_ITEMS}

@@ -40,6 +40,7 @@ const PAGING_ITEMS: Array<PagingItemType> = [
 
 const initialState: IPLaylist = {
     docId: "",
+    playlistsRecordsId: "",
     categoriesId: [],
     records: [],
     createdBy: "",
@@ -121,7 +122,8 @@ function PlaylistDetailPage() {
         const index = playlistDetails.records.findIndex(record => record.docId === item.docId);
 
         const newPlaylistDetail = { ...playlistDetails };
-        newPlaylistDetail.records = newPlaylistDetail.records.filter(record => record.docId !== newPlaylistDetail.records[index].docId);
+        newPlaylistDetail.records = newPlaylistDetail.records.filter(record =>
+            record.docId !== newPlaylistDetail.records[index].docId);
 
         setPlaylistDetails(newPlaylistDetail);
         debounceRemove(newPlaylistDetail);

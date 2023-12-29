@@ -2,7 +2,7 @@ import { IRecord } from "../Record";
 
 export interface IPLaylist {
   docId: string;
-  playlistsRecordsId?: string;
+  playlistsRecordsId: string;
   categoriesId: Array<string>;
   records: IRecord[];
   createdBy: string;
@@ -14,8 +14,16 @@ export interface IPLaylist {
   categories: Array<string>;
 }
 
-export interface PlaylistRecords {
+export interface IPlaylistRecords {
   docId: string;
   playlistsId: string;
   recordsId: Array<string>;
 }
+
+export type IPlaylistRecordDetail = {
+  playlist: Omit<IPLaylist, "id">;
+  quantity: number;
+  totalTime: string;
+  playlistId: string;
+  playlistRecordId: string;
+};

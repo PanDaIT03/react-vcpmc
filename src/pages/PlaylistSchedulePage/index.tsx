@@ -1,20 +1,20 @@
 import classNames from "classnames/bind";
+import { useNavigate } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 
 import { images } from "~/assets";
+import { Table } from "~/components/Table";
+import { Loading } from "~/components/Loading";
+import { RootState, useAppDispatch } from "~/state";
+import { CommonWrapper } from "~/components/CommonWrapper";
+import { IPlaylistSchedule } from "~/types/PlaylistSchedule";
+import { SidebarContext } from "~/context/Sidebar/SidebarContext.index";
+import { getPlaylistScheduleAction, removeSchedulePlaybackAction } from "~/state/thunk/playlistSchedule";
 import { ActionBar } from "~/components/ActionBar";
 import { ActionBarItem } from "~/components/ActionBar/ActionBarItem";
-import { CommonWrapper } from "~/components/CommonWrapper";
-import { Table } from "~/components/Table";
-import { RootState, useAppDispatch } from "~/state";
-import { getPlaylistScheduleAction, removeSchedulePlaybackAction } from "~/state/thunk/playlistSchedule";
-import { Loading } from "~/components/Loading";
-import { SidebarContext } from "~/context/Sidebar/SidebarContext.index";
 import { Dialog } from "~/components/Dialog";
 import { DeletePlaylistSchedule } from "~/components/DeletePlaylistSchedule";
-import { IPlaylistSchedule } from "~/types/PlaylistSchedule";
 
 import styles from "~/sass/PlaylistSchedule.module.scss";
 const cx = classNames.bind(styles);
@@ -28,10 +28,10 @@ const initialState: IPlaylistSchedule = {
 };
 
 function PlaylistSchedulePage() {
-    const dispatch = useAppDispatch();
     const navigate = useNavigate();
+    const dispatch = useAppDispatch();
 
-    const { setActive } = useContext(SidebarContext);
+    const { setActive, setCurrentPage } = useContext(SidebarContext);
     const [visible, setVisible] = useState(false);
 
     const { playlistSchedules, loading, status } = useSelector((state: RootState) => state.playlistSchedule);
@@ -42,6 +42,7 @@ function PlaylistSchedulePage() {
 
     useEffect(() => {
         setActive(true);
+        setCurrentPage(3);
         dispatch(getPlaylistScheduleAction());
     }, []);
 
@@ -94,11 +95,11 @@ function PlaylistSchedulePage() {
     };
 
     return (
-        <div className={cx("wrapper")}>
-            <CommonWrapper title="Danh sách lịch phát">
+        <div className={cx('wrapper')}>
+            <CommonWrapper title='Danh sách lịch phát'>
                 <Table
-                    thead={["STT", "Tên lịch", "Thời gian phát", "", ""]}
-                    className={cx("playlist-schedule")}
+                    className={cx('playlist-schedule')}
+                    thead={['STT', 'Tên lịch', 'Thời gian phát', '', '']}
                 >
                     {playlistSchedules.map((playlistSchedule, index) => (
                         <tr key={index}>
@@ -106,11 +107,11 @@ function PlaylistSchedulePage() {
                             <td>{playlistSchedule.name}</td>
                             <td>{playlistSchedule.playbackTime}</td>
                             <td
-                                className={cx("details")}
+                                className={cx("action")}
                                 onClick={() => navigate(`/playlist-schedule/detail/${playlistSchedule.docId}`)}
                             >Xem chi tiết</td>
                             <td
-                                className={cx("delete")}
+                                className={cx("action")}
                                 onClick={() => handleClickRemove(playlistSchedule)}
                             >Xoá</td>
                         </tr>
@@ -118,11 +119,10 @@ function PlaylistSchedulePage() {
                 </Table>
                 <ActionBar>
                     <ActionBarItem
-                        title="Thêm lịch phast"
+                        title="Thêm lịch phát"
                         icon={images.addPlaylistIcon}
                     />
                 </ActionBar>
-                <Loading loading={loading} />
                 <Dialog
                     visible={visible}
                 >

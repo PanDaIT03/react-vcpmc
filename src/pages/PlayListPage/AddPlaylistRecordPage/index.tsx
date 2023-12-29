@@ -42,7 +42,7 @@ const initialState = {
     title: ''
 };
 
-const initialPlaylist: IPLaylist = {
+const initialPlaylist: Omit<IPLaylist, "playlistsRecordsId"> = {
     docId: "",
     categoriesId: [],
     records: [],

@@ -16,7 +16,6 @@ interface InputOwnProps<E extends React.ElementType> {
     className?: string
     errorMessage?: string
     isRequire?: boolean
-    // border?: boolean
     border?: "orange-4-default" | "default-border" | "none"
     min?: any
     max?: any

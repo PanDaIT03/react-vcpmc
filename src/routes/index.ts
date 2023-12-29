@@ -1,6 +1,6 @@
 // Layout
-import { DefaultLayout } from "../layout/DefaultLayout";
-import { HeaderOnly } from "../layout/HeaderOnly";
+import { DefaultLayout } from "../layouts/DefaultLayout";
+import { HeaderOnly } from "../layouts/HeaderOnly";
 
 import { routes } from "~/config/routes";
 
@@ -20,7 +20,7 @@ import PlayListPage from "~/pages/PlayListPage";
 import PlaylistDetailPage from "~/pages/PlayListPage/PlaylistDetailPage";
 import AddPlaylistPage from "~/pages/PlayListPage/AddPlaylistPage";
 import AddPlaylistRecordPage from "~/pages/PlayListPage/AddPlaylistRecordPage";
-import PlaylistSchedulePage from "~/pages/PlaylistSchedulePage"
+import PlaylistSchedulePage from "~/pages/PlaylistSchedulePage";
 import PlaylistScheduleDetailPage from "~/pages/PlaylistSchedulePage/PlaylistScheduleDetailPage";
 import EditPlaylistSchedulePage from "~/pages/PlaylistSchedulePage/EditPlaylistSchedulePage";
 
@@ -29,7 +29,7 @@ const publicRoutes = [
     { path: routes.ErrorConnectPage, component: ErrorConnectPage, layout: HeaderOnly },
     { path: routes.ResetPasswordPage, component: ResetPasswordPage },
     { path: routes.ForgotPasswordPage, component: ForgotPasswordPage },
-    { path: routes.EditPlaylistSchedulePage, component: EditPlaylistSchedulePage, layout: DefaultLayout },
+    // { path: routes.EditPlaylistSchedulePage, component: EditPlaylistSchedulePage, layout: DefaultLayout },
 ];
 
 const protectedRoutes = [
@@ -46,7 +46,7 @@ const protectedRoutes = [
     { path: routes.AddPlaylistRecordPage, component: AddPlaylistRecordPage, layout: DefaultLayout },
     { path: routes.PlaylistSchedulePage, component: PlaylistSchedulePage, layout: DefaultLayout },
     { path: routes.PlaylistScheduleDetailPage, component: PlaylistScheduleDetailPage, layout: DefaultLayout },
-    // { path: routes.EditPlaylistSchedulePage, component: EditPlaylistSchedulePage, layout: DefaultLayout },
+    { path: routes.EditPlaylistSchedulePage, component: EditPlaylistSchedulePage, layout: DefaultLayout },
 ];
 
 export { publicRoutes, protectedRoutes };

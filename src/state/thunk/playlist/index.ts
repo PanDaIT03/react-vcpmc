@@ -104,7 +104,7 @@ export const updatePlaylistAction = createAsyncThunk(
 
 export const addPlaylistAction = createAsyncThunk(
   "playlist/addPlaylistRecord",
-  async (data: Omit<IPLaylist, "categories" | "docId">) => {
+  async (data: Omit<IPLaylist, "categories" | "docId" | "playlistsRecordsId">) => {
     const {
       title,
       records,

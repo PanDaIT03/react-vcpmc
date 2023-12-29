@@ -160,7 +160,8 @@ function AddPage() {
                 dateCreated: getCurrentDateTimeDMY(),
                 effectiveDate: formatDateDMY(effectiveDate),
                 expirationDate: formatDateDMY(expirationDate),
-                ownerShips: "Người biểu diễn",
+                // ownerShips: "Người biểu diễn",
+                ownerShips: [],
                 reason: "",
                 status: "Mới"
             };

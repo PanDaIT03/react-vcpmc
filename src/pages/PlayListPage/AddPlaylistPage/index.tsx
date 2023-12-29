@@ -84,7 +84,7 @@ function AddPlaylistPage() {
                 categories.indexOf(category) === index
             );
 
-            const data: Omit<IPLaylist, "categories" | "docId"> = {
+            const data: Omit<IPLaylist, "categories" | "docId" | "playlistsRecordsId"> = {
                 title: title,
                 records: records,
                 categoriesId: categoriesId,

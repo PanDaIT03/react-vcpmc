@@ -5,19 +5,15 @@
 .playlist-schedule {
   margin-top: 2.4rem;
 
-  .details,
-  .delete {
-    font-size: 1.2rem;
-    font-weight: 600;
-    letter-spacing: -0.024px;
-    text-decoration-line: underline;
-  }
-
-  .details {
+  .action {
+    width: max-content;
     color: var(--orange-4-default);
-  }
+    padding: 5px 16px;
+    text-decoration: underline;
+    cursor: pointer;
 
-  .delete {
-    color: var(--red);
+    &:hover {
+      opacity: 1;
+    }
   }
 }

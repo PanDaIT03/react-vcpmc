@@ -47,10 +47,6 @@ const SidebarItem = ({
         [className]: className
     });
 
-    useEffect(() => {
-        setCurrentPage(4);
-    }, []);
-
     return (
         <div
             className={classes}

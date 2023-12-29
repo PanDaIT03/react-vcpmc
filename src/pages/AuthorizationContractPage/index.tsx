@@ -8,7 +8,7 @@ import { Table } from "~/components/Table";
 import { Input } from "~/components/Input";
 import { ActionBar } from "~/components/ActionBar";
 import { OptionMenu } from "~/components/OptionMenu";
-import { IContract, IGlobalConstantsType, IUserDetail } from "~/types";
+import { IContract, IGlobalConstantsType, IOwnerShip, IUserDetail } from "~/types";
 import { CB_OWNER_ITEMS, VALIDITY_CONTRACT_ITEMS } from "~/constants";
 import { ActionBarItem } from "~/components/ActionBar/ActionBarItem";
 import { RootState, useAppDispatch } from "~/state";
@@ -25,6 +25,11 @@ const cx = classNames.bind(styles);
 const initialState = {
     id: 1,
     title: "Tất cả"
+};
+
+const initialOwnerShip: IOwnerShip = {
+    name: "Tất cả",
+    value: 0
 };
 
 function AuthorizationContractPage() {
@@ -69,27 +74,32 @@ function AuthorizationContractPage() {
             const result = contracts.filter(contract => {
                 let itemResult;
 
-                if (ownershipValue === "Tất cả")
-                    itemResult = contract;
-                else if (contract.ownerShips.includes(ownershipValue)) {
-                    if (ownershipValue === "Người biểu diễn")
-                        itemResult = contract;
-                    else if (ownershipValue === "Nhà sản xuất")
-                        itemResult = contract;
-                };
+                let ownerShips = contract.ownerShips.find(item =>
+                    item.name.toString().toLowerCase() === ownershipValue.toString().toLowerCase()) || initialOwnerShip;
 
-                if (validityValue === "Tất cả")
-                    return itemResult;
-                else if (itemResult?.status.includes(validityValue)) {
-                    if (contract.status === "Mới")
+                if (Object.keys(ownerShips).length > 0) {
+                    if (ownershipValue === "Tất cả")
                         itemResult = contract;
-                    else if (contract.status === "Còn thời hạn")
-                        itemResult = contract;
-                    else if (contract.status === "Đã huỷ")
-                        itemResult = contract;
+                    else if (ownerShips?.name.includes(ownershipValue)) {
+                        if (ownershipValue === "Người biểu diễn")
+                            itemResult = contract;
+                        else if (ownershipValue === "Nhà sản xuất")
+                            itemResult = contract;
+                    };
 
-                    return itemResult;
-                };
+                    if (validityValue === "Tất cả")
+                        return itemResult;
+                    else if (itemResult?.status.includes(validityValue)) {
+                        if (contract.status === "Mới")
+                            itemResult = contract;
+                        else if (contract.status === "Còn thời hạn")
+                            itemResult = contract;
+                        else if (contract.status === "Đã huỷ")
+                            itemResult = contract;
+
+                        return itemResult;
+                    };
+                }
             });
 
             setSearchResult(result.filter(item =>
@@ -150,12 +160,9 @@ function AuthorizationContractPage() {
                                 : "Chưa có"
                             }</td>
                         <td>
-                            {typeof contract.ownerShips === "string"
-                                ? <p>{contract.ownerShips}</p>
-                                : contract.ownerShips.map((ownership, index) => (
-                                    <p key={index}>{ownership}</p>
-                                ))
-                            }
+                            {contract.ownerShips.map((ownership, index) => (
+                                <p key={index}>{ownership.name}</p>
+                            ))}
                         </td>
                         <td>
                             {VALIDITY_CONTRACT_ITEMS.map((item, index) => (

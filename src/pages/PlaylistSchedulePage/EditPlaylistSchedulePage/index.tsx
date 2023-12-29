@@ -1,173 +1,163 @@
-import classNames from "classnames/bind";
-import { Fragment, useContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { RootState, useAppDispatch } from "~/state";
+import { useContext, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 
-import { RootState } from "~/state";
-import { routes } from "~/config/routes";
-import { PagingItemType } from "~/components/Paging";
-import { CommonWrapper } from "~/components/CommonWrapper";
-import { SidebarContext } from "~/context/Sidebar/SidebarContext.index";
-import { IPlaylistSchedule } from "~/types/PlaylistSchedule";
-import { Loading } from "~/components/Loading";
-import { Input } from "~/components/Input";
-import { ActionBar } from "~/components/ActionBar";
-import { ActionBarItem } from "~/components/ActionBar/ActionBarItem";
 import { images } from "~/assets";
-import { Table } from "~/components/Table";
-
-import styles from "~/sass/EditPlaylistSchedule.module.scss";
-const cx = classNames.bind(styles);
-
-const initialState: IPlaylistSchedule = {
-    docId: "",
-    name: "",
-    playbackTime: "",
-    playlistsIds: [],
-    devices: []
-};
+import { routes } from "~/config/routes";
+import { IGlobalConstantsType, IRecord } from "~/types";
+import { formatDateYMD, getTotalMoment } from "~/constants";
+import { PagingItemType } from "~/components/Paging";
+import { IPLaylist, IPlaylistRecordDetail } from "~/types/Playlist";
+import { IPlaylistSchedule, IPlaylistScheduleDetail } from "~/types/PlaylistSchedule";
+import { SidebarContext } from "~/context/Sidebar/SidebarContext.index";
+import { PlaylistScheduleCommonPage } from "../PlaylistScheduleCommonPage";
+import { getPlayListAction } from "~/state/thunk/playlist";
 
 function EditPlaylistSchedulePage() {
-    const { setActive } = useContext(SidebarContext);
     const { playlistScheduleCode } = useParams();
+    const navigate = useNavigate();
+    const dispatch = useAppDispatch();
 
-    const { playlistSchedules, loading } = useSelector((state: RootState) => state.playlistSchedule);
-    const [playlistScheduleDetails, setPlaylistScheduleDetails] = useState<IPlaylistSchedule>(initialState);
-
-    const PAGING_ITEMS: Array<PagingItemType> = [
+    const PAGING_ITEMS: PagingItemType[] = [
         {
-            title: "Lập lịch phát",
-            to: routes.PlaylistSchedulePage
+            title: 'Lập lịch phát',
+            to: routes.PlaylistSchedulePage,
         }, {
-            title: "Chi tiết",
-            to: `/playlist-schedule/detail/${playlistScheduleCode}`
+            title: 'Chi tiết',
+            to: `/playlist-schedule/detail/${playlistScheduleCode}`,
         }, {
-            title: "Chỉnh sửa lịch phát",
-            to: "#"
+            title: 'Chỉnh sửa lịch phát',
+            to: '#',
         }
     ];
 
-    const theadArray = ["", "Thứ hai", "Thứ ba", "Thứ tư", "Thứ năm", "Thứ sáu", "Thứ bảy", "Chủ nhật"];
-    const hoursArray: Array<string> = [];
+    const { playList } = useSelector((state: RootState) => state.playlist);
+    const { playlistSchedules } = useSelector((state: RootState) => state.playlistSchedule);
 
-    for (let index = 1; index <= 24; index++) {
-        if (index < 10)
-            hoursArray.push(`0${index}:00`);
-        else
-            hoursArray.push(`${index}:00`);
-    };
+    const [playlistScheduleDetails, setPlaylistScheduleDetails] = useState<IPlaylistSchedule>();
+
+    const { setActive } = useContext(SidebarContext);
+    const [actions, setActions] = useState<IGlobalConstantsType[]>([] as IGlobalConstantsType[]);
+    const [itemActive, setItemActive] = useState<IPlaylistScheduleDetail[]>([] as IPlaylistScheduleDetail[]);
+    const [title, setTitle] = useState<string>('');
+
+    const scheduleFormik = useFormik({
+        initialValues: {
+            id: '',
+            name: '',
+            playbackTime: '',
+            playlist: [] as Array<IPlaylistScheduleDetail>,
+            newPlaylist: [] as Array<IPlaylistRecordDetail>,
+            startDate: '',
+            endDate: ''
+        },
+        validationSchema: Yup.object({
+            startDate: Yup.string().required(),
+            endDate: Yup.string().required(),
+            name: Yup.string().required()
+        }),
+        onSubmit: values => {
+            // let playlists = itemActive.map((item: IPlaylistScheduleDetail) => ({
+            //     playbackCycle: item.playbackCycle.filter((playbackCycle) => playbackCycle.time.length > 0),
+            //     playlistsId: item.playlist.playlistId
+            // }));
+
+            // let playbackTime = `${formatDateDMYHPTS(values.startDate)} - ${formatDateDMYHPTS(values.endDate)}`;
+
+            console.log(values);
+            // console.log(playlists);
+            // console.log(playbackTime);
+            // dispatch(savePlaylistSchedule({
+            //     id: values.id,
+            //     playlistsIds: playlists.filter(playlist => playlist.playbackCycle.length > 0),
+            //     navigate: () => navigate('/playlist-schedule'),
+            //     name: values.name,
+            //     playbackTime: playbackTime
+            // }));
+        }
+    });
+    const { values, setValues } = scheduleFormik;
+
+    console.log(playlistSchedules);
 
     useEffect(() => {
+        if (playlistSchedules.length <= 0)
+            navigate(routes.PlaylistSchedulePage);
+
         setActive(false);
+        setActions([
+            {
+                id: 1,
+                title: 'Áp lịch cho thiết bị',
+                icon: images.calendarAltOrange
+            }
+        ]);
+
+        dispatch(getPlayListAction());
     }, []);
 
     useEffect(() => {
-        setPlaylistScheduleDetails(playlistSchedules.find(playlistSchedule =>
-            playlistSchedule.docId === playlistScheduleCode) || initialState
-        );
-    }, [playlistSchedules]);
+        setPlaylistScheduleDetails(
+            playlistSchedules.find(item => item.docId === playlistScheduleCode)
+            || {} as IPlaylistSchedule);
+    }, playlistSchedules);
+
+    useEffect(() => {
+        if (typeof playlistScheduleDetails !== "undefined") {
+            const playlistDetails = playList.filter(playlist =>
+                playlistScheduleDetails.playlistsIds.some(item => item.playlistsId === playlist.docId)) || {} as IPLaylist;
+
+            const playlist = playList.filter(playlist => !playlistDetails.some(item => item.docId === playlist.docId));
+
+            console.log(playlistDetails);
+            console.log(playlist);
+
+            // const playlistDetails: IPlaylistScheduleDetail[] = playlistScheduleDetails.playlistsIds.map(item => ({
+            //     playbackCycle: item.playbackCycle,
+            //     playlist: {
+            //         playlist: playlist,
+            //         quantity: playlist.records.length,
+            //         totalTime: totalPlaylistTime(playlist.records),
+            //         playlistId: playlist.docId,
+            //         playlistRecordId: playlist.playlistsRecordsId
+            //     }
+            // })),
+            //     playbackTimeSplit = playlistScheduleDetails.playbackTime.split('-'),
+            //     newPlaylist =
+
+            //         setValues({
+            //             id: playlistScheduleDetails.docId,
+            //             name: playlistScheduleDetails.name,
+            //             playbackTime: playlistScheduleDetails.playbackTime,
+            //             playlist: playlistDetails,
+            //             newPlaylist: newPlaylist,
+            //             startDate: formatDateYMD(playbackTimeSplit[0].trim()),
+            //             endDate: formatDateYMD(playbackTimeSplit[1].trim())
+            //         });
+        }
+    }, [playlistScheduleDetails]);
+
+    const totalPlaylistTime = (records: IRecord[]) => {
+        let timeArray: string[] = ["00:00"];
+
+        records.map((record) => timeArray.push(record.time));
+        let total = getTotalMoment(timeArray);
+        return total.slice(11, 19);
+    };
 
     return (
-        <div className={cx("wrapper")}>
-            <CommonWrapper
-                title={playlistScheduleDetails.name}
-                paging={PAGING_ITEMS}
-            >
-                <div className={cx("content")}>
-                    <div className={cx("content-left")}>
-                        <div className={cx("top")}>
-                            <div className={cx("title")}>Thông tin lịch phát</div>
-                            <Input
-                                id="playlistScheduleName"
-                                name="playlistScheduleName"
-                                value="Lịch phát số 1"
-                                title="Tên lịch phát"
-                                size="custom"
-                            />
-                            <Input
-                                id="playlistScheduleName"
-                                name="playlistScheduleName"
-                                value="22/10/2023"
-                                title="Từ ngày"
-                                size="custom"
-                                type="date"
-                                border="orange-4-default"
-                            />
-                            <Input
-                                id="playlistScheduleName"
-                                name="playlistScheduleName"
-                                value="22/10/2023"
-                                title="Đến ngày"
-                                size="custom"
-                                type="date"
-                                border="orange-4-default"
-                            />
-                        </div>
-                        <div className={cx("bottom")}>
-                            <div className={cx("bottom_content")}>
-                                <div className={cx("title")}>Danh sách Playlist</div>
-                                <div className={cx("playlist")}>
-                                    <div className={cx("item")}>
-                                        <div className={cx("item_title")}>Top USUK</div>
-                                        <div className={cx("duration")}>
-                                            <p>Thời lượng:</p>
-                                            <div className={cx("duration_content")}>02:00:00</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className={cx("playlist", "line")}>
-                                    <div className={cx("title")}>Playlist mới</div>
-                                    <div className={cx("item")}>
-                                        <div className={cx("item_title")}>Top USUK</div>
-                                        <div className={cx("duration")}>
-                                            <p>Thời lượng:</p>
-                                            <div className={cx("duration_content")}>02:00:00</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className={cx("playlist", "line")}>
-                                    <div className={cx("title")}>Playlist đề xuất</div>
-                                    <div className={cx("item")}>
-                                        <div className={cx("item_title")}>Top USUK</div>
-                                        <div className={cx("duration")}>
-                                            <p>Thời lượng:</p>
-                                            <div className={cx("duration_content")}>02:00:00</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className={cx("content-right")}>
-                        <div className={cx("playlist-schedule")}>
-                            <div className={cx("schedule_title")}>
-                                {theadArray.map((item, index) => (
-                                    <div
-                                        className={cx("schedule_item", item === "" && "null")}
-                                        key={index}
-                                    >{item}</div>
-                                ))}
-                            </div>
-                            <div className={cx("schedule_content")}>
-                                {hoursArray.map((item, index) => (
-                                    <div key={index} className={cx("item_content")}>
-                                        <p>{item}</p>
-                                        <div className={cx("row-line")}></div>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <Loading loading={loading} />
-                <ActionBar>
-                    <ActionBarItem
-                        title="Áp lịch cho thiết bị"
-                        icon={images.calendarAltOrange}
-                    />
-                </ActionBar>
-            </CommonWrapper>
-        </div>
+        <PlaylistScheduleCommonPage
+            title={title}
+            data={itemActive}
+            setData={setItemActive}
+            newPlaylist={scheduleFormik.values.newPlaylist}
+            formik={scheduleFormik}
+            action={actions}
+            paging={PAGING_ITEMS}
+        />
     );
 };
 

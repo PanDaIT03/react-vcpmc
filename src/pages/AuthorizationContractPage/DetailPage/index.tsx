@@ -98,7 +98,7 @@ function DetailPage() {
             setOwnerShip(() => CAPABILITY.filter(item => item.title.toLowerCase().includes(contractDetail.ownerShips.toString().toLowerCase())))
         } else {
             let result: IGlobalConstantsType[] = contractDetail.ownerShips.map(item => {
-                let itemCAPABILITY = CAPABILITY.find(i => i.title.toLowerCase().includes(item.toLowerCase()));
+                let itemCAPABILITY = CAPABILITY.find(i => i.title.toLowerCase().includes(item.name.toLowerCase()));
                 if (typeof itemCAPABILITY !== 'undefined')
                     return {
                         id: itemCAPABILITY.id,
