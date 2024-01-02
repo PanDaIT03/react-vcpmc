@@ -1,73 +1,73 @@
 .container {
-    display: flex;
+  display: flex;
 
-    .container_left {
-        width: max-content;
-    }
+  .container_left {
+    width: max-content;
+  }
 
-    .container_right {
-        flex: 1;
-    }
+  .container_right {
+    flex: 1;
+  }
 }
 
 .account {
-    width: 13.2rem;
-    height: 4rem;
-    gap: .8rem;
-    margin-left: 2.4rem;
-    border-radius: .4rem;
-    display: flex;
-    align-items: center;
-    cursor: pointer;
+  width: 13.2rem;
+  height: 4rem;
+  gap: 0.8rem;
+  margin-left: 2.4rem;
+  border-radius: 0.4rem;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
 }
 
 .avatar {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
-    img {
-        width: 4rem;
-        height: 4rem;
-        border-radius: 20rem;
-        object-fit: cover;
-    }
+  img {
+    width: 4rem;
+    height: 4rem;
+    border-radius: 20rem;
+    object-fit: cover;
+  }
 }
 
 .name {
-    color: var(--text-stroke-text-and-stroke);
-    text-align: center;
-    letter-spacing: -0.032px;
+  color: var(--text-stroke-text-and-stroke);
+  text-align: center;
+  letter-spacing: -0.032px;
 }
 
 .role {
-    color: var(--orange-5);
-    text-align: left;
-    font-size: 1.4rem;
-    font-weight: 500;
-    line-height: normal;
-    letter-spacing: 0.21px;
-    text-transform: capitalize;
+  text-align: center;
+  color: var(--orange-5);
+  font-size: 1.4rem;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: 0.21px;
+  text-transform: capitalize;
 }
 
 // Loading
 .loading {
-    font-size: 4.3rem;
-    color: white;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    position: fixed;
-    background-color: var(--white-transparent);
-    opacity: .4;
-    z-index: 99;
+  font-size: 4.3rem;
+  color: white;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  position: fixed;
+  background-color: var(--white-transparent);
+  opacity: 0.4;
+  z-index: 99;
 }
 
 .loading-spinner {
-    color: var(--orange-4-default);
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, 50%);
+  color: var(--orange-4-default);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, 50%);
 }

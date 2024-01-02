@@ -44,6 +44,8 @@ function ProfilePage() {
     const userState = useSelector((state: RootState) => state.user);
     const { currentUser, status, loading } = userState;
 
+    console.log(currentUser);
+
     const initialInfoVales = {
         id: currentUser.docId,
         avatar: currentUser.avatar,

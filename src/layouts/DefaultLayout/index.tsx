@@ -35,12 +35,18 @@ export const DefaultLayout = ({ children }: DefaultLayoutProps) => {
         if (!currentUser)
             return;
 
-        if (currentUser.firstName && currentUser.lastName) {
+        if (currentUser.firstName && currentUser.lastName && currentUser.role) {
             let firstName = currentUser.firstName.substring(0, 1),
                 lastName = currentUser.lastName.split(' '),
                 name = firstName.concat('. ', lastName[lastName.length - 1]);
 
-            setAccount({ name: name, role: currentUser.role || "" });
+            let splitRole = currentUser.role.split(' '),
+                role = '';
+            if (splitRole.length > 1)
+                role = splitRole[0].substring(0, 1).concat('.', splitRole[splitRole.length - 1].substring(0, 1));
+            else role = currentUser.role;
+
+            setAccount({ name: name, role: role });
         };
     }, [currentUser]);
 

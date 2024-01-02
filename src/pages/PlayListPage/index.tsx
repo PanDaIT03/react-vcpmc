@@ -28,7 +28,7 @@ function PlayListPage() {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
 
-    const { setActive } = useContext(SidebarContext);
+    const { setActive, setCurrentPage } = useContext(SidebarContext);
     const [isGridView, setIsGridView] = useState(true);
     const [searchValue, setSearchValue] = useState('');
 
@@ -38,6 +38,7 @@ function PlayListPage() {
     const handleClickSearch = () => { };
 
     useEffect(() => {
+        setCurrentPage(2);
         dispatch(getPlayListAction());
         dispatch(resetNewRecordsAction());
         setActive(true);

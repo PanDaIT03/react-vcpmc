@@ -1,6 +1,6 @@
 import classNames from "classnames/bind";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
 import Button from "~/components/Button";
@@ -20,6 +20,7 @@ import { routes } from "~/config/routes";
 import { Loading } from "~/components/Loading";
 
 import styles from "~/sass/AuthorizationContract.module.scss";
+import { SidebarContext } from "~/context/Sidebar/SidebarContext";
 const cx = classNames.bind(styles);
 
 const initialState = {
@@ -36,6 +37,7 @@ function AuthorizationContractPage() {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
 
+    const { setCurrentPage } = useContext(SidebarContext);
     const [visible, setVisible] = useState(false);
     const [searchValue, setSearchValue] = useState('');
     const [ownership, setOwnerShip] = useState<IGlobalConstantsType>(initialState);
@@ -54,6 +56,7 @@ function AuthorizationContractPage() {
     const handleClickSearch = () => { };
 
     useEffect(() => {
+        setCurrentPage(4);
         dispatch(getContractsAction());
     }, []);
 
