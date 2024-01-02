@@ -33,6 +33,7 @@ export const getRecords = async (contractId?: string) => {
       author: doc.data().author,
       categoriesId: doc.data().categoriesId,
       contractId: doc.data().contractId,
+      etmContractsId: doc.data().etmContractsId,
       contractStatus: doc.data().contractStatus,
       createdBy: doc.data().createdBy,
       createdDate: doc.data().createdDate,
