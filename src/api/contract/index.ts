@@ -37,6 +37,10 @@ export const getContracts = async () => {
       ownerShips: doc.data().ownerShips,
       reason: doc.data().reason,
       status: doc.data().status,
+      royalties: doc.data().royalties,
+      CPM: doc.data().CPM,
+      administrativeFee: doc.data().administrativeFee,
+      forControlDate: doc.data().forControlDate,
     };
   });
 
