@@ -21,13 +21,8 @@ export const CommonWrapper = ({
     paging,
     className
 }: CommonWrapperProps) => {
-    if (!className) className = "";
-    const classes = cx("wrapper", {
-        [className]: className
-    });
-
     return (
-        <div className={classes}>
+        <div className={cx("wrapper", className)}>
             <div className={cx("container")}>
                 <div className={cx("paging")}>
                     {paging && paging.map((item, index) => {
