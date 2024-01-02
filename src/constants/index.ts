@@ -101,7 +101,7 @@ const SIDEBAR_ITEMS = [
       {
         id: 4,
         title: "Đơn vị sử dụng",
-        // to: routes
+        to: routes.UnitUsedManagementPage,
       },
     ],
   },
@@ -114,14 +114,17 @@ const SIDEBAR_ITEMS = [
       {
         id: 1,
         title: "Báo cáo doanh thu",
+        to: routes.RevenueReportPage,
       },
       {
         id: 2,
         title: "Lịch sử đối soát",
+        to: routes.ForControlHistoryPage,
       },
       {
         id: 3,
         title: "Phân phối doanh thu",
+        to: routes.RevenueDistributionPage,
       },
     ],
   },
@@ -134,6 +137,7 @@ const SIDEBAR_ITEMS = [
       {
         id: 1,
         title: "Phân quyền người dùng",
+        to: routes.AuthorizedUser
       },
       {
         id: 2,
@@ -152,6 +156,7 @@ const SIDEBAR_ITEMS = [
       {
         id: 5,
         title: "Chu kỳ đối soát",
+        to: routes.ContractTypeForControl
       },
     ],
   },
@@ -164,16 +169,17 @@ const SIDEBAR_ITEMS = [
       {
         id: 1,
         title: "Hướng dẫn sử dụng",
+        to: routes.SupportUserManual
       },
       {
         id: 2,
         title: "Tải app",
-        to: routes.DownloadPage
+        to: routes.DownloadPage,
       },
       {
         id: 3,
         title: "Feedback",
-        to: routes.FeedbackPage
+        to: routes.FeedbackPage,
       },
     ],
   },

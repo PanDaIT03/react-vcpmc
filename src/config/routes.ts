@@ -16,7 +16,28 @@ export const routes = {
   AddPlaylistRecordPage: "/playlist/add-playlist/add-records",
   PlaylistSchedulePage: "/playlist-schedule",
   PlaylistScheduleDetailPage: "/playlist-schedule/detail/:playlistScheduleCode",
-  EditPlaylistSchedulePage: "/playlist-schedule/detail/edit/:playlistScheduleCode",
+  EditPlaylistSchedulePage:
+    "/playlist-schedule/detail/edit/:playlistScheduleCode",
+
+  RevenueReportPage: "/revenue/report",
+  RevenueDistributionPage: "/revenue/distribution",
+  RevenueDistributionDetailPage: "/revenue/distribution/detail/:id",
+  RevenueReportDetailPage: "/revenue/report/detail",
+  RevenueReportContractDetailPage: "/revenue/report/detail/contract/:id",
+  UnitUsedManagementPage: "/unit-used-management",
+  UnitUsedManagementDetailPage: "/unit-used-management/detail/:id",
+  UserOfUnitUsedManagementDetailPage: "/unit-used-management/detail/:contractId/user/:userId",
+  AddUserOfUnitUsedManagementPage: "/unit-used-management/detail/:id/user/add",
+  ForControlHistoryPage: "/for-control/history",
+  ForControlHistoryDetailPage: "/for-control/history/detail/:id",
+  AuthorizedUser: "/authorization/user",
+  AuthorizedEditUser: "/authorization/user/:id/edit",
+  AuthorizedAddUser: "/authorization/user/add",
+  AuthorizedEditRole: "/authorization/role/edit/:id",
+  AuthorizedAddRole: "/authorization/role/add",
+  ContractTypeForControl: "/setting/for-control",
+  SupportUserManual: "/support/user-manual",
+
   AuthorizedPartnerPage: "/authorized-partner",
   EditAuthorizedPartnerPage: "/authorized-partner/edit/:id",
   DevicePage: "/device-management",
@@ -25,5 +46,5 @@ export const routes = {
   CategoryPage: "/category",
   EditCategoryPage: "/category/edit",
   DownloadPage: "/download",
-  FeedbackPage: "/feedback"
+  FeedbackPage: "/feedback",
 };
