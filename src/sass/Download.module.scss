@@ -58,14 +58,20 @@
   justify-content: center;
   gap: 111px;
   margin-top: 73px;
+
+  .windows {
+    width: 154px;
+    height: 142px;
+  }
 }
 
 .download__box-item {
   width: max-content;
-  height: auto;
+  height: 444px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
+  align-items: center;
   gap: 89px;
   padding: 92px 71px 32px 71px;
   border-radius: 16px;

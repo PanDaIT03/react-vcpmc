@@ -18,9 +18,9 @@ import { Dialog } from "~/components/Dialog";
 import { CancleForm } from "~/components/CancelForm";
 import { routes } from "~/config/routes";
 import { Loading } from "~/components/Loading";
+import { SidebarContext } from "~/context/Sidebar/SidebarContext";
 
 import styles from "~/sass/AuthorizationContract.module.scss";
-import { SidebarContext } from "~/context/Sidebar/SidebarContext";
 const cx = classNames.bind(styles);
 
 const initialState = {

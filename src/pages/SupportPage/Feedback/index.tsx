@@ -54,7 +54,7 @@ const FeedbackItem = memo(({ data, className }: FeedbackItemProps) => {
             </div>
             <div className={cx('feedbacks__item__content')}>
                 <div className={cx('item__content__header')}>
-                    <span>{data.user.firstName} {data.user.lastName}</span>
+                    <span>{data.userName}</span>
                     <span>{data.dateTime}</span>
                 </div>
                 <div className={cx('item__content__content')}>
@@ -63,19 +63,19 @@ const FeedbackItem = memo(({ data, className }: FeedbackItemProps) => {
             </div>
         </div>
     );
-})
+});
 
 function FeedbackPage() {
     const dispatch = useAppDispatch();
 
     const user = useSelector((state: RootState) => state.user);
-    const { feedbacks, loading } = useSelector((state: RootState) => state.feedback);
+    const feedback = useSelector((state: RootState) => state.feedback);
 
     const { setActive, setCurrentPage } = useContext(SidebarContext);
     const [itemsPerPage, setItemsPerPage] = useState<string>('7');
     const [activeToast, setActiveToast] = useState<boolean>(false);
 
-    // const [feedbacks, setFeedbacks] = useState<IFeedback[]>([] as IFeedback[]);
+    const [feedbacks, setFeedbacks] = useState<IFeedback[]>([] as IFeedback[]);
     const [currentItems, setCurrentItems] = useState<IFeedback[]>([] as IFeedback[]);
     const [feedbackActive, setFeedbackActive] = useState<IFeedback>({} as IFeedback);
 
@@ -115,9 +115,13 @@ function FeedbackPage() {
         dispatch(getFeedbacks());
     }, []);
 
-    // useEffect(() => {
-    //     setFeedbacks(feedbacks);
-    // }, [feedback]);
+    useEffect(() => {
+        setFeedbacks(feedback.feedbacks);
+    }, [feedback]);
+
+    useEffect(() => {
+        if (user.currentUser) feedbackFormik.setFieldValue('userName', user.currentUser.firstName.concat(' ', user.currentUser.lastName));
+    }, [user.currentUser]);
 
     const handleOnItemClick = useCallback((problem: any) => {
         feedbackFormik.setFieldValue('typeProblem', problem.title);
@@ -175,7 +179,9 @@ function FeedbackPage() {
         setCurrentItems(items);
     }, []);
 
-    console.log(feedbacks);
+    console.log(feedback.feedbacks);
+    console.log(currentItems);
+    console.log(user.currentUser);
 
     return (
         <CommonWrapper
@@ -204,7 +210,6 @@ function FeedbackPage() {
                     <Toast
                         message='Gửi feedback thành công'
                         visible={activeToast} />
-                    <Loading loading={loading} />
                 </>
                 : <div className={cx('support-feedback-container')}>
                     <Table
@@ -214,17 +219,17 @@ function FeedbackPage() {
                         // }}
                         // itemsPerPage={itemsPerPage}
                         // setItemsPerPage={setItemsPerPage}
-                        // className={cx('container__feedbacks')}
-                        thead={['']}
-                    // loading={feedback.loading}
+                        className={cx('container__feedbacks')}
+                        thead={['Danh mục hướng dẫn']}
                     >
-                        {currentItems.map((feedback, index) =>
+                        {feedbacks.map((feedback, index) =>
                             <tr key={index} onClick={() => setFeedbackActive(feedback)}>
                                 <td style={{ height: '80px' }}>
-                                    <FeedbackItem
-                                        data={feedback}
-                                        className={cx(feedback.docId === feedbackActive.docId && 'active')}
-                                    />
+                                    {typeof feedback !== "undefined"
+                                        && <FeedbackItem
+                                            data={feedback}
+                                            className={cx(feedback.docId === feedbackActive.docId && 'active')}
+                                        />}
                                 </td>
                             </tr>
                         )}
@@ -249,6 +254,7 @@ function FeedbackPage() {
                             </>}
                     </div>
                 </div>}
+            <Loading loading={feedback.loading} />
         </CommonWrapper>
     );
 };

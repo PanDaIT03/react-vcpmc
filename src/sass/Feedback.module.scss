@@ -129,13 +129,16 @@
     width: 571px;
     height: 834px;
     padding: 8px;
+    margin-top: 24px;
   }
 
   & > .container__feedbacks-detail {
+    color: var(--white);
     width: 1014px;
     height: 834px;
     padding: 32px;
     border-radius: 16px;
+    margin-top: 24px;
     background: var(--middle-bg, rgba(47, 47, 65, 0.7));
 
     & > .container__feedbacks-detail__header {

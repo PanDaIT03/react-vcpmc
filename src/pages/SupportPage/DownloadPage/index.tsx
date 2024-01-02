@@ -1,12 +1,12 @@
 import classNames from "classnames/bind";
-import { ReactNode, memo, useCallback, useContext, useEffect } from "react";
+import { ReactNode, memo, useContext, useEffect } from "react";
 
 import Button from "~/components/Button";
 import { CommonWrapper } from "~/components/CommonWrapper";
 import { PagingItemType } from "~/components/Paging";
 import { DOWNLOAD_ITEMS } from "~/constants";
-import { IDownloadItem } from "~/types/SupportType";
 import { SidebarContext } from "~/context/Sidebar/SidebarContext";
+import { IDownloadItem } from "~/types/SupportType";
 
 import style from '~/sass/Download.module.scss';
 const cx = classNames.bind(style);
@@ -60,7 +60,12 @@ function DownloadPage() {
                 <div className={cx('support-download__content__download')}>
                     {DOWNLOAD_ITEMS.map(item => {
                         let imageTag: ReactNode = <></>;
-                        imageTag = <img src={item.image} alt={item.title} style={{ width: "189px", height: "104px" }} />
+                        let classes = cx("windows");
+
+                        imageTag = <img
+                            src={item.image}
+                            alt={item.title}
+                            className={item.title === DOWNLOAD_ITEMS[1].title ? classes : ''} />
 
                         return <DownloadBoxItem key={item.title} data={{
                             image: imageTag,

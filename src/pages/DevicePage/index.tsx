@@ -43,7 +43,7 @@ function DevicePage() {
 
     const { devices, loading } = useSelector((state: RootState) => state.device);
 
-    const { setActive } = useContext(SidebarContext);
+    const { setActive, setCurrentPage } = useContext(SidebarContext);
     const [isCheckedAll, setIsCheckedAll] = useState(false);
     const [activeConfirmDialog, setActiveConfirmDialog] = useState<boolean>(false);
 
@@ -79,10 +79,11 @@ function DevicePage() {
     });
 
     useEffect(() => {
-        setHeaderColumn(['STT', 'Tên thiết bị', 'Trạng thái', 'Địa điểm', 'Hạn hợp đồng', 'MAC Addresss', 'Memory']);
-
-        !devices.length && dispatch(getDeviceList());
         setActive(true);
+        setCurrentPage(4)
+        setSearchResult(devices);
+        setHeaderColumn(['STT', 'Tên thiết bị', 'Trạng thái', 'Địa điểm', 'Hạn hợp đồng', 'MAC Addresss', 'Memory']);
+        !devices.length && dispatch(getDeviceList());
     }, []);
 
     useEffect(() => {
@@ -137,6 +138,19 @@ function DevicePage() {
         else if (isUnLocked) setLock({ ...lock, title: "Khoá thiết bị", isActive: true });
     }, [itemsChosen]);
 
+    useEffect(() => {
+        const search = searchValue.toLowerCase().trim();
+
+        setSearchResult(devices.filter(item =>
+            item.name.toLowerCase().includes(search) ||
+            item.status.toLowerCase().includes(search) ||
+            item.operatingLocation.toLowerCase().includes(search) ||
+            item.macAddress.toLowerCase().includes(search) ||
+            item.expirationDate.toLowerCase().includes(search) ||
+            item.memory.toLowerCase().includes(search)
+        ));
+    }, [searchValue]);
+
     const handleSetCurrentItems = useCallback((items: Array<any>) => {
         setCurrentItems(items);
     }, []);
@@ -149,14 +163,6 @@ function DevicePage() {
         checked
             ? setItemsChosen(itemsChosen.filter(itemChosen => itemChosen.docId !== item.docId))
             : setItemsChosen([...itemsChosen, item]);
-    };
-
-    const handleCheckedAll = (checkedAll: boolean) => {
-        checkedAll
-            ? setItemsChosen([])
-            : setItemsChosen(devices);
-
-        setIsCheckedAll(!checkedAll);
     };
 
     const changeStatus = (item: string) => {
@@ -228,7 +234,7 @@ function DevicePage() {
                 className={cx("device-table")}
                 setIsCheckedAll={setIsCheckedAll}
             >
-                {devices.map((item, index) => {
+                {searchResult.map((item, index) => {
                     let status = '';
                     let checked = itemsChosen.indexOf(item) > -1;
 
