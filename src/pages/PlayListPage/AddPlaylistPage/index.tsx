@@ -17,12 +17,12 @@ import { PagingItemType } from "~/components/Paging";
 import { Table } from "~/components/Table";
 import { Upload } from "~/components/Upload";
 import { routes } from "~/config/routes";
-import { SidebarContext } from "~/context/Sidebar/SidebarContext.index";
+import { SidebarContext } from "~/context/Sidebar/SidebarContext";
 import { RootState, useAppDispatch } from "~/state";
 import { IRecord } from "~/types";
 import Button from "~/components/Button";
 import { getCurrentDateDMY, getTotalMoment } from "~/constants";
-import { IPLaylist } from "~/types/Playlist";
+import { IPLaylist } from "~/types/PlaylistType";
 import { addPlaylistAction } from "~/state/thunk/playlist";
 import { Loading } from "~/components/Loading";
 

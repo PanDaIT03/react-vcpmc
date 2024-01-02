@@ -6,10 +6,11 @@ import { useNavigate } from "react-router-dom";
 import { Sidebar } from "../component/Sidebar";
 import { Header } from "../component/Header";
 import { RootState } from "~/state";
-import { SidebarContext } from "~/context/Sidebar/SidebarContext.index";
+import { SidebarContext } from "~/context/Sidebar/SidebarContext";
 import { routes } from "~/config/routes";
 
 import styles from "~/sass/DefaultLayout.module.scss";
+import { ThemeProvider } from "~/context/Theme/ThemeContext";
 const cx = classNames.bind(styles);
 
 interface DefaultLayoutProps {
@@ -30,18 +31,6 @@ export const DefaultLayout = ({ children }: DefaultLayoutProps) => {
     });
     const { name, role } = account;
 
-    // useEffect(() => {
-    //     let handler = (event: MouseEvent) => {
-    //         if (!sidebarRef.current?.contains(event.target as Node))
-    //             setActive(false);
-    //     };
-    //     document.addEventListener("mousedown", handler);
-
-    //     return () => {
-    //         document.removeEventListener("mousedown", handler);
-    //     };
-    // });
-
     useEffect(() => {
         if (!currentUser)
             return;
@@ -56,33 +45,35 @@ export const DefaultLayout = ({ children }: DefaultLayoutProps) => {
     }, [currentUser]);
 
     return (
-        <div className={cx("wrapper")}>
-            <div className={cx("container")}>
-                <div className={cx("container_left")}>
-                    <Sidebar
-                        sidebarRef={sidebarRef}
-                        onClick={() => setActive(true)}
-                    />
-                </div>
-                <div className={cx("container_right")}>
-                    <div className={cx("header")}>
-                        <Header>
-                            <div className={cx("account")} onClick={() => navigate(routes.ProfilePage)}>
-                                <div className={cx("avatar")}>
-                                    <img src={`${currentUser.avatar}`} alt="avatar"/>
-                                </div>
-                                <div className={cx("info")}>
-                                    <p className={cx("name")}>{name}</p>
-                                    <p className={cx("role")}>{role}</p>
-                                </div>
-                            </div>
-                        </Header>
+        <ThemeProvider>
+            <div className={cx("wrapper")}>
+                <div className={cx("container")}>
+                    <div className={cx("container_left")}>
+                        <Sidebar
+                            sidebarRef={sidebarRef}
+                            onClick={() => setActive(true)}
+                        />
                     </div>
-                    <div className={cx("content")}>
-                        {children}
+                    <div className={cx("container_right")}>
+                        <div className={cx("header")}>
+                            <Header>
+                                <div className={cx("account")} onClick={() => navigate(routes.ProfilePage)}>
+                                    <div className={cx("avatar")}>
+                                        <img src={`${currentUser.avatar}`} alt="avatar" />
+                                    </div>
+                                    <div className={cx("info")}>
+                                        <p className={cx("name")}>{name}</p>
+                                        <p className={cx("role")}>{role}</p>
+                                    </div>
+                                </div>
+                            </Header>
+                        </div>
+                        <div className={cx("content")}>
+                            {children}
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </ThemeProvider>
     );
 };

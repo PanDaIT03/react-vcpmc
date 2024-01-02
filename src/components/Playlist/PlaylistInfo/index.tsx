@@ -2,7 +2,7 @@ import classNames from "classnames/bind";
 import { memo } from "react";
 
 import { images } from "~/assets";
-import { IPLaylist } from "~/types/Playlist";
+import { IPLaylist } from "~/types/PlaylistType";
 import { IRecord } from "~/types";
 import { getTotalMoment } from "~/constants";
 

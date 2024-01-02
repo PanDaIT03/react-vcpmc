@@ -1,32 +1,47 @@
-import { IDevice } from "../Device";
-import { IPlaylistRecordDetail } from "../Playlist";
+import { IPLaylist } from "../PlaylistType";
+import { PlaylistRecordDetail } from "../PlaylistsRecords";
 
-export interface IPlaybackCycle {
-  day: string;
-  time: Array<string>;
-}
-
-interface IPlaylistsSchedule {
-  playbackCycle: IPlaybackCycle[];
-  playlistsId: string;
-  playlistTitle?: string;
-}
-
-export interface IPlaylistSchedule {
-  docId: string;
+export interface SchedulePlaylistDetail {
+  id: string;
   name: string;
   playbackTime: string;
-  playlistsIds: Array<IPlaylistsSchedule>;
-  devices: IDevice[];
+  playlist: SchedulePlaylist[];
 }
 
-export interface IScheduleDevices {
-  docId: string;
-  devicesIds: Array<string>;
-  schedulesId: string;
+export interface SchedulePlaylist {
+  playbackCycle: PlaybackCycle[];
+  playlistDetail: IPLaylist;
 }
 
-export interface IPlaylistScheduleDetail {
-  playbackCycle: IPlaybackCycle[];
-  playlist: IPlaylistRecordDetail;
+export interface PlaybackCycle {
+  day: string;
+  time: string[];
 }
+
+interface OwnPlaylist {
+  playbackCycle: PlaybackCycle[];
+  playlistsId: string;
+}
+
+export interface PlaylistSchedule {
+  id: string;
+  name: string;
+  playbackTime: string;
+  playlistsIds: OwnPlaylist[];
+}
+
+export interface UpdateTimeScheduleParams {
+  id: string;
+  playlistsIds: {
+    playbackCycle: PlaybackCycle[];
+    playlistsId: string;
+  }[];
+  navigate: () => void;
+  name: string;
+  playbackTime: string;
+}
+
+export type PlaylistScheduleDetail = {
+  playbackCycle: PlaybackCycle[];
+  playlist: PlaylistRecordDetail;
+};

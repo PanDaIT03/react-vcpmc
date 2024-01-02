@@ -5,10 +5,11 @@ import { useNavigate } from "react-router-dom";
 import { Dropdown } from "~/components/Poper/Dropdown";
 import { IGlobalConstantsType } from "~/types/GlobalConstantsType";
 import { SIDEBAR_ITEMS } from "~/constants";
-import { SidebarContext } from "~/context/Sidebar/SidebarContext.index";
+import { SidebarContext } from "~/context/Sidebar/SidebarContext";
 import { images } from "~/assets";
 
 import styles from "~/sass/Sidebar.module.scss";
+import { routes } from "~/config/routes";
 const cx = classNames.bind(styles);
 
 interface SidebarProps {

@@ -1,0 +1,125 @@
+.table {
+  width: 1393px;
+  height: 870px;
+  padding: 16px 24px;
+  position: relative;
+  border-radius: 16px;
+  background-color: rgba(47, 47, 65, 0.7);
+  overflow-y: overlay;
+}
+
+.table__head {
+  display: flex;
+  align-items: center;
+
+  & > div {
+    width: calc(1393px / 8);
+    height: 20px;
+
+    & > p {
+      text-align: center;
+      position: relative;
+      z-index: 1;
+      color: var(--orange-3);
+    }
+
+    &.active {
+      & > p {
+        color: #7879f1;
+        position: relative;
+
+        & > span {
+          width: max-content;
+          position: absolute;
+          top: 100%;
+          left: 50%;
+          transform: translateX(-50%);
+          display: flex;
+          align-items: center;
+          gap: 4px;
+
+          & > span:first-child {
+            width: 8px;
+            height: 8px;
+            background-color: var(--color-green);
+            border-radius: 100%;
+          }
+
+          & > span:last-child {
+            font-size: 12px;
+            font-weight: 500;
+            line-height: 18px;
+            letter-spacing: 0.06px;
+          }
+        }
+      }
+    }
+  }
+
+  & > div > div.schedule-active {
+    width: 170px;
+    height: 1175px;
+    position: absolute;
+    top: 1%;
+    background-color: rgba(56, 56, 83, 0.7);
+    z-index: 0;
+    border: 1px solid rgba(120, 121, 241, 1);
+  }
+}
+
+.table__body {
+  position: relative;
+
+  & > .table__body__hour {
+    height: 47px;
+
+    & > p {
+      width: max-content;
+      color: #727288;
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 20px;
+      letter-spacing: 0.028px;
+      padding-left: 30px;
+      padding-right: 38px;
+      text-align: start;
+      position: relative;
+
+      &::after {
+        content: "";
+        display: block;
+        width: calc(1393px - 101px - 48px - 38px - 50px);
+        height: 1px;
+        opacity: 0.8;
+        background-color: rgba(114, 114, 136, 1);
+        position: absolute;
+        top: 50%;
+        left: 150%;
+        transform: translateY(-50%);
+      }
+    }
+
+    &:first-child > p::after {
+      display: none;
+    }
+  }
+}
+
+.table__body__schedule {
+  & .table__body__schedule__playlist {
+    width: 166.88px;
+    justify-content: center;
+    position: absolute;
+    left: 167px;
+
+    & > svg {
+      display: block;
+      color: #ff7506;
+      transition: color 0.2s linear;
+
+      &:hover {
+        color: var(--white);
+      }
+    }
+  }
+}

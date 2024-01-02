@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { BoxItem } from "../BoxItem";
 import { images } from "~/assets";
 import { Checkbox } from "../Checkbox";
-import { IPLaylist } from "~/types/Playlist";
+import { IPLaylist } from "~/types/PlaylistType";
 import { getTotalMoment } from "~/constants";
 import { IGlobalConstantsType, IRecord } from "~/types";
 

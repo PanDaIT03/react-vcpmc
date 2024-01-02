@@ -2,7 +2,7 @@ import classNames from "classnames/bind";
 import Switch from "react-switch";
 import { memo, useEffect, useState } from "react";
 
-import { IPLaylist } from "~/types/Playlist";
+import { IPLaylist } from "~/types/PlaylistType";
 import { IRecord } from "~/types";
 import { getTotalMoment } from "~/constants";
 import { Input } from "~/components/Input";

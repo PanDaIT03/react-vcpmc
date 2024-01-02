@@ -13,7 +13,7 @@ import { RootState, useAppDispatch } from "~/state";
 import { CAPABILITY } from "~/constants";
 import { Dialog } from "~/components/Dialog";
 import { CancleForm } from "~/components/CancelForm";
-import { SidebarContext } from "~/context/Sidebar/SidebarContext.index";
+import { SidebarContext } from "~/context/Sidebar/SidebarContext";
 import { Product } from "./Product";
 import { IContract, IGlobalConstantsType, IRecord, IUserDetail } from "~/types";
 import { RenewalAuthorization } from "~/components/RenewalAuthorization";

@@ -4,7 +4,7 @@ import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import { useContext } from "react";
 
-import { SidebarContext } from "~/context/Sidebar/SidebarContext.index";
+import { SidebarContext } from "~/context/Sidebar/SidebarContext";
 import style from './Paging.module.scss';
 const cx = classNames.bind(style);
 

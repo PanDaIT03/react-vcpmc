@@ -4,7 +4,7 @@ import { useContext, useEffect, useRef } from "react";
 import { ActionBar } from "~/components/ActionBar";
 import { ActionBarItem } from "~/components/ActionBar/ActionBarItem";
 // import { Contract } from "~/component/Contract";
-import { SidebarContext } from "~/context/Sidebar/SidebarContext.index";
+import { SidebarContext } from "~/context/Sidebar/SidebarContext";
 
 import styles from "~/sass/ContractAction.module.scss";
 const cx = classNames.bind(styles);

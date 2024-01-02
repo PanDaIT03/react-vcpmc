@@ -17,4 +17,13 @@ export const routes = {
   PlaylistSchedulePage: "/playlist-schedule",
   PlaylistScheduleDetailPage: "/playlist-schedule/detail/:playlistScheduleCode",
   EditPlaylistSchedulePage: "/playlist-schedule/detail/edit/:playlistScheduleCode",
+  AuthorizedPartnerPage: "/authorized-partner",
+  EditAuthorizedPartnerPage: "/authorized-partner/edit/:id",
+  DevicePage: "/device-management",
+  DeviceDetailPage: "/device-management/detail/:id",
+  SettingPage: "/system-setting",
+  CategoryPage: "/category",
+  EditCategoryPage: "/category/edit",
+  DownloadPage: "/download",
+  FeedbackPage: "/feedback"
 };

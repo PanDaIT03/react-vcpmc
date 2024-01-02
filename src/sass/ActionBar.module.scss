@@ -1,69 +1,70 @@
 .container {
-    width: 11rem;
-    background-color: var(--text-stroke-fill);
-    border-top-left-radius: 2.5rem;
-    border-bottom-left-radius: 2.5rem;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    position: fixed;
-    right: -10%;
-    top: 40%;
-    transform: translateY(-50%);
-    overflow: hidden;
-    transition: all .2s ease-in-out;
+  width: 11rem;
+  background-color: var(--text-stroke-fill);
+  border-top-left-radius: 2.5rem;
+  border-bottom-left-radius: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  position: fixed;
+  right: -10%;
+  top: 40%;
+  transform: translateY(-50%);
+  overflow: hidden;
+  transition: all 0.2s ease-in-out;
 }
 
 .active {
-    right: 0;
+  right: 0;
 }
 
 .disable {
-    img {
-        filter: invert(58%) sepia(7%) saturate(279%) hue-rotate(196deg) brightness(91%) contrast(91%);
-    }
+  img {
+    filter: invert(58%) sepia(7%) saturate(279%) hue-rotate(196deg)
+      brightness(91%) contrast(91%);
+  }
 
-    .title {
-        color: var(--gray) !important;
-    }
+  .title {
+    color: var(--gray) !important;
+  }
 }
 
 .wrapper {
-    display: flex;
-    width: 11rem;
-    padding: 1.6rem;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 1rem;
-    cursor: pointer;
-    opacity: .7;
-    transition: all .2s linear;
+  display: flex;
+  width: 11rem;
+  padding: 1.6rem;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: all 0.2s linear;
 
-    .icon {
-        padding: 1rem;
-        gap: 1rem;
-        border-radius: 6.7rem;
-        background: rgba(114, 114, 136, 0.50);
-        display: flex;
-        align-items: flex-start;
-    }
+  .icon {
+    padding: 1rem;
+    gap: 1rem;
+    border-radius: 6.7rem;
+    background: rgba(114, 114, 136, 0.5);
+    display: flex;
+    align-items: flex-start;
+  }
+
+  .title {
+    color: var(--white);
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: 500;
+    line-height: 1.8rem;
+    letter-spacing: 0.06px;
+  }
+
+  &:not(.disable):hover {
+    opacity: 1;
+    background-color: var(--white-transparent);
 
     .title {
-        color: var(--white);
-        text-align: center;
-        font-size: 1.2rem;
-        font-weight: 500;
-        line-height: 1.8rem;
-        letter-spacing: 0.06px;
+      color: var(--orange-4-default);
     }
-
-    &:not(.disable):hover {
-        opacity: 1;
-        background-color: var(--white-transparent);
-
-        .title {
-            color: var(--orange-4-default);
-        }
-    }
+  }
 }

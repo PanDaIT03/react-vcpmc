@@ -3,6 +3,7 @@ import moment from "moment";
 import { IGlobalConstantsType } from "~/types";
 import { images } from "~/assets";
 import { routes } from "~/config/routes";
+import { IDownloadItem } from "~/types/SupportType";
 
 const regexIsSlash = /^[a-zA-Z0-9/]+$/;
 
@@ -21,6 +22,25 @@ const LANGUAGE_ITEMS = [
     id: 3,
     title: "中國",
     icon: images.chinaFlag,
+  },
+];
+
+const CB_ROLES = [
+  {
+    id: 1,
+    title: "Lisences",
+  },
+  {
+    id: 2,
+    title: "User",
+  },
+  {
+    id: 3,
+    title: "System Admin",
+  },
+  {
+    id: 5,
+    title: "Super Admin",
   },
 ];
 
@@ -55,31 +75,33 @@ const SIDEBAR_ITEMS = [
     icon: images.calendarAlt,
     title: "Lập lịch phát",
     isActive: false,
-    to: routes.PlaylistSchedulePage
+    to: routes.PlaylistSchedulePage,
   },
   {
     id: 4,
     icon: images.contract,
     title: "Quản lý",
     isActive: false,
-    to: "/contract-management",
     children: [
       {
         id: 1,
         title: "Quản lý hợp đồng",
-        to: "/contract-management",
+        to: routes.ContractPage,
       },
       {
         id: 2,
         title: "Quản lý thiết bị",
+        to: routes.DevicePage,
       },
       {
         id: 3,
         title: "Đơn vị uỷ quyền",
+        to: routes.AuthorizedPartnerPage,
       },
       {
         id: 4,
         title: "Đơn vị sử dụng",
+        // to: routes
       },
     ],
   },
@@ -116,6 +138,7 @@ const SIDEBAR_ITEMS = [
       {
         id: 2,
         title: "Cấu hình",
+        to: routes.SettingPage,
       },
       {
         id: 3,
@@ -124,6 +147,7 @@ const SIDEBAR_ITEMS = [
       {
         id: 4,
         title: "Thông tin tác phẩm",
+        to: routes.CategoryPage,
       },
       {
         id: 5,
@@ -144,10 +168,12 @@ const SIDEBAR_ITEMS = [
       {
         id: 2,
         title: "Tải app",
+        to: routes.DownloadPage
       },
       {
         id: 3,
         title: "Feedback",
+        to: routes.FeedbackPage
       },
     ],
   },
@@ -346,6 +372,32 @@ const CB_PLAYLIST = [
   },
 ];
 
+const CB_ACCOUNT_GROUP = [
+  {
+    id: 1,
+    title: "Tất cả",
+  },
+  {
+    id: 2,
+    title: "Công ty TMCP Bách Hóa Xanh",
+  },
+  {
+    id: 3,
+    title: "Công ty TNHH XYZ",
+  },
+  {
+    id: 4,
+    title: "Công ty TMCP Adora",
+  },
+];
+
+const THEME_IMAGES = [
+  images.theme_1,
+  images.theme_2,
+  images.theme_3,
+  images.theme_4,
+];
+
 const handleClickDropDown = (
   item: IGlobalConstantsType,
   data: IGlobalConstantsType[]
@@ -397,6 +449,15 @@ const getCurrentDateTimeDMY = () => {
   let seconds = today.getSeconds();
 
   return dd + "/" + mm + "/" + yyyy + ` ${hours}:${minutes}:${seconds}`;
+};
+
+const getCurrentDateMDY = () => {
+  let today = new Date();
+  let dd = String(today.getDate()).padStart(2, "0");
+  let mm = String(today.getMonth() + 1).padStart(2, "0");
+  let yyyy = today.getFullYear();
+
+  return mm + "/" + dd + "/" + yyyy;
 };
 
 // const formatDateDMY = (date: Date) => {
@@ -485,8 +546,8 @@ const getTotalMoment = (array: Array<any>) => {
 };
 
 const formatDateDMYHPTS = (date: string) => {
-  let dateList = date.split('-');
-  return dateList[2] + '/' + dateList[1] + '/' + dateList[0];
+  let dateList = date.split("-");
+  return dateList[2] + "/" + dateList[1] + "/" + dateList[0];
 };
 
 const DAYS = [
@@ -509,12 +570,31 @@ const DAYSNUM = [
   "Chủ nhật",
 ];
 
+export const DOWNLOAD_ITEMS: IDownloadItem[] = [
+  {
+    image: images.upload,
+    title: "Tool Upload",
+    format: "image",
+  },
+  {
+    image: images.windows_10,
+    title: "Tải App Windows",
+    format: "image",
+  },
+  {
+    image: images.android,
+    title: "Tải App Android",
+    format: "image",
+  },
+];
+
 export {
   formatDate,
   formatTime,
   getCurrentDate,
   getCurrentDateDMY,
   getCurrentDateTimeDMY,
+  getCurrentDateMDY,
   theFollowingDays,
   formatDateYMD,
   formatDateDMY,
@@ -527,6 +607,7 @@ export {
   SIDEBAR_ITEMS,
   ACTION_INFO_USER,
   VALIDITY_CONTRACT_ITEMS,
+  CB_ROLES,
   CB_NATIONALITY,
   CAPABILITY,
   CB_OWNER_ITEMS,
@@ -536,6 +617,8 @@ export {
   CB_VADILITY_MUSIC,
   CB_APPROVE,
   CB_PLAYLIST,
+  CB_ACCOUNT_GROUP,
+  THEME_IMAGES,
   DAYS,
   DAYSNUM,
 };

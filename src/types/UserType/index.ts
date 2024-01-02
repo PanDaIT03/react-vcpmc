@@ -1,3 +1,5 @@
+import { Role } from "../RoleType";
+
 export interface IUser {
   docId: string;
   avatar: string;
@@ -10,6 +12,7 @@ export interface IUser {
   password: string;
   rolesId: string;
   role?: string;
+  roleDetails?: Pick<Role, "docId" | "name">;
 }
 
 export interface IUserDetail {
@@ -33,3 +36,15 @@ export interface IUserDetail {
   companyName: string;
   position: string;
 }
+
+export type UserInfo = Pick<
+  IUser,
+  | "docId"
+  | "userName"
+  | "email"
+  | "phoneNumber"
+  | "rolesId"
+  | "firstName"
+  | "lastName"
+  | "password"
+> & { fullName: string; confirmPassword: string; status: string };

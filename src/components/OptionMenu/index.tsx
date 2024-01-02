@@ -20,6 +20,7 @@ interface OptionMenuProps {
     borderColor?: string
     className?: string
     state?: IGlobalConstantsType
+    filterStyle?: any
     setState?: React.Dispatch<React.SetStateAction<IGlobalConstantsType>>
 };
 
@@ -34,6 +35,7 @@ export const OptionMenu = ({
     borderColor,
     className,
     state,
+    filterStyle,
     setState,
     ...passProps
 }: OptionMenuProps) => {
@@ -99,7 +101,7 @@ export const OptionMenu = ({
         <div className={classes}>
             {title
                 && <div className={cx("title")} ref={titleRef}>{title}:</div>}
-            <div className={cx('filter_ownership_cb')} onClick={() => setOpen(!open)} ref={menuRef}>
+            <div className={cx('filter_ownership_cb')} onClick={() => setOpen(!open)} ref={menuRef} style={filterStyle}>
                 <div
                     className={cx("choosen", boxSize)}
                     style={{ borderColor: `${borderColor}` }}

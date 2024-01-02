@@ -4,9 +4,9 @@ import {
   addPlaylistAction,
   deletePlaylistAction,
   getPlayListAction,
-  updatePlaylistAction,
+  updatePlaylistAction
 } from "~/state/thunk/playlist";
-import { IPLaylist } from "~/types/Playlist";
+import { IPLaylist } from "~/types/PlaylistType";
 
 interface InitType {
   playList: IPLaylist[];
@@ -39,6 +39,8 @@ const playListSlice = createSlice({
         state.loading = true;
       })
       .addCase(getPlayListAction.fulfilled, (state, action) => {
+        console.log(action);
+
         state.playList = action.payload;
         state.loading = false;
         state.status = "get successfully";

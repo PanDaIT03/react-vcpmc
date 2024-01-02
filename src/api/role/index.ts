@@ -14,3 +14,17 @@ export const getRoles = async () => {
 
   return roles;
 };
+
+export const getListRole = async () => {
+  const queryStmt = query(collection(fireStoreDatabase, "roles"));
+  const querySnapshot = await getDocs(queryStmt);
+
+  return querySnapshot.docs.map((doc) => ({
+    docId: doc.id,
+    role: doc.data().role,
+    name: doc.data().name,
+    description: doc.data().description,
+    functionalsId: doc.data().functionalsId,
+    allowDelete: doc.data().allowDelete,
+  }));
+};

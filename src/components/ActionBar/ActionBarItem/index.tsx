@@ -32,7 +32,7 @@ export const ActionBarItem = ({
     return (
         <div className={classes} {...props}>
             <div className={cx("icon")}>
-                <img src={icon} />
+                <img src={icon} alt="icon" />
             </div>
             <div className={cx("title")}>{title}</div>
         </div>

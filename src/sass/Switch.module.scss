@@ -1,0 +1,53 @@
+.switch-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  & > p {
+    font-weight: 700;
+  }
+}
+
+.switch__button {
+  width: 44px;
+  height: 24px;
+  border-radius: 50px;
+  position: relative;
+  cursor: pointer;
+  transition: background-color 0.2s linear;
+
+  & > span {
+    &::after {
+      content: "";
+      display: block;
+      width: 20px;
+      height: 20px;
+      background-color: var(--white);
+      border-radius: 100%;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      transition: right 0.2s linear;
+    }
+  }
+}
+
+.switch__button {
+  &.switch__on {
+    background-color: var(--blue);
+
+    & > span::after {
+      right: 5%;
+      background-color: var(--white);
+    }
+  }
+
+  &.switch__off {
+    background-color: var(--text-stroke-text-and-stroke-2);
+
+    & > span::after {
+      right: 50%;
+      background-color: var(--white);
+    }
+  }
+}

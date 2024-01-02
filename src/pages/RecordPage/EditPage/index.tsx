@@ -18,7 +18,7 @@ import { OptionMenu } from "~/components/OptionMenu";
 import Button from "~/components/Button";
 import { updateRecordAction } from "~/state/thunk/record";
 import { VALIDITY_CONTRACT_ITEMS, CB_MUSIC_KIND, getCurrentDate, formatDateMDY } from "~/constants";
-import { SidebarContext } from "~/context/Sidebar/SidebarContext.index";
+import { SidebarContext } from "~/context/Sidebar/SidebarContext";
 
 import styles from "~/sass/EditRecord.module.scss";
 const cx = classNames.bind(styles);

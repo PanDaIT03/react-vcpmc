@@ -11,7 +11,7 @@ import { IContract, IUserDetail } from "~/types";
 import { CommonWrapper } from "~/components/CommonWrapper";
 import { RootState, useAppDispatch } from "~/state";
 import { routes } from "~/config/routes";
-import { SidebarContext } from "~/context/Sidebar/SidebarContext.index";
+import { SidebarContext } from "~/context/Sidebar/SidebarContext";
 import { formatDateDMY } from "~/constants";
 import { saveContractAction } from "~/state/thunk/contract";
 import { updateUserAction } from "~/state/thunk/user/user";

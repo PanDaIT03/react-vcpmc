@@ -11,12 +11,23 @@ import { Loading } from "~/components/Loading";
 import { PagingItemType } from "~/components/Paging";
 import { Table } from "~/components/Table";
 import { routes } from "~/config/routes";
+import { SidebarContext } from "~/context/Sidebar/SidebarContext";
 import { RootState, useAppDispatch } from "~/state";
-import { IPlaylistSchedule } from "~/types/PlaylistSchedule";
-import { SidebarContext } from "~/context/Sidebar/SidebarContext.index";
+import { setPlaylistScheduleDetail } from "~/state/reducer/playlistSchedule";
+import { getPlayListAction } from "~/state/thunk/playlist";
+import { getPlaylistsRecordsList } from "~/state/thunk/playlistsRecords";
+import { IPLaylist } from "~/types/PlaylistType";
+import { PlaybackCycle, PlaylistSchedule, SchedulePlaylist, SchedulePlaylistDetail } from "~/types/PlaylistSchedule";
 
-import styles from "~/sass/PlaylistScheduleDetail.module.scss";
-const cx = classNames.bind(styles);
+import style from "~/sass/PlaylistScheduleDetail.module.scss";
+const cx = classNames.bind(style);
+
+const initialSchedule: PlaylistSchedule = {
+    id: '',
+    name: '',
+    playbackTime: '',
+    playlistsIds: []
+};
 
 const PAGING_ITEMS: Array<PagingItemType> = [
     {
@@ -30,80 +41,86 @@ const PAGING_ITEMS: Array<PagingItemType> = [
     }
 ];
 
-const initialState: IPlaylistSchedule = {
-    docId: "",
-    name: "",
-    playbackTime: "",
-    playlistsIds: [],
-    devices: []
-};
-
 function PlaylistScheduleDetailPage() {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const { playlistScheduleCode } = useParams();
 
-    const { setActive } = useContext(SidebarContext);
+    const playlist = useSelector((state: RootState) => state.playlist);
+    const playlistSchedule = useSelector((state: RootState) => state.playlistSchedule);
+    const playlistsRecords = useSelector((state: RootState) => state.playlistsRecords);
 
-    const { playlistSchedules, loading } = useSelector((state: RootState) => state.playlistSchedule);
-    const [playlistScheduleDetails, setPlaylistScheduleDetails] = useState<IPlaylistSchedule>(initialState);
-    const { playbackTime, playlistsIds, devices } = playlistScheduleDetails;
+    const { setActive } = useContext(SidebarContext);
+    const [scheduleDetail, setScheduleDetail] = useState<SchedulePlaylistDetail>({
+        id: '',
+        name: '',
+        playbackTime: '',
+        playlist: []
+    } as SchedulePlaylistDetail);
+    const [loading, setLoading] = useState<boolean>(false);
 
     useEffect(() => {
         setActive(false);
+        dispatch(getPlaylistsRecordsList());
+        dispatch(getPlayListAction());
     }, []);
 
     useEffect(() => {
-        setPlaylistScheduleDetails(playlistSchedules.find(playlistSchedule =>
-            playlistSchedule.docId === playlistScheduleCode) || initialState
-        );
-    }, [playlistSchedules]);
+        if (playlist.playList.length <= 0 || playlistsRecords.playlistsRecords.length <= 0) return;
+
+        let schedule: PlaylistSchedule =
+            playlistSchedule.listSchedule.find(schedule => schedule.id === playlistScheduleCode)
+            || initialSchedule;
+
+        const scheduleDetail: SchedulePlaylistDetail = {
+            id: schedule.id,
+            name: schedule.name,
+            playbackTime: schedule.playbackTime,
+            playlist: schedule.playlistsIds.map(item => ({
+                playbackCycle: item.playbackCycle,
+                playlistDetail: playlist.playList.find(playlist =>
+                    item.playlistsId === playlist.docId) || {} as IPLaylist
+            }))
+        };
+
+        setScheduleDetail(scheduleDetail);
+        dispatch(setPlaylistScheduleDetail(scheduleDetail));
+    }, [playlist.playList, playlistsRecords.playlistsRecords]);
+
+    useEffect(() => {
+        if (playlistsRecords.loading) setLoading(true);
+        else if (playlist.loading) setLoading(true);
+        else if (playlistSchedule.loading === true) setLoading(true);
+        else setLoading(false);
+    }, [playlistsRecords, playlist]);
 
     return (
         <div className={cx('wrapper')}>
             <CommonWrapper
-                title={playlistScheduleDetails.name}
                 paging={PAGING_ITEMS}
+                title={scheduleDetail.name}
             >
-                <Table
-                    thead={["STT", "Tên playlist", "Ngày phát playlist", "Bắt đầu - Kết thúc", "Chu kỳ phát", "Thiết bị"]}
-                    className={cx("playlist-schedule-detail")}
-                >
-                    {playlistsIds.map((playlist, index) => (
-                        <tr key={index}>
-                            <td>{index + 1}</td>
-                            <td>{playlist.playlistTitle}</td>
-                            <td>{playbackTime}</td>
-                            <td>{playlist.playbackCycle.map((item, index) => (
-                                <div key={index}>{item.time}</div>
-                            ))}</td>
-                            <td>
-                                <div className={cx("playback-cycle")}>
-                                    {playlist.playbackCycle.map((item, index) => (
-                                        <div className={cx("item")} key={index}>
-                                            <div>{item.day}</div>
-                                            <p>|</p>
-                                        </div>
-                                    ))}
-                                </div>
-                            </td>
-                            <td>
-                                <div className={cx("devices")}>
-                                    {devices.map((item, index) => (
-                                        <div className={cx("item")} key={index}>
-                                            <div>{item.name}</div>
-                                            <p>|</p>
-                                        </div>
-                                    ))}
-                                </div>
-                            </td>
-                        </tr>
-                    ))}
+                <p className={cx('header')}>Danh sách Playlist</p>
+                <Table thead={['STT', 'Tên lịch', 'Ngày phát Playlist', 'Bắt đầu - Kết thúc', 'Chu kỳ phát', 'Thiết bị']}>
+                    {scheduleDetail.playlist.map((item: SchedulePlaylist, index) => {
+                        return (
+                            <tr key={index} style={{ height: '47px' }} className={cx('content')}>
+                                <td><p>{index + 1}</p></td>
+                                <td><p>{item.playlistDetail.title}</p></td>
+                                <td><p>{scheduleDetail.playbackTime}</p></td>
+                                <td><div className={cx('table__time')}>{item.playbackCycle.map((item: PlaybackCycle, index: number) =>
+                                    <p key={index}>{item.time.map(time => time)}</p>
+                                )}</div></td>
+                                <td><div className={cx('table__cycle')}>{item.playbackCycle.map((item: PlaybackCycle, index: number) => <span key={index}>{item.day}</span>)}</div></td>
+                                <td><p>{scheduleDetail.playbackTime}</p></td>
+                            </tr>
+                        )
+                    })}
                 </Table>
                 <ActionBar>
                     <ActionBarItem
-                        title="Chỉnh sửa lịch phát"
                         icon={images.edit}
+                        title="Chỉnh sửa lịch phát"
                         onClick={() => navigate(`/playlist-schedule/detail/edit/${playlistScheduleCode}`)}
                     />
                 </ActionBar>

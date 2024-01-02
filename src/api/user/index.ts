@@ -12,6 +12,8 @@ import {
 import { sendPasswordResetEmail } from "firebase/auth";
 import { auth, fireStoreDatabase } from "../../config/firebase";
 import { IUser } from "../../types";
+import { getListRole } from "../role";
+import { IFeedback } from "~/types/Feedback";
 
 export const checkLogin = async ({
   userName,
@@ -100,6 +102,46 @@ export const getUser = async () => {
   return contracts;
 };
 
+export const getUserList = async () => {
+  const roles = await getListRole();
+  const resultSnapshot = await getDocs(collection(fireStoreDatabase, "users"));
+
+  const user: Pick<IFeedback, "user">[] = resultSnapshot.docs.map((doc) => {
+    return {
+      user: {
+        docId: doc.id,
+        avatar: doc.data().avatar,
+        bank: doc.data().bank,
+        bankNumber: doc.data().bankNumber,
+        dateOfBirth: doc.data().dateOfBirth,
+        dateRange: doc.data().dateRange,
+        email: doc.data().email,
+        firstName: doc.data().firstName,
+        gender: doc.data().gender,
+        idNumber: doc.data().idNumber,
+        issuedBy: doc.data().issuedBy,
+        lastName: doc.data().lastName,
+        nationality: doc.data().nationality,
+        password: doc.data().password,
+        phoneNumber: doc.data().phoneNumber,
+        residence: doc.data().residence,
+        rolesId: doc.data().rolesId,
+        taxCode: doc.data().taxCode,
+        userName: doc.data().userName,
+        role: roles.find((role) => role.docId === doc.data().rolesId) || {
+          docId: "",
+          name: "",
+        },
+        companyName: doc.data().companyName,
+        status: doc.data().status,
+        expirationDate: doc.data().expirationDate,
+      },
+    };
+  });
+
+  return user;
+};
+
 export const checkUserIsExisted = async (email: string) => {
   const queryStmt = query(
       collection(fireStoreDatabase, "users"),
@@ -117,4 +159,15 @@ export const addUser = async (user: any) => {
   const data = { ...user };
 
   return (await addDoc(collectionRef, data)).id;
+};
+
+export const changePasswordStatusUserById = async ({
+  docId,
+  password,
+  status,
+}: Pick<IUser, "password" | "docId"> & { status: string }) => {
+  return await updateDoc(doc(fireStoreDatabase, "users", docId), {
+    password,
+    status,
+  });
 };

@@ -13,9 +13,10 @@ import { ActionBar } from "~/components/ActionBar";
 import { RootState, useAppDispatch } from "~/state";
 import { ActionBarItem } from "~/components/ActionBar/ActionBarItem";
 import { resetPasswordAction, updateUserAction } from "~/state/thunk/user/user";
-import { SidebarContext } from "~/context/Sidebar/SidebarContext.index";
+import { SidebarContext } from "~/context/Sidebar/SidebarContext";
 
 import styles from "~/sass/BasicInfomation.module.scss";
+import { Toast } from "~/components/Toast";
 const cx = classNames.bind(styles);
 
 const initialPasswordValue = {
@@ -290,21 +291,7 @@ function ProfilePage() {
                         onClick={() => handleSubmitInfoForm()}
                     />
                 </div>
-                <div className={cx("toast", isChangePassSuccess && "visible")}>
-                    <div className={cx("icon-check")}>
-                        <div className={cx("checkmark_circle")}>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 44 44" fill="none">
-                                <path d="M22 42.1668C33.1378 42.1668 42.1667 33.1379 42.1667 22.0002C42.1667 10.8624 33.1378 1.8335 22 1.8335C10.8623 1.8335 1.83337 10.8624 1.83337 22.0002C1.83337 33.1379 10.8623 42.1668 22 42.1668Z" stroke="#18E306" strokeWidth="3.66667" strokeLinecap="round" strokeLinejoin="round" />
-                            </svg>
-                        </div>
-                        <div className={cx("checkmark_check")}>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="27.5" height="27.5" viewBox="0 0 28 28" fill="none">
-                                <path d="M23.0833 7.0415L10.4792 19.6457L4.75 13.9165" stroke="#18E306" strokeWidth="3.66667" strokeLinecap="round" strokeLinejoin="round" />
-                            </svg>
-                        </div>
-                    </div>
-                    <p className={cx("message")}>Đổi mật khẩu thành công!</p>
-                </div>
+                <Toast message="Đổi mật khẩu thành công!" visible={isChangePassSuccess} />
                 <div className={cx("form-dialog")}>
                     <Form
                         className={cx("form-change-password")}

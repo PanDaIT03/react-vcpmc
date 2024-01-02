@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 
 import { CommonWrapper } from "~/components/CommonWrapper";
 import { Tab, Tabs } from "~/components/Tabs";
-import { SidebarContext } from "~/context/Sidebar/SidebarContext.index";
+import { SidebarContext } from "~/context/Sidebar/SidebarContext";
 import { PagingItemType } from "~/components/Paging";
 import { routes } from "~/config/routes";
 import AuthorizationContractPage from "../AuthorizationContractPage";

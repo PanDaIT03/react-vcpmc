@@ -10,7 +10,7 @@ import { CommonWrapper } from "~/components/CommonWrapper";
 import { PagingItemType } from "~/components/Paging";
 import { IContract, IUserDetail } from "~/types";
 import { formatDateDMY, getCurrentDateTimeDMY, getCurrentDate } from "~/constants";
-import { SidebarContext } from "~/context/Sidebar/SidebarContext.index";
+import { SidebarContext } from "~/context/Sidebar/SidebarContext";
 import { RootState, useAppDispatch } from "~/state";
 import { ActionContract } from "~/components/ActionContract";
 import { addContractAction } from "~/state/thunk/contract";

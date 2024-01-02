@@ -5,6 +5,7 @@ import {
   addPlaylistsRecords,
   getPlaylist,
   getPlaylistRecords,
+  getPlaylistUser,
   removePlaylist,
   removePlaylistRecord,
   removePlaylistsRecords,
@@ -14,7 +15,7 @@ import {
 import { getCategories, getRecords } from "~/api/record";
 import { getUser } from "~/api/user";
 import { IRecord } from "~/types";
-import { IPLaylist } from "~/types/Playlist";
+import { IPLaylist } from "~/types/PlaylistType";
 
 export interface UpdatePlaylist {
   docId: string;
@@ -104,7 +105,9 @@ export const updatePlaylistAction = createAsyncThunk(
 
 export const addPlaylistAction = createAsyncThunk(
   "playlist/addPlaylistRecord",
-  async (data: Omit<IPLaylist, "categories" | "docId" | "playlistsRecordsId">) => {
+  async (
+    data: Omit<IPLaylist, "categories" | "docId" | "playlistsRecordsId">
+  ) => {
     const {
       title,
       records,
@@ -165,5 +168,12 @@ export const deletePlaylistAction = createAsyncThunk(
     if (docId === "") return;
     await removePlaylist(docId);
     await removePlaylistsRecords(docId);
+  }
+);
+
+export const getPlaylistListAction = createAsyncThunk(
+  "playlist/getPlaylistList",
+  async () => {
+    return await getPlaylistUser();
   }
 );

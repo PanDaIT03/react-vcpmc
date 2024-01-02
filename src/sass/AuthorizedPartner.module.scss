@@ -1,0 +1,26 @@
+.authorized-contract-container {
+  margin-top: 24px;
+  width: 1611px;
+
+  .search {
+    width: 665px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 2.4rem 0;
+  }
+
+  & table {
+    & > tbody > tr.table__row__paginate {
+      position: relative !important;
+    }
+
+    & .action {
+      width: max-content;
+      color: var(--orange-4-default);
+      padding: 5px 16px;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+  }
+}

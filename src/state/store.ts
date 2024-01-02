@@ -7,6 +7,11 @@ import { recordReducer } from "./reducer/record";
 import { contractReducer } from "./reducer/contract";
 import { playListReducer } from "./reducer/playlist";
 import { playlistScheduleReducer } from "./reducer/playlistSchedule";
+import { playlistsRecordsReducer } from "./reducer/playlistsRecords";
+import { authorizedContractReducer } from "./reducer/authorizedPartner";
+import { deviceReducer } from "./reducer/device";
+import { categoryReducer } from "./reducer/category";
+import { feedBackReducer } from "./reducer/feedback";
 
 export const store = configureStore({
   reducer: {
@@ -15,7 +20,12 @@ export const store = configureStore({
     contract: contractReducer,
     record: recordReducer,
     playlist: playListReducer,
-    playlistSchedule: playlistScheduleReducer
+    playlistSchedule: playlistScheduleReducer,
+    playlistsRecords: playlistsRecordsReducer,
+    authorized: authorizedContractReducer,
+    device: deviceReducer,
+    category: categoryReducer,
+    feedback: feedBackReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

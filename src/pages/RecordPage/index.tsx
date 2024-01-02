@@ -10,7 +10,7 @@ import { CommonWrapper } from "~/components/CommonWrapper";
 import { Input } from "~/components/Input";
 import { OptionMenu } from "~/components/OptionMenu";
 import { Table } from "~/components/Table";
-import { SidebarContext } from "~/context/Sidebar/SidebarContext.index";
+import { SidebarContext } from "~/context/Sidebar/SidebarContext";
 import { RootState, useAppDispatch } from "~/state";
 import { Loading } from "~/components/Loading";
 import { getRecordsAction } from "~/state/thunk/record";

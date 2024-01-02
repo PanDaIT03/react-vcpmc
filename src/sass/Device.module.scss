@@ -1,0 +1,126 @@
+.device-management-container {
+  & > div > div:first-child {
+    display: flex;
+    align-items: center;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    margin-bottom: 24px;
+
+    & > div:nth-child(2) > div {
+      margin-top: 0;
+    }
+  }
+
+  .filter-action {
+    width: 1541px;
+  }
+}
+
+.device-table {
+  width: 1541px;
+
+  .action {
+    width: max-content;
+    color: var(--orange-4-default);
+    padding: 5px 16px;
+    text-decoration: underline;
+    cursor: pointer;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+}
+
+.filter-action {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  .combo-box {
+    display: flex;
+    gap: 24px;
+    margin: 24px 0;
+  }
+
+  .search {
+    width: 665px;
+  }
+}
+
+.device-management-container {
+  table {
+    width: 1541px;
+
+    & > tbody {
+      & > tr > td > p {
+        position: relative;
+        white-space: nowrap;
+
+        &::after {
+          content: "";
+          display: block;
+          width: 8px;
+          height: 8px;
+          background-color: transparent;
+          border-radius: 50%;
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%);
+          left: -4px;
+        }
+
+        &.activated::after {
+          background-color: var(--color-green);
+        }
+
+        &.deactivated::after,
+        &.blocked::after {
+          background-color: var(--color-red);
+        }
+      }
+    }
+  }
+}
+
+// table {
+//   & .action {
+//     width: max-content;
+//     color: var(--color-orange-4);
+//     padding: 5px 16px;
+//     text-decoration: underline;
+//     cursor: pointer;
+
+//     &:hover {
+//       opacity: 1;
+//     }
+//   }
+// }
+
+.remove-device {
+  display: flex;
+  padding: 40px 24px;
+  flex-direction: column;
+  align-items: center;
+
+  & h3 {
+    padding: 0;
+  }
+
+  .description {
+    width: 352px;
+    margin-top: 24px;
+    margin-bottom: 40px;
+  }
+
+  .device-detail__edit__actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+  }
+
+  & button {
+    margin-top: 0;
+  }
+}

@@ -2,6 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 
 import { IUser, IRole } from "~/types";
 import {
+  changePasswordStatusUserById,
   checkLogin,
   getDocIdByField,
   getUserByDocId,
@@ -65,5 +66,22 @@ export const updateUserAction = createAsyncThunk(
     });
 
     if (isUpdateSuccess) return await getUserByDocId(data.docId);
+  }
+);
+
+export const changePasswordStatusUser = createAsyncThunk(
+  "user/changePasswordStatusUserById",
+  async ({
+    docId,
+    password,
+    status,
+    navigate,
+  }: Pick<IUser, "password" | "docId"> & {
+    status: string;
+    navigate: () => void;
+  }) => {
+    await changePasswordStatusUserById({ docId, password, status });
+
+    navigate();
   }
 );

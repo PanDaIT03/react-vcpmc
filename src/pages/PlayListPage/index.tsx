@@ -17,7 +17,7 @@ import { getTotalMoment } from "~/constants";
 import { BoxItem } from "~/components/BoxItem";
 import { GridView } from "~/components/GridView";
 import { Loading } from "~/components/Loading";
-import { SidebarContext } from "~/context/Sidebar/SidebarContext.index";
+import { SidebarContext } from "~/context/Sidebar/SidebarContext";
 import { routes } from "~/config/routes";
 import { resetNewRecordsAction } from "~/state/thunk/record";
 
