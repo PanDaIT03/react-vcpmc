@@ -20,7 +20,7 @@ interface BlockDetailProps {
     className?: string
 };
 
-const BlockInfo = memo(({
+export const BlockInfo = memo(({
     data,
     maxWidth,
 }: Pick<BlockDetailProps, "data" | "maxWidth">) => {

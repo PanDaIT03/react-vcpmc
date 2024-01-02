@@ -1,3 +1,5 @@
+import { IRole, Role } from "../RoleType";
+
 export interface IUser {
   docId: string;
   avatar: string;
@@ -33,3 +35,34 @@ export interface IUserDetail {
   companyName: string;
   position: string;
 }
+
+export interface User {
+  avatar: string;
+  bank: string;
+  bankNumber: string;
+  dateOfBirth: string;
+  dateRange: string;
+  email: string;
+  firstName: string;
+  gender: string;
+  idNumber: string;
+  issuedBy: string;
+  lastName: string;
+  nationality: string;
+  password: string;
+  phoneNumber: string;
+  residence: string;
+  rolesId: string;
+  taxCode: string;
+  userName: string;
+  role: Pick<Role, 'docId' | 'name'>;
+  docId: string;
+  companyName?: string;
+  status?: string;
+  expirationDate?: string;
+}
+
+export type UserInfo = Pick<
+  User, 'docId' | 'userName' | 'email' | 'phoneNumber'
+  | 'rolesId' | 'firstName' | 'lastName' | 'password'
+> & { fullName: string, confirmPassword: string, status: string };

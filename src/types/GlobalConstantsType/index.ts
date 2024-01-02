@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 
 export interface IGlobalConstantsType {
-  id: number;
+  id?: number | string;
   title?: string;
   isRequired?: boolean;
   value?: string | Array<{ id: number; icon: string; title: string }>;

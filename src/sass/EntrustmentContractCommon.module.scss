@@ -1,0 +1,107 @@
+.history-for-control {
+    &>div:last-child>div:last-child {
+        display: flex;
+        gap: 24px;
+    }
+}
+
+.history-for-control__container-left {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.container-left__contract-info {
+    height: 432px;
+}
+
+.container-left__for-control-info {
+    height: 386px;
+}
+
+.container-left__contract-info,
+.container-left__for-control-info {
+    width: 571px;
+    border-radius: 16px;
+    background: var(--bg-lighter, #2B2B3F);
+    padding: 24px;
+
+    &>p {
+        color: var(--orange-4-default, #FF7506);
+        font-size: 24px;
+        font-weight: 700;
+        line-height: 24px;
+        letter-spacing: -0.048px;
+        margin-bottom: 32px;
+        text-align: start;
+    }
+
+    &>div {
+        display: flex;
+        justify-content: space-between;
+
+        &>div {
+            &.contract-info__left {
+                &>p {
+                    color: white;
+                    font-weight: 700;
+                }
+            }
+
+            &.contract-info__right {
+                &>p {
+                    color: var(--text-stroke-text-and-stroke, #F5F5FF);
+                    font-weight: 400;
+                    opacity: .7;
+                }
+            }
+
+            & p {
+                text-align: start;
+
+                &+p {
+                    margin-top: 20px;
+                }
+            }
+        }
+    }
+}
+
+.history-for-control__container-right {
+    width: 1095px;
+    
+    & table {
+        width: 1095px;
+    }
+}
+
+.history-for-control__container-right {
+    &>p {
+        color: #E5E5E5;
+        font-size: 24px;
+        font-weight: 700;
+        letter-spacing: -0.048px;
+        text-align: start;
+    }
+
+    &>.filter-box {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin: 24px 0;
+
+        &>div:first-child {
+            display: flex;
+            flex-direction: row;
+            gap: 13px;
+
+            &>p {
+                font-weight: 700;
+            }
+        }
+
+        &>div:last-child {
+            margin-top: 0;
+        }
+    }
+}

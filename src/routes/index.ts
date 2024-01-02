@@ -5,24 +5,44 @@ import { HeaderOnly } from "../layouts/HeaderOnly";
 import { routes } from "~/config/routes";
 
 // Pages
-import LoginPage from "../pages/LoginPage";
-import ErrorConnectPage from "../pages/ErrorConnectPage";
-import ResetPasswordPage from "../pages/ResetPasswordPage";
-import ForgotPasswordPage from "../pages/ForgotPasswordPage";
-import ProfilePage from "../pages/ProfilePage";
-import ContractPage from "~/pages/ContractPage";
+import AddPage from "~/pages/AuthorizationContractPage/AddPage";
 import DetailPage from "~/pages/AuthorizationContractPage/DetailPage";
 import EditPage from "~/pages/AuthorizationContractPage/EditPage";
-import AddPage from "~/pages/AuthorizationContractPage/AddPage";
-import RecordPage from "~/pages/RecordPage";
-import EditRecordPage from "~/pages/RecordPage/EditPage";
+import ContractPage from "~/pages/ContractPage";
+import AddEtrustmentContractPage from "~/pages/EntrustmentContract/AddEntrustmentContract";
+import EntrustmentContractDetailPage from "~/pages/EntrustmentContract/EntrustmentContractDetail";
+import ForControlHistoryPage from "~/pages/ForControlPage";
 import PlayListPage from "~/pages/PlayListPage";
-import PlaylistDetailPage from "~/pages/PlayListPage/PlaylistDetailPage";
 import AddPlaylistPage from "~/pages/PlayListPage/AddPlaylistPage";
 import AddPlaylistRecordPage from "~/pages/PlayListPage/AddPlaylistRecordPage";
+import PlaylistDetailPage from "~/pages/PlayListPage/PlaylistDetailPage";
 import PlaylistSchedulePage from "~/pages/PlaylistSchedulePage";
-import PlaylistScheduleDetailPage from "~/pages/PlaylistSchedulePage/PlaylistScheduleDetailPage";
 import EditPlaylistSchedulePage from "~/pages/PlaylistSchedulePage/EditPlaylistSchedulePage";
+import PlaylistScheduleDetailPage from "~/pages/PlaylistSchedulePage/PlaylistScheduleDetailPage";
+import RecordPage from "~/pages/RecordPage";
+import EditRecordPage from "~/pages/RecordPage/EditPage";
+import RevenueContractReportDetailPage from "~/pages/Revenue/ContractDetailPage";
+import RevenueReportDetailPage from "~/pages/Revenue/ReportDetailPage";
+import RevenueReportPage from "~/pages/Revenue/ReportPage";
+import UnitUsedManagementPage from "~/pages/UnitPage";
+import UnitUsedDetailPage from "~/pages/UnitPage/UnitDetailPage";
+import AddUserOfUnitPage from "~/pages/UnitPage/UserPage/AddUserPage";
+import UserOfUnitDetailPage from "~/pages/UnitPage/UserPage/UserDetailPage";
+import ErrorConnectPage from "../pages/ErrorConnectPage";
+import ForgotPasswordPage from "../pages/ForgotPasswordPage";
+import LoginPage from "../pages/LoginPage";
+import ProfilePage from "../pages/ProfilePage";
+import ResetPasswordPage from "../pages/ResetPasswordPage";
+import ForControlHistoryDetailPage from "~/pages/ForControlPage/ForControlDetailPage";
+import RevenueDistributionPage from "~/pages/Revenue/RevenueDistributionPage";
+import RevenueDistributionDetailPage from "~/pages/Revenue/RevenueDetailPage";
+import EditUserPage from "~/pages/User/EditUser";
+import UserAuthorizationPage from "~/pages/User/Authorization";
+import AddUserPage from "~/pages/User/AddUser";
+import AuthorizedEditRolePage from "~/pages/RolePage/EditRole";
+import AuthorizedAddRolePage from "~/pages/RolePage/AddRolePage";
+import ForControlCirclePage from "~/pages/ContractTypeManagementPage/ForControlPage";
+import SupportUserManualPage from "~/pages/SupportPage/UserManualPage";
 
 const publicRoutes = [
     { path: routes.LoginPage, component: LoginPage },
@@ -47,6 +67,27 @@ const protectedRoutes = [
     { path: routes.PlaylistSchedulePage, component: PlaylistSchedulePage, layout: DefaultLayout },
     { path: routes.PlaylistScheduleDetailPage, component: PlaylistScheduleDetailPage, layout: DefaultLayout },
     { path: routes.EditPlaylistSchedulePage, component: EditPlaylistSchedulePage, layout: DefaultLayout },
+    { path: routes.EntrustmentContractDetail, component: EntrustmentContractDetailPage, layout: DefaultLayout },
+    { path: routes.AddEntrustmentContract, component: AddEtrustmentContractPage, layout: DefaultLayout },
+    { path: routes.RevenueReportPage, component: RevenueReportPage, layout: DefaultLayout },
+    { path: routes.RevenueReportDetailPage, component: RevenueReportDetailPage, layout: DefaultLayout },
+    { path: routes.RevenueReportContractDetailPage, component: RevenueContractReportDetailPage, layout: DefaultLayout },
+    { path: routes.UnitUsedManagementPage, component: UnitUsedManagementPage, layout: DefaultLayout },
+    { path: routes.UnitUsedManagementDetailPage, component: UnitUsedDetailPage, layout: DefaultLayout },
+    { path: routes.UserOfUnitUsedManagementDetailPage, component: UserOfUnitDetailPage, layout: DefaultLayout },
+    { path: routes.AddUserOfUnitUsedManagementPage, component: AddUserOfUnitPage, layout: DefaultLayout },
+    { path: routes.ForControlHistoryPage, component: ForControlHistoryPage, layout: DefaultLayout },
+    { path: routes.ForControlHistoryDetailPage, component: ForControlHistoryDetailPage, layout: DefaultLayout },
+    { path: routes.AuthorizedUser, component: UserAuthorizationPage, layout: DefaultLayout },
+    { path: routes.RevenueDistributionPage, component: RevenueDistributionPage, layout: DefaultLayout },
+    { path: routes.RevenueDistributionDetailPage, component: RevenueDistributionDetailPage, layout: DefaultLayout },
+    { path: routes.AuthorizedEditUser, component: EditUserPage, layout: DefaultLayout },
+    { path: routes.AuthorizedAddUser, component: AddUserPage, layout: DefaultLayout },
+    { path: routes.AuthorizedEditRole, component: AuthorizedEditRolePage, layout: DefaultLayout },
+    { path: routes.AuthorizedAddRole, component: AuthorizedAddRolePage, layout: DefaultLayout },
+    { path: routes.ContractTypeForControl, component: ForControlCirclePage, layout: DefaultLayout },
+    { path: routes.SupportUserManual, component: SupportUserManualPage, layout: DefaultLayout },
 ];
 
-export { publicRoutes, protectedRoutes };
+export { protectedRoutes, publicRoutes };
+

@@ -9,16 +9,18 @@ interface RadioButtonProps {
     title?: string
     checked: boolean
     onClick: () => void
+    className?: string
 };
 
 export const RadioButton = memo(({
     title,
     checked,
+    className,
     onClick,
     ...passProps
 }: RadioButtonProps) => {
     return (
-        <div className={cx('form-group')} onClick={onClick}>
+        <div className={cx('form-group', className)} onClick={onClick}>
             {!checked
                 ? <>
                     <div className={cx("radio")} ></div>

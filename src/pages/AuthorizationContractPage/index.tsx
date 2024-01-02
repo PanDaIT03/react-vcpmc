@@ -1,23 +1,23 @@
 import classNames from "classnames/bind";
-import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
-import Button from "~/components/Button";
-import { Table } from "~/components/Table";
-import { Input } from "~/components/Input";
+import { images } from "~/assets";
 import { ActionBar } from "~/components/ActionBar";
-import { OptionMenu } from "~/components/OptionMenu";
-import { IContract, IGlobalConstantsType, IOwnerShip, IUserDetail } from "~/types";
-import { CB_OWNER_ITEMS, VALIDITY_CONTRACT_ITEMS } from "~/constants";
 import { ActionBarItem } from "~/components/ActionBar/ActionBarItem";
+import Button from "~/components/Button";
+import { CancleForm } from "~/components/CancelForm";
+import { Dialog } from "~/components/Dialog";
+import { Input } from "~/components/Input";
+import { Loading } from "~/components/Loading";
+import { OptionMenu } from "~/components/OptionMenu";
+import { Table } from "~/components/Table";
+import { routes } from "~/config/routes";
+import { CB_OWNER_ITEMS, VALIDITY_CONTRACT_ITEMS } from "~/constants";
 import { RootState, useAppDispatch } from "~/state";
 import { getContractsAction } from "~/state/thunk/contract";
-import { images } from "~/assets";
-import { Dialog } from "~/components/Dialog";
-import { CancleForm } from "~/components/CancelForm";
-import { routes } from "~/config/routes";
-import { Loading } from "~/components/Loading";
+import { IContract, IGlobalConstantsType, IOwnerShip, IUserDetail } from "~/types";
 
 import styles from "~/sass/AuthorizationContract.module.scss";
 const cx = classNames.bind(styles);
@@ -60,10 +60,11 @@ function AuthorizationContractPage() {
     useEffect(() => {
         setSearchResult(contracts);
     }, [contractState]);
-
+    
     useEffect(() => {
         contractId !== '' && setVisible(true);
     }, [contractId]);
+
 
     useEffect(() => {
         const ownershipValue = ownership.title;
@@ -108,10 +109,6 @@ function AuthorizationContractPage() {
                 item.authorized.toLowerCase().includes(search) ||
                 item.status.toLowerCase().includes(search) ||
                 item.dateCreated.toLowerCase().includes(search)
-                // || (typeof item.ownerShips === "string"
-                //     ? item.ownerShips.toLowerCase().includes(search)
-                //     : item.ownerShips.filter(ownership => ownership.toLowerCase().includes(search))
-                // )
             ));
         };
     }, [ownership, validity, searchValue]);

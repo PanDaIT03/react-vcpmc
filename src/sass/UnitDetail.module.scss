@@ -1,0 +1,41 @@
+.unit-detail-container {
+    & .remove-icon {
+        color: var(--color-red);
+    }
+}
+
+.table__row__checkbox {
+    &>div {
+        min-width: max-content;
+        padding: 0 0 8px 8px;
+    }
+}
+
+.table__row-item {
+    height: 47px;
+    cursor: pointer;
+
+    &>td>p {
+        position: relative;
+
+        &::after {
+            content: '';
+            display: block;
+            width: 8px;
+            height: 8px;
+            position: absolute;
+            top: 50%;
+            left: -5%;
+            transform: translateY(-50%);
+            border-radius: 50%;
+        }
+
+        &.active::after {
+            background-color: var(--color-green);
+        }
+
+        &.deactive::after {
+            background-color: var(--color-red);
+        }
+    }
+}

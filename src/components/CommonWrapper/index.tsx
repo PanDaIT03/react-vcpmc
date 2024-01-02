@@ -12,15 +12,17 @@ interface CommonWrapperProps {
     title: string
     children?: ReactNode
     paging?: PagingItemType[]
+    className?: string
 };
 
 export const CommonWrapper = ({
     title,
     children,
-    paging
+    paging,
+    className
 }: CommonWrapperProps) => {
     return (
-        <div className={cx("wrapper")}>
+        <div className={cx("wrapper", className)}>
             <div className={cx("container")}>
                 <div className={cx("paging")}>
                     {paging && paging.map((item, index) => {

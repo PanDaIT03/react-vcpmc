@@ -36,7 +36,7 @@ const PAGING_ITEMS: Array<PagingItemType> = [
 
 type InitType =
     { fullName: string, companyName: string, position: string }
-    & Pick<IContract, "contractCode" | "authorizingLegalEntity" | "customer" | "effectiveDate" | "expirationDate">
+    & Pick<IContract, "contractCode" | "authorizingLegalEntity" | "customer" | "effectiveDate" | "expirationDate" | 'royalties' | 'CPM' | 'administrativeFee' | 'forControlDate'>
     & Omit<IUserDetail, "docId" | "firstName" | "lastName">;
 
 function AddPage() {
@@ -78,29 +78,11 @@ function AddPage() {
         userName: "",
         password: "",
         bankNumber: "",
-        bank: ""
-        // contractCode: "HDA",
-        // customer: "Hợp đồng uỷ quyền bài hát",
-        // companyName: "PD Software",
-        // position: "Chủ tịch",
-        // authorizingLegalEntity: "Tổ chức",
-        // effectiveDate: getCurrentDate("yyyy-mm-dd"),
-        // expirationDate: getCurrentDate("yyyy-mm-dd"),
-        // fullName: "Dương Đại",
-        // dateOfBirth: "2003-10-05",
-        // gender: "Nam",
-        // nationality: "Việt Nam",
-        // phoneNumber: "0987164519",
-        // idNumber: "123123123123",
-        // dateRange: getCurrentDate("yyyy-mm-dd"),
-        // issuedBy: "TP. Sadec",
-        // taxCode: "123123123123",
-        // residence: "Sadec",
-        // email: "pandaid03@gmail.com",
-        // userName: "pandaid03@gmail.com",
-        // password: "12345678",
-        // bankNumber: "123123123123",
-        // bank: "Agribank"
+        bank: "",
+        royalties: '',
+        CPM: '',
+        administrativeFee: '',
+        forControlDate: ''
     };
 
     const formik = useFormik({
@@ -163,7 +145,11 @@ function AddPage() {
                 // ownerShips: "Người biểu diễn",
                 ownerShips: [],
                 reason: "",
-                status: "Mới"
+                status: "Mới",
+                royalties: values.royalties,
+                CPM: values.CPM,
+                administrativeFee: values.administrativeFee,
+                forControlDate: values.forControlDate
             };
 
             const user: Omit<IUserDetail, "docId"> = {

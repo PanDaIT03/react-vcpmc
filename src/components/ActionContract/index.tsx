@@ -13,6 +13,7 @@ import { Loading } from "../Loading";
 import { IContract, IGlobalConstantsType, IUserDetail } from "~/types";
 
 import style from '~/sass/ActionContract.module.scss';
+import { routes } from "~/config/routes";
 const cx = classNames.bind(style);
 
 interface ActionContractProps {
@@ -580,8 +581,6 @@ export const ActionContract = memo(({
         setFieldValue("nationality", national.title);
     }, [national]);
 
-    console.log(errors);
-
     return (
         <div className={classes}>
             <ContractEdit
@@ -634,7 +633,7 @@ export const ActionContract = memo(({
                         primary
                         size="large"
                         value="Huỷ"
-                        onClick={() => navigate(`/contract-management/detail/${contractDetail?.contractCode}`)}
+                        onClick={() => navigate(routes.ContractPage)}
                     />
                     <Button
                         primary

@@ -1,0 +1,135 @@
+.user-role-edit {
+    margin-right: 40px;
+    position: relative;
+
+    & .form__body {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-top: 24px;
+        
+        &>.form__body__left {
+            & textarea {
+                width: 557px;
+                height: 120px;
+                resize: none;
+            }
+
+            & input[type='text'] {
+                width: 557px;
+            }
+        }
+    }
+}
+
+.edit__right-container {
+    &>p {
+        text-align: start;
+    }
+
+    &>.functionals-container {
+        width: 1063px;
+        height: 558px;
+        padding: 16px 24px;
+        border-radius: 16px;
+        background-color: rgba(47, 47, 65, 0.70);
+    }
+}
+
+.functionals-container {
+    margin-top: 14px;
+    
+    &>.functionals-container__header {
+        display: flex;
+        margin-bottom: 16px;
+
+        &>p {
+            color: var(--orange-3);
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 700;
+            line-height: 20px;
+            letter-spacing: 0.028px;
+            text-align: start;
+
+            &.title {
+                width: 225px;
+            }
+
+            &.name {
+                width: 400px;
+            }
+
+            &.code {
+                width: 417px;
+            }
+        }
+    }
+
+    &>.functionals-container__body {
+        &>.functional-detail-item {
+            display: flex;
+
+            &>.item__type-name {
+                width: 225px;
+                display: flex;
+                align-items: center;
+                justify-content: flex-start;
+            }
+
+            &>.item__functional-container {
+                &>.item {
+                    display: flex;
+                    align-items: center;
+                    padding: 12px 0;
+                    cursor: pointer;
+
+                    &>.item-name {
+                        width: 400px;
+                        display: flex;
+                        align-items: center;
+                    }
+
+                    &>p {
+                        width: 417px;
+                        text-align: start;
+                    }
+                }
+
+                &>.item+.item {
+                    border-top: 1px solid #727288;
+                }
+
+                & p {
+                    opacity: .7;
+                }
+            }
+        }
+
+        &>div+div {
+            border-top: 1px solid rgba(245, 245, 255, .5);
+        }
+    }
+}
+
+.form__body__right {
+    & p {
+        color: white;
+    }
+}
+
+.functional-checkbox {
+    min-width: 90px;
+
+    & img {
+        cursor: pointer;
+    }
+}
+
+.form__action {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    margin: 88px 0;
+}

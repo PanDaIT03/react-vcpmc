@@ -5,16 +5,18 @@ import {
   cancelContractAction,
   getContractsAction,
 } from "~/state/thunk/contract";
-import { IContract, IUserDetail } from "~/types";
+import { ContractDetail, IContract, IUserDetail } from "~/types";
 
 interface InitType {
   contracts: (IContract & IUserDetail)[];
   loading: boolean;
   status: string;
+  contractDetails: Array<ContractDetail>;
 }
 
 const initialState: InitType = {
   contracts: [],
+  contractDetails: [],
   loading: false,
   status:
     "get successfully" ||
@@ -29,7 +31,11 @@ const initialState: InitType = {
 const contractSlice = createSlice({
   name: "contract",
   initialState: initialState,
-  reducers: {},
+  reducers: {
+    setContractsDetail: (state, action) => {
+      state.contractDetails = action.payload;
+    }
+  },
   extraReducers(builder) {
     builder
       .addCase(getContractsAction.pending, (state) => {
@@ -83,5 +89,5 @@ const contractSlice = createSlice({
   },
 });
 
-export const {} = contractSlice.actions;
+export const { setContractsDetail } = contractSlice.actions;
 export const contractReducer = contractSlice.reducer;

@@ -9,7 +9,7 @@ const cx = classNames.bind(styles);
 interface InputOwnProps<E extends React.ElementType> {
     id?: string
     name: string
-    value?: string | number
+    value?: string | number | Date
     title?: string
     checked?: boolean
     placeholder?: string

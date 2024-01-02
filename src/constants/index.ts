@@ -1,8 +1,8 @@
 import moment from "moment";
 
-import { IGlobalConstantsType } from "~/types";
 import { images } from "~/assets";
 import { routes } from "~/config/routes";
+import { IGlobalConstantsType } from "~/types";
 
 const regexIsSlash = /^[a-zA-Z0-9/]+$/;
 
@@ -62,7 +62,6 @@ const SIDEBAR_ITEMS = [
     icon: images.contract,
     title: "Quản lý",
     isActive: false,
-    to: "/contract-management",
     children: [
       {
         id: 1,
@@ -80,6 +79,7 @@ const SIDEBAR_ITEMS = [
       {
         id: 4,
         title: "Đơn vị sử dụng",
+        to: routes.UnitUsedManagementPage
       },
     ],
   },
@@ -92,14 +92,17 @@ const SIDEBAR_ITEMS = [
       {
         id: 1,
         title: "Báo cáo doanh thu",
+        to: routes.RevenueReportPage
       },
       {
         id: 2,
         title: "Lịch sử đối soát",
+        to: routes.ForControlHistoryPage
       },
       {
         id: 3,
         title: "Phân phối doanh thu",
+        to: routes.RevenueDistributionPage
       },
     ],
   },
@@ -112,6 +115,7 @@ const SIDEBAR_ITEMS = [
       {
         id: 1,
         title: "Phân quyền người dùng",
+        to: routes.AuthorizedUser
       },
       {
         id: 2,
@@ -128,6 +132,7 @@ const SIDEBAR_ITEMS = [
       {
         id: 5,
         title: "Chu kỳ đối soát",
+        to: routes.ContractTypeForControl
       },
     ],
   },
@@ -140,6 +145,7 @@ const SIDEBAR_ITEMS = [
       {
         id: 1,
         title: "Hướng dẫn sử dụng",
+        to: routes.SupportUserManual
       },
       {
         id: 2,
@@ -509,33 +515,66 @@ const DAYSNUM = [
   "Chủ nhật",
 ];
 
+export interface Quarter {
+  quarter: string;
+  time: string;
+}
+
+const QUARTERLY: Array<Quarter> = [
+  {
+    quarter: 'Quý 1',
+    time: '01/06 - 30/07'
+  }, {
+    quarter: 'Quý 2',
+    time: '01/08 - 30/09'
+  }, {
+    quarter: 'Quý 3',
+    time: '01/10 - 30/11'
+  }, {
+    quarter: 'Quý 4',
+    time: '01/12 - 31/12'
+  }
+];
+
+const formatDateDMYFromDate = (date: Date) => {
+  let yyyy = date.getFullYear();
+  let mm = date.getMonth() + 1;
+  let dd = date.getDate();
+  let day = `${dd}`, month = `${mm}`;
+
+  if (dd < 10)
+    day = `0${dd}`;
+  if (mm < 10)
+    month = `0${mm}`;
+
+  return `${day}/${month}/${yyyy}`;
+}
+
+const formatToLocalStringCurrentDate = () => {
+  let date = new Date();
+
+  return `${formatDateDMYFromDate(date)} - ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+}
+
+const formatMoney = (money: number) => {
+  const config = {
+    style: 'currency',
+    currency: 'VND',
+    maximumFractionDigist: 9
+  }
+
+  const formated = new Intl.NumberFormat('vi-VN', config).format(money);
+
+  return formated;
+}
+
+export * as Yup from 'yup';
+
 export {
-  formatDate,
-  formatTime,
-  getCurrentDate,
+  ACTION_INFO_USER, CAPABILITY, CB_APPROVE, CB_APPROVE_ITEMS, CB_FORMAT, CB_MUSIC_KIND, CB_NATIONALITY, CB_OWNER_ITEMS, CB_PLAYLIST, CB_VADILITY_MUSIC, DAYS,
+  DAYSNUM, LANGUAGE_ITEMS, QUARTERLY, SIDEBAR_ITEMS, VALIDITY_CONTRACT_ITEMS, formatDate, formatDateDMY, formatDateDMYFromDate, formatDateDMYHPTS, formatDateMDY, formatDateYMD, formatMoney, formatTime, formatToLocalStringCurrentDate, getCurrentDate,
   getCurrentDateDMY,
-  getCurrentDateTimeDMY,
-  theFollowingDays,
-  formatDateYMD,
-  formatDateDMY,
-  formatDateMDY,
-  handleClickDropDown,
-  regexOnlyNumer,
-  getTotalMoment,
-  formatDateDMYHPTS,
-  LANGUAGE_ITEMS,
-  SIDEBAR_ITEMS,
-  ACTION_INFO_USER,
-  VALIDITY_CONTRACT_ITEMS,
-  CB_NATIONALITY,
-  CAPABILITY,
-  CB_OWNER_ITEMS,
-  CB_APPROVE_ITEMS,
-  CB_MUSIC_KIND,
-  CB_FORMAT,
-  CB_VADILITY_MUSIC,
-  CB_APPROVE,
-  CB_PLAYLIST,
-  DAYS,
-  DAYSNUM,
+  getCurrentDateTimeDMY, getTotalMoment, handleClickDropDown,
+  regexOnlyNumer, theFollowingDays
 };
+
