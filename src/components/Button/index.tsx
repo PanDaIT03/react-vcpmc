@@ -18,6 +18,7 @@ interface IButtonProps {
     loading?: boolean
     buttonref?: any
     onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void
+    disable?: boolean
 }
 
 export const Button = ({
@@ -30,6 +31,7 @@ export const Button = ({
     className,
     buttonType = "button",
     loading = false,
+    disable,
     onClick,
     ...passProps
 }: IButtonProps) => {
@@ -47,7 +49,8 @@ export const Button = ({
         [className]: className,
         [size]: size,
         primary,
-        fill
+        fill,
+        disable
     });
 
     return (
