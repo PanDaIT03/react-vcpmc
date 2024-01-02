@@ -1,9 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-import { IUser } from "~/types";
+import { IUser, User } from "~/types";
 import {
+  addUserThunk,
   checkLoginAction,
+  getUsers,
   resetPasswordAction,
+  saveUser,
   updateUserAction,
 } from "~/state/thunk/user/user";
 
@@ -12,12 +15,13 @@ interface InitType {
   newUser: IUser;
   loading: boolean;
   status:
-    | "loggin successfully"
-    | "loggin failed"
-    | "user updated"
-    | "update failed"
-    | "user added"
-    | "";
+  | "loggin successfully"
+  | "loggin failed"
+  | "user updated"
+  | "update failed"
+  | "user added"
+  | "";
+  users: Array<User>
 }
 
 const initialState: InitType = {
@@ -25,6 +29,7 @@ const initialState: InitType = {
   newUser: {} as IUser,
   loading: false,
   status: "",
+  users: [] as Array<User>
 };
 
 const userSlice = createSlice({
@@ -102,9 +107,40 @@ const userSlice = createSlice({
           state.loading = false;
         }
       })
+      .addCase(getUsers.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getUsers.fulfilled, (state, action) => {
+        state.users = action.payload;
+        state.loading = false;
+      })
+      .addCase(getUsers.rejected, (state, action) => {
+        state.loading = false;
+        console.log(new Error(`${action.error.name}: ${action.error.message}`));
+      })
       .addCase(updateUserAction.rejected, (state) => {
         state.status = "update failed";
         state.loading = false;
+      })
+      .addCase(saveUser.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(saveUser.fulfilled, (state) => {
+        state.loading = false;
+      })
+      .addCase(saveUser.rejected, (state, action) => {
+        state.loading = false;
+        console.log(new Error(`${action.error.name}: ${action.error.message}`));
+      })
+      .addCase(addUserThunk.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(addUserThunk.fulfilled, (state) => {
+        state.loading = false;
+      })
+      .addCase(addUserThunk.rejected, (state, action) => {
+        state.loading = false;
+        console.log(new Error(`${action.error.name}: ${action.error.message}`));
       })
       .addDefaultCase((state) => {
         return state;
@@ -112,5 +148,5 @@ const userSlice = createSlice({
   },
 });
 
-export const {} = userSlice.actions;
+export const { } = userSlice.actions;
 export const userReducer = userSlice.reducer;

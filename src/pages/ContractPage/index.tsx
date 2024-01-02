@@ -1,11 +1,12 @@
 import { useContext, useEffect, useState } from "react";
 
 import { CommonWrapper } from "~/components/CommonWrapper";
-import { Tab, Tabs } from "~/components/Tabs";
-import { SidebarContext } from "~/context/Sidebar/SidebarContext.index";
 import { PagingItemType } from "~/components/Paging";
+import { Tab, Tabs } from "~/components/Tabs";
 import { routes } from "~/config/routes";
+import { SidebarContext } from "~/context/Sidebar/SidebarContext.index";
 import AuthorizationContractPage from "../AuthorizationContractPage";
+import EntrustmentContract from "../EntrustmentContract";
 
 const PAGING_ITEMS: Array<PagingItemType> = [
     {
@@ -42,7 +43,7 @@ function ContractPage() {
                     onClick={() => setSwitchPage(false)}
                 />
             </Tabs>
-            <AuthorizationContractPage />
+            {switchPage ? <AuthorizationContractPage /> : <EntrustmentContract />}
         </CommonWrapper>
     )
 };

@@ -1,0 +1,158 @@
+.content-container {
+    &>.content-edit>button {
+        margin: 76px 0;
+
+        &+button {
+            margin-left: 40px !important;
+        }
+    }
+
+    & input[type='text'],
+    & input[type='password'] {
+        width: 311px;
+
+        &:read-only {
+            background-color: #3E3E50;
+        }
+    }
+
+    & input[type='date'] {
+        width: 265px;
+    }
+
+    & .country {
+        &>div>div:first-child {
+            width: 237px;
+        }
+    }
+
+    & .block-detail__password {
+        width: max-content;
+
+        &>div {
+            width: max-content;
+        }
+    }
+}
+
+.gender-group {
+    height: 48px;
+    display: flex;
+}
+
+// block input
+
+.content-edit__box {
+    max-width: 1691px;
+    display: flex;
+    flex-wrap: wrap;
+    row-gap: 99px;
+    margin-top: 40px;
+
+    &>div {
+        flex: 0 0 33.333333%;
+    }
+}
+
+.content__type {
+    display: flex;
+    flex-direction: column;
+
+    &>p {
+        color: white;
+        text-align: start;
+        padding-bottom: 18px;
+    }
+
+    &>.content__type__all {
+        width: max-content;
+        display: inline-flex;
+        justify-content: space-between;
+        gap: 42px;
+
+        & input[type='text'] {
+            width: 169px !important;
+        }
+
+        &>div+div {
+            width: 1px;
+            height: auto;
+            padding-left: 13px;
+            border-left: 1px solid #727288;
+        }
+
+        & .type__all__radio-button {
+            width: 97px;
+        }
+    }
+
+    &>div {
+        &+div {
+            margin-top: 17px;
+        }
+    }
+
+}
+
+.all__value-input {
+    &>div {
+        gap: 12px;
+    }
+
+    &>div>div {
+        &>div:first-child {
+            margin-right: 24px;
+        }
+
+        &>div>div {
+            max-width: 108px !important;
+        }
+    }
+
+}
+
+.nationality-combo-box {
+    &>li {
+        padding-top: 0 !important;
+
+        &>div {
+            height: 48px;
+            width: 311px;
+            z-index: 2 !important;
+            border-color: #727288;
+            background-color: rgb(43 43 63);
+
+            &>div>input {
+                width: 267px !important;
+            }
+        }
+
+        &>ul {
+            width: 311px !important;
+            z-index: 1 !important;
+        }
+    }
+}
+
+.content-information {
+    display: flex;
+    flex-wrap: wrap;
+    row-gap: 16.4rem;
+
+    &>div {
+        flex: 0 0 33.333333%;
+
+        &>div {
+            &>div:first-child>div {
+                height: 48px;
+                display: flex;
+                align-items: center;
+                margin-right: 24px;
+            }
+
+            &>div:last-child>div>div {
+                opacity: .7;
+            }
+        }
+    }
+}

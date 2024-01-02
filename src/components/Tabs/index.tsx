@@ -9,20 +9,22 @@ interface TabsProps {
     children?: ReactNode
 };
 
-interface TabProps {
+export interface TabProps {
     visible: boolean
     title: string
     pageRef?: any
     onClick?: () => void
+    className?: string
 };
 
 export const Tab = memo(({
     visible,
     title,
     pageRef,
-    onClick
+    onClick,
+    className
 }: TabProps) => {
-    const classes = cx("tab", visible && "active");
+    const classes = cx("tab", visible && "active", className);
 
     return (
         <div

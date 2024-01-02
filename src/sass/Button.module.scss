@@ -1,6 +1,18 @@
 .wrapper {
   display: flex;
   justify-content: center;
+
+  &.disable {
+    transform: none !important;
+    background-color: #d7d7d7 !important;
+    color: var(--white) !important;
+    border-color: #d7d7d7 !important;
+    cursor: auto;
+
+    &:hover {
+      opacity: .8;
+    }
+  }
 }
 
 button {

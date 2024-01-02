@@ -55,5 +55,12 @@ export const images = {
     repeat: require('./images/fi_repeat.png'),
     trash: require('./images/u_trash-alt.png'),
     moreVertical: require('./images/fi_more-vertical.png'),
+    receipt: require('./images/receipt-icon.png'),
+    checkAll: require('./images/check-all.png'),
+    fileExport: require('./images/file-export-icon.png'),
+    userPlus: require('./images/user-plus-icon.png'),
+    users: require('./images/users.png'),
+    keySkeleton: require('./images/key-skeleton.png'),
+    userX: require('./images/user-x.png'),
     // aaaa: require('./images/aaaa.png'),
 };

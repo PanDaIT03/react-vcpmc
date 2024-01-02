@@ -1,11 +1,15 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
-import { IUser, IRole } from "~/types";
+import { IUser, IRole, User } from "~/types";
 import {
+  addUser,
   checkLogin,
+  deleteUserById,
   getDocIdByField,
   getUserByDocId,
+  getUserList,
   resetPassword,
+  saveUserAPI,
   updateUser,
 } from "~/api/user";
 
@@ -66,4 +70,36 @@ export const updateUserAction = createAsyncThunk(
 
     if (isUpdateSuccess) return await getUserByDocId(data.docId);
   }
+);
+
+export const saveUser = createAsyncThunk(
+  'user/saveUser',
+  async ({ user, navigate }: { user: Omit<IUser, 'role'>; navigate?: () => void; }) => {
+    await saveUserAPI(user);
+
+    navigate && navigate();
+  }
+);
+
+export const getUsers = createAsyncThunk(
+  'user/getUsers', async () => {
+    return await getUserList();
+  }
+);
+
+export const addUserThunk = createAsyncThunk(
+    'user/addUser',
+    async ({ user, navigate }: { user: Omit<User, 'role' | 'docId'>; navigate?: () => void; }
+    ) => {
+        await addUser(user);
+        navigate && navigate();
+    }
+);
+
+export const deleteUser = createAsyncThunk(
+    'user/deleteUser',
+    async ({ id, navigate }: { id: string, navigate: () => void }) => {
+        await deleteUserById(id);
+        navigate();
+    }
 );

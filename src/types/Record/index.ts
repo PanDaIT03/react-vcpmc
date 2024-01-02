@@ -1,6 +1,6 @@
 import { IContract } from "../Contract";
 
-export type IRecord = {
+export interface IRecord {
   docId: string;
   imageURL: string;
   ISRCCode: string;
@@ -10,6 +10,7 @@ export type IRecord = {
   author: string;
   categoriesId: string;
   contractId: string;
+  etmContractsId?: string;
   contractStatus: string;
   createdBy: string;
   createdDate: string;

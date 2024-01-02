@@ -10,7 +10,7 @@ import styles from "~/sass/OptionMenu.module.scss";
 const cx = classNames.bind(styles);
 
 interface OptionMenuProps {
-    data: IGlobalConstantsType[]
+    data: IGlobalConstantsType[] | any[]
     title?: string
     titlePosition?: "top" | "left"
     boxSize?: "small" | "medium" | "large" | "small-pl" | "extra-large" | "extra-extra-large" | "custom"
