@@ -14,10 +14,9 @@ import { routes } from "~/config/routes";
 import { Yup } from "~/constants";
 import { RootState, useAppDispatch } from "~/state";
 import { updateRole } from "~/state/thunk/role/role";
-import { Functional } from "~/types/Functional";
+import { Functional } from "~/types/FunctionalType";
 
 import style from '~/sass/EditRole.module.scss';
-import { getFunctionalTypes, getFunctionals } from "~/state/thunk/functional";
 const cx = classNames.bind(style);
 
 type FunctionalDetail = {
@@ -63,7 +62,7 @@ function AuthorizedEditRolePage() {
                     functionalsId: values.functionals.map(functional => functional.docId),
                     allowDelete: values.allowDelete
                 },
-                navigate: () => navigate(routes.AuthorizedUser)
+                navigate: () => navigate(routes.AuthorizedUserPage)
             }));
         }
     });
@@ -72,11 +71,11 @@ function AuthorizedEditRolePage() {
         setPaging([
             {
                 title: 'Cài đặt',
-                to: routes.AuthorizedUser,
+                to: routes.AuthorizedUserPage,
                 active: true
             }, {
                 title: 'Phân quyền người dùng',
-                to: routes.AuthorizedUser,
+                to: routes.AuthorizedUserPage,
                 active: true
             }, {
                 title: 'Cập nhật',
@@ -200,7 +199,7 @@ function AuthorizedEditRolePage() {
                         primary
                         size="large"
                         value="Huỷ"
-                        onClick={() => navigate(routes.AuthorizedUser)}
+                        onClick={() => navigate(routes.AuthorizedUserPage)}
                     />
                     <Button
                         primary

@@ -1,89 +1,53 @@
 .search {
-    width: 41.8rem;
-    margin-top: 2.4rem;
+  margin: 24px 0;
+  width: 418px;
 }
 
-// Table
-.contract_title,
-.contract_item {
-    display: flex;
-    height: 4.8rem;
-    font-size: 1.4rem;
-    font-weight: 400;
-    line-height: 2rem;
-}
+.entrusment-contract {
+  width: 1541px !important;
+  position: relative;
 
-.title {
-    color: var(--orange-3);
-    display: flex;
-    align-items: flex-start;
-    align-self: stretch;
-    letter-spacing: 0.028px;
-}
-
-.content {
-    color: var(--white);
-    display: flex;
-    align-items: center;
-    letter-spacing: 0.21px;
-}
-
-.contract_item {
+  & tbody > tr > td > p.action {
+    width: max-content;
+    color: var(--orange-4-default);
+    padding: 5px 16px;
+    text-decoration: underline;
     cursor: pointer;
 
-    .numerical-order {
-        display: flex;
-        justify-content: center;
-    }
-
-    .action-detail,
-    .action-copy {
-        font-size: 1.2rem;
-        color: var(--orange-4-default);
-        display: flex;
-        justify-content: center;
-        text-decoration-line: underline;
-        cursor: pointer;
-        letter-spacing: -0.024px;
-    }
-
     &:hover {
-        background-color: var(--white-transparent);
+      opacity: 1;
     }
-}
+  }
 
-.contract_title,
-.contract_item {
-    .numerical-order {
-        width: 8rem;
-        padding: .8rem 0 .8rem .8rem;
-    }
+  & .status {
+    position: relative;
 
-    .customer {
-        width: 26.4rem;
-        padding: .8rem 0;
-    }
-
-    .contract-code,
-    .date-created,
-    .effective-date,
-    .expiration-date,
-    .validity-contract {
-        width: 15.8rem;
-        padding: .8rem .8rem .8rem 0;
+    &::after {
+      content: "";
+      display: block;
+      width: 8px;
+      height: 8px;
+      position: absolute;
+      top: 50%;
+      left: -15px;
+      transform: translateY(-50%);
+      border-radius: 50%;
     }
 
-    .validity-contract {
-        img {
-            margin-right: .5rem;
-        }
+    &.new::after {
+      background-color: var(--emerald);
     }
 
-    .action-detail {
-        width: 19.3rem;
+    &.cancelled::after {
+      background-color: var(--red);
     }
 
-    .action-copy {
-        width: 15.8rem;
+    &.still::after {
+      background-color: var(--blue);
     }
+
+    &.expiration::after {
+      background-color: var(--gray);
+    }
+  }
 }

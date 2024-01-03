@@ -18,7 +18,6 @@ export const routes = {
   PlaylistScheduleDetailPage: "/playlist-schedule/detail/:playlistScheduleCode",
   EditPlaylistSchedulePage:
     "/playlist-schedule/detail/edit/:playlistScheduleCode",
-
   RevenueReportPage: "/revenue/report",
   RevenueDistributionPage: "/revenue/distribution",
   RevenueDistributionDetailPage: "/revenue/distribution/detail/:id",
@@ -26,18 +25,18 @@ export const routes = {
   RevenueReportContractDetailPage: "/revenue/report/detail/contract/:id",
   UnitUsedManagementPage: "/unit-used-management",
   UnitUsedManagementDetailPage: "/unit-used-management/detail/:id",
-  UserOfUnitUsedManagementDetailPage: "/unit-used-management/detail/:contractId/user/:userId",
+  UserOfUnitUsedManagementDetailPage:
+    "/unit-used-management/detail/:contractId/user/:userId",
   AddUserOfUnitUsedManagementPage: "/unit-used-management/detail/:id/user/add",
   ForControlHistoryPage: "/for-control/history",
   ForControlHistoryDetailPage: "/for-control/history/detail/:id",
-  AuthorizedUser: "/authorization/user",
-  AuthorizedEditUser: "/authorization/user/:id/edit",
-  AuthorizedAddUser: "/authorization/user/add",
-  AuthorizedEditRole: "/authorization/role/edit/:id",
-  AuthorizedAddRole: "/authorization/role/add",
-  ContractTypeForControl: "/setting/for-control",
-  SupportUserManual: "/support/user-manual",
-
+  AuthorizedUserPage: "/authorization/user",
+  AuthorizedEditUserPage: "/authorization/user/:id/edit",
+  AuthorizedAddUserPage: "/authorization/user/add",
+  AuthorizedEditRolePage: "/authorization/role/edit/:id",
+  AuthorizedAddRolePage: "/authorization/role/add",
+  SettingForControlPage: "/setting/for-control",
+  SupportUserManualPage: "/support/user-manual",
   AuthorizedPartnerPage: "/authorized-partner",
   EditAuthorizedPartnerPage: "/authorized-partner/edit/:id",
   DevicePage: "/device-management",
@@ -47,4 +46,10 @@ export const routes = {
   EditCategoryPage: "/category/edit",
   DownloadPage: "/download",
   FeedbackPage: "/feedback",
+  EntrustmentContractDetail:
+    "/contract-management/entrustment-contract/detail/:id",
+  AddEntrustmentContractPage: "/contract-management/entrustment-contract/add",
+  ManagementContractTypePage: "/setting/contract-management",
+  EditWarningExpirePage: "/setting/contract-management/edit",
+  EditContractTypePage: "/setting/contract-management/edit-contract-type",
 };

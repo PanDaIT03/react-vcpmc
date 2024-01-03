@@ -5,7 +5,6 @@ import { useCallback, useContext, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 
-import { EtmContractDetail } from "~/api/entrustmentContract";
 import { images } from "~/assets";
 import { ActionBar } from "~/components/ActionBar";
 import { ActionBarItem } from "~/components/ActionBar/ActionBarItem";
@@ -15,12 +14,13 @@ import { Input } from "~/components/Input";
 import { PagingItemType } from "~/components/Paging";
 import { Switch } from "~/components/Switch";
 import { Table } from "~/components/Table";
-import { SidebarContext } from "~/context/Sidebar/SidebarContext.index";
 import { RootState, useAppDispatch } from "~/state";
-import { deleteContracts, getEtmContractListDetail } from "~/state/thunk/entrustmentContractThunk";
+import { Loading } from "~/components/Loading";
+import { SidebarContext } from "~/context/Sidebar/SidebarContext";
+import { EtmContractDetail } from "~/types/EntrustmentContractType";
+import { deleteContracts, getEtmContractListDetail } from "~/state/thunk/entrustmentContract";
 
 import style from '~/sass/UnitManagement.module.scss';
-import { Loading } from "~/components/Loading";
 const cx = classNames.bind(style);
 
 function UnitUsedManagementPage() {

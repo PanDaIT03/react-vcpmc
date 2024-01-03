@@ -1,0 +1,40 @@
+.config-contract-container {
+  display: flex;
+  margin-top: 24px;
+  align-items: flex-start;
+  gap: 24px;
+}
+
+.contract-container__expiration {
+  width: 649px;
+  height: 168px;
+  border-radius: 16px;
+  color: var(--white);
+  background: var(--middle-bg);
+  padding: 24px;
+
+  & > .expiration__title {
+    color: #e5e5e5;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 24px;
+    letter-spacing: -0.048px;
+    text-align: start;
+  }
+
+  & > .expiration__time {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-top: 40px;
+
+    & > p:last-child {
+      opacity: 0.7;
+    }
+  }
+}
+
+.contract-container__table-type {
+  width: 868px;
+  height: 168px;
+}

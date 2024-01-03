@@ -2,7 +2,7 @@ import classNames from "classnames/bind";
 import { useFormik } from "formik";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router";
+import { useNavigate } from "react-router";
 
 import { Button } from "~/components/Button";
 import { Checkbox } from "~/components/Checkbox";
@@ -14,7 +14,7 @@ import { routes } from "~/config/routes";
 import { Yup } from "~/constants";
 import { RootState, useAppDispatch } from "~/state";
 import { addRole } from "~/state/thunk/role/role";
-import { Functional } from "~/types/Functional";
+import { Functional } from "~/types/FunctionalType";
 
 import style from '~/sass/EditRole.module.scss';
 const cx = classNames.bind(style);
@@ -59,7 +59,7 @@ function AuthorizedAddRolePage() {
                     functionalsId: values.functionals.map(functional => functional.docId),
                     allowDelete: true
                 },
-                navigate: () => navigate(routes.AuthorizedUser)
+                navigate: () => navigate(routes.AuthorizedUserPage)
             }));
         }
     });
@@ -68,11 +68,11 @@ function AuthorizedAddRolePage() {
         setPaging([
             {
                 title: 'Cài đặt',
-                to: routes.AuthorizedUser,
+                to: routes.AuthorizedUserPage,
                 active: true
             }, {
                 title: 'Phân quyền người dùng',
-                to: routes.AuthorizedUser,
+                to: routes.AuthorizedUserPage,
                 active: true
             }, {
                 title: 'Cập nhật',
@@ -184,7 +184,7 @@ function AuthorizedAddRolePage() {
                         primary
                         size="large"
                         value="Huỷ"
-                        onClick={() => navigate(routes.AuthorizedUser)}
+                        onClick={() => navigate(routes.AuthorizedUserPage)}
                     />
                     <Button
                         primary

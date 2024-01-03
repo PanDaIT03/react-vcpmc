@@ -9,6 +9,7 @@ import {
 
 import { fireStoreDatabase } from "~/config/firebase";
 import { ICategory, IRecord } from "~/types";
+import { OwnRecord } from "~/types/EntrustmentContractType";
 
 export const getRecords = async (contractId?: string) => {
   let queryStmt;
@@ -64,6 +65,33 @@ export const getCategories = async () => {
   return categories;
 };
 
+export const getRecordList = async () => {
+  const resultSnapshot = await getDocs(
+    collection(fireStoreDatabase, "records")
+  );
+
+  return resultSnapshot.docs.map((doc) => ({
+    docId: doc.id,
+    imageURL: doc.data().imageURL,
+    ISRCCode: doc.data().ISRCCode,
+    approvalDate: doc.data().approvalDate,
+    approvalBy: doc.data().approvalBy,
+    audioLink: doc.data().audioLink,
+    author: doc.data().author,
+    categoriesId: doc.data().categoriesId,
+    contractId: doc.data().contractId,
+    createdBy: doc.data().createdBy,
+    createdDate: doc.data().createdDate,
+    expirationDate: doc.data().expirationDate,
+    format: doc.data().format,
+    nameRecord: doc.data().nameRecord,
+    producer: doc.data().producer,
+    singer: doc.data().singer,
+    time: doc.data().time,
+    etmContractsId: doc.data().etmContractsId,
+  }));
+};
+
 export const approvalRecords = async (
   recordId: string,
   status: string,
@@ -96,10 +124,7 @@ export const approvalContractRecords = async (
 
 export const updateRecord = async (
   recordId: string,
-  data: Pick<
-    IRecord,
-    "title" | "ISRCCode" | "singer" | "author" | "producer"
-  >
+  data: Pick<IRecord, "title" | "ISRCCode" | "singer" | "author" | "producer">
 ) => {
   if (recordId === "") return;
 

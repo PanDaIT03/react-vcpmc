@@ -5,7 +5,8 @@ import { Tab, Tabs } from "~/components/Tabs";
 import { SidebarContext } from "~/context/Sidebar/SidebarContext";
 import { PagingItemType } from "~/components/Paging";
 import { routes } from "~/config/routes";
-import AuthorizationContractPage from "../AuthorizationContractPage";
+import AuthorizationContractPage from "./AuthorizationContractPage";
+import EntrustmentContract from "./EntrustmentContractPage";
 
 const PAGING_ITEMS: Array<PagingItemType> = [
     {
@@ -42,7 +43,7 @@ function ContractPage() {
                     onClick={() => setSwitchPage(false)}
                 />
             </Tabs>
-            <AuthorizationContractPage />
+            {switchPage ? <AuthorizationContractPage /> : <EntrustmentContract />}
         </CommonWrapper>
     )
 };

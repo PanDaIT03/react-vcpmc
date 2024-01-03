@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 import { PagingItemType } from "~/components/Paging";
 import { routes } from "~/config/routes";
-import { CommonDetailPage } from "~/pages/EntrustmentContract/Components/CommonContractPage";
+import { CommonDetailPage } from "~/pages/ContractPage/EntrustmentContractPage/Components/CommonContractPage";
 
 function RevenueContractReportDetailPage() {
     const [paging, setPaging] = useState<Array<PagingItemType>>([] as Array<PagingItemType>);

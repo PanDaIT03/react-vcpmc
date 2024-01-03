@@ -3,27 +3,27 @@ import { useCallback, useContext, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 
+import { images } from "~/assets";
+import { ActionBar } from "~/components/ActionBar";
+import { ActionBarItem } from "~/components/ActionBar/ActionBarItem";
+import Button from "~/components/Button";
+import { CommonWrapper } from "~/components/CommonWrapper";
+import { Dialog } from "~/components/Dialog";
+import { Input } from "~/components/Input";
+import { Loading } from "~/components/Loading";
+import { OptionMenu } from "~/components/OptionMenu";
 import { PagingItemType } from "~/components/Paging";
 import { Table } from "~/components/Table";
 import { routes } from "~/config/routes";
-import { QUARTERLY, Quarter, formatDateYMD } from "~/constants";
-import { SidebarContext } from "~/context/Sidebar/SidebarContext.index";
-import { EtmContractForControl } from "~/api/entrustmentContract";
-import { CommonWrapper } from "~/components/CommonWrapper";
-import { OptionMenu } from "~/components/OptionMenu";
+import { QUARTERLY, formatDateYMD } from "~/constants";
+import { SidebarContext } from "~/context/Sidebar/SidebarContext";
 import { RootState, useAppDispatch } from "~/state";
-import { checkpointAllContract, getEtmContractForControls } from "~/state/thunk/entrustmentContractThunk";
+import { checkpointAllContract, getEtmContractForControls } from "~/state/thunk/entrustmentContract";
 import { IGlobalConstantsType } from "~/types";
-import { Filter } from "../ReportPage";
+import { EtmContractForControl, Quarterly } from "~/types/EntrustmentContractType";
+import { Filter } from "..";
 
 import style from '~/sass/RevenueReportDetail.module.scss';
-import { Input } from "~/components/Input";
-import { images } from "~/assets";
-import { Dialog } from "~/components/Dialog";
-import Button from "~/components/Button";
-import { ActionBar } from "~/components/ActionBar";
-import { ActionBarItem } from "~/components/ActionBar/ActionBarItem";
-import { Loading } from "~/components/Loading";
 const cx = classNames.bind(style);
 
 function RevenueReportDetailPage() {
@@ -32,7 +32,7 @@ function RevenueReportDetailPage() {
 
     const etmContract = useSelector((state: RootState) => state.etmContract);
 
-    const { setActive } = useContext(SidebarContext);
+    const { setActive, setCurrentPage } = useContext(SidebarContext);
 
     const [paging, setPaging] = useState<Array<PagingItemType>>([] as Array<PagingItemType>);
     const [actionData, setActionData] = useState<any[]>([] as any[]);
@@ -97,7 +97,7 @@ function RevenueReportDetailPage() {
 
         setSearchResult(etmContract.etmContractForControl
             .map(contract => {
-                let quarter: Quarter = { quarter: '', time: '' };
+                let quarter: Quarterly = { quarter: '', time: '' };
 
                 if (filter.type === 'Theo quý')
                     quarter = QUARTERLY.find(quarter => quarter.quarter === filter.dataActive.split('/')[0]) || { quarter: '', time: '' };
@@ -245,12 +245,6 @@ function RevenueReportDetailPage() {
             <Table
                 thead={['STT', 'Số hợp đồng', 'Dơn vị khai thác', 'Thời hạn hợp đồng', 'Loại hợp đồng',
                     'Số thiết bị đã đồng bộ', 'Tổng số lượt phát', 'Ngày chốt đối soát', '', '']}
-                paginate={{
-                    dataForPaginate: searchResult,
-                    setCurrentItems: handleSetCurrentItems
-                }}
-                itemsPerPage={itemsPerPage}
-                setItemsPerPage={handleChange}
                 className={cx('container-table-data', 'renvenue-report-detail__table')}
             >
                 {currentItems.map((item, index) => (

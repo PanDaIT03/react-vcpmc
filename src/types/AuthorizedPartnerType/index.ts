@@ -1,6 +1,7 @@
+import { IContract } from "../ContractType";
 import { IRecord, RecordPlays } from "../RecordType";
 import { Role } from "../RoleType";
-import { IUser } from "../UserType";
+import { IUser, User } from "../UserType";
 
 export interface AuthorizedContract {
   docId: string;
@@ -30,6 +31,21 @@ export interface RecordDetail {
   totalPlay: number;
 }
 
+// export type AuthorizedContractDetail = Omit<
+//   AuthorizedContract,
+//   "authorizedPerson" | "createdBy"
+// > & {
+//   authorizedPerson: Omit<IUser, "role"> & { status: string } & {
+//     role: Pick<Role, "docId" | "name">;
+//   };
+//   createdBy: IUser;
+// };
+
+export type AuthorizedContractDetail = Omit<IContract, 'authorizedPerson' | 'createdBy'> & {
+  authorizedPerson: User;
+  createdBy: User;
+}
+
 export interface ContractDetail {
   contract: AuthorizedContractDetail;
   records: RecordDetail[];
@@ -39,13 +55,3 @@ export interface ContractDetail {
   date: string;
   administrativeFee: number;
 }
-
-export type AuthorizedContractDetail = Omit<
-  AuthorizedContract,
-  "authorizedPerson" | "createdBy"
-> & {
-  authorizedPerson: Omit<IUser, "role"> & { status: string } & {
-    role: Pick<Role, "docId" | "name">;
-  };
-  createdBy: IUser;
-};

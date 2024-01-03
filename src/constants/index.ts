@@ -4,6 +4,7 @@ import { IGlobalConstantsType } from "~/types";
 import { images } from "~/assets";
 import { routes } from "~/config/routes";
 import { IDownloadItem } from "~/types/SupportType";
+import { Quarterly } from "~/types/EntrustmentContractType";
 
 const regexIsSlash = /^[a-zA-Z0-9/]+$/;
 
@@ -137,7 +138,7 @@ const SIDEBAR_ITEMS = [
       {
         id: 1,
         title: "Phân quyền người dùng",
-        to: routes.AuthorizedUser
+        to: routes.AuthorizedUserPage,
       },
       {
         id: 2,
@@ -147,6 +148,7 @@ const SIDEBAR_ITEMS = [
       {
         id: 3,
         title: "Quản lý hợp đồng",
+        to: routes.ManagementContractTypePage,
       },
       {
         id: 4,
@@ -156,7 +158,7 @@ const SIDEBAR_ITEMS = [
       {
         id: 5,
         title: "Chu kỳ đối soát",
-        to: routes.ContractTypeForControl
+        to: routes.SettingForControlPage,
       },
     ],
   },
@@ -169,7 +171,7 @@ const SIDEBAR_ITEMS = [
       {
         id: 1,
         title: "Hướng dẫn sử dụng",
-        to: routes.SupportUserManual
+        to: routes.SupportUserManualPage,
       },
       {
         id: 2,
@@ -486,13 +488,25 @@ const formatDateMDY = (date: string) => {
   return dateList[1] + "/" + dateList[0] + "/" + dateList[2];
 };
 
-// const formatToLocalStringCurrentDate = () => {
-//   let date = new Date();
+const formatToLocalStringCurrentDate = () => {
+  let date = new Date();
 
-//   return `${formatDateDMY(
-//     date
-//   )} - ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
-// };
+  return `${formatDateDMY(
+    `${date}`
+  )} - ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+};
+
+const formatMoney = (money: number) => {
+  const config = {
+    style: "currency",
+    currency: "VND",
+    maximumFractionDigist: 9,
+  };
+
+  const formated = new Intl.NumberFormat("vi-VN", config).format(money);
+
+  return formated;
+};
 
 const formatDateYMD = (date: string) => {
   let dateList = date.split("/");
@@ -576,7 +590,26 @@ const DAYSNUM = [
   "Chủ nhật",
 ];
 
-export const DOWNLOAD_ITEMS: IDownloadItem[] = [
+const QUARTERLY: Array<Quarterly> = [
+  {
+    quarter: "Quý 1",
+    time: "01/06 - 30/07",
+  },
+  {
+    quarter: "Quý 2",
+    time: "01/08 - 30/09",
+  },
+  {
+    quarter: "Quý 3",
+    time: "01/10 - 30/11",
+  },
+  {
+    quarter: "Quý 4",
+    time: "01/12 - 31/12",
+  },
+];
+
+const DOWNLOAD_ITEMS: IDownloadItem[] = [
   {
     image: images.upload,
     title: "Tool Upload",
@@ -594,6 +627,8 @@ export const DOWNLOAD_ITEMS: IDownloadItem[] = [
   },
 ];
 
+export * as Yup from "yup";
+
 export {
   formatDate,
   formatTime,
@@ -609,6 +644,8 @@ export {
   regexOnlyNumer,
   getTotalMoment,
   formatDateDMYHPTS,
+  formatToLocalStringCurrentDate,
+  formatMoney,
   LANGUAGE_ITEMS,
   SIDEBAR_ITEMS,
   ACTION_INFO_USER,
@@ -627,4 +664,6 @@ export {
   THEME_IMAGES,
   DAYS,
   DAYSNUM,
+  QUARTERLY,
+  DOWNLOAD_ITEMS,
 };

@@ -11,9 +11,9 @@ import ResetPasswordPage from "../pages/ResetPasswordPage";
 import ForgotPasswordPage from "../pages/ForgotPasswordPage";
 import ProfilePage from "../pages/ProfilePage";
 import ContractPage from "~/pages/ContractPage";
-import DetailPage from "~/pages/AuthorizationContractPage/DetailPage";
-import EditPage from "~/pages/AuthorizationContractPage/EditPage";
-import AddPage from "~/pages/AuthorizationContractPage/AddPage";
+import DetailPage from "~/pages/ContractPage/AuthorizationContractPage/DetailPage";
+import EditPage from "~/pages/ContractPage/AuthorizationContractPage/EditPage";
+import AddPage from "~/pages/ContractPage/AuthorizationContractPage/AddPage";
 import RecordPage from "~/pages/RecordPage";
 import EditRecordPage from "~/pages/RecordPage/EditPage";
 import PlayListPage from "~/pages/PlayListPage";
@@ -32,14 +32,35 @@ import CategoryPage from "~/pages/CategoryPage";
 import EditCategoryPage from "~/pages/CategoryPage/EditCategoryPage";
 import DownloadPage from "~/pages/SupportPage/DownloadPage";
 import FeedbackPage from "~/pages/SupportPage/Feedback";
+import AddEtrustmentContractPage from "~/pages/ContractPage/EntrustmentContractPage/AddEntrustmentContract";
+import UnitUsedManagementPage from "~/pages/UnitPage";
+import UnitUsedDetailPage from "~/pages/UnitPage/UnitDetailPage";
+import UserOfUnitDetailPage from "~/pages/UnitPage/UserPage/UserDetailPage";
+import AddUserOfUnitPage from "~/pages/UnitPage/UserPage/AddUserPage";
+import EntrustmentContractDetailPage from "~/pages/ContractPage/EntrustmentContractPage/EntrustmentContractDetail";
+import RevenueReportPage from "~/pages/Revenue";
+import RevenueReportDetailPage from "~/pages/Revenue/ReportDetailPage";
+import RevenueContractReportDetailPage from "~/pages/Revenue/ContractDetailPage";
+import ForControlHistoryPage from "~/pages/ForControlPage";
+import ForControlHistoryDetailPage from "~/pages/ForControlPage/ForControlDetailPage";
+import RevenueDistributionDetailPage from "~/pages/Revenue/RevenueDetailPage";
+import RevenueDistributionPage from "~/pages/Revenue/RevenueDistributionPage";
+import UserAuthorizationPage from "~/pages/User/Authorization";
+import EditUserPage from "~/pages/User/EditUser";
+import AddUserPage from "~/pages/User/AddUser";
+import AuthorizedEditRolePage from "~/pages/RolePage/EditRole";
+import AuthorizedAddRolePage from "~/pages/RolePage/AddRolePage";
+import SupportUserManualPage from "~/pages/SupportPage/UserManualPage";
+import ForControlCirclePage from "~/pages/SettingPage/ForControlPage";
+import ManagementContractTypePage from "~/pages/SettingPage/ManagementContractTypePage";
+import EditWarningExpirePage from "~/pages/SettingPage/ManagementContractTypePage/EditWarningExpirePage";
+import EditContractTypePage from "~/pages/SettingPage/ManagementContractTypePage/EditContractTypePage";
 
 const publicRoutes = [
     { path: routes.LoginPage, component: LoginPage },
     { path: routes.ErrorConnectPage, component: ErrorConnectPage, layout: HeaderOnly },
     { path: routes.ResetPasswordPage, component: ResetPasswordPage },
     { path: routes.ForgotPasswordPage, component: ForgotPasswordPage },
-    // { path: routes.EditPlaylistSchedulePage, component: EditPlaylistSchedulePage, layout: DefaultLayout },
-    // { path: routes.FeedbackPage, component: FeedbackPage, layout: DefaultLayout },
 ];
 
 const protectedRoutes = [
@@ -66,6 +87,29 @@ const protectedRoutes = [
     { path: routes.EditCategoryPage, component: EditCategoryPage, layout: DefaultLayout },
     { path: routes.DownloadPage, component: DownloadPage, layout: DefaultLayout },
     { path: routes.FeedbackPage, component: FeedbackPage, layout: DefaultLayout },
+    { path: routes.EntrustmentContractDetail, component: EntrustmentContractDetailPage, layout: DefaultLayout },
+    { path: routes.AddEntrustmentContractPage, component: AddEtrustmentContractPage, layout: DefaultLayout },
+    { path: routes.UnitUsedManagementPage, component: UnitUsedManagementPage, layout: DefaultLayout },
+    { path: routes.UnitUsedManagementDetailPage, component: UnitUsedDetailPage, layout: DefaultLayout },
+    { path: routes.UserOfUnitUsedManagementDetailPage, component: UserOfUnitDetailPage, layout: DefaultLayout },
+    { path: routes.AddUserOfUnitUsedManagementPage, component: AddUserOfUnitPage, layout: DefaultLayout },
+    { path: routes.RevenueReportPage, component: RevenueReportPage, layout: DefaultLayout },
+    { path: routes.RevenueReportDetailPage, component: RevenueReportDetailPage, layout: DefaultLayout },
+    { path: routes.RevenueReportContractDetailPage, component: RevenueContractReportDetailPage, layout: DefaultLayout },
+    { path: routes.ForControlHistoryPage, component: ForControlHistoryPage, layout: DefaultLayout },
+    { path: routes.ForControlHistoryDetailPage, component: ForControlHistoryDetailPage, layout: DefaultLayout },
+    { path: routes.RevenueDistributionPage, component: RevenueDistributionPage, layout: DefaultLayout },
+    { path: routes.RevenueDistributionDetailPage, component: RevenueDistributionDetailPage, layout: DefaultLayout },
+    { path: routes.AuthorizedUserPage, component: UserAuthorizationPage, layout: DefaultLayout },
+    { path: routes.AuthorizedEditUserPage, component: EditUserPage, layout: DefaultLayout },
+    { path: routes.AuthorizedAddUserPage, component: AddUserPage, layout: DefaultLayout },
+    { path: routes.AuthorizedEditRolePage, component: AuthorizedEditRolePage, layout: DefaultLayout },
+    { path: routes.AuthorizedAddRolePage, component: AuthorizedAddRolePage, layout: DefaultLayout },
+    { path: routes.SupportUserManualPage, component: SupportUserManualPage, layout: DefaultLayout },
+    { path: routes.SettingForControlPage, component: ForControlCirclePage, layout: DefaultLayout },
+    { path: routes.EditWarningExpirePage, component: EditWarningExpirePage, layout: DefaultLayout },
+    { path: routes.ManagementContractTypePage, component: ManagementContractTypePage, layout: DefaultLayout },
+    { path: routes.EditContractTypePage, component: EditContractTypePage, layout: DefaultLayout },
 ];
 
 export { publicRoutes, protectedRoutes };

@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { getFeedbackList, sendFeedbackAPI } from "~/api/feedback";
-import { IFeedback } from "~/types/Feedback";
+import { IFeedback } from "~/types/FeedbackType";
 
 export const sendFeedback = createAsyncThunk(
   "feedback/sendFeedback",

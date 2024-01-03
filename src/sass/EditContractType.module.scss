@@ -1,0 +1,38 @@
+.type-contract__form {
+    margin-top: 24px;
+}
+
+.form__table {
+  width: 1143px;
+
+  & > tbody > tr {
+    & > td:nth-child(2) {
+      & input {
+        width: 216px;
+      }
+    }
+
+    & > td:nth-child(3) {
+      & input {
+        width: 70px;
+      }
+    }
+
+    & > td:nth-child(4) {
+      & input {
+        width: max-content;
+      }
+    }
+  }
+}
+
+.form__footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  position: fixed;
+  bottom: 5%;
+  left: 50%;
+  transform: translateX(-50%);
+}

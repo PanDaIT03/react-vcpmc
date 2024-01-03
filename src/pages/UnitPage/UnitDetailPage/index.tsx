@@ -3,25 +3,26 @@ import { useCallback, useContext, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router";
 
-import { EtmContractDetail } from "~/api/entrustmentContract";
 import { images } from "~/assets";
+import { ActionBar } from "~/components/ActionBar";
+import { ActionBarItem } from "~/components/ActionBar/ActionBarItem";
 import { Checkbox } from "~/components/Checkbox";
 import { CommonWrapper } from "~/components/CommonWrapper";
 import { Input } from "~/components/Input";
 import { Loading } from "~/components/Loading";
 import { PagingItemType } from "~/components/Paging";
 import { Table } from "~/components/Table";
+import { Toast } from "~/components/Toast";
 import { routes } from "~/config/routes";
-import { SidebarContext } from "~/context/Sidebar/SidebarContext.index";
+import { SidebarContext } from "~/context/Sidebar/SidebarContext";
 import { RootState, useAppDispatch } from "~/state";
 import { setStatus } from "~/state/reducer/entrustmentContract";
-import { deleteEmployees } from "~/state/thunk/entrustmentContractThunk";
+import { deleteEmployees } from "~/state/thunk/entrustmentContract";
 import { getUsers } from "~/state/thunk/user/user";
 import { User } from "~/types";
+import { EtmContractDetail } from "~/types/EntrustmentContractType";
 
 import style from '~/sass/UnitUsedDetail.module.scss';
-import { ActionBar } from "~/components/ActionBar";
-import { ActionBarItem } from "~/components/ActionBar/ActionBarItem";
 const cx = classNames.bind(style);
 
 function UnitUsedDetailPage() {
@@ -203,12 +204,10 @@ function UnitUsedDetailPage() {
                         onClick={() => navigate('')}
                     />
                 </ActionBar>
-                {/* <Toast
+                <Toast
                     message='Thêm người dùng thành công!'
                     visible={etmContract.status === 'add successfully'}
-                    onSuccess={handleSuccessToast}
-                    duration={800}
-                /> */}
+                />
                 <Loading loading={etmContract.loading} />
             </CommonWrapper>
         }</>

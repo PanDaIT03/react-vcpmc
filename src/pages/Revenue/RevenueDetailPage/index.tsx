@@ -15,8 +15,9 @@ import { CommonWrapper } from "~/components/CommonWrapper";
 import { Input } from "~/components/Input";
 import { Loading } from "~/components/Loading";
 import { formatMoney } from "~/constants";
-import { ContractDetail, IRecord, RecordDetail } from "~/types";
-import { RecordPlays } from "~/types/RecordPlay";
+import { ContractDetail, IRecord } from "~/types";
+import { RecordPlays } from "~/types/RecordPlayType";
+import { RecordDetail } from "~/types/AuthorizedPartnerType";
 
 import style from '~/sass/RevenueDetail.module.scss';
 const cx = classNames.bind(style);

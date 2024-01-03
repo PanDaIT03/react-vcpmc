@@ -21,10 +21,10 @@ export const checkLogin = async ({
   password,
 }: Pick<IUser, "userName" | "password">) => {
   const queryStmt = query(
-    collection(fireStoreDatabase, "users"),
-    where("userName", "==", `${userName}`),
-    where("password", "==", `${password}`)
-  ),
+      collection(fireStoreDatabase, "users"),
+      where("userName", "==", `${userName}`),
+      where("password", "==", `${password}`)
+    ),
     querySnapshot = await getDocs(queryStmt);
 
   if (querySnapshot.docs.map((doc) => doc.data()).length !== 0)
@@ -37,9 +37,9 @@ export const getUserByDocId = async (param: string) => {
 };
 
 export const getUserById = async (id: string, roleList?: Role[]) => {
-  let result = (await getDoc(doc(fireStoreDatabase, 'users', id))).data();
+  let result = (await getDoc(doc(fireStoreDatabase, "users", id))).data();
 
-  if (typeof roleList === 'undefined' || roleList.length < 0)
+  if (typeof roleList === "undefined" || roleList.length < 0)
     roleList = await getListRole();
 
   if (!result) return {} as User;
@@ -64,21 +64,24 @@ export const getUserById = async (id: string, roleList?: Role[]) => {
     taxCode: result.taxCode,
     userName: result.userName,
     docId: result.id,
-    role: roleList?.find(role => result && role.docId === result.rolesId) || { docId: '', name: '' },
+    role: roleList?.find((role) => result && role.docId === result.rolesId) || {
+      docId: "",
+      name: "",
+    },
     companyName: result.companyName,
     status: result.status,
-    expirationDate: result.expirationDate
-  }
-}
+    expirationDate: result.expirationDate,
+  };
+};
 
 export const getDocIdByField = async (
   field: string,
   param: number | string
 ) => {
   const queryStmt = query(
-    collection(fireStoreDatabase, "users"),
-    where(`${field}`, "==", typeof param === "string" ? `${param}` : param)
-  ),
+      collection(fireStoreDatabase, "users"),
+      where(`${field}`, "==", typeof param === "string" ? `${param}` : param)
+    ),
     querySnapshot = await getDocs(queryStmt);
 
   if (querySnapshot.docs.map((doc) => doc.data()).length !== 0)
@@ -138,16 +141,19 @@ export const getUser = async () => {
   return contracts;
 };
 
-export const saveUserAPI = async (user: Omit<IUser, 'role'>) => {
+export const saveUser = async (user: Omit<IUser, "role">) => {
   await setDoc(doc(fireStoreDatabase, `users`, `${user.docId}`), user);
-}
+};
 
 export const getUserList = async () => {
-  const resultSnapshot = getDocs(collection(fireStoreDatabase, 'users'));
+  const resultSnapshot = getDocs(collection(fireStoreDatabase, "users"));
   const roles = await getListRole();
 
-  return (await resultSnapshot).docs.map(doc => {
-    const role = roles.find(role => role.docId === doc.data().rolesId) || { docId: '', name: '' };
+  return (await resultSnapshot).docs.map((doc) => {
+    const role = roles.find((role) => role.docId === doc.data().rolesId) || {
+      docId: "",
+      name: "",
+    };
 
     return {
       avatar: doc.data().avatar,
@@ -172,16 +178,54 @@ export const getUserList = async () => {
       role: { docId: role.docId, name: role.name },
       companyName: doc.data().companyName,
       status: doc.data().status,
-      expirationDate: doc.data().expirationDate
-    }
+      expirationDate: doc.data().expirationDate,
+    };
   });
-}
+};
+
+export const getUserFeedbackList = async () => {
+  const resultSnapshot = await getDocs(collection(fireStoreDatabase, "users"));
+  const roles = await getListRole();
+
+  const userFeedback: User[] = resultSnapshot.docs.map((doc) => {
+    return {
+      docId: doc.id,
+      avatar: doc.data().avatar,
+      bank: doc.data().bank,
+      bankNumber: doc.data().bankNumber,
+      dateOfBirth: doc.data().dateOfBirth,
+      dateRange: doc.data().dateRange,
+      email: doc.data().email,
+      firstName: doc.data().firstName,
+      gender: doc.data().gender,
+      idNumber: doc.data().idNumber,
+      issuedBy: doc.data().issuedBy,
+      lastName: doc.data().lastName,
+      nationality: doc.data().nationality,
+      password: doc.data().password,
+      phoneNumber: doc.data().phoneNumber,
+      residence: doc.data().residence,
+      rolesId: doc.data().rolesId,
+      taxCode: doc.data().taxCode,
+      userName: doc.data().userName,
+      role: roles.find((role) => role.docId === doc.data().rolesId) || {
+        docId: "",
+        name: "",
+      },
+      companyName: doc.data().companyName,
+      status: doc.data().status,
+      expirationDate: doc.data().expirationDate,
+    };
+  });
+
+  return userFeedback;
+};
 
 export const checkUserIsExisted = async (email: string) => {
   const queryStmt = query(
-    collection(fireStoreDatabase, "users"),
-    where("email", "==", `${email}`)
-  ),
+      collection(fireStoreDatabase, "users"),
+      where("email", "==", `${email}`)
+    ),
     querySnapshot = await getDocs(queryStmt);
 
   if (querySnapshot.docs.map((doc) => doc.data()).length !== 0)
@@ -197,5 +241,20 @@ export const addUser = async (user: any) => {
 };
 
 export const deleteUserById = async (id: string) => {
-  await deleteDoc(doc(fireStoreDatabase, 'users', `${id}`));
-}
+  await deleteDoc(doc(fireStoreDatabase, "users", `${id}`));
+};
+
+export const saveUserAPI = async (user: Omit<IUser, 'role'>) => {
+  await setDoc(doc(fireStoreDatabase, `users`, `${user.docId}`), user);
+};
+
+export const changePasswordStatusUserById = async ({
+  docId,
+  password,
+  status,
+}: Pick<IUser, "password" | "docId"> & { status: string }) => {
+  await updateDoc(doc(fireStoreDatabase, "users", `${docId}`), {
+    password: password,
+    status: status,
+  });
+};

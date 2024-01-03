@@ -5,25 +5,25 @@ import { useCallback, useContext, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 
+import { images } from "~/assets";
+import { ActionBar } from "~/components/ActionBar";
+import { ActionBarItem } from "~/components/ActionBar/ActionBarItem";
+import { CommonWrapper } from "~/components/CommonWrapper";
+import { Input } from "~/components/Input";
+import { Loading } from "~/components/Loading";
 import { PagingItemType } from "~/components/Paging";
 import { Table } from "~/components/Table";
-
-import { CommonWrapper } from "~/components/CommonWrapper";
-import { Loading } from "~/components/Loading";
 import { formatDateDMYHPTS, formatDateYMD, formatMoney } from "~/constants";
-import { SidebarContext } from "~/context/Sidebar/SidebarContext.index";
+import { SidebarContext } from "~/context/Sidebar/SidebarContext";
 import { RootState, useAppDispatch } from "~/state";
 import { setContractsDetail } from "~/state/reducer/contract";
 import { getContractsAction } from "~/state/thunk/contract";
 import { getRecordsAction } from "~/state/thunk/record";
 import { getRecordPlays } from "~/state/thunk/recordPlay";
-import { ContractDetail, RecordDetail, User } from "~/types";
+import { ContractDetail, RecordDetail } from "~/types/AuthorizedPartnerType";
+import { User } from "~/types/UserType";
 
 import style from '~/sass/RevenueDistribution.module.scss';
-import { ActionBar } from "~/components/ActionBar";
-import { ActionBarItem } from "~/components/ActionBar/ActionBarItem";
-import { images } from "~/assets";
-import { Input } from "~/components/Input";
 const cx = classNames.bind(style);
 
 function RevenueDistributionPage() {

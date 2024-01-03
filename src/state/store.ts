@@ -12,6 +12,9 @@ import { authorizedContractReducer } from "./reducer/authorizedPartner";
 import { deviceReducer } from "./reducer/device";
 import { categoryReducer } from "./reducer/category";
 import { feedBackReducer } from "./reducer/feedback";
+import { etmContractReducer } from "./reducer/entrustmentContract";
+import { recordPlayReducer } from "./reducer/recordPlay";
+import { functionalReducer } from "./reducer/functional";
 
 export const store = configureStore({
   reducer: {
@@ -26,6 +29,9 @@ export const store = configureStore({
     device: deviceReducer,
     category: categoryReducer,
     feedback: feedBackReducer,
+    etmContract: etmContractReducer,
+    recordPlay: recordPlayReducer,
+    functional: functionalReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

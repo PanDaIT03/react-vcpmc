@@ -1,7 +1,7 @@
 import { addDoc, collection, getDocs } from "firebase/firestore";
 import { fireStoreDatabase } from "~/config/firebase";
-import { IFeedback } from "~/types/Feedback";
-import { getUserList } from "../user";
+import { IFeedback } from "~/types/FeedbackType";
+import { getUserFeedbackList } from "../user";
 
 export const sendFeedbackAPI = async (
   feedback: Omit<IFeedback, "docId" | "user"> & { usersId: string }
@@ -10,12 +10,12 @@ export const sendFeedbackAPI = async (
 };
 
 export const getFeedbackList = async () => {
-  const resultSnapshot = getDocs(collection(fireStoreDatabase, "feedbacks"));
-  const userList = await getUserList();
+  const resultSnapshot = await getDocs(collection(fireStoreDatabase, "feedbacks"));
+  const userList = await getUserFeedbackList();
 
-  return (await resultSnapshot).docs.map((doc) => {
+  return resultSnapshot.docs.map((doc) => {
     const user =
-      userList.find((user) => user.user.docId === doc.data().usersId) ||
+      userList.find((user) => user.docId === doc.data().usersId) ||
       ({} as Pick<IFeedback, "user">);
 
     return {
@@ -24,7 +24,7 @@ export const getFeedbackList = async () => {
       content: doc.data().content,
       problem: doc.data().problem,
       dateTime: doc.data().dateTime,
-      user: user.user,
+      user: user,
     };
   });
 };

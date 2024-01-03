@@ -1,0 +1,89 @@
+.content-container {
+  & > .content-edit > button {
+    margin: 76px 0;
+
+    & + button {
+      margin-left: 40px !important;
+    }
+  }
+
+  & > div > div > div:last-child {
+    & > p {
+      opacity: 0.7;
+    }
+  }
+}
+
+.gender-group {
+  height: 48px;
+  display: flex;
+}
+
+// block input
+
+.content-edit__box {
+  max-width: 1691px;
+  display: flex;
+  flex-wrap: wrap;
+  row-gap: 99px;
+}
+
+.content__type {
+  display: flex;
+  flex-direction: column;
+
+  & > p {
+    text-align: start;
+    padding-bottom: 18px;
+  }
+
+  & > .content__type__all {
+    display: inline-flex;
+    justify-content: space-between;
+    gap: 42px;
+
+    & input[type="text"] {
+      width: 169px !important;
+    }
+
+    & > div + div {
+      width: 1px;
+      height: auto;
+      padding-left: 13px;
+      border-left: 1px solid #727288;
+    }
+  }
+
+  & > div + div {
+    margin-top: 17px;
+  }
+}
+
+.all__value-input {
+  & > div {
+    gap: 12px;
+  }
+}
+
+.nationality-combo-box {
+  & > li {
+    padding-top: 0 !important;
+
+    & > div {
+      height: 48px;
+      width: 311px;
+      z-index: 2 !important;
+      border-color: #727288;
+      background-color: rgb(43 43 63);
+
+      & > div > input {
+        width: 267px !important;
+      }
+    }
+
+    & > ul {
+      width: 311px !important;
+      z-index: 1 !important;
+    }
+  }
+}

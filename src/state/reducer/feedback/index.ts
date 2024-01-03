@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { getFeedbacks, sendFeedback } from "~/state/thunk/feedback";
-import { IFeedback } from "~/types/Feedback";
+import { IFeedback } from "~/types/FeedbackType";
 
 interface InitialState {
   feedbacks: IFeedback[];

@@ -3,26 +3,24 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router";
 
+import { useFormik } from "formik";
 import { images } from "~/assets";
 import { ActionBar } from "~/components/ActionBar";
 import { ActionBarItem } from "~/components/ActionBar/ActionBarItem";
 import { BlockDetail } from "~/components/BlockDetail";
+import Button from "~/components/Button";
 import { CommonWrapper } from "~/components/CommonWrapper";
+import { Input } from "~/components/Input";
+import { Loading } from "~/components/Loading";
+import { OptionMenu } from "~/components/OptionMenu";
 import { PagingItemType } from "~/components/Paging";
 import { routes } from "~/config/routes";
-import { RootState, useAppDispatch } from "~/state";
-import { getUsers } from "~/state/thunk/user/user";
-import { IGlobalConstantsType, IRole, User, UserInfo } from "~/types";
-
-import { useFormik } from "formik";
-import { Input } from "~/components/Input";
-import { OptionMenu } from "~/components/OptionMenu";
-import { RadioButton } from "~/components/RadioButton";
 import { Yup } from "~/constants";
-import { updateEmployee } from "~/state/thunk/entrustmentContractThunk";
+import { RootState, useAppDispatch } from "~/state";
+import { updateEmployee } from "~/state/thunk/entrustmentContract";
+import { getUsers } from "~/state/thunk/user/user";
+import { IGlobalConstantsType, IRole, UserInfo } from "~/types";
 
-import Button from "~/components/Button";
-import { Loading } from "~/components/Loading";
 import style from '~/sass/UserOfUnitDetail.module.scss';
 const cx = classNames.bind(style);
 
@@ -38,7 +36,7 @@ function UserOfUnitDetailPage() {
 
     const [paging, setPaging] = useState<Array<PagingItemType>>([] as Array<PagingItemType>);
     const [editable, setEditable] = useState<boolean>(false);
-    const [userRole, setUserRole] = useState<IGlobalConstantsType>({ id: '', title: '' });
+    const [userRole, setUserRole] = useState<IGlobalConstantsType>({ id: 0, title: '' });
     const [passwordType, setPasswordType] = useState<{ password: boolean; confirmPassword: boolean }>({ password: true, confirmPassword: true, });
 
     const userFormik = useFormik({
@@ -138,7 +136,7 @@ function UserOfUnitDetailPage() {
 
         const currentRole: IRole = role.roles.find(role => role.docId === currentUser.rolesId) || { docId: '', role: '' };
         setUserRole({
-            id: currentRole.docId,
+            id: parseInt(currentRole.docId),
             title: currentRole.role
         });
     }, [user.users]);
@@ -222,7 +220,7 @@ function UserOfUnitDetailPage() {
                     title: 'Vai trò:',
                     tag: <OptionMenu
                         data={role.roles.map(role => ({
-                            id: role.docId,
+                            id: parseInt(role.docId),
                             title: role.role
                         }))}
                         state={userRole}

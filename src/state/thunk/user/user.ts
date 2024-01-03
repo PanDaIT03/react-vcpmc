@@ -1,12 +1,16 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
-import { IUser, IRole } from "~/types";
+import { IUser, IRole, User } from "~/types";
 import {
+  addUser,
   changePasswordStatusUserById,
   checkLogin,
+  deleteUserById,
   getDocIdByField,
   getUserByDocId,
+  getUserList,
   resetPassword,
+  saveUserAPI,
   updateUser,
 } from "~/api/user";
 
@@ -70,18 +74,42 @@ export const updateUserAction = createAsyncThunk(
 );
 
 export const changePasswordStatusUser = createAsyncThunk(
-  "user/changePasswordStatusUserById",
-  async ({
-    docId,
-    password,
-    status,
-    navigate,
-  }: Pick<IUser, "password" | "docId"> & {
-    status: string;
-    navigate: () => void;
-  }) => {
-    await changePasswordStatusUserById({ docId, password, status });
+  'user/changePasswordStatusUserById',
+  async ({ docId, password, status, navigate }: Pick<User, 'password' | 'docId'> & { status: string, navigate: () => void }) => {
+      await changePasswordStatusUserById({ docId, password, status });
 
-    navigate();
+      navigate();
   }
+);
+
+export const saveUser = createAsyncThunk(
+  'user/saveUser',
+  async ({ user, navigate }: { user: Omit<IUser, 'role'>; navigate?: () => void; }) => {
+    await saveUserAPI(user);
+
+    navigate && navigate();
+  }
+);
+
+export const getUsers = createAsyncThunk(
+  'user/getUsers', async () => {
+    return await getUserList();
+  }
+);
+
+export const addUserThunk = createAsyncThunk(
+    'user/addUser',
+    async ({ user, navigate }: { user: Omit<User, 'role' | 'docId'>; navigate?: () => void; }
+    ) => {
+        await addUser(user);
+        navigate && navigate();
+    }
+);
+
+export const deleteUser = createAsyncThunk(
+    'user/deleteUser',
+    async ({ id, navigate }: { id: string, navigate: () => void }) => {
+        await deleteUserById(id);
+        navigate();
+    }
 );

@@ -1,3 +1,6 @@
+import { RecordDetail } from "../AuthorizedPartnerType";
+import { User } from "../UserType";
+
 export interface IOwnerShip {
   name: string;
   value: number;
@@ -20,4 +23,26 @@ export interface IContract {
   ownerShips: Array<IOwnerShip>;
   reason: string;
   status: string;
+  royalties: string;
+  CPM: string;
+  administrativeFee: string;
+  forControlDate: string;
+}
+
+export type AuthorizedContractDetail = Omit<
+  IContract,
+  "authorizedPerson" | "createdBy"
+> & {
+  authorizedPerson: User;
+  createdBy: User;
+};
+
+export interface ContractDetail {
+  contract: AuthorizedContractDetail;
+  records: RecordDetail[];
+  totalPlay: number;
+  revenue: number;
+  royalties: number;
+  date: string;
+  administrativeFee: number;
 }

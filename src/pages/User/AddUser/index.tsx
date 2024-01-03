@@ -10,7 +10,6 @@ import { PagingItemType } from "~/components/Paging";
 import { routes } from "~/config/routes";
 import { Yup, formatDateDMYHPTS } from "~/constants";
 import { RootState, useAppDispatch } from "~/state";
-
 import { images } from "~/assets";
 import { CommonWrapper } from "~/components/CommonWrapper";
 import { Loading } from "~/components/Loading";
@@ -30,7 +29,7 @@ function AddUserPage() {
     const role = useSelector((state: RootState) => state.role);
 
     const [paging, setPaging] = useState<Array<PagingItemType>>([] as Array<PagingItemType>);
-    const [roleActive, setRoleActive] = useState<IGlobalConstantsType>({ id: '', title: '' });
+    const [roleActive, setRoleActive] = useState<IGlobalConstantsType>({ id: 0, title: '' });
     const [isPassword, setIsPassword] = useState<boolean>(true);
 
     const userFormik = useFormik({
@@ -85,7 +84,7 @@ function AddUserPage() {
                 expirationDate: formatDateDMYHPTS(values.expirationDate || 'yyyy/MM/dd'),
             };
 
-            dispatch(addUserThunk({ user: user, navigate: () => navigate(routes.AuthorizedUser) }));
+            dispatch(addUserThunk({ user: user, navigate: () => navigate(routes.AuthorizedUserPage) }));
         }
     });
 
@@ -93,11 +92,11 @@ function AddUserPage() {
         setPaging([
             {
                 title: 'Cài đặt',
-                to: routes.AuthorizedUser,
+                to: routes.AuthorizedUserPage,
                 active: true
             }, {
                 title: 'Phân quyền người dùng',
-                to: routes.AuthorizedUser,
+                to: routes.AuthorizedUserPage,
                 active: true
             }, {
                 title: 'Phân quyền người dùng',
@@ -125,7 +124,7 @@ function AddUserPage() {
         onBlur: () => void;
     }[] = [
             {
-                title: 'Tên người dùng:',
+                title: 'Tên người dùng',
                 type: 'text',
                 name: 'fullName',
                 errorMessage: userFormik.errors.fullName,
@@ -135,7 +134,7 @@ function AddUserPage() {
                 onFocus: () => userFormik.setFieldTouched('fullName', true),
                 onBlur: () => userFormik.setFieldTouched('fullName', false)
             }, {
-                title: 'Số điện thoại:',
+                title: 'Số điện thoại',
                 type: 'text',
                 name: 'phoneNumber',
                 errorMessage: userFormik.errors.phoneNumber,
@@ -145,7 +144,7 @@ function AddUserPage() {
                 onFocus: () => userFormik.setFieldTouched('phoneNumber', true),
                 onBlur: () => userFormik.setFieldTouched('phoneNumber', false)
             }, {
-                title: 'Ngày hết hạn:',
+                title: 'Ngày hết hạn',
                 type: 'date',
                 name: 'expirationDate',
                 errorMessage: userFormik.errors.expirationDate,
@@ -155,7 +154,7 @@ function AddUserPage() {
                 onFocus: () => userFormik.setFieldTouched('expirationDate', true),
                 onBlur: () => userFormik.setFieldTouched('expirationDate', false)
             }, {
-                title: 'Email:',
+                title: 'Email',
                 type: 'text',
                 name: 'email',
                 errorMessage: userFormik.errors.email,
@@ -165,7 +164,7 @@ function AddUserPage() {
                 onFocus: () => userFormik.setFieldTouched('email', true),
                 onBlur: () => userFormik.setFieldTouched('email', false)
             }, {
-                title: 'Tên đăng nhập:',
+                title: 'Tên đăng nhập',
                 type: 'text',
                 name: 'userName',
                 errorMessage: userFormik.errors.userName,
@@ -175,7 +174,7 @@ function AddUserPage() {
                 onFocus: () => userFormik.setFieldTouched('userName', true),
                 onBlur: () => userFormik.setFieldTouched('userName', false)
             }, {
-                title: 'Mật khẩu:',
+                title: 'Mật khẩu',
                 type: isPassword ? 'password' : 'text',
                 name: 'password',
                 errorMessage: userFormik.errors.password,
@@ -194,13 +193,13 @@ function AddUserPage() {
 
         if (typeof currentRole !== 'undefined')
             setRoleActive({
-                id: currentRole.docId,
+                id: parseInt(currentRole.docId),
                 title: currentRole.name
             });
     }, []);
 
     useEffect(() => {
-        let currentRole = role.roleDetails.find(role => role.docId === roleActive.id);
+        let currentRole = role.roleDetails.find(role => role.docId === roleActive.id.toString());
 
         if (typeof currentRole !== 'undefined')
             userFormik.setValues({
@@ -224,7 +223,7 @@ function AddUserPage() {
                             <p>Vai trò: <span>*</span></p>
                             <OptionMenu
                                 data={role.roleDetails.map(role => ({
-                                    id: role.docId,
+                                    id: parseInt(role.docId),
                                     title: role.name
                                 }))}
                                 state={roleActive}
@@ -243,7 +242,7 @@ function AddUserPage() {
                         primary
                         size="large"
                         value="Huỷ"
-                        onClick={() => navigate(routes.AuthorizedUser)}
+                        onClick={() => navigate(routes.AuthorizedUserPage)}
                     />
                     <Button
                         primary

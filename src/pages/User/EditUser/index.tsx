@@ -3,12 +3,8 @@ import { useFormik } from "formik";
 import { ChangeEvent, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router";
-import { faEye } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { images } from "~/assets";
-import { ActionBar } from "~/components/ActionBar";
-import { ActionBarItem } from "~/components/ActionBar/ActionBarItem";
 import Button from "~/components/Button";
 import { CommonWrapper } from "~/components/CommonWrapper";
 import { Input } from "~/components/Input";
@@ -35,7 +31,7 @@ function EditUserPage() {
     const role = useSelector((state: RootState) => state.role);
 
     const [paging, setPaging] = useState<Array<PagingItemType>>([] as Array<PagingItemType>);
-    const [roleActive, setRoleActive] = useState<IGlobalConstantsType>({ id: '', title: '' });
+    const [roleActive, setRoleActive] = useState<IGlobalConstantsType>({ id: 0, title: '' });
     const [isPassword, setIsPassword] = useState<boolean>(true);
 
     const userFormik = useFormik({
@@ -89,7 +85,7 @@ function EditUserPage() {
                 expirationDate: formatDateDMYHPTS(values.expirationDate || 'yyyy/MM/dd'),
             };
 
-            dispatch(saveUser({ user: user, navigate: () => navigate(routes.AuthorizedUser) }));
+            dispatch(saveUser({ user: user, navigate: () => navigate(routes.AuthorizedUserPage) }));
         }
     });
 
@@ -99,11 +95,11 @@ function EditUserPage() {
         setPaging([
             {
                 title: 'Cài đặt',
-                to: routes.AuthorizedUser,
+                to: routes.AuthorizedUserPage,
                 active: true
             }, {
                 title: 'Phân quyền người dùng',
-                to: routes.AuthorizedUser,
+                to: routes.AuthorizedUserPage,
                 active: true
             }, {
                 title: 'Phân quyền người dùng',
@@ -131,7 +127,7 @@ function EditUserPage() {
 
         if (typeof currentRole !== 'undefined')
             setRoleActive({
-                id: currentRole.docId,
+                id: parseInt(currentRole.docId),
                 title: currentRole.name
             });
     }, [user.users]);
@@ -224,7 +220,7 @@ function EditUserPage() {
         ];
 
     useEffect(() => {
-        let currentRole = role.roleDetails.find(role => role.docId === roleActive.id);
+        let currentRole = role.roleDetails.find(role => role.docId === roleActive.id.toString());
 
         if (typeof currentRole !== 'undefined')
             userFormik.setValues({
@@ -248,7 +244,7 @@ function EditUserPage() {
                             <p>Vai trò: <span>*</span></p>
                             <OptionMenu
                                 data={role.roleDetails.map(role => ({
-                                    id: role.docId,
+                                    id: parseInt(role.docId),
                                     title: role.name
                                 }))}
                                 state={roleActive}
@@ -274,7 +270,7 @@ function EditUserPage() {
                         primary
                         size="large"
                         value="Huỷ"
-                        onClick={() => navigate(routes.AuthorizedUser)}
+                        onClick={() => navigate(routes.AuthorizedUserPage)}
                     />
                     <Button
                         primary

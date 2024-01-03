@@ -2,33 +2,33 @@ import classNames from "classnames/bind";
 import { useCallback, useContext, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router";
+
 import { images } from "~/assets";
 import { ActionBar } from "~/components/ActionBar";
 import { ActionBarItem } from "~/components/ActionBar/ActionBarItem";
 import { CommonWrapper } from "~/components/CommonWrapper";
 import { Input } from "~/components/Input";
 import { Loading } from "~/components/Loading";
-
 import { PagingItemType } from "~/components/Paging";
 import { Switch } from "~/components/Switch";
 import { Table } from "~/components/Table";
 import { Tab, Tabs } from "~/components/Tabs";
-import { SidebarContext } from "~/context/Sidebar/SidebarContext.index";
+import { routes } from "~/config/routes";
+import { SidebarContext } from "~/context/Sidebar/SidebarContext";
 import { RootState, useAppDispatch } from "~/state";
+import { getFunctionalTypes, getFunctionals } from "~/state/thunk/functional";
 import { deleteRole, getRoleList } from "~/state/thunk/role/role";
 import { getUsers } from "~/state/thunk/user/user";
 import { Role, User } from "~/types";
-import { routes } from "~/config/routes";
 
 import style from '~/sass/AuthorizationUser.module.scss';
-import { getFunctionalTypes, getFunctionals } from "~/state/thunk/functional";
 const cx = classNames.bind(style);
 
 function UserAuthorizationPage() {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
-    const { setActive } = useContext(SidebarContext);
+    const { setActive, setCurrentPage } = useContext(SidebarContext);
 
     const user = useSelector((state: RootState) => state.user);
     const role = useSelector((state: RootState) => state.role);
@@ -62,6 +62,7 @@ function UserAuthorizationPage() {
         dispatch(getFunctionals());
 
         setActive(true);
+        setCurrentPage(6)
     }, []);
 
     useEffect(() => {
@@ -207,12 +208,12 @@ function UserAuthorizationPage() {
                     ? <ActionBarItem
                         title="Thêm người dùng"
                         icon={images.userPlus}
-                        onClick={() => navigate(routes.AuthorizedAddUser)}
+                        onClick={() => navigate(routes.AuthorizedAddUserPage)}
                     />
                     : <ActionBarItem
                         title="Thêm vai trò"
                         icon={images.users}
-                        onClick={() => navigate(routes.AuthorizedAddRole)}
+                        onClick={() => navigate(routes.AuthorizedAddRolePage)}
                     />}
             </ActionBar>
             <Loading loading={loading} />

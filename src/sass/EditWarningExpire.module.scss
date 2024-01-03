@@ -1,0 +1,50 @@
+.config-edit-contract__form {
+  color: var(--white);
+  margin-top: 24px;
+
+  & input {
+    width: 117px;
+  }
+}
+
+.form__body {
+  width: 649px;
+  height: 444px;
+  border-radius: 16px;
+  background: var(--middle-bg);
+  padding: 24px;
+
+  & > .form__body__title {
+    color: #e5e5e5;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 24px;
+    letter-spacing: -0.048px;
+    text-align: start;
+  }
+
+  & > .form__body__input {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 24px;
+
+    & > p:first-child {
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 24px;
+      letter-spacing: -0.032px;
+    }
+  }
+}
+
+.form__footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  position: fixed;
+  bottom: 5%;
+  left: 50%;
+  transform: translateX(-50%);
+}

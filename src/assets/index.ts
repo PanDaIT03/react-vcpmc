@@ -69,5 +69,9 @@ export const images = {
   upload: require("./images/upload.png"),
   windows_10: require("./images/windows_10.png"),
   android: require("./images/android.png"),
+  refresh: require('./images/fi_refresh-cw.png'),
+  power: require('./images/fi_power.png'),
+  editAlt: require('./images/u_file-edit-alt.png'),
+  editCalendar: require('./images/edit_calendar.png'),
   // aaaa: require('./images/aaaa.png'),
 };

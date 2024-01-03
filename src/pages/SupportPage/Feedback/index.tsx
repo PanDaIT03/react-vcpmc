@@ -16,7 +16,7 @@ import { Toast } from "~/components/Toast";
 import { SidebarContext } from "~/context/Sidebar/SidebarContext";
 import { RootState, useAppDispatch } from "~/state";
 import { getFeedbacks, sendFeedback } from "~/state/thunk/feedback";
-import { IFeedback } from "~/types/Feedback";
+import { IFeedback } from "~/types/FeedbackType";
 
 import style from '~/sass/Feedback.module.scss';
 const cx = classNames.bind(style);
