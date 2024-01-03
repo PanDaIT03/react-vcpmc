@@ -32,6 +32,10 @@ export const DefaultLayout = ({ children }: DefaultLayoutProps) => {
     const { name, role } = account;
 
     useEffect(() => {
+        document.title = 'VCPMC - Trang quản trị';
+    }, []);
+
+    useEffect(() => {
         if (!currentUser)
             return;
 

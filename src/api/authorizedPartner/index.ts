@@ -72,7 +72,7 @@ export const getAuthorizedContract = async () => {
         rolesId: createdBy?.data().rolesId || "",
         taxCode: createdBy?.data().taxCode || "",
         userName: createdBy?.data().userName || "",
-        roleDetails: roleCreatedBy
+        role: roleCreatedBy
           ? { docId: roleCreatedBy.id, name: roleCreatedBy.data().name }
           : { docId: "", name: "" },
         docId: createdBy?.id || "",

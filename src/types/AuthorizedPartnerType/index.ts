@@ -41,7 +41,7 @@ export interface RecordDetail {
 //   createdBy: IUser;
 // };
 
-export type AuthorizedContractDetail = Omit<IContract, 'authorizedPerson' | 'createdBy'> & {
+export type AuthorizedContractDetail = Omit<IContract, 'authorizedPerson' | 'createdBy' | 'approvalDate'> & {
   authorizedPerson: User;
   createdBy: User;
 }

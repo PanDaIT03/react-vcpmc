@@ -92,6 +92,8 @@ function ResetPasswordPage() {
     };
 
     useEffect(() => {
+        document.title = 'Khôi phục mật khẩu';
+
         if (!emailAddress)
             navigate("/error");
     }, []);

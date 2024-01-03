@@ -8,7 +8,7 @@ import PropagateLoader from "react-spinners/PropagateLoader";
 import Button from "~/components/Button";
 import { Form } from "~/components/Form";
 import { forgotPassword } from "~/api/user";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Input } from "~/components/Input";
 import { RootState } from "~/state";
 import { images } from "~/assets";
@@ -56,6 +56,10 @@ function ForgotPasswordPage() {
     const handleClickAction = () => {
         navigate("/login");
     };
+
+    useEffect(() => {
+        document.title = 'Quên mật khẩu';
+    }, []);
 
     return (
         <div className={cx("container")}>

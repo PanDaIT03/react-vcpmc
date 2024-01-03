@@ -2,6 +2,7 @@ import { addDoc, collection, getDocs } from "firebase/firestore";
 import { fireStoreDatabase } from "~/config/firebase";
 import { IFeedback } from "~/types/FeedbackType";
 import { getUserFeedbackList } from "../user";
+import { User } from "~/types";
 
 export const sendFeedbackAPI = async (
   feedback: Omit<IFeedback, "docId" | "user"> & { usersId: string }
@@ -16,7 +17,7 @@ export const getFeedbackList = async () => {
   return resultSnapshot.docs.map((doc) => {
     const user =
       userList.find((user) => user.docId === doc.data().usersId) ||
-      ({} as Pick<IFeedback, "user">);
+      ({} as User);
 
     return {
       docId: doc.id,

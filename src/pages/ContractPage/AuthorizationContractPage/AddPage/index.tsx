@@ -163,7 +163,11 @@ function AddPage() {
                 // ownerShips: "Người biểu diễn",
                 ownerShips: [],
                 reason: "",
-                status: "Mới"
+                status: "Mới",
+                royalties: '',
+                CPM: '',
+                administrativeFee: '',
+                forControlDate: '',
             };
 
             const user: Omit<IUserDetail, "docId"> = {

@@ -73,7 +73,7 @@ function EditAuthorizedPartnerPage() {
             fullName: '',
             confirmPassword: '',
             status: ''
-        } as UserInfo & { status: string },
+        } as UserInfo,
         validationSchema: Yup.object({
             userName: Yup.string().required(),
             email: Yup.string().required(),
@@ -105,6 +105,7 @@ function EditAuthorizedPartnerPage() {
 
         userFormik.setValues({
             ...userInfo,
+            status: userInfo.status || '',
             fullName: `${userInfo.firstName} ${userInfo.lastName}`,
             confirmPassword: ''
         });

@@ -77,6 +77,7 @@ function LoginPage() {
     }, [status]);
 
     useEffect(() => {
+        document.title = 'Trang đăng nhập';
         dispatch(getRoleAction());
     }, []);
 
