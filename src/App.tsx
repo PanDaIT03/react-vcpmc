@@ -62,7 +62,7 @@ function ProtectedRoute({ path, children }: ProtectedRouteProps) {
   const { currentUser } = userState;
   const isExisted = Object.keys(currentUser).length > 0;
 
-  return isExisted ? children : <Navigate to="/login" state={{ from: path }} />;
+  return isExisted ? children : <Navigate to="/" state={{ from: path }} />;
 };
 
 export default App;

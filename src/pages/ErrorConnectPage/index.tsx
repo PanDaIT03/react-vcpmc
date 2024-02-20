@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import Button from "~/components/Button";
 import { images } from "~/assets";
 import { Form } from "~/components/Form";
+import { routes } from "~/config/routes";
 
 import styles from "~/sass/Login.module.scss";
 const cx = classNames.bind(styles);
@@ -38,7 +39,7 @@ function ErrorConnectPage() {
                         buttonType="submit"
                     />
                 </Form>
-                <div className={cx("action")} onClick={() => navigate("/login")}>Quay lại đăng nhập</div>
+                <div className={cx("action")} onClick={() => navigate(routes.LoginPage)}>Quay lại đăng nhập</div>
             </div>
         </div>
     );

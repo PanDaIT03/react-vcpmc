@@ -13,6 +13,7 @@ import { Input } from "~/components/Input";
 import { resetPasswordAction } from "~/state/thunk/user/user";
 import { RootState, useAppDispatch } from "~/state";
 import { images } from "~/assets";
+import { routes } from "~/config/routes";
 
 import styles from "~/sass/Login.module.scss";
 const cx = classNames.bind(styles);
@@ -83,7 +84,7 @@ function ResetPasswordPage() {
                 width: 400
             }).then((result) => {
                 if (result.isConfirmed)
-                    navigate("/login");
+                    navigate(routes.LoginPage);
             });
     }, [userState]);
 
@@ -95,7 +96,7 @@ function ResetPasswordPage() {
         document.title = 'Khôi phục mật khẩu';
 
         if (!emailAddress)
-            navigate("/error");
+            navigate(routes.ErrorConnectPage);
     }, []);
 
     return (

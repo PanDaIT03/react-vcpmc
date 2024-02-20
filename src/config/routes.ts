@@ -1,5 +1,5 @@
 export const routes = {
-  LoginPage: "/login",
+  LoginPage: "/",
   ErrorConnectPage: "/error",
   ResetPasswordPage: "/reset-password",
   ForgotPasswordPage: "/forgot-password",

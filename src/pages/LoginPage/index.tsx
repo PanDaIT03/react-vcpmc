@@ -31,8 +31,8 @@ function LoginPage() {
     const { loading: roleLoading, roles } = roleState;
 
     const initialValuesLogin = {
-        name: currentUser.userName || 'daiphucduongvinh203@gmail.com',
-        password: currentUser.password || 'dai05102003'
+        name: currentUser.userName || 'daiphuc2003',
+        password: currentUser.password || 'daiduong2003'
     };
 
     const formikLogin = useFormik({

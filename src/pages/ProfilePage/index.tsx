@@ -14,9 +14,9 @@ import { RootState, useAppDispatch } from "~/state";
 import { ActionBarItem } from "~/components/ActionBar/ActionBarItem";
 import { resetPasswordAction, updateUserAction } from "~/state/thunk/user/user";
 import { SidebarContext } from "~/context/Sidebar/SidebarContext";
+import { Toast } from "~/components/Toast";
 
 import styles from "~/sass/BasicInfomation.module.scss";
-import { Toast } from "~/components/Toast";
 const cx = classNames.bind(styles);
 
 const initialPasswordValue = {

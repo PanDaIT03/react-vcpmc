@@ -15,6 +15,7 @@ import { images } from "~/assets";
 import { Loading } from "~/components/Loading";
 
 import styles from "~/sass/Login.module.scss";
+import { routes } from "~/config/routes";
 const cx = classNames.bind(styles);
 
 const initialValues = {
@@ -54,7 +55,7 @@ function ForgotPasswordPage() {
     };
 
     const handleClickAction = () => {
-        navigate("/login");
+        navigate(routes.LoginPage);
     };
 
     useEffect(() => {
