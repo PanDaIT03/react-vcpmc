@@ -106,3 +106,10 @@ a {
 .--capitalize input {
   text-transform: capitalize;
 }
+
+// Mobile
+@media only screen and (max-width: 1024px) {
+  body {
+    height: 100vh;
+  }
+}

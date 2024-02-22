@@ -2,19 +2,19 @@ import classNames from "classnames/bind";
 import { Dispatch, SetStateAction, memo, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
+import { images } from "~/assets";
+import { AudioDialog } from "~/components/AudioDialog";
 import Button from "~/components/Button";
+import { Checkbox } from "~/components/Checkbox";
+import { Dialog } from "~/components/Dialog";
 import { Input } from "~/components/Input";
+import { Loading } from "~/components/Loading";
 import { OptionMenu } from "~/components/OptionMenu";
-import { CB_APPROVE_ITEMS } from "~/constants";
-import { IContract, IGlobalConstantsType, IRecord, IUserDetail } from "~/types";
 import { Table } from "~/components/Table";
+import { CB_APPROVE_ITEMS } from "~/constants";
 import { RootState, useAppDispatch } from "~/state";
 import { getRecordsAction } from "~/state/thunk/record";
-import { AudioDialog } from "~/components/AudioDialog";
-import { Dialog } from "~/components/Dialog";
-import { Checkbox } from "~/components/Checkbox";
-import { images } from "~/assets";
-import { Loading } from "~/components/Loading";
+import { IContract, IGlobalConstantsType, IRecord, IUserDetail } from "~/types";
 
 import styles from "~/sass/Product.module.scss";
 const cx = classNames.bind(styles);
@@ -57,7 +57,7 @@ const ProductItem = memo(({
             </td>}
           <td>{index + 1}</td>
           <td>
-            <div>{record.title}</div>
+            <div>{record.nameRecord}</div>
             <div className={cx("subtitle")}>
               <div>{record.category}</div>
               <img src={images.ellipseEffect} alt="icon" />
@@ -180,7 +180,7 @@ export const Product = ({
       });
 
       setSearchResult(result.filter(item =>
-        item.title.toLowerCase().includes(search) ||
+        item.nameRecord.toLowerCase().includes(search) ||
         item.ISRCCode.toLowerCase().includes(search) ||
         item.singer.toLowerCase().includes(search) ||
         item.author.toLowerCase().includes(search) ||

@@ -71,7 +71,7 @@ export const updateRecordAction = createAsyncThunk(
   async (
     data: Pick<
       IRecord,
-      "title" | "ISRCCode" | "singer" | "author" | "producer" | "category"
+      "nameRecord" | "ISRCCode" | "singer" | "author" | "producer" | "category"
     > & { docId?: string },
     thunkAPI
   ) => {
@@ -90,6 +90,8 @@ export const updateRecordAction = createAsyncThunk(
       ...data,
       categoriesId: categoriesId,
     };
+
+    console.log(recordUpdate);
 
     return await updateRecord(docId, recordUpdate);
   }

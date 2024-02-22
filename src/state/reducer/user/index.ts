@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-import { IUser, User } from "~/types";
 import {
   addUserThunk,
   checkLoginAction,
@@ -9,19 +8,20 @@ import {
   saveUser,
   updateUserAction,
 } from "~/state/thunk/user/user";
+import { IUser, User } from "~/types";
 
 interface InitType {
   currentUser: IUser;
   newUser: IUser;
   loading: boolean;
   status:
-  | "loggin successfully"
-  | "loggin failed"
-  | "user updated"
-  | "update failed"
-  | "user added"
-  | "";
-  users: Array<User>
+    | "loggin successfully"
+    | "loggin failed"
+    | "user updated"
+    | "update failed"
+    | "user added"
+    | "";
+  users: Array<User>;
 }
 
 const initialState: InitType = {
@@ -29,13 +29,20 @@ const initialState: InitType = {
   newUser: {} as IUser,
   loading: false,
   status: "",
-  users: [] as Array<User>
+  users: [] as Array<User>,
 };
 
 const userSlice = createSlice({
   name: "user",
   initialState,
-  reducers: {},
+  reducers: {
+    setInitialUser: (state) => {
+      state.currentUser = {} as IUser;
+      state.newUser = {} as IUser;
+      state.status = "";
+      state.users = [] as Array<User>;
+    },
+  },
   extraReducers(builder) {
     builder
       .addCase(checkLoginAction.pending, (state) => {
@@ -62,10 +69,12 @@ const userSlice = createSlice({
               rolesId: user.rolesId,
               role: userRole?.role,
             };
-            state.status = "loggin successfully";
-            state.loading = false;
           }
         }
+        state.status = Object.keys(state.currentUser).length
+          ? "loggin successfully"
+          : "loggin failed";
+        state.loading = false;
       })
       .addCase(checkLoginAction.rejected, (state) => {
         state.status = "loggin failed";
@@ -148,5 +157,5 @@ const userSlice = createSlice({
   },
 });
 
-export const { } = userSlice.actions;
+export const { setInitialUser } = userSlice.actions;
 export const userReducer = userSlice.reducer;

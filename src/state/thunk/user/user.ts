@@ -18,7 +18,7 @@ interface IUpdatePassword {
   email?: string;
   id?: string;
   password: string;
-}
+};
 
 export const checkLoginAction = createAsyncThunk(
   "user/checkLogin",

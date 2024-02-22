@@ -1,20 +1,23 @@
 import classNames from "classnames/bind";
-import * as Yup from "yup";
-import { useSelector } from "react-redux";
 import { useFormik } from "formik";
 import { useContext, useEffect, useRef, useState } from "react";
+import { useSelector } from "react-redux";
+import * as Yup from "yup";
 
-import Button from "~/components/Button";
+import { useNavigate } from "react-router-dom";
 import { images } from "~/assets";
-import { IUser } from "~/types";
+import { ActionBar } from "~/components/ActionBar";
+import { ActionBarItem } from "~/components/ActionBar/ActionBarItem";
+import Button from "~/components/Button";
 import { Form } from "~/components/Form";
 import { Input } from "~/components/Input";
-import { ActionBar } from "~/components/ActionBar";
-import { RootState, useAppDispatch } from "~/state";
-import { ActionBarItem } from "~/components/ActionBar/ActionBarItem";
-import { resetPasswordAction, updateUserAction } from "~/state/thunk/user/user";
-import { SidebarContext } from "~/context/Sidebar/SidebarContext";
 import { Toast } from "~/components/Toast";
+import { routes } from "~/config/routes";
+import { SidebarContext } from "~/context/Sidebar/SidebarContext";
+import { RootState, useAppDispatch } from "~/state";
+import { setInitialUser } from "~/state/reducer/user";
+import { resetPasswordAction, updateUserAction } from "~/state/thunk/user/user";
+import { IUser } from "~/types";
 
 import styles from "~/sass/BasicInfomation.module.scss";
 const cx = classNames.bind(styles);
@@ -27,6 +30,7 @@ const initialPasswordValue = {
 
 function ProfilePage() {
     const dispatch = useAppDispatch();
+    const navigate = useNavigate();
 
     const firstNameRef = useRef<HTMLDivElement>(null);
     const passwordRef = useRef<HTMLDivElement>(null);
@@ -43,8 +47,6 @@ function ProfilePage() {
     const [errorMessage, setErrorMessage] = useState('');
     const userState = useSelector((state: RootState) => state.user);
     const { currentUser, status, loading } = userState;
-
-    console.log(currentUser);
 
     const initialInfoVales = {
         id: currentUser.docId,
@@ -271,6 +273,10 @@ function ProfilePage() {
                             <ActionBarItem
                                 icon={images.logOut}
                                 title="Đăng xuất"
+                                onClick={() => {
+                                    dispatch(setInitialUser());
+                                    navigate(routes.LoginPage);
+                                }}
                             />
                         </ActionBar>
                     </div>

@@ -2,12 +2,12 @@ import classNames from "classnames/bind";
 import { Dispatch, memo, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { BoxItem } from "../BoxItem";
 import { images } from "~/assets";
-import { Checkbox } from "../Checkbox";
-import { IPLaylist } from "~/types/PlaylistType";
 import { getTotalMoment } from "~/constants";
 import { IGlobalConstantsType, IRecord } from "~/types";
+import { IPLaylist } from "~/types/PlaylistType";
+import { BoxItem } from "../BoxItem";
+import { Checkbox } from "../Checkbox";
 
 import styles from "~/sass/GridView.module.scss";
 const cx = classNames.bind(styles);
@@ -56,7 +56,7 @@ const GridRecord = memo(({
             <div className={cx("content-left")}>
                 <div className={cx("primary")}>
                     <div className={cx("title-primary")}>
-                        <h2>{record.title}</h2>
+                        <h2>{record.nameRecord}</h2>
                     </div>
                     <div className={cx("sub-title")}>
                         <div className={cx("singer")}>

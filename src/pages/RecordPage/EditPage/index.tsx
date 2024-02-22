@@ -1,31 +1,31 @@
 import classNames from "classnames/bind";
+import { useFormik } from "formik";
+import { useContext, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { useContext, useEffect, useState } from "react";
-import { useFormik } from "formik";
 import * as Yup from "yup";
 
+import { images } from "~/assets";
+import Button from "~/components/Button";
 import { CommonWrapper } from "~/components/CommonWrapper";
+import { Form } from "~/components/Form";
+import { Input } from "~/components/Input";
+import { Loading } from "~/components/Loading";
+import { OptionMenu } from "~/components/OptionMenu";
 import { PagingItemType } from "~/components/Paging";
 import { routes } from "~/config/routes";
-import { RootState, useAppDispatch } from "~/state";
-import { Loading } from "~/components/Loading";
-import { IGlobalConstantsType, IRecord } from "~/types";
-import { images } from "~/assets";
-import { Input } from "~/components/Input";
-import { Form } from "~/components/Form";
-import { OptionMenu } from "~/components/OptionMenu";
-import Button from "~/components/Button";
-import { updateRecordAction } from "~/state/thunk/record";
-import { VALIDITY_CONTRACT_ITEMS, CB_MUSIC_KIND, getCurrentDate, formatDateMDY } from "~/constants";
+import { CB_MUSIC_KIND, VALIDITY_CONTRACT_ITEMS, formatDateMDY, getCurrentDate } from "~/constants";
 import { SidebarContext } from "~/context/Sidebar/SidebarContext";
+import { RootState, useAppDispatch } from "~/state";
+import { updateRecordAction } from "~/state/thunk/record";
+import { IGlobalConstantsType, IRecord } from "~/types";
 
 import styles from "~/sass/EditRecord.module.scss";
 const cx = classNames.bind(styles);
 
 interface InitType {
     docId: string
-    title: string
+    nameRecord: string
     ISRCCode: string
     singer: string
     author: string
@@ -45,7 +45,7 @@ const PAGING_ITEMS: Array<PagingItemType> = [
 
 const initialValues: InitType = {
     docId: "",
-    title: "",
+    nameRecord: "",
     ISRCCode: "",
     singer: "",
     author: "",
@@ -86,7 +86,7 @@ function EditRecordPage() {
             initialValues: initialValues,
             validationSchema: Yup.object({
                 docId: Yup.string().required(),
-                title: Yup.string().required(),
+                nameRecord: Yup.string().required(),
                 ISRCCode: Yup.string().required(),
                 singer: Yup.string().required(),
                 author: Yup.string().required(),
@@ -94,10 +94,12 @@ function EditRecordPage() {
                 category: Yup.string().required()
             }),
             onSubmit: values => {
+                console.log(values);
+
                 dispatch(updateRecordAction(values)).then(() => navigate(routes.RecordPage));
             }
         });
-    const { title, ISRCCode, singer, author, producer } = values;
+    const { nameRecord, ISRCCode, singer, author, producer } = values;
 
     useEffect(() => {
         if (Object.keys(records).length <= 0)
@@ -115,7 +117,7 @@ function EditRecordPage() {
 
         setValues({
             docId: recordId || "",
-            title: record.title,
+            nameRecord: record.nameRecord,
             ISRCCode: record.ISRCCode,
             singer: record.singer,
             author: record.author,
@@ -132,17 +134,17 @@ function EditRecordPage() {
             {
                 id: 1,
                 tag: <Input
-                    id="title"
+                    id="nameRecord"
                     type='text'
-                    name='title'
+                    name='nameRecord'
                     title='Tên bản ghi'
                     size="custom"
-                    value={title}
-                    errorMessage={errors.title}
-                    touched={touched.title}
+                    value={nameRecord}
+                    errorMessage={errors.nameRecord}
+                    touched={touched.nameRecord}
                     onChange={handleChange}
-                    onFocus={() => setFieldTouched('title', true)}
-                    onBlur={() => setFieldTouched('title', false)}
+                    onFocus={() => setFieldTouched('nameRecord', true)}
+                    onBlur={() => setFieldTouched('nameRecord', false)}
                 />
             }, {
                 id: 2,
@@ -227,7 +229,7 @@ function EditRecordPage() {
     return (
         <div className={cx("wrapper")}>
             <CommonWrapper
-                title={`Bản ghi - ${record.title}`}
+                title={`Bản ghi - ${record.nameRecord}`}
                 paging={PAGING_ITEMS}
             >
                 <div className={cx("content")}>

@@ -1,11 +1,11 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { Navigate, Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 
 import './App.css';
-import { RootState } from './state';
-import { protectedRoutes, publicRoutes } from './routes';
 import { DefaultLayout } from './layouts/DefaultLayout';
 import { HeaderOnly } from './layouts/HeaderOnly';
+import { protectedRoutes, publicRoutes } from './routes';
+import { RootState } from './state';
 
 interface ProtectedRouteProps {
   path: string
@@ -58,8 +58,7 @@ function App() {
 };
 
 function ProtectedRoute({ path, children }: ProtectedRouteProps) {
-  const userState = useSelector((state: RootState) => state.user);
-  const { currentUser } = userState;
+  const { currentUser } = useSelector((state: RootState) => state.user);
   const isExisted = Object.keys(currentUser).length > 0;
 
   return isExisted ? children : <Navigate to="/" state={{ from: path }} />;

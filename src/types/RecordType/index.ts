@@ -14,7 +14,7 @@ export type IRecord = {
   createdBy: string;
   createdDate: string;
   format: string;
-  title: string;
+  // title: string;
   producer: string;
   singer: string;
   time: string;
@@ -23,7 +23,8 @@ export type IRecord = {
   category?: string;
   contract?: IContract;
   approvalsId?: string;
-  nameRecord?: string;
+  // nameRecord?: string;
+  nameRecord: string;
   etmContractsId?: string;
 };
 

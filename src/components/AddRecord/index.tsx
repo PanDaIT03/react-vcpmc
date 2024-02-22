@@ -19,10 +19,10 @@ interface AddRecordProps {
     setState: Dispatch<SetStateAction<boolean>>
 };
 
-type InitType = Pick<IRecord, "title" | "ISRCCode" | "author" | "singer" | "category" | "producer">;
+type InitType = Pick<IRecord, "nameRecord" | "ISRCCode" | "author" | "singer" | "category" | "producer">;
 
 const initialValues: InitType = {
-    title: "",
+    nameRecord: "",
     ISRCCode: "",
     author: "",
     singer: "",
@@ -57,7 +57,7 @@ export const AddRecord = memo(({
             console.log(values);
         }
     });
-    const { title, ISRCCode, author, singer, category, producer } = values;
+    const { nameRecord, ISRCCode, author, singer, category, producer } = values;
 
     useEffect(() => {
         setRecordInput([
@@ -65,17 +65,17 @@ export const AddRecord = memo(({
                 id: 1,
                 tag: <Input
                     title="Tên bản ghi"
-                    id="title"
+                    id="nameRecord"
                     type='text'
-                    name='title'
+                    name='nameRecord'
                     size="custom"
                     isRequire={true}
-                    value={title}
-                    errorMessage={errors.title}
-                    touched={touched.title}
+                    value={nameRecord}
+                    errorMessage={errors.nameRecord}
+                    touched={touched.nameRecord}
                     onChange={handleChange}
-                    onFocus={() => setFieldTouched('title', true)}
-                    onBlur={() => setFieldTouched('title', false)}
+                    onFocus={() => setFieldTouched('nameRecord', true)}
+                    onBlur={() => setFieldTouched('nameRecord', false)}
                 />
             }, {
                 id: 2,

@@ -12,8 +12,8 @@ import { Table } from "~/components/Table";
 import { formatDateYMD, formatMoney } from "~/constants";
 import { SidebarContext } from "~/context/Sidebar/SidebarContext";
 import { RootState, useAppDispatch } from "~/state";
-import { EtmContractForControl } from "~/types/EntrustmentContractType";
 import { getEtmContractForControls } from "~/state/thunk/entrustmentContract";
+import { EtmContractForControl } from "~/types/EntrustmentContractType";
 
 import style from '~/sass/ForControl.module.scss';
 const cx = classNames.bind(style);
@@ -76,7 +76,7 @@ function ForControlHistoryPage() {
         }
 
         setSearchResult(etmContract.etmContractForControl.filter(contract =>
-            contract.records.some(record => record.title.toLowerCase().includes(value))
+            contract.records.some(record => record.nameRecord.toLowerCase().includes(value))
         ));
     }, [searchValue]);
 

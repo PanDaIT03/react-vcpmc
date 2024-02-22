@@ -28,8 +28,6 @@ export const ThemeProvider = ({ children }: IProvider) => {
         imageURL: image
     }));
 
-    console.log(THEME_ITEMS);
-
     useEffect(() => {
         setThemeActive(THEME_ITEMS[0]);
     }, []);

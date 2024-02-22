@@ -1,38 +1,37 @@
+import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import classNames from "classnames/bind";
 import { useContext, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 
 import { images } from "~/assets";
-import { CommonWrapper } from "~/components/CommonWrapper";
-import { Input } from "~/components/Input";
-import { OptionMenu } from "~/components/OptionMenu";
-import { Table } from "~/components/Table";
-import { SidebarContext } from "~/context/Sidebar/SidebarContext";
-import { RootState, useAppDispatch } from "~/state";
-import { Loading } from "~/components/Loading";
-import { getRecordsAction } from "~/state/thunk/record";
 import { ActionBar } from "~/components/ActionBar";
 import { ActionBarItem } from "~/components/ActionBar/ActionBarItem";
 import { AudioDialog } from "~/components/AudioDialog";
-import { Dialog } from "~/components/Dialog";
-import { IGlobalConstantsType, IRecord } from "~/types";
-import { GridView } from "~/components/GridView";
-import { Checkbox } from "~/components/Checkbox";
-import { updateRecordsAction } from "~/state/thunk/record";
-import { CancleForm } from "~/components/CancelForm";
 import Button from "~/components/Button";
+import { CancleForm } from "~/components/CancelForm";
+import { Checkbox } from "~/components/Checkbox";
+import { CommonWrapper } from "~/components/CommonWrapper";
+import { Dialog } from "~/components/Dialog";
+import { GridView } from "~/components/GridView";
+import { Input } from "~/components/Input";
+import { Loading } from "~/components/Loading";
+import { OptionMenu } from "~/components/OptionMenu";
 import { SwitchViewButton } from "~/components/SwitchViewButtons";
+import { Table } from "~/components/Table";
 import {
+    CB_APPROVE,
     CB_FORMAT,
     CB_MUSIC_KIND,
-    CB_APPROVE,
     CB_VADILITY_MUSIC,
     formatDateMDY,
     getCurrentDate,
 } from "~/constants";
+import { SidebarContext } from "~/context/Sidebar/SidebarContext";
+import { RootState, useAppDispatch } from "~/state";
+import { getRecordsAction, updateRecordsAction } from "~/state/thunk/record";
+import { IGlobalConstantsType, IRecord } from "~/types";
 
 import styles from "~/sass/Record.module.scss";
 const cx = classNames.bind(styles);
@@ -109,7 +108,7 @@ function RecordPage() {
             });
 
             setSearchResult(result.filter(item =>
-                item.title.toLowerCase().includes(search) ||
+                item.nameRecord.toLowerCase().includes(search) ||
                 item.singer.toLowerCase().includes(search) ||
                 item.ISRCCode.toLowerCase().includes(search) ||
                 item.author.toLowerCase().includes(search) ||
@@ -235,7 +234,7 @@ function RecordPage() {
                                                 <Checkbox checked={isChecked} />
                                             </td>}
                                         <td>{index + 1}</td>
-                                        <td>{record.title}</td>
+                                        <td>{record.nameRecord}</td>
                                         <td>{record.ISRCCode}</td>
                                         <td>{record.time}</td>
                                         <td>{record.singer}</td>

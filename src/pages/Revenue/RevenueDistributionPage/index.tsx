@@ -134,7 +134,7 @@ function RevenueDistributionPage() {
         }
 
         setSearchResult(searchFilterDate.filter(contract =>
-            contract.records.some(record => record.records.title.toLowerCase().includes(value)))
+            contract.records.some(record => record.records.nameRecord.toLowerCase().includes(value)))
         );
     }, [searchValue, date]);
 

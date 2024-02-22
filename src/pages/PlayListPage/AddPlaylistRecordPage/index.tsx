@@ -3,23 +3,23 @@ import { useContext, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
+import { images } from "~/assets";
+import { AudioDialog } from "~/components/AudioDialog";
+import Button from "~/components/Button";
 import { CommonWrapper } from "~/components/CommonWrapper";
+import { Dialog } from "~/components/Dialog";
+import { Input } from "~/components/Input";
 import { Loading } from "~/components/Loading";
 import { OptionMenu } from "~/components/OptionMenu";
 import { PagingItemType } from "~/components/Paging";
+import { Table } from "~/components/Table";
 import { routes } from "~/config/routes";
 import { CB_FORMAT, CB_PLAYLIST, getTotalMoment } from "~/constants";
 import { SidebarContext } from "~/context/Sidebar/SidebarContext";
 import { RootState, useAppDispatch } from "~/state";
-import { IGlobalConstantsType, IRecord } from "~/types";
-import { Input } from "~/components/Input";
-import { Table } from "~/components/Table";
-import { images } from "~/assets";
-import { IPLaylist } from "~/types/PlaylistType";
-import { Dialog } from "~/components/Dialog";
-import { AudioDialog } from "~/components/AudioDialog";
-import Button from "~/components/Button";
 import { addPlaylistRecordsAction } from "~/state/thunk/record";
+import { IGlobalConstantsType, IRecord } from "~/types";
+import { IPLaylist } from "~/types/PlaylistType";
 
 import styles from "~/sass/AddPlaylistRecord.module.scss";
 const cx = classNames.bind(styles);
@@ -100,7 +100,7 @@ function AddPlaylistRecordPage() {
     }, [playlistOption]);
 
     const handleAddRecords = (item: IRecord) => {
-        let isExisted = newPlaylistRecords.filter(newRecord => item.title === newRecord.title).length > 0;
+        let isExisted = newPlaylistRecords.filter(newRecord => item.nameRecord === newRecord.nameRecord).length > 0;
         if (!isExisted) setNewPlaylistRecords(prev => [...prev, item]);
     };
 
@@ -152,7 +152,7 @@ function AddPlaylistRecordPage() {
                             {records.map((record, index) => (
                                 <tr key={index}>
                                     <td>{index + 1}</td>
-                                    <td>{record.title}</td>
+                                    <td>{record.nameRecord}</td>
                                     <td>{record.singer}</td>
                                     <td>{record.author}</td>
                                     <td
@@ -216,7 +216,7 @@ function AddPlaylistRecordPage() {
                                 : newPlaylistRecords.map((record, index) => (
                                     <tr key={record.docId}>
                                         <td>{index + 1}</td>
-                                        <td>{record.title}</td>
+                                        <td>{record.nameRecord}</td>
                                         <td>{record.singer}</td>
                                         <td>{record.author}</td>
                                         <td
@@ -228,7 +228,7 @@ function AddPlaylistRecordPage() {
                                         >Nghe</td>
                                         <td
                                             className={cx("action")}
-                                            onClick={() => setNewPlaylistRecords(newPlaylistRecords.filter(item => item.title !== record.title))}
+                                            onClick={() => setNewPlaylistRecords(newPlaylistRecords.filter(item => item.nameRecord !== record.nameRecord))}
                                         >Gỡ</td>
                                     </tr>
                                 ))}

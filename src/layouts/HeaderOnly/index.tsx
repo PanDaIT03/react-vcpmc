@@ -7,7 +7,7 @@ interface DefaultLayoutProps {
 
 export const HeaderOnly = ({ children }: DefaultLayoutProps) => {
     return (
-        <div className="wrapper">
+        <div className="wrapper" style={{ height: "100%" }}>
             <div className="header">
                 <Header />
             </div>

@@ -1,29 +1,29 @@
 import classNames from "classnames/bind";
+import { useFormik } from "formik";
 import { useCallback, useContext, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { useFormik } from "formik";
 import * as Yup from "yup";
 
-import Button from "~/components/Button";
 import { images } from "~/assets";
+import { ActionBar } from "~/components/ActionBar";
+import { ActionBarItem } from "~/components/ActionBar/ActionBarItem";
+import { AudioDialog } from "~/components/AudioDialog";
+import Button from "~/components/Button";
 import { CommonWrapper } from "~/components/CommonWrapper";
+import { Dialog } from "~/components/Dialog";
 import { Loading } from "~/components/Loading";
 import { PagingItemType } from "~/components/Paging";
-import { routes } from "~/config/routes";
-import { RootState, useAppDispatch } from "~/state";
-import { IPLaylist } from "~/types/PlaylistType";
-import { IRecord } from "~/types";
-import { Table } from "~/components/Table";
-import { SidebarContext } from "~/context/Sidebar/SidebarContext";
-import { Dialog } from "~/components/Dialog";
-import { AudioDialog } from "~/components/AudioDialog";
-import { ActionBarItem } from "~/components/ActionBar/ActionBarItem";
-import { ActionBar } from "~/components/ActionBar";
-import { PlaylistInfo } from "~/components/Playlist/PlaylistInfo";
 import { EditPlaylist } from "~/components/Playlist/EditPlaylist";
+import { PlaylistInfo } from "~/components/Playlist/PlaylistInfo";
+import { Table } from "~/components/Table";
+import { routes } from "~/config/routes";
+import { SidebarContext } from "~/context/Sidebar/SidebarContext";
+import { RootState, useAppDispatch } from "~/state";
 import { deletePlaylistAction, getPlayListAction, removePlaylistRecordAction, updatePlaylistAction, updatePlaylistsRecordsAction } from "~/state/thunk/playlist";
 import { resetNewRecordsAction } from "~/state/thunk/record";
+import { IRecord } from "~/types";
+import { IPLaylist } from "~/types/PlaylistType";
 
 import styles from "~/sass/PlaylistDetail.module.scss";
 const cx = classNames.bind(styles);
@@ -188,7 +188,7 @@ function PlaylistDetailPage() {
                                 <tr className={cx("playlist_item")} key={index}>
                                     <td >{index + 1}</td>
                                     <td>
-                                        <div>{record.title}</div>
+                                        <div>{record.nameRecord}</div>
                                         <div className={cx("subtitle")}>
                                             <div>{record.category}</div>
                                             <img src={images.ellipseEffect} alt="icon" />

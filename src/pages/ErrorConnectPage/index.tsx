@@ -2,8 +2,8 @@ import classNames from "classnames/bind";
 import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 
-import Button from "~/components/Button";
 import { images } from "~/assets";
+import Button from "~/components/Button";
 import { Form } from "~/components/Form";
 import { routes } from "~/config/routes";
 

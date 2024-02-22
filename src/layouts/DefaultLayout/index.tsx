@@ -3,14 +3,14 @@ import { ReactNode, useContext, useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import { Sidebar } from "../component/Sidebar";
-import { Header } from "../component/Header";
-import { RootState } from "~/state";
-import { SidebarContext } from "~/context/Sidebar/SidebarContext";
 import { routes } from "~/config/routes";
+import { SidebarContext } from "~/context/Sidebar/SidebarContext";
+import { ThemeProvider } from "~/context/Theme/ThemeContext";
+import { RootState } from "~/state";
+import { Header } from "../component/Header";
+import { Sidebar } from "../component/Sidebar";
 
 import styles from "~/sass/DefaultLayout.module.scss";
-import { ThemeProvider } from "~/context/Theme/ThemeContext";
 const cx = classNames.bind(styles);
 
 interface DefaultLayoutProps {

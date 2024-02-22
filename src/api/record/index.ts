@@ -39,7 +39,7 @@ export const getRecords = async (contractId?: string) => {
       createdBy: doc.data().createdBy,
       createdDate: doc.data().createdDate,
       format: doc.data().format,
-      title: doc.data().nameRecord,
+      nameRecord: doc.data().nameRecord,
       producer: doc.data().producer,
       singer: doc.data().singer,
       time: doc.data().time,
@@ -124,7 +124,7 @@ export const approvalContractRecords = async (
 
 export const updateRecord = async (
   recordId: string,
-  data: Pick<IRecord, "title" | "ISRCCode" | "singer" | "author" | "producer">
+  data: Pick<IRecord, "nameRecord" | "ISRCCode" | "singer" | "author" | "producer">
 ) => {
   if (recordId === "") return;
 

@@ -30,6 +30,7 @@ export const images = {
   history: require("./images/u_history.png"),
   camera: require("./images/fi_camera.png"),
   eye: require("./images/eye.png"),
+  eyeSlash: require('./images/eye-slash.png'),
   checkbox: require("./images/checkbox.png"),
   chevronRight: require("./images/fi_chevron-right.png"),
   xCircle: require("./images/fi_x-circle.png"),

@@ -1,8 +1,11 @@
 import classNames from "classnames/bind";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
+import { images } from "~/assets";
+import { ActionBar } from "~/components/ActionBar";
+import { ActionBarItem } from "~/components/ActionBar/ActionBarItem";
 import { CommonWrapper } from "~/components/CommonWrapper";
 import { Table } from "~/components/Table";
 import { SidebarContext } from "~/context/Sidebar/SidebarContext";
@@ -11,9 +14,6 @@ import { getScheduleList } from "~/state/thunk/playlistSchedule";
 import { PlaylistSchedule } from "~/types/PlaylistSchedule";
 
 import style from '~/sass/PlaylistSchedule.module.scss';
-import { ActionBar } from "~/components/ActionBar";
-import { ActionBarItem } from "~/components/ActionBar/ActionBarItem";
-import { images } from "~/assets";
 const cx = classNames.bind(style);
 
 function PlaylistSchedulePage() {

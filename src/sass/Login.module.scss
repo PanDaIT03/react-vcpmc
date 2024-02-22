@@ -91,3 +91,58 @@
   left: 50%;
   transform: translate(50%, -50%);
 }
+
+.form-error {
+  div {
+    color: var(--red) !important;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+// Mobile
+@media only screen and (max-width: 1024px) {
+  .content {
+    width: 100%;
+
+    .main-logo {
+      width: 12rem;
+    }
+  }
+
+  .form-login,
+  .form-recover,
+  .form-error,
+  .form-reset-password {
+    width: 100%;
+
+    & > div {
+      font-size: 2.6rem !important;
+      margin: 1rem 0 !important;
+    }
+
+    form {
+      padding: 0 2rem;
+
+      div {
+        width: 100% !important;
+      }
+
+      p {
+        width: 100%;
+        text-align: center !important;
+      }
+    }
+  }
+
+  .btn-login {
+    button {
+      margin-top: 1.8rem;
+    }
+  }
+}

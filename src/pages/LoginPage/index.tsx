@@ -1,20 +1,21 @@
-import * as Yup from "yup";
 import classNames from "classnames/bind";
 import { useFormik } from "formik";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
+import * as Yup from "yup";
 
-import Button from "~/components/Button";
-import { Input } from "~/components/Input";
-import { Form } from "~/components/Form";
-import { RootState, useAppDispatch } from "~/state";
-import { checkLoginAction } from "~/state/thunk/user/user";
-import { getRoleAction } from "~/state/thunk/role/role";
 import { images } from "~/assets";
+import Button from "~/components/Button";
+import { Form } from "~/components/Form";
+import { Input } from "~/components/Input";
 import { Loading } from "~/components/Loading";
+import { RootState, useAppDispatch } from "~/state";
+import { getRoleAction } from "~/state/thunk/role/role";
+import { checkLoginAction } from "~/state/thunk/user/user";
 
 import styles from "~/sass/Login.module.scss";
+import { Checkbox } from "~/components/Checkbox";
 const cx = classNames.bind(styles);
 
 function LoginPage() {
@@ -22,13 +23,12 @@ function LoginPage() {
     const dispatch = useAppDispatch();
     const location = useLocation();
 
+    const [remember, setRemember] = useState(true);
     const [isPassword, setIsPassword] = useState(true);
     const [errorMessage, setErrorMessage] = useState("");
 
-    const userState = useSelector((state: RootState) => state.user);
-    const { loading, status, currentUser } = userState;
-    const roleState = useSelector((state: RootState) => state.role);
-    const { loading: roleLoading, roles } = roleState;
+    const { loading, status, currentUser } = useSelector((state: RootState) => state.user);
+    const { loading: roleLoading, roles } = useSelector((state: RootState) => state.role);
 
     const initialValuesLogin = {
         name: currentUser.userName || 'daiphuc2003',
@@ -69,12 +69,14 @@ function LoginPage() {
     useEffect(() => {
         if (status === "loggin successfully")
             navigate(location.state?.from ?? "/contract-management");
+    }, [status]);
 
+    useEffect(() => {
         if (status === "loggin failed")
             setErrorMessage("Sai tên đăng nhập hoặc mật khẩu");
         else
             setErrorMessage("");
-    }, [status]);
+    }, [status, loading]);
 
     useEffect(() => {
         document.title = 'Trang đăng nhập';
@@ -121,16 +123,17 @@ function LoginPage() {
                         value={loginValues.password}
                         touched={loginTouched.password}
                         errorMessage={loginErrors.password}
-                        iconRight={images.eye}
+                        iconRight={isPassword ? images.eye : images.eyeSlash}
                         onFocus={() => handleFocus("password")}
                         onChange={handleChangeLogin}
                         onIconRightClick={() => setIsPassword(!isPassword)}
                     />
                     <p className={cx("error-message")}>{errorMessage && errorMessage}</p>
-                    <div className={cx("remember-login")}>
-                        <input id="cb-remember" type="checkbox" />
-                        <label htmlFor="cb-remember">Ghi nhớ đăng nhập</label>
-                    </div>
+                    <Checkbox
+                        checked={remember}
+                        label="Ghi nhớ đăng nhập"
+                        onClick={() => setRemember(!remember)}
+                    />
                     <div className={cx("btn-login")}>
                         <Button
                             primary

@@ -3,21 +3,20 @@ import { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router";
 
-import { PagingItemType } from "~/components/Paging";
-import { Table } from "~/components/Table";
-import { routes } from "~/config/routes";
-import { RootState } from "~/state";
-
 import { images } from "~/assets";
 import { ActionBar } from "~/components/ActionBar";
 import { ActionBarItem } from "~/components/ActionBar/ActionBarItem";
 import { CommonWrapper } from "~/components/CommonWrapper";
 import { Input } from "~/components/Input";
 import { Loading } from "~/components/Loading";
+import { PagingItemType } from "~/components/Paging";
+import { Table } from "~/components/Table";
+import { routes } from "~/config/routes";
 import { formatMoney } from "~/constants";
+import { RootState } from "~/state";
 import { ContractDetail, IRecord } from "~/types";
-import { RecordPlays } from "~/types/RecordPlayType";
 import { RecordDetail } from "~/types/AuthorizedPartnerType";
+import { RecordPlays } from "~/types/RecordPlayType";
 
 import style from '~/sass/RevenueDetail.module.scss';
 const cx = classNames.bind(style);
@@ -77,7 +76,7 @@ function RevenueDistributionDetailPage() {
         }
 
         setCurrentItems(contractDetail.records.filter(record =>
-            record.records.title.toLowerCase().includes(value))
+            record.records.nameRecord.toLowerCase().includes(value))
         );
     }, [searchValue]);
 
@@ -149,7 +148,7 @@ function RevenueDistributionDetailPage() {
                             return (
                                 <tr key={item.records.docId} style={{ height: '56px' }} className={cx('table-record__tr__item')} onClick={() => handleRecordItemClick(item)}>
                                     <td><p style={{ textAlign: 'center' }}>{index + 1}</p></td>
-                                    <td><p>{item.records.title}</p></td>
+                                    <td><p>{item.records.nameRecord}</p></td>
                                     <td><p>{item.totalPlay}</p></td>
                                     <td><p>{formatMoney(revenue).split('₫')[0]}</p></td>
                                     <td><p>{formatMoney(administrativeFee).split('₫')[0]}</p></td>
@@ -160,7 +159,7 @@ function RevenueDistributionDetailPage() {
                     </Table>
                     <div className={cx('table-right')}>
                         <p className={cx('table-right__title')}>Doanh thu bản ghi</p>
-                        <p className={cx('table-right__record-name')}>{itemActive.records.title || 'Tên bản ghi'}</p>
+                        <p className={cx('table-right__record-name')}>{itemActive.records.nameRecord || 'Tên bản ghi'}</p>
                         <Table
                             thead={['Đơn vị khai thác', 'Số lượt phát', 'Doanh thu (VNĐ)']}
                             className={cx('table__record-plays')}

@@ -10,21 +10,21 @@ import { images } from "~/assets";
 import { ActionBar } from "~/components/ActionBar";
 import { ActionBarItem } from "~/components/ActionBar/ActionBarItem";
 import { AudioDialog } from "~/components/AudioDialog";
+import Button from "~/components/Button";
 import { CommonWrapper } from "~/components/CommonWrapper";
 import { Dialog } from "~/components/Dialog";
 import { Input } from "~/components/Input";
+import { Loading } from "~/components/Loading";
 import { PagingItemType } from "~/components/Paging";
 import { Table } from "~/components/Table";
 import { Upload } from "~/components/Upload";
 import { routes } from "~/config/routes";
+import { getCurrentDateDMY, getTotalMoment } from "~/constants";
 import { SidebarContext } from "~/context/Sidebar/SidebarContext";
 import { RootState, useAppDispatch } from "~/state";
-import { IRecord } from "~/types";
-import Button from "~/components/Button";
-import { getCurrentDateDMY, getTotalMoment } from "~/constants";
-import { IPLaylist } from "~/types/PlaylistType";
 import { addPlaylistAction } from "~/state/thunk/playlist";
-import { Loading } from "~/components/Loading";
+import { IRecord } from "~/types";
+import { IPLaylist } from "~/types/PlaylistType";
 
 import styles from "~/sass/AddPlaylist.module.scss";
 const cx = classNames.bind(styles);
@@ -242,7 +242,7 @@ function AddPlaylistPage() {
                                 : newPlaylistRecords?.map((record, index) => (
                                     <tr key={index}>
                                         <td>{index + 1}</td>
-                                        <td>{record.title}</td>
+                                        <td>{record.nameRecord}</td>
                                         <td>{record.singer}</td>
                                         <td>{record.author}</td>
                                         <td>{record.author}</td>
@@ -256,7 +256,7 @@ function AddPlaylistPage() {
                                         >Nghe</td>
                                         <td
                                             className={cx("action")}
-                                            onClick={() => setNewPlaylistRecords(newPlaylistRecords.filter(item => item.title !== record.title))}
+                                            onClick={() => setNewPlaylistRecords(newPlaylistRecords.filter(item => item.nameRecord !== record.nameRecord))}
                                         >Gỡ</td>
                                     </tr>
                                 ))}

@@ -1,19 +1,19 @@
-import * as Yup from "yup";
-import Swal from "sweetalert2";
 import classNames from "classnames/bind";
-import { useEffect, useState } from "react";
 import { useFormik } from "formik";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+import * as Yup from "yup";
 
-import useQuery from "~/hooks";
+import { images } from "~/assets";
 import Button from "~/components/Button";
 import { Form } from "~/components/Form";
 import { Input } from "~/components/Input";
-import { resetPasswordAction } from "~/state/thunk/user/user";
-import { RootState, useAppDispatch } from "~/state";
-import { images } from "~/assets";
 import { routes } from "~/config/routes";
+import useQuery from "~/hooks";
+import { RootState, useAppDispatch } from "~/state";
+import { resetPasswordAction } from "~/state/thunk/user/user";
 
 import styles from "~/sass/Login.module.scss";
 const cx = classNames.bind(styles);

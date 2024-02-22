@@ -11,9 +11,9 @@ import { Table } from "~/components/Table";
 import { formatDateYMD, formatMoney } from "~/constants";
 import { RootState } from "~/state";
 import { EtmContractForControl, OwnRecord } from "~/types/EntrustmentContractType";
+import { SidebarContext } from "~/context/Sidebar/SidebarContext";
 
 import style from '~/sass/EntrustmentContractCommon.module.scss';
-import { SidebarContext } from "~/context/Sidebar/SidebarContext";
 const cx = classNames.bind(style);
 
 interface CommonDetailPageProps {
@@ -65,7 +65,7 @@ export const CommonDetailPage = memo(({ title, pagingData, actionData, style }: 
             return;
         }
 
-        setSearchResult(entrustmentContract.records.filter(record => record.title.toLowerCase().includes(value)));
+        setSearchResult(entrustmentContract.records.filter(record => record.nameRecord.toLowerCase().includes(value)));
     }, [searchValue, date]);
 
     const handleSetCurrentItems = useCallback((items: Array<any>) => {
@@ -168,7 +168,7 @@ export const CommonDetailPage = memo(({ title, pagingData, actionData, style }: 
                                     return (
                                         <tr key={item.docId} style={{ height: '47px' }}>
                                             <td><p>{index + 1}</p></td>
-                                            <td><p>{item.title}</p></td>
+                                            <td><p>{item.nameRecord}</p></td>
                                             <td><p>{item.totalPlay}</p></td>
                                             <td><p>{revenue}</p></td>
                                             <td><p>{performanceRight}</p></td>
