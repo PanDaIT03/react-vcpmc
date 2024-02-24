@@ -1,0 +1,106 @@
+.container {
+  display: flex;
+  gap: 6.4rem;
+
+  .in-active {
+    opacity: 0;
+    top: 55%;
+    transform: translateY(-50%);
+    pointer-events: none;
+  }
+}
+
+.filter__icon {
+  width: 5.2rem;
+  height: 5.2rem;
+  font-size: 2.6rem;
+  border-radius: 50%;
+  color: var(--orange-4-default);
+  background-color: var(--white-transparent);
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.2s linear;
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+.filter__dropdown {
+  width: 25rem;
+  margin-top: 1rem;
+  border-radius: 0.5rem;
+  background-color: var(--text-stroke-fill);
+  position: absolute;
+  opacity: 1;
+  top: 48%;
+  transform: translateY(-50%);
+  transition: all 0.2s ease-in-out;
+
+  box-shadow: -2px 0px 5px 3px rgba(0, 0, 0, 0.22);
+  -webkit-box-shadow: -2px 0px 5px 3px rgba(0, 0, 0, 0.22);
+  -moz-box-shadow: -2px 0px 5px 3px rgba(0, 0, 0, 0.22);
+
+  &:after {
+    bottom: 100%;
+    left: 50%;
+    border: solid transparent;
+    content: "";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+
+    border-color: rgba(136, 183, 213, 0);
+    border-bottom-color: var(--text-stroke-fill);
+    border-width: 0.8rem;
+    margin-left: -10.8rem;
+  }
+
+  .title {
+    color: var(--orange-3);
+    font-style: normal;
+    font-weight: 400;
+    letter-spacing: 0.21px;
+    padding: 0.8rem;
+    border-bottom: 0.1rem solid rgb(114, 114, 136);
+  }
+}
+
+.item {
+  padding: 2rem;
+  color: var(--white);
+  font-style: normal;
+  font-weight: 400;
+  letter-spacing: 0.21px;
+
+  .item__title {
+    margin-bottom: 0.8rem;
+  }
+}
+
+.list-item {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+
+  .item__content {
+    background-color: var(--white-transparent);
+    width: max-content;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.3);
+    }
+  }
+
+  .active {
+    background-color: rgba(255, 255, 255, 0.6);
+    transition: all 0.2s linear;
+  }
+}

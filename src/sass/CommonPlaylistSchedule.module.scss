@@ -152,7 +152,10 @@
 }
 
 .action {
-  margin: 40px 0;
+  display: flex;
+  margin: 30px 0;
+  justify-content: center;
+  gap: 16px;
 }
 
 .playlist__new,

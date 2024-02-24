@@ -1,24 +1,25 @@
 import classNames from "classnames/bind";
-import { useNavigate } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
-import Button from "~/components/Button";
-import { Table } from "~/components/Table";
-import { Input } from "~/components/Input";
+import { images } from "~/assets";
 import { ActionBar } from "~/components/ActionBar";
-import { OptionMenu } from "~/components/OptionMenu";
-import { IContract, IGlobalConstantsType, IOwnerShip, IUserDetail } from "~/types";
-import { CB_OWNER_ITEMS, VALIDITY_CONTRACT_ITEMS } from "~/constants";
 import { ActionBarItem } from "~/components/ActionBar/ActionBarItem";
+import Button from "~/components/Button";
+import { CancleForm } from "~/components/CancelForm";
+import { Dialog } from "~/components/Dialog";
+import { Filter, IFilter } from "~/components/Filter";
+import { Input } from "~/components/Input";
+import { Loading } from "~/components/Loading";
+import { OptionMenu } from "~/components/OptionMenu";
+import { Table } from "~/components/Table";
+import { routes } from "~/config/routes";
+import { CB_OWNER_ITEMS, VALIDITY_CONTRACT_ITEMS } from "~/constants";
+import { SidebarContext } from "~/context/Sidebar/SidebarContext";
 import { RootState, useAppDispatch } from "~/state";
 import { getContractsAction } from "~/state/thunk/contract";
-import { images } from "~/assets";
-import { Dialog } from "~/components/Dialog";
-import { CancleForm } from "~/components/CancelForm";
-import { routes } from "~/config/routes";
-import { Loading } from "~/components/Loading";
-import { SidebarContext } from "~/context/Sidebar/SidebarContext";
+import { IContract, IGlobalConstantsType, IOwnerShip, IUserDetail } from "~/types";
 
 import styles from "~/sass/AuthorizationContract.module.scss";
 const cx = classNames.bind(styles);
@@ -37,6 +38,9 @@ function AuthorizationContractPage() {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
 
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+    const [filter, setFilter] = useState<IFilter[]>([] as IFilter[]);
     const { setCurrentPage } = useContext(SidebarContext);
     const [visible, setVisible] = useState(false);
     const [searchValue, setSearchValue] = useState('');
@@ -56,8 +60,36 @@ function AuthorizationContractPage() {
     const handleClickSearch = () => { };
 
     useEffect(() => {
+        const handleWindowResize = () => {
+            setWindowWidth(window.innerWidth);
+        };
+
+        window.addEventListener('resize', handleWindowResize);
+
+        return () => {
+            window.removeEventListener('resize', handleWindowResize);
+        };
+    });
+
+    useEffect(() => {
         setCurrentPage(4);
         dispatch(getContractsAction());
+    }, []);
+
+    console.log(ownership);
+
+    useEffect(() => {
+        setFilter([
+            {
+                title: "Quyền sở hữu",
+                data: CB_OWNER_ITEMS,
+                setState: setOwnerShip,
+            }, {
+                title: "Hiệu lực hợp đồng",
+                data: VALIDITY_CONTRACT_ITEMS,
+                setState: setValidity
+            }
+        ]);
     }, []);
 
     useEffect(() => {
@@ -122,18 +154,7 @@ function AuthorizationContractPage() {
     return (
         <div className={cx("wrapper")}>
             <div className={cx("action")}>
-                <div className={cx("filter")}>
-                    <OptionMenu
-                        title="Quyền sở hữu"
-                        data={CB_OWNER_ITEMS}
-                        setState={setOwnerShip}
-                    />
-                    <OptionMenu
-                        title="Hiệu lực hợp đồng"
-                        data={VALIDITY_CONTRACT_ITEMS}
-                        setState={setValidity}
-                    />
-                </div>
+                <Filter data={filter} size={windowWidth} />
                 <div className={cx("search")}>
                     <Input
                         id="search"

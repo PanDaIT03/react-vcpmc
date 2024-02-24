@@ -145,9 +145,9 @@ function ResetPasswordPage() {
                         <Button
                             primary
                             fill
+                            loading={loading}
                             value="Xác nhận"
                             buttonType="submit"
-                            loading={loading}
                         />
                     </div>
                 </Form>

@@ -16,9 +16,9 @@ import { Checkbox } from "~/components/Checkbox";
 import { Input } from "~/components/Input";
 import { Loading } from "~/components/Loading";
 import { DAYS, DAYSNUM } from "~/constants";
+import { PlaylistScheduleTable } from "../PLaylistScheduleTable";
 
 import style from '~/sass/CommonPlaylistSchedule.module.scss';
-import { PlaylistScheduleTable } from "../PLaylistScheduleTable";
 const cx = classNames.bind(style);
 
 interface InputProps {
@@ -85,8 +85,8 @@ export const DialogConfirm = memo(({ children, className, onSubmit, onClose, act
         <div className={cx('dialog-confirm', active && 'active', className)}>
             <div className={cx('dialog-confirm__content')}>{children}</div>
             <div className={cx('dialog-confirm__action-button')}>
-                <Button size="large" value='Hủy' onClick={onClose} />
-                <Button fill size="large" value='Lưu' onClick={onSubmit} />
+                <Button primary size="large" value='Hủy' onClick={onClose} />
+                <Button primary fill size="large" value='Lưu' onClick={onSubmit} />
             </div>
         </div>
     );
@@ -335,8 +335,8 @@ function CommonPage({
                             saveChange={handleSaveChange}
                         />
                         <div className={cx('action')}>
-                            <Button value='Hủy' onClick={() => navigate(`/playlist-schedule/detail/${playlistScheduleCode}`)} />
-                            <Button buttonType='submit' value='Lưu' fill />
+                            <Button primary value='Hủy' onClick={() => navigate(`/playlist-schedule/detail/${playlistScheduleCode}`)} />
+                            <Button primary fill buttonType='submit' value='Lưu' />
                         </div>
                     </div>
                 </form>

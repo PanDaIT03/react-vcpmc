@@ -1,15 +1,14 @@
 import classNames from "classnames/bind";
-import { useCallback, useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+import { images } from "~/assets";
 import { Dropdown } from "~/components/Poper/Dropdown";
-import { IGlobalConstantsType } from "~/types/GlobalConstantsType";
 import { SIDEBAR_ITEMS } from "~/constants";
 import { SidebarContext } from "~/context/Sidebar/SidebarContext";
-import { images } from "~/assets";
+import { IGlobalConstantsType } from "~/types/GlobalConstantsType";
 
 import styles from "~/sass/Sidebar.module.scss";
-import { routes } from "~/config/routes";
 const cx = classNames.bind(styles);
 
 interface SidebarProps {
@@ -113,5 +112,5 @@ export const Sidebar = ({ sidebarRef, onClick }: SidebarProps) => {
                 : <img src={images.angleRight} alt="angleRight" />
             }
         </div>
-    )
+    );
 };

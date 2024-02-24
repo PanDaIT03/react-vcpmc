@@ -7,6 +7,7 @@ import * as Yup from "yup";
 
 import { images } from "~/assets";
 import Button from "~/components/Button";
+import { Checkbox } from "~/components/Checkbox";
 import { Form } from "~/components/Form";
 import { Input } from "~/components/Input";
 import { Loading } from "~/components/Loading";
@@ -15,7 +16,6 @@ import { getRoleAction } from "~/state/thunk/role/role";
 import { checkLoginAction } from "~/state/thunk/user/user";
 
 import styles from "~/sass/Login.module.scss";
-import { Checkbox } from "~/components/Checkbox";
 const cx = classNames.bind(styles);
 
 function LoginPage() {
@@ -32,7 +32,7 @@ function LoginPage() {
 
     const initialValuesLogin = {
         name: currentUser.userName || 'daiphuc2003',
-        password: currentUser.password || 'daiduong2003'
+        password: currentUser.password || 'dai090909'
     };
 
     const formikLogin = useFormik({

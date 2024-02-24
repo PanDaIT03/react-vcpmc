@@ -1,20 +1,19 @@
-import * as Yup from "yup";
 import classNames from "classnames/bind";
-import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
 import { useFormik } from "formik";
-import PropagateLoader from "react-spinners/PropagateLoader";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import * as Yup from "yup";
 
+import { useEffect, useState } from "react";
+import { forgotPassword } from "~/api/user";
+import { images } from "~/assets";
 import Button from "~/components/Button";
 import { Form } from "~/components/Form";
-import { forgotPassword } from "~/api/user";
-import { useEffect, useState } from "react";
 import { Input } from "~/components/Input";
-import { RootState } from "~/state";
-import { images } from "~/assets";
 import { Loading } from "~/components/Loading";
-
+import { RootState } from "~/state";
 import styles from "~/sass/Login.module.scss";
+
 import { routes } from "~/config/routes";
 const cx = classNames.bind(styles);
 
@@ -73,13 +72,13 @@ function ForgotPasswordPage() {
                     className={cx("form-recover")}
                     handleFormSubmit={handleSubmitRecover}
                 >
-                    <p className={cx("hint", !recover ? "active" : "inactive")}>
+                    <h4 className={cx("hint", !recover ? "active" : "inactive")}>
                         Vui lòng nhập địa chỉ email đã đăng ký để yêu cầu khôi phục mật khẩu
-                    </p>
-                    <p className={cx("hint", recover ? "active" : "inactive")}>
+                    </h4>
+                    <h4 className={cx("hint", recover ? "active" : "inactive")}>
                         Link khôi phục mật khẩu đã được gửi vào mail của bạn. Vui lòng kiểm tra mail. <br />
                         Click vào đường link được đính kèm trong mail để chuyển đến trang đặt lại mật khẩu.
-                    </p>
+                    </h4>
                     {!recover &&
                         <>
                             <Input

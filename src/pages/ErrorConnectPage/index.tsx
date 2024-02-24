@@ -15,7 +15,7 @@ function ErrorConnectPage() {
 
     const handleSubmit = useCallback((event: React.MouseEvent<HTMLFormElement>) => {
         event.preventDefault();
-        navigate("/forgot-password");
+        navigate(routes.ForgotPasswordPage);
     }, []);
 
     return (
@@ -30,9 +30,9 @@ function ErrorConnectPage() {
                     className={cx("form-error")}
                     handleFormSubmit={(event) => handleSubmit(event)}
                 >
-                    <p className={cx("hint", "w-585")}>
+                    <h4 className={cx("hint", "w-585")}>
                         Dường như đã có chút trục trặc hoặc link này đã hết hạn. Vui lòng thử lại hoặc yêu cầu gửi lại link để đặt lại mật khẩu của bạn.
-                    </p>
+                    </h4>
                     <Button
                         primary
                         value="Yêu cầu gửi lại link"

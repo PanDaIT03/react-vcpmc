@@ -22,8 +22,8 @@ export const DefaultLayout = ({ children }: DefaultLayoutProps) => {
     const sidebarRef = useRef<HTMLDivElement>(null);
 
     const { setActive } = useContext(SidebarContext);
-    const userState = useSelector((state: RootState) => state.user);
-    const { currentUser } = userState;
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+    const { currentUser } = useSelector((state: RootState) => state.user);
 
     const [account, setAccount] = useState({
         name: "",
@@ -34,6 +34,22 @@ export const DefaultLayout = ({ children }: DefaultLayoutProps) => {
     useEffect(() => {
         document.title = 'VCPMC - Trang quản trị';
     }, []);
+
+    useEffect(() => {
+        const handleWindowResize = () => {
+            setWindowWidth(window.innerWidth);
+        };
+
+        window.addEventListener('resize', handleWindowResize);
+
+        return () => {
+            window.removeEventListener('resize', handleWindowResize);
+        };
+    });
+
+    useEffect(() => {
+        windowWidth <= 1805 && setActive(false);
+    }, [windowWidth]);
 
     useEffect(() => {
         if (!currentUser)

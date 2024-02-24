@@ -64,8 +64,9 @@
 
 .error-message {
   text-align: left;
+  height: 2.4rem;
   line-height: 2.4rem;
-  margin-top: 2rem;
+  margin-top: 1rem;
   color: var(--red);
 }
 
@@ -133,7 +134,7 @@
         width: 100% !important;
       }
 
-      p {
+      h4 {
         width: 100%;
         text-align: center !important;
       }

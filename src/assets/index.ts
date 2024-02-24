@@ -74,5 +74,6 @@ export const images = {
   power: require('./images/fi_power.png'),
   editAlt: require('./images/u_file-edit-alt.png'),
   editCalendar: require('./images/edit_calendar.png'),
+  filter: require('./images/filter.png'),
   // aaaa: require('./images/aaaa.png'),
 };
