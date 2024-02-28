@@ -14,10 +14,11 @@ import { CancleForm } from "~/components/CancelForm";
 import { Checkbox } from "~/components/Checkbox";
 import { CommonWrapper } from "~/components/CommonWrapper";
 import { Dialog } from "~/components/Dialog";
+import { Filter } from "~/components/Filter";
 import { GridView } from "~/components/GridView";
 import { Input } from "~/components/Input";
 import { Loading } from "~/components/Loading";
-import { OptionMenu } from "~/components/OptionMenu";
+import { IOptionMenu } from "~/components/OptionMenu";
 import { SwitchViewButton } from "~/components/SwitchViewButtons";
 import { Table } from "~/components/Table";
 import {
@@ -56,6 +57,7 @@ function RecordPage() {
     const [cancel, setCancel] = useState('');
     const [audioSource, setAudioSource] = useState('');
     const [searchValue, setSearchValue] = useState('');
+    const [filter, setFilter] = useState<IOptionMenu[]>([]);
     const [approveArr, setApproveArr] = useState<IRecord[]>([]);
     const [searchResult, setSearchResult] = useState<IRecord[]>([]);
     const [editRecords, setEditRecords] = useState<IRecord[]>([]);
@@ -69,6 +71,18 @@ function RecordPage() {
     const { records, loading } = recordState;
     const userState = useSelector((state: RootState) => state.user);
     const { currentUser } = userState;
+
+    const search = {
+        tag: <Input
+            id="search"
+            name="search"
+            value={searchValue}
+            placeholder="Tên bản ghi, ca sĩ,..."
+            size="custom"
+            iconRight={images.search}
+            onChange={(event) => handleChange(event)}
+        />
+    };
 
     useEffect(() => {
         setCurrentPage(1);
@@ -84,38 +98,34 @@ function RecordPage() {
     }, [audioVisible]);
 
     useEffect(() => {
-        const musicKindValue = musicKind.title;
+        const musicKindValue = musicKind.title || "";
         const search = searchValue.toLowerCase().trim();
 
-        const isValid = typeof musicKindValue !== "undefined";
+        const result = records.filter(record => {
+            let itemResult;
 
-        if (isValid) {
-            const result = records.filter(record => {
-                let itemResult;
-
-                if (musicKindValue === "Tất cả")
+            if (musicKindValue === "Tất cả")
+                itemResult = record;
+            else if (record.category?.includes(musicKindValue)) {
+                if (musicKindValue === "Pop")
                     itemResult = record;
-                else if (record.category?.includes(musicKindValue)) {
-                    if (musicKindValue === "Pop")
-                        itemResult = record;
-                    else if (musicKindValue === "EDM")
-                        itemResult = record;
-                    else if (musicKindValue === "Ballad")
-                        itemResult = record;
-                };
+                else if (musicKindValue === "EDM")
+                    itemResult = record;
+                else if (musicKindValue === "Ballad")
+                    itemResult = record;
+            };
 
-                return itemResult;
-            });
+            return itemResult;
+        });
 
-            setSearchResult(result.filter(item =>
-                item.nameRecord.toLowerCase().includes(search) ||
-                item.singer.toLowerCase().includes(search) ||
-                item.ISRCCode.toLowerCase().includes(search) ||
-                item.author.toLowerCase().includes(search) ||
-                item.category?.toLowerCase().includes(search) ||
-                item.format.toLowerCase().includes(search)
-            ));
-        };
+        setSearchResult(result.filter(item =>
+            item.nameRecord.toLowerCase().includes(search) ||
+            item.singer.toLowerCase().includes(search) ||
+            item.ISRCCode.toLowerCase().includes(search) ||
+            item.author.toLowerCase().includes(search) ||
+            item.category?.toLowerCase().includes(search) ||
+            item.format.toLowerCase().includes(search)
+        ));
     }, [musicKind, searchValue]);
 
     useEffect(() => {
@@ -123,6 +133,32 @@ function RecordPage() {
     }, [isCheckedAll]);
 
     useEffect(() => {
+        const fiterData: IOptionMenu[] = [
+            {
+                title: "Thể loại",
+                data: CB_MUSIC_KIND,
+                boxSize: "small",
+                setState: setMusicKind,
+            }, {
+                title: "Định dạng",
+                data: CB_FORMAT,
+                boxSize: "small",
+                setState: setFormat
+            },
+            !approveOption ? {
+                title: "Thời hạn sử dụng",
+                data: CB_VADILITY_MUSIC,
+                setState: setVadilityMusic
+            } : {} as IOptionMenu,
+            !approveOption ? {
+                title: "Trạng thái",
+                data: CB_APPROVE,
+                boxSize: "small-pl",
+                setState: setApprove
+            } : {} as IOptionMenu
+        ];
+
+        setFilter(fiterData);
         setEditRecords(records.filter(record => record.status === "Chưa phê duyệt"));
     }, [approveOption]);
 
@@ -154,150 +190,115 @@ function RecordPage() {
     return (
         <div className={cx("wrapper")}>
             <CommonWrapper title="Kho bản ghi">
-                <div className={cx("action")}>
-                    <div className={cx("search")}>
-                        <Input
-                            id="search"
-                            name="search"
-                            value={searchValue}
-                            placeholder="Tên bản ghi, ca sĩ,..."
-                            size="custom"
-                            iconRight={images.search}
-                            onChange={(event) => handleChange(event)}
+                <div className={cx("actions")}>
+                    <div className={cx("actions__filter")}>
+                        <Filter
+                            data={filter}
+                            search={search}
+                            searchPosition="top"
+                            spaceBetween={approveOption ? "default" : "auto"}
+                            width={approveOption ? "max-content" : "max-width-100pc"}
                         />
+                        {(approveOption && isGridView)
+                            && <Checkbox
+                                label="Chọn tất cả"
+                                className={cx("check-all")}
+                                checked={isCheckedAll}
+                                onClick={() => setIsCheckedAll(!isCheckedAll)} />}
                     </div>
-                    <div className={cx("actions-top")}>
-                        <div className={cx("filter", approveOption && "approve")}>
-                            <OptionMenu
-                                title="Thể loại"
-                                data={CB_MUSIC_KIND}
-                                boxSize="small"
-                                setState={setMusicKind}
-                            />
-                            <OptionMenu
-                                title="Định dạng"
-                                data={CB_FORMAT}
-                                boxSize="small"
-                                setState={setFormat}
-                            />
-                            {!approveOption
-                                && <>
-                                    <OptionMenu
-                                        title="Thời hạn sử dụng"
-                                        data={CB_VADILITY_MUSIC}
-                                        setState={setVadilityMusic}
-                                    />
-                                    <OptionMenu
-                                        title="Trạng thái"
-                                        data={CB_APPROVE}
-                                        boxSize="small-pl"
-                                        setState={setApprove}
-                                    />
-                                </>}
-                            {(approveOption && isGridView)
-                                && <div
-                                    className={cx("checked-all")}
-                                    onClick={() => setIsCheckedAll(!isCheckedAll)}
-                                >
-                                    <Checkbox checked={isCheckedAll} />
-                                    <p>Chọn tất cả</p>
-                                </div>}
-                        </div>
-                        <SwitchViewButton state={isGridView} setState={setIsGridView} />
-                    </div>
+                    <SwitchViewButton state={isGridView} setState={setIsGridView} />
                 </div>
-                {
-                    !isGridView
-                        ? <Table
-                            isApprove={approveOption}
-                            isCheckedAll={isCheckedAll}
-                            thead={["STT", "Tên bản ghi", "Mã ISRC", "Thời lượng", "Ca sĩ", "Tác giả",
-                                "Thể loại", "Định dạng", "Thời hạn sử dụng", '', '']}
-                            className={cx("record")}
-                            setIsCheckedAll={setIsCheckedAll}
-                        >
-                            {(approveOption ? editRecords : searchResult).map((record, index) => {
-                                let expiryDateRecord = new Date(formatDateMDY(record.expirationDate) || "");
-                                let currentDate = new Date(getCurrentDate("mm/dd/yyyy"));
-                                let isExpiry = expiryDateRecord < currentDate;
+                {!isGridView
+                    ? <Table
+                        isApprove={approveOption}
+                        isCheckedAll={isCheckedAll}
+                        className={cx("record")}
+                        thead={["STT", "Tên bản ghi", "Mã ISRC", "Thời lượng", "Ca sĩ", "Tác giả",
+                            "Thể loại", "Định dạng", "Thời hạn sử dụng", '', '']}
+                        setIsCheckedAll={setIsCheckedAll}
+                    >
+                        {(approveOption ? editRecords : searchResult).map((record, index) => {
+                            let expiryDateRecord = new Date(formatDateMDY(record.expirationDate) || "");
+                            let currentDate = new Date(getCurrentDate("mm/dd/yyyy"));
+                            let isExpiry = expiryDateRecord < currentDate;
 
-                                let isItemExisted = approveArr.filter(item => item.docId === record.docId);
-                                let isChecked = isItemExisted.length > 0;
+                            let isItemExisted = approveArr.filter(item => item.docId === record.docId);
+                            let isChecked = isItemExisted.length > 0;
 
-                                return (
-                                    <tr
-                                        key={index}
-                                        onClick={() => handleClickApproveArr(record, isChecked)}
+                            return (
+                                <tr
+                                    key={index}
+                                    onClick={() => handleClickApproveArr(record, isChecked)}
+                                >
+                                    {approveOption
+                                        && <td>
+                                            <Checkbox checked={isChecked} />
+                                        </td>}
+                                    <td>{index + 1}</td>
+                                    <td>{record.nameRecord}</td>
+                                    <td>{record.ISRCCode}</td>
+                                    <td>{record.time}</td>
+                                    <td>{record.singer}</td>
+                                    <td>{record.author}</td>
+                                    <td>{record.category}</td>
+                                    <td>{record.format}</td>
+                                    <td>{
+                                        <>
+                                            {!isExpiry
+                                                ? <div className={cx("status")}>
+                                                    <img src={images.ellipseEffect} alt="icon" />
+                                                    <p>Còn thời hạn</p>
+                                                </div>
+                                                : <div className={cx("status")}>
+                                                    <img src={images.ellipseExpire} alt="icon" />
+                                                    <p>Đã hết hạn</p>
+                                                </div>}
+                                            <p className={cx("date")}>{record.expirationDate}</p>
+                                        </>
+                                    }</td>
+                                    <td
+                                        className={cx("edit")}
+                                        onClick={() => navigate(`/record/edit/${record.docId}`)}
                                     >
-                                        {approveOption
-                                            && <td>
-                                                <Checkbox checked={isChecked} />
-                                            </td>}
-                                        <td>{index + 1}</td>
-                                        <td>{record.nameRecord}</td>
-                                        <td>{record.ISRCCode}</td>
-                                        <td>{record.time}</td>
-                                        <td>{record.singer}</td>
-                                        <td>{record.author}</td>
-                                        <td>{record.category}</td>
-                                        <td>{record.format}</td>
-                                        <td>{
-                                            <>
-                                                {!isExpiry
-                                                    ? <div className={cx("status")}>
-                                                        <img src={images.ellipseEffect} alt="icon" />
-                                                        <p>Còn thời hạn</p>
-                                                    </div>
-                                                    : <div className={cx("status")}>
-                                                        <img src={images.ellipseExpire} alt="icon" />
-                                                        <p>Đã hết hạn</p>
-                                                    </div>}
-                                                <p className={cx("date")}>{record.expirationDate}</p>
-                                            </>
-                                        }</td>
-                                        <td
-                                            className={cx("edit")}
-                                            onClick={() => navigate(`/record/edit/${record.docId}`)}
-                                        >
-                                            Cập nhật</td>
-                                        <td
-                                            className={cx("edit")}
-                                            onClick={() => {
-                                                setAudioVisible(true);
-                                                setAudioSource(record.audioLink);
-                                            }}
-                                        >Nghe</td>
-                                    </tr>
-                                );
-                            })}
-                        </Table>
-                        : <div>
-                            <GridView
-                                data={approveOption ? editRecords : searchResult}
-                                isApprove={approveOption}
-                                setAudioSource={setAudioSource}
-                                approveArray={approveArr}
-                                setState={setAudioVisible}
-                                handleClick={handleClickApproveArr}
-                            />
-                            <div className={cx("action-bottom")}>
-                                <div className={cx("show", "--center-flex")}>
-                                    <div className={cx("title")}>Hiển thị</div>
-                                    <input name="pageNumber" value="13" onChange={handleChange} />
-                                    <div className={cx("sub-title")}>hàng trong mỗi trang</div>
+                                        Cập nhật</td>
+                                    <td
+                                        className={cx("edit")}
+                                        onClick={() => {
+                                            setAudioVisible(true);
+                                            setAudioSource(record.audioLink);
+                                        }}
+                                    >Nghe</td>
+                                </tr>
+                            );
+                        })}
+                    </Table>
+                    : <>
+                        <GridView
+                            data={approveOption ? editRecords : searchResult}
+                            isApprove={approveOption}
+                            setAudioSource={setAudioSource}
+                            approveArray={approveArr}
+                            setState={setAudioVisible}
+                            handleClick={handleClickApproveArr}
+                        />
+                        <div className={cx("action-bottom")}>
+                            <div className={cx("show", "--center-flex")}>
+                                <div className={cx("title")}>Hiển thị</div>
+                                <input name="pageNumber" value="13" onChange={handleChange} />
+                                <div className={cx("sub-title")}>hàng trong mỗi trang</div>
+                            </div>
+                            <div className={cx("pagination")}>
+                                <FontAwesomeIcon icon={faChevronLeft} />
+                                <div className={cx("page-num", "--center-flex")}>
+                                    <div className={cx("active", "--center-flex")}>1</div>
+                                    <div>2</div>
+                                    <div>...</div>
+                                    <div>10</div>
                                 </div>
-                                <div className={cx("pagination")}>
-                                    <FontAwesomeIcon icon={faChevronLeft} />
-                                    <div className={cx("page-num", "--center-flex")}>
-                                        <div className={cx("active", "--center-flex")}>1</div>
-                                        <div>2</div>
-                                        <div>...</div>
-                                        <div>10</div>
-                                    </div>
-                                    <FontAwesomeIcon icon={faChevronRight} />
-                                </div>
+                                <FontAwesomeIcon icon={faChevronRight} />
                             </div>
                         </div>
+                    </>
                 }
                 <ActionBar visible={true}>
                     {!approveOption

@@ -36,6 +36,12 @@
   --text-stroke-text-and-stroke-2: #727288;
 
   --disabled-state: #3e3e50;
+
+  //Size
+  --pd-l-container-left: 5.9rem;
+  --w-sidebar-inactive: 4rem;
+  --pd-r-contract-wrapper: 2.5rem;
+  --max-w-table: 154.1rem;
 }
 
 * {
@@ -49,14 +55,12 @@ html {
 }
 
 body {
-  height: 108rem;
-  // height: 100vh;
+  height: 100%;
   color: var(--text-color);
   font: normal 600 1.5rem/1.8em Montserrat;
   line-height: 2.4rem;
   text-rendering: optimizeSpeed;
   background-color: var(--bg-color);
-  position: relative;
 }
 
 input {

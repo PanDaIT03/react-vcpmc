@@ -1,19 +1,5 @@
 .wrapper {
   width: 153.3rem;
-
-  .contract {
-    margin-top: 2.4rem;
-  }
-}
-
-.action {
-  margin-top: 3.2rem;
-  display: flex;
-  justify-content: space-between;
-
-  .search {
-    width: 50.1rem;
-  }
 }
 
 .contract_item {
@@ -34,4 +20,10 @@
 .cancel {
   width: 72rem;
   padding: 3.2rem 4rem 3.7rem 4rem;
+}
+
+@media only screen and (max-width: 1805px) {
+  .wrapper {
+    width: 100%;
+  }
 }

@@ -1,4 +1,4 @@
-.container {
+.wrapper {
   width: 11rem;
   background-color: var(--text-stroke-fill);
   border-top-left-radius: 2.5rem;
@@ -29,7 +29,7 @@
   }
 }
 
-.wrapper {
+.container {
   display: flex;
   width: 11rem;
   padding: 1.6rem;
@@ -66,5 +66,12 @@
     .title {
       color: var(--orange-4-default);
     }
+  }
+}
+
+@media only screen and (max-width: 1024px) {
+  .wrapper {
+    top: 95%;
+    background-color: transparent;
   }
 }

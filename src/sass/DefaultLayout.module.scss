@@ -75,3 +75,9 @@
   left: 50%;
   transform: translate(-50%, 50%);
 }
+
+@media only screen and (max-width: 1805px) {
+  .container_left {
+    width: 4rem !important;
+  }
+}

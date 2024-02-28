@@ -16,14 +16,6 @@ interface ActionBarItemOwnProps<E extends React.ElementType> {
 type ActionBarItemProps<E extends React.ElementType> = ActionBarItemOwnProps<E> &
     Omit<React.ComponentProps<E>, keyof ActionBarItemOwnProps<E>>
 
-// interface ActionBarItemProps {
-//     icon?: string
-//     title?: string
-//     disable?: boolean
-//     className?: string
-//     onClick?: (event: React.MouseEvent<HTMLDivElement>) => void
-// };
-
 export const ActionBarItem = <E extends React.ElementType = 'div'>({
     icon,
     title,
@@ -37,7 +29,7 @@ export const ActionBarItem = <E extends React.ElementType = 'div'>({
 
     if (!className) className = "";
 
-    const classes = cx("wrapper", {
+    const classes = cx("container", {
         disable
     });
     const props = {

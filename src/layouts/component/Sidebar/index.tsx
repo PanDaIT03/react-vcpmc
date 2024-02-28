@@ -90,27 +90,25 @@ export const Sidebar = ({ sidebarRef, onClick }: SidebarProps) => {
             className={cx("wrapper", active ? "active" : "inactive")}
             onClick={onClick}
         >
-            {active ?
-                <>
-                    <div className={cx("logo")}>
-                        <img src={images.logo} alt="logo" />
-                    </div>
-                    <div className={cx("sidebar-items")}>
-                        {SIDEBAR_ITEMS.map((item, index) => (
-                            <SidebarItem
-                                key={index}
-                                id={item.id}
-                                title={item.title}
-                                to={item.to}
-                                icon={item.icon}
-                                data={item.children}
-                                onClick={handleClickOption}
-                            />
-                        ))}
-                    </div>
-                </>
-                : <img src={images.angleRight} alt="angleRight" />
-            }
+            <div className={cx("content")} style={{ display: active ? "flex" : "none" }}>
+                <div className={cx("logo")}>
+                    <img src={images.logo} alt="logo" />
+                </div>
+                <div className={cx("sidebar-items")}>
+                    {SIDEBAR_ITEMS.map((item, index) => (
+                        <SidebarItem
+                            key={index}
+                            id={item.id}
+                            title={item.title}
+                            to={item.to}
+                            icon={item.icon}
+                            data={item.children}
+                            onClick={handleClickOption}
+                        />
+                    ))}
+                </div>
+            </div>
+            : <img src={images.angleRight} alt="angleRight" style={{ display: !active ? "flex" : "none" }} />
         </div>
     );
 };

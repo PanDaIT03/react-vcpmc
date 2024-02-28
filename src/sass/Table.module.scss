@@ -1,9 +1,34 @@
 .wrapper {
   width: 100%;
-  height: 72.7rem;
-  border-radius: 1.6rem;
+  max-width: var(--max-w-table);
   background: rgba(47, 47, 65, 0.7);
-  overflow: hidden;
+  border-radius: 1.6rem;
+  overflow-x: scroll;
+  margin-top: 2.4rem;
+
+  &::-webkit-scrollbar {
+    width: 0.7rem;
+    height: 0.7rem;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #3e3e5b;
+    border-radius: 1.6rem;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #727288;
+    border-radius: 1.6rem;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+}
+
+.container {
+  min-width: 115.4rem;
+  min-height: 60rem;
 
   .content {
     width: 100%;
@@ -22,7 +47,7 @@ table {
   border-collapse: collapse;
 
   &:has(.default-border) {
-    tr+tr {
+    tr + tr {
       border-top: 0.1rem solid rgba(114, 114, 136, 1);
     }
   }
@@ -69,17 +94,17 @@ table {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    
-    &>span {
+
+    & > span {
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 8px;
 
-      &>div {
+      & > div {
         width: max-content;
 
-        >div>input {
+        > div > input {
           width: 48.374px !important;
           height: 32px !important;
           padding: 6px 16.187px 5px 16.187px !important;
@@ -117,10 +142,10 @@ tbody {
 
     &.action {
       width: max-content;
-    color: var(--orange-4-default);
-    padding: 5px 16px;
-    text-decoration: underline;
-    cursor: pointer;
+      color: var(--orange-4-default);
+      padding: 5px 16px;
+      text-decoration: underline;
+      cursor: pointer;
     }
   }
 }
@@ -135,27 +160,27 @@ tbody {
     opacity: 1;
   }
 
-  &>li {
+  & > li {
     padding: 0 9px;
     user-select: none;
 
-    &>a {
+    & > a {
       padding: 4px 8px;
       border-radius: 50%;
       background-color: transparent;
       cursor: pointer;
 
-      &>svg {
+      & > svg {
         font-size: 1.5rem;
       }
 
       &:hover {
-        background-color: #FF7506;
+        background-color: #ff7506;
       }
     }
 
-    &.active>a {
-      background-color: #FF7506;
+    &.active > a {
+      background-color: #ff7506;
     }
   }
 }
@@ -205,3 +230,28 @@ tbody {
     gap: 2rem;
   }
 }
+
+// @media only screen and (max-width: 1145px) {
+//   .wrapper {
+//     overflow-x: scroll;
+//   }
+
+//   .wrapper::-webkit-scrollbar {
+//     width: 0.7rem;
+//     height: 0.7rem;
+//   }
+
+//   .wrapper::-webkit-scrollbar-track {
+//     background: #3e3e5b;
+//     border-radius: 1.6rem;
+//   }
+
+//   .wrapper::-webkit-scrollbar-thumb {
+//     background: #727288;
+//     border-radius: 1.6rem;
+//   }
+
+//   .wrapper::-webkit-scrollbar-thumb:hover {
+//     background: #555;
+//   }
+// }

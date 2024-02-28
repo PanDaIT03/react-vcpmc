@@ -3,23 +3,28 @@ import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 
 import { images } from "~/assets";
 import { IGlobalConstantsType } from "~/types";
-import { OptionMenu } from "../OptionMenu";
+import { Input } from "../Input";
+import { IOptionMenu, OptionMenu } from "../OptionMenu";
 
 import styles from "~/sass/Filter.module.scss";
 const cx = classNames.bind(styles);
 
-interface FilterProps {
-    data: IFilter[]
-    size?: number
+interface IFilter {
+    data: IOptionMenu[]
+    search: any
+    className?: string
+    width?: "max-content" | "max-width-100pc"
+    spaceBetween?: "auto" | "default"
+    searchPosition?: "top" | "right" | "bottom" | "left"
 };
 
-export interface IFilter {
-    title: string
+interface FilterItemProps {
+    title?: string
     data: IGlobalConstantsType[]
     setState?: Dispatch<SetStateAction<IGlobalConstantsType>>
 };
 
-const FilterItem = ({ title, data, setState }: IFilter) => {
+const FilterItem = ({ title, data, setState }: FilterItemProps) => {
     const [active, setActive] = useState(1);
 
     const handleClick = (itemChoosen: IGlobalConstantsType) => {
@@ -46,21 +51,36 @@ const FilterItem = ({ title, data, setState }: IFilter) => {
 
 export const Filter = ({
     data,
-    size
-}: FilterProps) => {
+    search,
+    className,
+    width = "max-width-100pc",
+    spaceBetween = "default",
+    searchPosition = "right"
+}: IFilter) => {
+    if (!className) className = "";
+
+    const classes = cx("container", {
+        [className]: className,
+        [width]: width,
+        [searchPosition]: searchPosition
+    });
+
     const [visible, setVisible] = useState(false);
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
     const filterRef = useRef<HTMLDivElement>(null);
 
-    const renderFilter = () => {
-        return data.map((item, index) => (
-            <OptionMenu
-                key={index}
-                title={item.title}
-                data={item.data}
-                setState={item.setState}
-            />
-        ));
-    };
+    useEffect(() => {
+        const handleWindowResize = () => {
+            setWindowWidth(window.innerWidth);
+        };
+
+        window.addEventListener('resize', handleWindowResize);
+
+        return () => {
+            window.removeEventListener('resize', handleWindowResize);
+        };
+    });
 
     useEffect(() => {
         let handler = (event: MouseEvent) => {
@@ -74,29 +94,46 @@ export const Filter = ({
         };
     });
 
+    const renderFilter = () => {
+        return data.map((item, index) => (
+            Object.keys(item).length > 0 && <OptionMenu
+                key={index}
+                title={item.title}
+                data={item.data}
+                setState={item.setState}
+            />
+        ));
+    };
+
     return (
-        <div className={cx("container")} ref={filterRef}>
-            {size && size <= 1860
-                ? <div className={cx("filter")}>
-                    <div className={cx("filter__icon")} onClick={() => setVisible(!visible)}>
-                        <img src={images.filter} alt="filter" />
-                    </div>
-                    <div className={cx("filter__dropdown", !visible && "in-active")}>
-                        <div className={cx("title")}>Lọc theo</div>
-                        <div className={cx("content")}>
-                            <div className={cx("dropdown-list")}>
-                                {data.map((item, index) => (
-                                    <div className={cx("item")} key={index}>
-                                        <FilterItem
-                                            title={item.title}
-                                            data={item.data}
-                                            setState={item.setState} />
-                                    </div>))}
+        <div className={classes}>
+            {Object.keys(data).length > 0
+                && <div className={cx("container__left", spaceBetween)} ref={filterRef}>
+                    {(windowWidth && windowWidth <= 1860)
+                        ? <div className={cx("filter")}>
+                            <div className={cx("filter__icon")} onClick={() => setVisible(!visible)}>
+                                <img src={images.filter} alt="filter" />
+                            </div>
+                            <div className={cx("filter__dropdown", !visible && "in-active")}>
+                                <div className={cx("title")}>Lọc theo</div>
+                                <div className={cx("content")}>
+                                    <div className={cx("dropdown-list")}>
+                                        {data.map((item, index) => (
+                                            <div className={cx("item")} key={index}>
+                                                <FilterItem
+                                                    title={item.title}
+                                                    data={item.data}
+                                                    setState={item.setState} />
+                                            </div>))}
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-                : renderFilter()}
+                        : renderFilter()}
+                </div>}
+            <div className={cx("container__right")}>
+                {Object.keys(search).length > 0 && <Input {...search.tag.props} />}
+            </div>
         </div>
     );
 };

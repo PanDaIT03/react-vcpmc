@@ -1,45 +1,21 @@
 .wrapper {
   width: 154.1rem;
-}
 
-.action {
-  margin-top: 3.2rem;
-  display: flex;
-  justify-content: space-between;
-  flex-direction: column;
-  gap: 2.4rem;
-
-  .search {
-    width: 50.1rem;
+  .actions {
+    display: flex;
+    align-items: end;
+    gap: 6.4rem;
   }
 }
 
-.actions-top {
+.actions__filter {
   display: flex;
-  justify-content: space-between;
+  align-items: end;
+  flex: 1;
   gap: 6.4rem;
 
-  .approve {
-    flex: auto;
-    gap: 6.4rem;
-    justify-content: flex-start;
-  }
-}
-
-.filter {
-  display: flex;
-  justify-content: space-between;
-  flex: 1;
-
-  .checked-all {
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-    color: var(--white);
-    font-weight: 400;
-    letter-spacing: -0.032px;
-    cursor: pointer;
-    user-select: none;
+  .check-all {
+    height: 4rem;
   }
 }
 

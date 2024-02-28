@@ -1,28 +1,63 @@
+:root {
+  --filter-w-h: 5.2rem;
+}
+
 .container {
+  max-width: 154.1rem;
+  margin-top: 3.2em;
   display: flex;
-  gap: 6.4rem;
+  justify-content: space-between;
+  gap: 2.4rem;
+
+  .container__right {
+    width: 50.1rem;
+  }
 
   .in-active {
     opacity: 0;
-    top: 55%;
-    transform: translateY(-50%);
+    top: calc(var(--filter-w-h) + 5rem);
     pointer-events: none;
+  }
+
+  ::-webkit-scrollbar {
+    width: 0.7rem;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #3e3e5b;
+    border-radius: 1.6rem;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #727288;
+    border-radius: 1.6rem;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+}
+
+.container__left {
+  display: flex;
+
+  .filter {
+    position: relative;
+    transition: all 0.2s linear;
   }
 }
 
 .filter__icon {
-  width: 5.2rem;
-  height: 5.2rem;
+  width: var(--filter-w-h);
+  height: var(--filter-w-h);
   font-size: 2.6rem;
   border-radius: 50%;
   color: var(--orange-4-default);
   background-color: var(--white-transparent);
-  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  transition: all 0.2s linear;
 
   &:hover {
     opacity: 0.8;
@@ -36,9 +71,9 @@
   background-color: var(--text-stroke-fill);
   position: absolute;
   opacity: 1;
-  top: 48%;
-  transform: translateY(-50%);
+  top: var(--filter-w-h);
   transition: all 0.2s ease-in-out;
+  z-index: 1;
 
   box-shadow: -2px 0px 5px 3px rgba(0, 0, 0, 0.22);
   -webkit-box-shadow: -2px 0px 5px 3px rgba(0, 0, 0, 0.22);
@@ -67,6 +102,12 @@
     letter-spacing: 0.21px;
     padding: 0.8rem;
     border-bottom: 0.1rem solid rgb(114, 114, 136);
+  }
+
+  .dropdown-list {
+    height: 34.5rem;
+    overflow-y: scroll;
+    scroll-behavior: auto;
   }
 }
 
@@ -103,4 +144,39 @@
     background-color: rgba(255, 255, 255, 0.6);
     transition: all 0.2s linear;
   }
+}
+
+//----
+.top {
+  flex-direction: column-reverse;
+}
+
+.right {
+  flex-direction: row;
+}
+
+.bottom {
+  flex-direction: column;
+}
+
+.left {
+  flex-direction: row-reverse;
+}
+
+//----
+.default {
+  gap: 6.4rem;
+}
+
+.auto {
+  justify-content: space-between;
+}
+
+//----
+.max-content {
+  width: max-content;
+}
+
+.max-width-100pc {
+  width: 100%;
 }

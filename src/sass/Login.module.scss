@@ -18,10 +18,7 @@
     color: var(--orange-4-default);
     text-decoration-line: underline;
     cursor: pointer;
-    position: absolute;
-    left: 50%;
-    bottom: 5%;
-    transform: translateX(-50%);
+    margin-top: 2rem;
   }
 
   .btn-login,

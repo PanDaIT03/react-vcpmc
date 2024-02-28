@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { images } from "~/assets";
 import { ActionBar } from "~/components/ActionBar";
 import { ActionBarItem } from "~/components/ActionBar/ActionBarItem";
+import { Filter } from "~/components/Filter";
 import { Input } from "~/components/Input";
 import { Loading } from "~/components/Loading";
 import { Table } from "~/components/Table";
@@ -27,6 +28,19 @@ function EntrustmentContract() {
     const [searchResult, setSearchResult] = useState<EtmContract[]>([]);
     const [itemsCurrent, setItemsCurrent] = useState<Array<EtmContract>>([] as Array<EtmContract>);
     const [itemsPerPage, setItemsPerPage] = useState<string>('8');
+
+    const search = {
+        tag: <Input
+            id="search"
+            name="search"
+            value={searchValue}
+            placeholder="Tên hợp đồng, số hợp đồng, người uỷ quyền..."
+            size="custom"
+            iconRight={images.search}
+            onChange={(event) => handleInputChange(event)}
+            className={cx('search-input')}
+        />
+    };
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSearchValue(event.target.value);
@@ -63,18 +77,7 @@ function EntrustmentContract() {
 
     return (
         <div className={cx('entrustment-contract-wrapper')}>
-            <div className={cx("search")}>
-                <Input
-                    id="search"
-                    name="search"
-                    value={searchValue}
-                    placeholder="Tên hợp đồng, số hợp đồng, người uỷ quyền..."
-                    size="custom"
-                    iconRight={images.search}
-                    onChange={(event) => handleInputChange(event)}
-                    className={cx('search-input')}
-                />
-            </div>
+            <Filter data={[]} search={search} />
             <Table
                 thead={['STT', 'Số hợp đồng', 'Khách hàng', 'Ngày tạo',
                     'Ngày hiệu lực', 'Ngày hết hạn', 'Hiệu lực hợp đồng', '', '']}
@@ -105,7 +108,7 @@ function EntrustmentContract() {
                             <td><p>{contract.expirationDate}</p></td>
                             <td><p className={cx('status', status)}>{contract.status}</p></td>
                             <td><p className={cx('action')} onClick={() => navigate(`/contract-management/entrustment-contract/detail/${contract.docId}`)}>Xem chi tiết</p></td>
-                            <td><p className={cx('action')} onClick={() => navigate(`/entrustment-contract/copy/${contract.docId}`)}>Sao chép hợp đồng</p></td>
+                            <td><p className={cx('action')}>Sao chép hợp đồng</p></td>
                         </tr>
                     );
                 })}

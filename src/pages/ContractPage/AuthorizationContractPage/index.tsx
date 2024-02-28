@@ -9,10 +9,10 @@ import { ActionBarItem } from "~/components/ActionBar/ActionBarItem";
 import Button from "~/components/Button";
 import { CancleForm } from "~/components/CancelForm";
 import { Dialog } from "~/components/Dialog";
-import { Filter, IFilter } from "~/components/Filter";
+import { Filter } from "~/components/Filter";
 import { Input } from "~/components/Input";
 import { Loading } from "~/components/Loading";
-import { OptionMenu } from "~/components/OptionMenu";
+import { IOptionMenu } from "~/components/OptionMenu";
 import { Table } from "~/components/Table";
 import { routes } from "~/config/routes";
 import { CB_OWNER_ITEMS, VALIDITY_CONTRACT_ITEMS } from "~/constants";
@@ -38,9 +38,6 @@ function AuthorizationContractPage() {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
 
-    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-
-    const [filter, setFilter] = useState<IFilter[]>([] as IFilter[]);
     const { setCurrentPage } = useContext(SidebarContext);
     const [visible, setVisible] = useState(false);
     const [searchValue, setSearchValue] = useState('');
@@ -53,43 +50,37 @@ function AuthorizationContractPage() {
     const contractState = useSelector((state: RootState) => state.contract);
     const { contracts, loading } = contractState;
 
+    const filter: IOptionMenu[] = [
+        {
+            title: "Quyền sở hữu",
+            data: CB_OWNER_ITEMS,
+            setState: setOwnerShip
+        }, {
+            title: "Hiệu lực hợp đồng",
+            data: VALIDITY_CONTRACT_ITEMS,
+            setState: setValidity
+        }
+    ];
+
+    const search = {
+        tag: <Input
+            id="search"
+            name="search"
+            value={searchValue}
+            placeholder="Tên hợp đồng, số hợp đồng, người uỷ quyền..."
+            size="custom"
+            iconRight={images.search}
+            onChange={(event) => handleChange(event)}
+        />
+    };
+
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSearchValue(event.target.value);
     };
 
-    const handleClickSearch = () => { };
-
-    useEffect(() => {
-        const handleWindowResize = () => {
-            setWindowWidth(window.innerWidth);
-        };
-
-        window.addEventListener('resize', handleWindowResize);
-
-        return () => {
-            window.removeEventListener('resize', handleWindowResize);
-        };
-    });
-
     useEffect(() => {
         setCurrentPage(4);
         dispatch(getContractsAction());
-    }, []);
-
-    console.log(ownership);
-
-    useEffect(() => {
-        setFilter([
-            {
-                title: "Quyền sở hữu",
-                data: CB_OWNER_ITEMS,
-                setState: setOwnerShip,
-            }, {
-                title: "Hiệu lực hợp đồng",
-                data: VALIDITY_CONTRACT_ITEMS,
-                setState: setValidity
-            }
-        ]);
     }, []);
 
     useEffect(() => {
@@ -143,31 +134,13 @@ function AuthorizationContractPage() {
                 item.authorized.toLowerCase().includes(search) ||
                 item.status.toLowerCase().includes(search) ||
                 item.dateCreated.toLowerCase().includes(search)
-                // || (typeof item.ownerShips === "string"
-                //     ? item.ownerShips.toLowerCase().includes(search)
-                //     : item.ownerShips.filter(ownership => ownership.toLowerCase().includes(search))
-                // )
             ));
         };
     }, [ownership, validity, searchValue]);
 
     return (
         <div className={cx("wrapper")}>
-            <div className={cx("action")}>
-                <Filter data={filter} size={windowWidth} />
-                <div className={cx("search")}>
-                    <Input
-                        id="search"
-                        name="search"
-                        value={searchValue}
-                        placeholder="Tên hợp đồng, số hợp đồng, người uỷ quyền..."
-                        size="custom"
-                        iconRight={images.search}
-                        onChange={(event) => handleChange(event)}
-                        onIconRightClick={handleClickSearch}
-                    />
-                </div>
-            </div>
+            <Filter data={filter} search={search} />
             <Table
                 className={cx("contract")}
                 thead={["STT", "Số hợp đồng", "Tên hợp đồng", "Người uỷ quyền",

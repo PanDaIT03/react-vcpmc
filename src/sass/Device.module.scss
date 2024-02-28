@@ -10,15 +10,9 @@
       margin-top: 0;
     }
   }
-
-  .filter-action {
-    width: 1541px;
-  }
 }
 
 .device-table {
-  width: 1541px;
-
   .action {
     width: max-content;
     color: var(--orange-4-default);
@@ -29,22 +23,6 @@
     &:hover {
       opacity: 1;
     }
-  }
-}
-
-.filter-action {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  .combo-box {
-    display: flex;
-    gap: 24px;
-    margin: 24px 0;
-  }
-
-  .search {
-    width: 665px;
   }
 }
 

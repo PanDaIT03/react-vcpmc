@@ -51,7 +51,7 @@ export const Table = ({
 
     if (!className) className = "";
 
-    const classes = cx("wrapper", {
+    const classes = cx("container", {
         [className]: className
     });
 
@@ -88,76 +88,78 @@ export const Table = ({
     const handleChange = () => { };
 
     return (
-        <div className={classes}>
-            <div className={cx("content")}>
-                <table>
-                    <thead>
-                        <tr className={cx("title")}>
-                            {headerChildren && headerChildren}
-                            {isApprove && <th>
-                                <Checkbox
-                                    checked={isCheckedAll}
-                                    onClick={() => setIsCheckedAll && setIsCheckedAll(!isCheckedAll)}
-                                />
-                            </th>}
-                            {thead.map((item, index) => (
-                                <th key={index}><p>{item}</p></th>
-                            ))}
-                        </tr>
-                    </thead>
-                    <tbody className={cx(isScroll && "scroll", border)}>
-                        {children}
+        <div className={cx("wrapper")}>
+            <div className={classes}>
+                <div className={cx("content")}>
+                    <table>
+                        <thead>
+                            <tr className={cx("title")}>
+                                {headerChildren && headerChildren}
+                                {isApprove && <th>
+                                    <Checkbox
+                                        checked={isCheckedAll}
+                                        onClick={() => setIsCheckedAll && setIsCheckedAll(!isCheckedAll)}
+                                    />
+                                </th>}
+                                {thead.map((item, index) => (
+                                    <th key={index}><p>{item}</p></th>
+                                ))}
+                            </tr>
+                        </thead>
+                        <tbody className={cx(isScroll && "scroll", border)}>
+                            {children}
 
-                    </tbody>
-                </table>
-                {typeof paginate !== 'undefined' ? <div className={cx('table__option', paginateClass)}>
-                    <div className={cx('table__option__container')}>
-                        <span>
-                            <p>Hiển thị</p>
-                            <Input
-                                size="small-pl"
-                                value={per}
-                                name='number'
-                                onChange={(e: ChangeEvent<HTMLInputElement>) => setItemsPerPage && setItemsPerPage(e.target.value)}
+                        </tbody>
+                    </table>
+                    {typeof paginate !== 'undefined' ? <div className={cx('table__option', paginateClass)}>
+                        <div className={cx('table__option__container')}>
+                            <span>
+                                <p>Hiển thị</p>
+                                <Input
+                                    size="small-pl"
+                                    value={per}
+                                    name='number'
+                                    onChange={(e: ChangeEvent<HTMLInputElement>) => setItemsPerPage && setItemsPerPage(e.target.value)}
+                                />
+                                <p>hàng trong mỗi trang</p>
+                            </span>
+                            <ReactPaginate
+                                breakLabel="..."
+                                nextLabel={<FontAwesomeIcon icon={faChevronRight} />}
+                                onPageChange={handlePageClick}
+                                pageRangeDisplayed={3}
+                                pageCount={pageCount}
+                                previousLabel={<FontAwesomeIcon icon={faChevronLeft} />}
+                                renderOnZeroPageCount={null}
+                                containerClassName={cx("pagination")}
+                                pageLinkClassName={cx("page-num")}
+                                previousClassName={cx("page-num")}
+                                nextLinkClassName={cx("page-num")}
+                                activeClassName={cx("active")}
                             />
-                            <p>hàng trong mỗi trang</p>
-                        </span>
-                        <ReactPaginate
-                            breakLabel="..."
-                            nextLabel={<FontAwesomeIcon icon={faChevronRight} />}
-                            onPageChange={handlePageClick}
-                            pageRangeDisplayed={3}
-                            pageCount={pageCount}
-                            previousLabel={<FontAwesomeIcon icon={faChevronLeft} />}
-                            renderOnZeroPageCount={null}
-                            containerClassName={cx("pagination")}
-                            pageLinkClassName={cx("page-num")}
-                            previousClassName={cx("page-num")}
-                            nextLinkClassName={cx("page-num")}
-                            activeClassName={cx("active")}
-                        />
+                        </div>
                     </div>
-                </div>
-                    : <></>
-                }
-                {/* {!isScroll
-                    && <div className={cx("action-bottom")}>
-                        <div className={cx("show", "--center-flex")}>
-                            <div className={cx("title")}>Hiển thị</div>
-                            <input name="pageNumber" value="13" onChange={handleChange} />
-                            <div className={cx("sub-title")}>hàng trong mỗi trang</div>
-                        </div>
-                        <div className={cx("pagination")}>
-                            <FontAwesomeIcon icon={faChevronLeft} />
-                            <div className={cx("page-num", "--center-flex")}>
-                                <div className={cx("active", "--center-flex")}>1</div>
-                                <div>2</div>
-                                <div>...</div>
-                                <div>10</div>
+                        : <></>
+                    }
+                    {/* {!isScroll
+                        && <div className={cx("action-bottom")}>
+                            <div className={cx("show", "--center-flex")}>
+                                <div className={cx("title")}>Hiển thị</div>
+                                <input name="pageNumber" value="13" onChange={handleChange} />
+                                <div className={cx("sub-title")}>hàng trong mỗi trang</div>
                             </div>
-                            <FontAwesomeIcon icon={faChevronRight} />
-                        </div>
-                    </div>} */}
+                            <div className={cx("pagination")}>
+                                <FontAwesomeIcon icon={faChevronLeft} />
+                                <div className={cx("page-num", "--center-flex")}>
+                                    <div className={cx("active", "--center-flex")}>1</div>
+                                    <div>2</div>
+                                    <div>...</div>
+                                    <div>10</div>
+                                </div>
+                                <FontAwesomeIcon icon={faChevronRight} />
+                            </div>
+                        </div>} */}
+                </div>
             </div>
         </div>
     );

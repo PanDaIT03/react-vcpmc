@@ -7,20 +7,21 @@ import { useNavigate } from "react-router-dom";
 import { images } from "~/assets";
 import { ActionBar } from "~/components/ActionBar";
 import { ActionBarItem } from "~/components/ActionBar/ActionBarItem";
+import Button from "~/components/Button";
 import { Checkbox } from "~/components/Checkbox";
 import { CommonWrapper } from "~/components/CommonWrapper";
+import { Dialog } from "~/components/Dialog";
+import { Filter } from "~/components/Filter";
 import { Input } from "~/components/Input";
 import { Loading } from "~/components/Loading";
-import { OptionMenu } from "~/components/OptionMenu";
+import { IOptionMenu } from "~/components/OptionMenu";
 import { Table } from "~/components/Table";
 import { CB_ACCOUNT_GROUP } from "~/constants";
 import { SidebarContext } from "~/context/Sidebar/SidebarContext";
 import { RootState, useAppDispatch } from "~/state";
+import { changeStatusDevice, deleteDevices, getDeviceList } from "~/state/thunk/device";
 import { IGlobalConstantsType } from "~/types";
 import { IDevice } from "~/types/DeviceType";
-import { Dialog } from "~/components/Dialog";
-import Button from "~/components/Button";
-import { changeStatusDevice, deleteDevices, getDeviceList } from "~/state/thunk/device";
 
 import style from '~/sass/Device.module.scss';
 const cx = classNames.bind(style);
@@ -66,6 +67,29 @@ function DevicePage() {
     const [currentItems, setCurrentItems] = useState<IDevice[]>([] as IDevice[]);
     const [itemsChosen, setItemsChosen] = useState<IDevice[]>([] as IDevice[]);
     const [accountGroup, setAccountGroup] = useState<IGlobalConstantsType>(initialState);
+
+    const filter: IOptionMenu[] = [
+        {
+            title: 'Công ty',
+            data: CB_ACCOUNT_GROUP,
+            setState: setAccountGroup
+        }, {
+            title: 'Cột',
+            data: CB_SHOW_COLUNMS
+        }
+    ];
+
+    const search = {
+        tag: <Input
+            id="search"
+            name="search"
+            value={searchValue}
+            placeholder="Tên thiết bị, địa điểm, Mac Address..."
+            size="custom"
+            iconRight={images.search}
+            onChange={(event) => setSearchValue(event.target.value)}
+        />
+    };
 
     const deviceFormik = useFormik({
         initialValues: {
@@ -197,28 +221,7 @@ function DevicePage() {
             title='Danh sách thiết bị'
             className={cx('device-management-container')}
         >
-            <div className={cx("filter-action")}>
-                <div className={cx("combo-box")}>
-                    <OptionMenu
-                        boxSize="extra-large"
-                        data={CB_ACCOUNT_GROUP}
-                        setState={setAccountGroup}
-                        filterStyle={{ height: "40px" }}
-                    />
-                    <OptionMenu data={CB_SHOW_COLUNMS} />
-                </div>
-                <div className={cx("search")}>
-                    <Input
-                        id="search"
-                        name="search"
-                        value={searchValue}
-                        placeholder="Tên hợp đồng, số hợp đồng, người uỷ quyền..."
-                        size="custom"
-                        iconRight={images.search}
-                        onChange={(event) => setSearchValue(event.target.value)}
-                    />
-                </div>
-            </div>
+            <Filter data={filter} search={search} />
             <Table
                 // paginate={{
                 //     dataForPaginate: searchResult,

@@ -1,15 +1,15 @@
 import classNames from "classnames/bind";
 import { useCallback, useEffect, useRef, useState } from "react";
 
+import { images } from "~/assets";
+import { handleClickDropDown } from "~/constants";
 import { IGlobalConstantsType } from "~/types";
 import { Dropdown } from "../Poper/Dropdown";
-import { handleClickDropDown } from "~/constants";
-import { images } from "~/assets";
 
 import styles from "~/sass/OptionMenu.module.scss";
 const cx = classNames.bind(styles);
 
-interface OptionMenuProps {
+export interface IOptionMenu {
     data: IGlobalConstantsType[]
     title?: string
     titlePosition?: "top" | "left"
@@ -38,7 +38,7 @@ export const OptionMenu = ({
     filterStyle,
     setState,
     ...passProps
-}: OptionMenuProps) => {
+}: IOptionMenu) => {
     if (!className) className = "";
 
     const classes = cx("wrapper", !border && "none-border", {
@@ -117,5 +117,5 @@ export const OptionMenu = ({
                 />
             </div>
         </div >
-    )
+    );
 };

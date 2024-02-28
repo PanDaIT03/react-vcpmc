@@ -11,7 +11,7 @@ interface ActionBarProps {
 
 export const ActionBar = ({ visible = true, children }: ActionBarProps) => {
     return (
-        <div className={cx("container", visible && "active")}>
+        <div className={cx("wrapper", visible && "active")}>
             <div className={cx("action-bar-items")}>
                 {children}
             </div>

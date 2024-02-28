@@ -48,7 +48,19 @@ export const DefaultLayout = ({ children }: DefaultLayoutProps) => {
     });
 
     useEffect(() => {
-        windowWidth <= 1805 && setActive(false);
+        let handler = (event: MouseEvent) => {
+            if (!sidebarRef.current?.contains(event.target as Node) && windowWidth <= 1805)
+                setActive(false);
+        };
+        document.addEventListener("mousedown", handler);
+
+        return () => {
+            document.removeEventListener("mousedown", handler);
+        };
+    });
+
+    useEffect(() => {
+        windowWidth <= 1805 ? setActive(false) : setActive(true);
     }, [windowWidth]);
 
     useEffect(() => {
