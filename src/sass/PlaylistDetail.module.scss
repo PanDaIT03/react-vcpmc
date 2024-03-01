@@ -1,5 +1,6 @@
 .wrapper {
   width: 100%;
+  max-width: var(--max-width);
 
   .button-actions {
     display: flex;
@@ -12,7 +13,6 @@
 }
 
 .container {
-  width: 169rem;
   display: flex;
   align-items: flex-start;
   gap: 2.4rem;

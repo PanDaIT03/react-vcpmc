@@ -1,70 +1,66 @@
 .unit-detail-container {
-    & .remove-icon {
-        color: var(--color-red);
-    }
-
-    & .unit-detail-container__table {
-        width: 1686px;
-    }
+  & .remove-icon {
+    color: var(--color-red);
+  }
 }
 
 .table__row__checkbox {
-    &>div {
-        min-width: max-content;
-        padding: 0 0 8px 8px;
-    }
+  & > div {
+    min-width: max-content;
+    padding: 0 0 8px 8px;
+  }
 }
 
 .table__row-item {
-    height: 47px;
-    cursor: pointer;
+  height: 47px;
+  cursor: pointer;
 
-    &>td>p {
-        position: relative;
+  & > td > p {
+    position: relative;
 
-        &::after {
-            content: '';
-            display: block;
-            width: 8px;
-            height: 8px;
-            position: absolute;
-            top: 50%;
-            left: -13px;
-            transform: translateY(-50%);
-            border-radius: 50%;
-        }
-
-        &.active::after {
-            background-color: var(--emerald);
-        }
-
-        &.deactive::after {
-            background-color: var(--red);
-        }
-
-        &.action {
-            color: var(--orange-4-default);
-            text-align: center;
-            font-size: 1.2rem;
-            font-weight: 600;
-            letter-spacing: -0.024px;
-            text-decoration-line: underline;
-            -webkit-user-select: none;
-            user-select: none;
-        }
+    &::after {
+      content: "";
+      display: block;
+      width: 8px;
+      height: 8px;
+      position: absolute;
+      top: 50%;
+      left: -13px;
+      transform: translateY(-50%);
+      border-radius: 50%;
     }
 
-    &>td:first-child {
-        &>div {
-            padding-left: 8px;
-        }
+    &.active::after {
+      background-color: var(--emerald);
     }
+
+    &.deactive::after {
+      background-color: var(--red);
+    }
+
+    &.action {
+      color: var(--orange-4-default);
+      text-align: center;
+      font-size: 1.2rem;
+      font-weight: 600;
+      letter-spacing: -0.024px;
+      text-decoration-line: underline;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+  }
+
+  & > td:first-child {
+    & > div {
+      padding-left: 8px;
+    }
+  }
 }
 
 .search {
-    margin: 24px 0;
+  margin: 24px 0;
 
-    & input {
-        width: 665px !important;
-    }
+  & input {
+    width: 665px !important;
+  }
 }

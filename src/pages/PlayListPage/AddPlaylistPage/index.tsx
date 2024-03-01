@@ -64,10 +64,12 @@ function AddPlaylistPage() {
     const { setActive } = useContext(SidebarContext);
     const [visible, setVisible] = useState(false);
     const [audioSource, setAudioSource] = useState("");
+    const [itemsPerPage, setItemsPerPage] = useState('8');
 
     const { loading, status } = useSelector((state: RootState) => state.playlist);
     const { currentUser } = useSelector((state: RootState) => state.user);
-    const { newRecords } = useSelector((state: RootState) => state.record);
+    const { newRecords } = useSelector((state: RootState) => state.record)
+    const [currentItems, setCurrentItems] = useState<IRecord[]>([]);
     const [newPlaylistRecords, setNewPlaylistRecords] = useState<IRecord[]>([]);
 
     const { errors, values, touched, handleChange, handleSubmit, setFieldTouched, setFieldValue } = useFormik({
@@ -132,6 +134,14 @@ function AddPlaylistPage() {
     const handleClickAddPlaylistsRecords = () => {
         localStorage.setItem('fromPage', routes.AddPlaylistPage);
         navigate(routes.AddPlaylistRecordPage);
+    };
+
+    const handleCurrentItems = (items: any[]) => {
+        setCurrentItems(items && items);
+    };
+
+    const handleItemsPerPage = (value: string) => {
+        setItemsPerPage(value);
     };
 
     return (
@@ -226,7 +236,16 @@ function AddPlaylistPage() {
                         </div>
                     </div>
                     <div className={cx("container-right")}>
-                        <Table thead={["STT", "Tên bản ghi", "Ca sĩ", "Tác giả"]}>
+                        <Table
+                            minWidth="100%"
+                            paginate={{
+                                dataForPaginate: newPlaylistRecords,
+                                setCurrentItems: handleCurrentItems
+                            }}
+                            itemsPerPage={itemsPerPage}
+                            setItemsPerPage={handleItemsPerPage}
+                            thead={["STT", "Tên bản ghi", "Ca sĩ", "Tác giả"]}
+                        >
                             {newPlaylistRecords.length <= 0
                                 ? <tr>
                                     <td
@@ -244,8 +263,6 @@ function AddPlaylistPage() {
                                         <td>{index + 1}</td>
                                         <td>{record.nameRecord}</td>
                                         <td>{record.singer}</td>
-                                        <td>{record.author}</td>
-                                        <td>{record.author}</td>
                                         <td>{record.author}</td>
                                         <td
                                             className={cx("action")}

@@ -4,8 +4,10 @@
   .edit__form-container__body {
     max-width: 140rem;
     display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
     justify-content: space-between;
-    align-items: start;
+    gap: 2.4rem;
   }
 }
 
@@ -25,7 +27,7 @@
   }
 
   .mg-0 {
-    margin: 0!important;
+    margin: 0 !important;
   }
 }
 
@@ -54,4 +56,11 @@
   justify-content: center;
   align-items: center;
   gap: 40px;
+}
+
+@media only screen and (max-width: 1440px) {
+  .authorized-contract-edit > div > div {
+    width: 100%;
+    padding-right: 1.5rem;
+  }
 }

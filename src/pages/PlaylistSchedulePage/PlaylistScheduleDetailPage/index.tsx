@@ -46,18 +46,21 @@ function PlaylistScheduleDetailPage() {
     const navigate = useNavigate();
     const { playlistScheduleCode } = useParams();
 
+    const [itemsPerPage, setItemsPerPage] = useState('8');
+
     const playlist = useSelector((state: RootState) => state.playlist);
     const playlistSchedule = useSelector((state: RootState) => state.playlistSchedule);
     const playlistsRecords = useSelector((state: RootState) => state.playlistsRecords);
+    const [currentItems, setCurrentItems] = useState<SchedulePlaylist[]>([]);
 
     const { setActive } = useContext(SidebarContext);
+    const [loading, setLoading] = useState<boolean>(false);
     const [scheduleDetail, setScheduleDetail] = useState<SchedulePlaylistDetail>({
         id: '',
         name: '',
         playbackTime: '',
         playlist: []
     } as SchedulePlaylistDetail);
-    const [loading, setLoading] = useState<boolean>(false);
 
     useEffect(() => {
         setActive(false);
@@ -94,6 +97,14 @@ function PlaylistScheduleDetailPage() {
         else setLoading(false);
     }, [playlistsRecords, playlist]);
 
+    const handleCurrentItems = (items: any[]) => {
+        setCurrentItems(items);
+    };
+
+    const handleItemsPerPage = (value: string) => {
+        setItemsPerPage(value);
+    };
+
     return (
         <div className={cx('wrapper')}>
             <CommonWrapper
@@ -101,8 +112,16 @@ function PlaylistScheduleDetailPage() {
                 title={scheduleDetail.name}
             >
                 <p className={cx('header')}>Danh sách Playlist</p>
-                <Table thead={['STT', 'Tên lịch', 'Ngày phát Playlist', 'Bắt đầu - Kết thúc', 'Chu kỳ phát', 'Thiết bị']}>
-                    {scheduleDetail.playlist.map((item: SchedulePlaylist, index) => {
+                <Table
+                    paginate={{
+                        dataForPaginate: scheduleDetail.playlist,
+                        setCurrentItems: handleCurrentItems
+                    }}
+                    itemsPerPage={itemsPerPage}
+                    setItemsPerPage={handleItemsPerPage}
+                    thead={['STT', 'Tên lịch', 'Ngày phát Playlist', 'Bắt đầu - Kết thúc', 'Chu kỳ phát', 'Thiết bị']}
+                >
+                    {currentItems.map((item: SchedulePlaylist, index) => {
                         return (
                             <tr key={index} style={{ height: '47px' }} className={cx('content')}>
                                 <td><p>{index + 1}</p></td>

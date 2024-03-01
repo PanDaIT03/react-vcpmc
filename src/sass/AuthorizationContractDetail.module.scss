@@ -1,11 +1,12 @@
 .wrapper {
   width: 100%;
-}
+  max-width: var(--max-width);
 
-.renewal {
-  width: 90.8rem;
-  height: 62.3rem;
-  padding: 4rem 3.2rem;
+  .renewal {
+    width: 90.8rem;
+    height: 62.3rem;
+    padding: 4rem 3.2rem;
+  }
 }
 
 .cancel {

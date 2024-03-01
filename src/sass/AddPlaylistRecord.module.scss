@@ -115,3 +115,16 @@
     }
   }
 }
+
+@media only screen and (max-width: 1440px) {
+  .container {
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+
+    .container-left,
+    .container-right {
+      width: 100%;
+    }
+  }
+}

@@ -1,5 +1,6 @@
 .wrapper {
-  width: 169rem;
+  width: 100%;
+  max-width: var(--max-width);
 
   .container {
     display: flex;

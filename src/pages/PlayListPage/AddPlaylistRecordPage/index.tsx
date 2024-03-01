@@ -146,8 +146,9 @@ function AddPlaylistRecordPage() {
                             />
                         </div>
                         <Table
-                            thead={["STT", "Tên bản ghi", "Ca sĩ", "Tác giả"]}
+                            minWidth="100%"
                             className={cx("playlist-records")}
+                            thead={["STT", "Tên bản ghi", "Ca sĩ", "Tác giả"]}
                         >
                             {records.map((record, index) => (
                                 <tr key={index}>
@@ -198,8 +199,9 @@ function AddPlaylistRecordPage() {
                             />
                         </div>
                         <Table
-                            thead={["STT", "Tên bản ghi", "Ca sĩ", "Tác giả"]}
+                            minWidth="100%"
                             className={cx("playlist-records")}
+                            thead={["STT", "Tên bản ghi", "Ca sĩ", "Tác giả"]}
                         >
                             {newPlaylistRecords.length <= 0
                                 ? <tr>

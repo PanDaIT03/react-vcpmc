@@ -126,7 +126,6 @@ function RevenueDistributionDetailPage() {
                             dataForPaginate: searchResult,
                             setCurrentItems: handleSetCurrentItems
                         }}
-                        paginateClass={cx('table__paginate')}
                         itemsPerPage={itemsPerPage}
                         setItemsPerPage={handleChange}
                         thead={['STT', 'Bài hát', 'Số lượt phát', 'Doanh thu (VNĐ)', 'Hành chính phí (VNĐ)', 'Nhuận bút (VNĐ)']}
@@ -167,7 +166,6 @@ function RevenueDistributionDetailPage() {
                                 dataForPaginate: itemActive.recordPlays,
                                 setCurrentItems: handleSetCurrentItemActive
                             }}
-                            paginateClass={cx('table__paginate')}
                             itemsPerPage={itemsActivePerPage}
                             setItemsPerPage={handleChangeItemActive}
                         >

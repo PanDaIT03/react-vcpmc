@@ -150,10 +150,9 @@ function UserAuthorizationPage() {
                     dataForPaginate: searchResult,
                     setCurrentItems: handleSetCurrentItems
                 }}
-                paginateClass={cx('table__row__paginate')}
-                className={cx('container-table-data', displayUserTable ? 'active' : 'disable')}
                 itemsPerPage={itemsPerPage}
                 setItemsPerPage={handleChange}
+                className={cx('container-table-data', displayUserTable ? 'active' : 'disable')}
                 thead={['STT', 'Họ tên', 'Tên đăng nhập', 'Vai trò', 'Trạng thái', 'Email', 'Số điện thoại', 'Ngày hết hạn', '']}
             >
                 {currentItems.map((item, index) => (
@@ -180,10 +179,9 @@ function UserAuthorizationPage() {
                     dataForPaginate: searchRoleResult,
                     setCurrentItems: handleSetCurrentRoleItems
                 }}
-                paginateClass={cx('table__row__paginate')}
-                className={cx('container-table-data', !displayUserTable ? 'active' : 'disable')}
                 itemsPerPage={itemsPerPage}
                 setItemsPerPage={handleChange}
+                className={cx('container-table-data', !displayUserTable ? 'active' : 'disable')}
                 thead={['STT', 'Tên nhóm người dùng', 'Số lượng người dùng', 'Vai trò', 'Mô tả', '', '']}
             >
                 {currentRoleItems.map((item, index) => (

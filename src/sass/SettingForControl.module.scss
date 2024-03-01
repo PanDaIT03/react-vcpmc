@@ -34,7 +34,7 @@
 .type-for-control__quarterly {
     &>.quarterly__content {
         display: flex;
-        align-items: start;
+        align-items: flex-start;
         flex-direction: column;
         width: max-content;
         height: 0;

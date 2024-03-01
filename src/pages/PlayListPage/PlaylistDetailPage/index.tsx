@@ -1,6 +1,6 @@
 import classNames from "classnames/bind";
 import { useFormik } from "formik";
-import { useCallback, useContext, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import * as Yup from "yup";
@@ -18,7 +18,6 @@ import { EditPlaylist } from "~/components/Playlist/EditPlaylist";
 import { PlaylistInfo } from "~/components/Playlist/PlaylistInfo";
 import { Table } from "~/components/Table";
 import { routes } from "~/config/routes";
-import { SidebarContext } from "~/context/Sidebar/SidebarContext";
 import { RootState, useAppDispatch } from "~/state";
 import { deletePlaylistAction, getPlayListAction, removePlaylistRecordAction, updatePlaylistAction, updatePlaylistsRecordsAction } from "~/state/thunk/playlist";
 import { resetNewRecordsAction } from "~/state/thunk/record";
@@ -64,20 +63,17 @@ function PlaylistDetailPage() {
     const params = useParams();
     const { playlistId } = params;
 
-    const { setActive } = useContext(SidebarContext);
     const [visible, setVisible] = useState(false);
     const [isEdit, setIsEdit] = useState(false);
 
     const [audioSource, setAudioSource] = useState("");
+    const [itemsPerPage, setItemsPerPage] = useState('8');
 
     const { playList, loading, status } = useSelector((state: RootState) => state.playlist);
     const { newRecords } = useSelector((state: RootState) => state.record);
 
+    const [currentItems, setCurrentItems] = useState<IRecord[]>([]);
     const [playlistDetails, setPlaylistDetails] = useState<IPLaylist>(initialState);
-
-    useEffect(() => {
-        setActive(false);
-    }, []);
 
     useEffect(() => {
         if (newRecords.length > 0)
@@ -155,6 +151,14 @@ function PlaylistDetailPage() {
         navigate(routes.AddPlaylistRecordPage);
     };
 
+    const handleCurrentItems = (items: any[]) => {
+        setCurrentItems(items && items);
+    };
+
+    const handleItemsPerPage = (value: string) => {
+        setItemsPerPage(value);
+    };
+
     return (
         <div className={cx("wrapper")}>
             <CommonWrapper
@@ -182,9 +186,16 @@ function PlaylistDetailPage() {
                     </div>
                     <div className={cx("container-right")}>
                         <Table
+                            minWidth="960px"
+                            paginate={{
+                                dataForPaginate: playlistDetails.records,
+                                setCurrentItems: handleCurrentItems
+                            }}
+                            itemsPerPage={itemsPerPage}
+                            setItemsPerPage={handleItemsPerPage}
                             thead={["STT", "Tên bản ghi", "Ca sĩ", "Tác giả", "", ""]}
                         >
-                            {playlistDetails.records.map((record, index) => (
+                            {currentItems.map((record, index) => (
                                 <tr className={cx("playlist_item")} key={index}>
                                     <td >{index + 1}</td>
                                     <td>

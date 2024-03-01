@@ -4,22 +4,24 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import { images } from "~/assets";
-import { Input } from "~/components/Input";
-import { Table } from "~/components/Table";
-import { CommonWrapper } from "~/components/CommonWrapper";
 import { ActionBar } from "~/components/ActionBar";
 import { ActionBarItem } from "~/components/ActionBar/ActionBarItem";
+import { BoxItem } from "~/components/BoxItem";
+import { CommonWrapper } from "~/components/CommonWrapper";
+import { GridView } from "~/components/GridView";
+import { Input } from "~/components/Input";
+import { Loading } from "~/components/Loading";
 import { SwitchViewButton } from "~/components/SwitchViewButtons";
+import { Table } from "~/components/Table";
+import { routes } from "~/config/routes";
+import { getTotalMoment } from "~/constants";
+import { SidebarContext } from "~/context/Sidebar/SidebarContext";
 import { RootState, useAppDispatch } from "~/state";
 import { getPlayListAction } from "~/state/thunk/playlist";
-import { IGlobalConstantsType, IRecord } from "~/types";
-import { getTotalMoment } from "~/constants";
-import { BoxItem } from "~/components/BoxItem";
-import { GridView } from "~/components/GridView";
-import { Loading } from "~/components/Loading";
-import { SidebarContext } from "~/context/Sidebar/SidebarContext";
-import { routes } from "~/config/routes";
 import { resetNewRecordsAction } from "~/state/thunk/record";
+import { IGlobalConstantsType, IRecord } from "~/types";
+import { IPLaylist } from "~/types/PlaylistType";
+import { Filter } from "~/components/Filter";
 
 import styles from "~/sass/PlayList.module.scss";
 const cx = classNames.bind(styles);
@@ -28,14 +30,14 @@ function PlayListPage() {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
 
-    const { setActive, setCurrentPage } = useContext(SidebarContext);
+    const [search, setSearch] = useState<Pick<IGlobalConstantsType, "tag">>({});
     const [isGridView, setIsGridView] = useState(true);
     const [searchValue, setSearchValue] = useState('');
+    const [itemsPerPage, setItemsPerPage] = useState('8');
+    const { setActive, setCurrentPage } = useContext(SidebarContext);
 
-    const playlistState = useSelector((state: RootState) => state.playlist);
-    const { playList, loading } = playlistState;
-
-    const handleClickSearch = () => { };
+    const { playList, loading } = useSelector((state: RootState) => state.playlist);
+    const [currentItems, setCurrentItems] = useState<IPLaylist[]>([]);
 
     useEffect(() => {
         setCurrentPage(2);
@@ -43,6 +45,24 @@ function PlayListPage() {
         dispatch(resetNewRecordsAction());
         setActive(true);
     }, []);
+
+    useEffect(() => {
+        setSearch({
+            tag: <Input
+                id="search"
+                name="search"
+                value={searchValue}
+                placeholder="Tên hợp đồng, số hợp đồng, người uỷ quyền..."
+                size="custom"
+                iconRight={images.search}
+                onChange={(event) => setSearchValue(event.target.value)}
+                onIconRightClick={handleClickSearch}
+            />
+        });
+    }, [searchValue]);
+
+    const handleClickSearch = () => { };
+    const handlePlaylistClick = () => { };
 
     const totalPlaylistTime = (records: IRecord[]) => {
         let timeArray: string[] = ["00:00"];
@@ -52,33 +72,33 @@ function PlayListPage() {
         return total.slice(11, 19);
     };
 
+    const handleCurrentItems = (items: any[]) => {
+        setCurrentItems(items);
+    };
+
+    const handleItemsPerPage = (value: string) => {
+        setItemsPerPage(value);
+    };
+
     return (
         <div className={cx("wrapper")}>
-            <CommonWrapper
-                title="Playlist"
-            >
-                {/* <Filter /> */}
+            <CommonWrapper title="Playlist">
                 <div className={cx("action")}>
-                    <div className={cx("search")}>
-                        <Input
-                            id="search"
-                            name="search"
-                            value={searchValue}
-                            placeholder="Tên hợp đồng, số hợp đồng, người uỷ quyền..."
-                            size="custom"
-                            iconRight={images.search}
-                            onChange={(event) => setSearchValue(event.target.value)}
-                            onIconRightClick={handleClickSearch}
-                        />
-                    </div>
+                    <Filter data={[]} search={search} />
                     <SwitchViewButton state={isGridView} setState={setIsGridView} />
                 </div>
                 {!isGridView
                     ? <Table
-                        thead={["STT", "Tiêu đề", "Số bản ghi", "Thời lượng", "Chủ đề", "Ngày tạo", "Người tạo", ""]}
                         className={cx("playlist")}
+                        paginate={{
+                            dataForPaginate: playList,
+                            setCurrentItems: handleCurrentItems
+                        }}
+                        itemsPerPage={itemsPerPage}
+                        setItemsPerPage={handleItemsPerPage}
+                        thead={["STT", "Tiêu đề", "Số bản ghi", "Thời lượng", "Chủ đề", "Ngày tạo", "Người tạo", ""]}
                     >
-                        {playList.map((item, index) => {
+                        {currentItems.map((item, index) => {
                             let boxData: IGlobalConstantsType[] = [];
                             item.categories.map((category, index) => boxData.push({ id: index + 1, value: category }));
 
@@ -100,9 +120,15 @@ function PlayListPage() {
                         })}
                     </Table>
                     : <GridView
-                        data={playList}
                         type="playlist"
-                        handleClick={() => console.log("clicked")}
+                        data={currentItems}
+                        paginate={{
+                            dataForPaginate: playList,
+                            setCurrentItems: handleCurrentItems
+                        }}
+                        itemsPerPage={itemsPerPage}
+                        setItemsPerPage={handleItemsPerPage}
+                        handleClick={handlePlaylistClick}
                     />}
                 <ActionBar>
                     <ActionBarItem

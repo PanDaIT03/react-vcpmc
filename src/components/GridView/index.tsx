@@ -8,6 +8,7 @@ import { IGlobalConstantsType, IRecord } from "~/types";
 import { IPLaylist } from "~/types/PlaylistType";
 import { BoxItem } from "../BoxItem";
 import { Checkbox } from "../Checkbox";
+import { IPaginate, Paginate } from "../Paginate";
 
 import styles from "~/sass/GridView.module.scss";
 const cx = classNames.bind(styles);
@@ -108,9 +109,7 @@ const GridPlaylist = memo(({
     };
 
     useEffect(() => {
-        playlist.categories.map(
-            (category, index) => setBoxItem([{ id: index + 1, value: category }])
-        );
+        playlist.categories.map((category, index) => setBoxItem([{ id: index + 1, value: category }]));
         setBoxItem2([
             {
                 id: 1,
@@ -170,6 +169,7 @@ const GridItem = memo(({
     handleClick
 }: { item: any, approveArray: IRecord[] }
     & Omit<GridViewProps, "data" | "approveArray" | "className">) => {
+
     const navigate = useNavigate();
     const classes = cx("item-wrapper", {
         isApprove
@@ -227,13 +227,16 @@ const GridItem = memo(({
 export const GridView = memo(({
     data,
     className,
+    paginate,
+    itemsPerPage: per = "1",
+    setItemsPerPage,
     isApprove = false,
     approveArray = [],
     type = "record",
     setAudioSource,
     setState,
     handleClick
-}: GridViewProps) => {
+}: GridViewProps & IPaginate) => {
     if (!className) className = "";
 
     const classes = cx("wrapper", {
@@ -242,19 +245,26 @@ export const GridView = memo(({
 
     return (
         <div className={classes}>
-            {data.map((item, index) => (
-                <div key={index} className={cx("grid-item")}>
-                    <GridItem
-                        item={item}
-                        isApprove={isApprove}
-                        approveArray={approveArray}
-                        type={type}
-                        setAudioSource={setAudioSource && setAudioSource}
-                        setState={setState && setState}
-                        handleClick={handleClick}
-                    />
-                </div>
-            ))}
+            <div className={cx("container")}>
+                {data.map((item, index) => (
+                    <div key={index} className={cx("grid-item")}>
+                        <GridItem
+                            item={item}
+                            type={type}
+                            isApprove={isApprove}
+                            approveArray={approveArray}
+                            handleClick={handleClick}
+                            setState={setState}
+                            setAudioSource={setAudioSource}
+                        />
+                    </div>
+                ))}
+            </div>
+            <Paginate
+                paginate={paginate}
+                itemsPerPage={per}
+                setItemsPerPage={setItemsPerPage}
+            />
         </div>
     );
 });

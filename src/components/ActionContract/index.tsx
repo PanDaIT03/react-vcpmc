@@ -580,8 +580,6 @@ export const ActionContract = memo(({
         setFieldValue("nationality", national.title);
     }, [national]);
 
-    console.log(errors);
-
     return (
         <div className={classes}>
             <ContractEdit

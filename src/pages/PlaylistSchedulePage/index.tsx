@@ -1,5 +1,5 @@
 import classNames from "classnames/bind";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
@@ -23,6 +23,9 @@ function PlaylistSchedulePage() {
     const { setActive, setCurrentPage } = useContext(SidebarContext);
     const { listSchedule } = useSelector((state: RootState) => state.playlistSchedule);
 
+    const [itemsPerPage, setItemsPerPage] = useState('8');
+    const [currentItems, setCurrentItems] = useState<PlaylistSchedule[]>([]);
+
     useEffect(() => {
         setActive(true);
         setCurrentPage(3);
@@ -34,14 +37,28 @@ function PlaylistSchedulePage() {
         setActive(false);
     };
 
+    const handleCurrentItems = (items: any[]) => {
+        setCurrentItems(items);
+    };
+
+    const handleItemsPerPage = (value: string) => {
+        setItemsPerPage(value);
+    };
+
     return (
         <div className={cx('wrapper')}>
             <CommonWrapper title='Danh sách lịch phát'>
                 <Table
+                    paginate={{
+                        dataForPaginate: listSchedule,
+                        setCurrentItems: handleCurrentItems
+                    }}
+                    itemsPerPage={itemsPerPage}
+                    setItemsPerPage={handleItemsPerPage}
                     className={cx("playlist-schedule")}
                     thead={['STT', 'Tên lịch', 'Thời gian phát', '', '']}
                 >
-                    {listSchedule.map((item: PlaylistSchedule, index) => (
+                    {currentItems.map((item: PlaylistSchedule, index) => (
                         <tr key={index} style={{ height: '47px' }} className={cx('content')}>
                             <td><p>{index + 1}</p></td>
                             <td><p>{item.name}</p></td>

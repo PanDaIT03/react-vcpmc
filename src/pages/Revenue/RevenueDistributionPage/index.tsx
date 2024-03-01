@@ -191,7 +191,6 @@ function RevenueDistributionPage() {
                     dataForPaginate: searchResult,
                     setCurrentItems: handleSetCurrentItems
                 }}
-                paginateClass={cx('table__paginate')}
                 itemsPerPage={itemsPerPage}
                 setItemsPerPage={handleChange}
                 thead={['STT', 'Hợp đồng ủy quyền', 'Người ủy quyền', 'Số bài hát ủy quyền', 'Doanh thu (VNĐ)',

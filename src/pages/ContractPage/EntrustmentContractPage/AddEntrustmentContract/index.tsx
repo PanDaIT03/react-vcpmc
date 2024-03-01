@@ -181,11 +181,11 @@ function AddEtrustmentContractPage() {
     return (
         <div className={cx('entrustment-contract-container')}>
             <CommonPageContractEdit
-                pagingData={paging}
-                title='Thêm hợp đồng khai thác mới'
-                edit={true}
-                formikData={contractFormik}
                 data={[]}
+                edit={true}
+                pagingData={paging}
+                formikData={contractFormik}
+                title='Thêm hợp đồng khai thác mới'
             >
                 <div className={cx('form__action')}>
                     <Button

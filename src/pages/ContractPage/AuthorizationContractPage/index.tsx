@@ -39,10 +39,13 @@ function AuthorizationContractPage() {
     const dispatch = useAppDispatch();
 
     const { setCurrentPage } = useContext(SidebarContext);
+
     const [visible, setVisible] = useState(false);
     const [searchValue, setSearchValue] = useState('');
+    const [itemsPerPage, setItemsPerPage] = useState('8');
     const [ownership, setOwnerShip] = useState<IGlobalConstantsType>(initialState);
     const [validity, setValidity] = useState<IGlobalConstantsType>(initialState);
+    const [currentItems, setCurrentItems] = useState<(IContract & IUserDetail)[]>([]);
     const [searchResult, setSearchResult] = useState<(IContract & IUserDetail)[]>([]);
 
     const [contractId, setContractId] = useState('');
@@ -78,6 +81,14 @@ function AuthorizationContractPage() {
         setSearchValue(event.target.value);
     };
 
+    const handleCurrentItems = (items: any[]) => {
+        setCurrentItems(items);
+    };
+
+    const handleItemsPerPage = (value: string) => {
+        setItemsPerPage(value);
+    };
+
     useEffect(() => {
         setCurrentPage(4);
         dispatch(getContractsAction());
@@ -96,46 +107,46 @@ function AuthorizationContractPage() {
         const validityValue = validity.title;
         const search = searchValue.toLowerCase().trim();
 
-        if (ownershipValue && validityValue) {
-            const result = contracts.filter(contract => {
-                let itemResult;
+        if (!ownershipValue || !validityValue) return;
 
-                let ownerShips = contract.ownerShips.find(item =>
-                    item.name.toString().toLowerCase() === ownershipValue.toString().toLowerCase()) || initialOwnerShip;
+        const result = contracts.filter(contract => {
+            let itemResult;
 
-                if (Object.keys(ownerShips).length > 0) {
-                    if (ownershipValue === "Tất cả")
+            let ownerShips = contract.ownerShips.find(item =>
+                item.name.toString().toLowerCase() === ownershipValue.toString().toLowerCase()) || initialOwnerShip;
+
+            if (Object.keys(ownerShips).length > 0) {
+                if (ownershipValue === "Tất cả")
+                    itemResult = contract;
+                else if (ownerShips?.name.includes(ownershipValue)) {
+                    if (ownershipValue === "Người biểu diễn")
                         itemResult = contract;
-                    else if (ownerShips?.name.includes(ownershipValue)) {
-                        if (ownershipValue === "Người biểu diễn")
-                            itemResult = contract;
-                        else if (ownershipValue === "Nhà sản xuất")
-                            itemResult = contract;
-                    };
+                    else if (ownershipValue === "Nhà sản xuất")
+                        itemResult = contract;
+                };
 
-                    if (validityValue === "Tất cả")
-                        return itemResult;
-                    else if (itemResult?.status.includes(validityValue)) {
-                        if (contract.status === "Mới")
-                            itemResult = contract;
-                        else if (contract.status === "Còn thời hạn")
-                            itemResult = contract;
-                        else if (contract.status === "Đã huỷ")
-                            itemResult = contract;
+                if (validityValue === "Tất cả")
+                    return itemResult;
+                else if (itemResult?.status.includes(validityValue)) {
+                    if (contract.status === "Mới")
+                        itemResult = contract;
+                    else if (contract.status === "Còn thời hạn")
+                        itemResult = contract;
+                    else if (contract.status === "Đã huỷ")
+                        itemResult = contract;
 
-                        return itemResult;
-                    };
-                }
-            });
+                    return itemResult;
+                };
+            };
+        });
 
-            setSearchResult(result.filter(item =>
-                item.contractCode.toLowerCase().includes(search) ||
-                item.customer.toLowerCase().includes(search) ||
-                item.authorized.toLowerCase().includes(search) ||
-                item.status.toLowerCase().includes(search) ||
-                item.dateCreated.toLowerCase().includes(search)
-            ));
-        };
+        setSearchResult(result.filter(item =>
+            item.contractCode.toLowerCase().includes(search) ||
+            item.customer.toLowerCase().includes(search) ||
+            item.authorized.toLowerCase().includes(search) ||
+            item.status.toLowerCase().includes(search) ||
+            item.dateCreated.toLowerCase().includes(search)
+        ));
     }, [ownership, validity, searchValue]);
 
     return (
@@ -143,10 +154,16 @@ function AuthorizationContractPage() {
             <Filter data={filter} search={search} />
             <Table
                 className={cx("contract")}
+                paginate={{
+                    dataForPaginate: searchResult,
+                    setCurrentItems: handleCurrentItems
+                }}
+                itemsPerPage={itemsPerPage}
+                setItemsPerPage={handleItemsPerPage}
                 thead={["STT", "Số hợp đồng", "Tên hợp đồng", "Người uỷ quyền",
                     "Quyền sở hữu", "Hiệu lực hợp đồng", "Ngày tạo", '', '']}
             >
-                {searchResult.map((contract, index) => (
+                {currentItems.map((contract, index) => (
                     <tr className={cx("contract_item")} key={index}>
                         <td >{index + 1}</td>
                         <td >{contract.contractCode}</td>
@@ -170,8 +187,7 @@ function AuthorizationContractPage() {
                                 >
                                     <img src={item.icon} alt="icon" />
                                     <p>{item.title}</p>
-                                </span>
-                            ))}
+                                </span>))}
                         </td>
                         <td>{contract.dateCreated}</td>
                         <td
@@ -189,8 +205,7 @@ function AuthorizationContractPage() {
                         >
                             {contract.status === "Đã huỷ" && <p>Lý do huỷ</p>}
                         </td>
-                    </tr>
-                ))}
+                    </tr>))}
             </Table>
             <ActionBar visible={true}>
                 <ActionBarItem

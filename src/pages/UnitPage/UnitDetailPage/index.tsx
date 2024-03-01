@@ -8,6 +8,7 @@ import { ActionBar } from "~/components/ActionBar";
 import { ActionBarItem } from "~/components/ActionBar/ActionBarItem";
 import { Checkbox } from "~/components/Checkbox";
 import { CommonWrapper } from "~/components/CommonWrapper";
+import { Filter } from "~/components/Filter";
 import { Input } from "~/components/Input";
 import { Loading } from "~/components/Loading";
 import { PagingItemType } from "~/components/Paging";
@@ -37,13 +38,27 @@ function UnitUsedDetailPage() {
     const etmContract = useSelector((state: RootState) => state.etmContract);
 
     const [searchValue, setSearchValue] = useState<string>('');
-    const [searchResult, setSearchResult] = useState<Array<User>>([] as Array<User>);
     const [itemsPerPage, setItemsPerPage] = useState<string>('8');
+    const [toastVisible, setToastVisible] = useState<boolean>(false);
+
+    const [itemsChosen, setItemsChosen] = useState<Array<User>>([] as Array<User>);
+    const [searchResult, setSearchResult] = useState<Array<User>>([] as Array<User>);
     const [currentItems, setCurrentItems] = useState<Array<User>>([] as Array<User>);
     const [paging, setPaging] = useState<Array<PagingItemType>>([] as Array<PagingItemType>);
     const [contractDetail, setContractDetail] = useState<EtmContractDetail>({} as EtmContractDetail);
-    const [itemsChosen, setItemsChosen] = useState<Array<User>>([] as Array<User>);
-    const [toastVisible, setToastVisible] = useState<boolean>(false);
+
+    const search = {
+        tag: <Input
+            id="search"
+            name="search"
+            value={searchValue}
+            placeholder="Tên hợp đồng, số hợp đồng, người uỷ quyền..."
+            size="custom"
+            iconRight={images.search}
+            onChange={(event) => handleSearchChange(event)}
+            onIconRightClick={() => { }}
+        />
+    };
 
     useEffect(() => {
         setPaging([
@@ -127,18 +142,7 @@ function UnitUsedDetailPage() {
                 title={`Đơn vị sử dụng - ${contractDetail.name}`}
                 className={cx('unit-detail-container')}
             >
-                <div className={cx("search")}>
-                    <Input
-                        id="search"
-                        name="search"
-                        value={searchValue}
-                        placeholder="Tên hợp đồng, số hợp đồng, người uỷ quyền..."
-                        size="custom"
-                        iconRight={images.search}
-                        onChange={(event) => handleSearchChange(event)}
-                        onIconRightClick={() => { }}
-                    />
-                </div>
+                <Filter data={[]} search={search} />
                 <Table
                     thead={['STT', 'Tên người dùng', 'Vai trò', 'Email',
                         'Tên đăng nhập', 'Cập nhật lần cuối', 'Trạng thái', '']}
@@ -146,7 +150,6 @@ function UnitUsedDetailPage() {
                         dataForPaginate: searchResult,
                         setCurrentItems: handleSetCurrentItems
                     }}
-                    paginateClass={cx('table__row__paginate')}
                     itemsPerPage={itemsPerPage}
                     setItemsPerPage={handleChange}
                     headerChildren={<th className={cx('table__row__checkbox')}>

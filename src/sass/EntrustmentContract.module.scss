@@ -1,22 +1,11 @@
-.search {
-  margin: 24px 0;
-  width: 41.8rem;
-}
-
 .entrusment-contract {
-  width: 1541px !important;
   position: relative;
 
-  & tbody > tr > td > p.action {
-    width: max-content;
+  .action {
     color: var(--orange-4-default);
-    padding: 5px 16px;
-    text-decoration: underline;
-    cursor: pointer;
-
-    &:hover {
-      opacity: 1;
-    }
+    font-size: 1.2rem;
+    letter-spacing: -0.024px;
+    text-decoration-line: underline;
   }
 
   & .status {

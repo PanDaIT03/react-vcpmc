@@ -1,121 +1,121 @@
 .renvenue-report-detail {
-    &>div:last-child>div:first-child>div {
-        width: 1690px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        flex-direction: row-reverse;
+  & > div:last-child > div:first-child > div {
+    width: 1690px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row-reverse;
 
-        &>div:last-child>div {
-            margin-top: 0;
-        }
+    & > div:last-child > div {
+      margin-top: 0;
     }
+  }
 }
 
 .renvenue-report-detail__filter {
-    width: 1690px;
+  width: 1690px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 24px 0;
+
+  & > div:first-child {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    margin: 24px 0;
 
-    &>div:first-child {
-        display: flex;
-        align-items: center;
-
-        &>p {
-            color: white;
-            margin-right: 12px;
-        }
-
-        &>div {
-            height: 48px;
-
-            & input {
-                width: calc(264px - 16px - 24px) !important;
-                height: 48px;
-            }
-
-            &>li {
-                margin-top: 0 !important;
-
-                &>div {
-                    border-radius: 8px;
-                    border: 1px solid var(--text-stroke-text-and-stroke-2, #727288);
-                    background: var(--Background-BG, #1E1E2E);
-                    position: relative;
-                    z-index: 2;
-                }
-
-                &>ul {
-                    width: 264px !important;
-                    z-index: 1 !important;
-                }
-            }
-
-            &+div {
-                margin-left: 32px;
-            }
-        }
+    & > p {
+      color: white;
+      margin-right: 12px;
     }
 
-    &>div:last-child {
-        & input {
-            width: 436px;
+    & > div {
+      height: 48px;
+
+      & input {
+        width: calc(264px - 16px - 24px) !important;
+        height: 48px;
+      }
+
+      & > li {
+        margin-top: 0 !important;
+
+        & > div {
+          border-radius: 8px;
+          border: 1px solid var(--text-stroke-text-and-stroke-2, #727288);
+          background: var(--Background-BG, #1e1e2e);
+          position: relative;
+          z-index: 2;
         }
+
+        & > ul {
+          width: 264px !important;
+          z-index: 1 !important;
+        }
+      }
+
+      & + div {
+        margin-left: 32px;
+      }
     }
+  }
+
+  & > div:last-child {
+    & input {
+      width: 436px;
+    }
+  }
 }
 
 .renvenue-report-detail__table {
-    width: 1690px !important;
+  width: 1690px !important;
 
-    & tbody>tr>td>p {
-        white-space: nowrap;
-    }
+  & tbody > tr > td > p {
+    white-space: nowrap;
+  }
 
-    & .action {
-        width: max-content;
-        color: var(--orange-4-default);
-        padding: 5px 16px;
-        text-decoration: underline;
-        cursor: pointer;
-    }
+  & .action {
+    width: max-content;
+    color: var(--orange-4-default);
+    padding: 5px 16px;
+    text-decoration: underline;
+    cursor: pointer;
+  }
 
-    &>div>div:last-child {
-        width: calc(1690px - 48px);
-    }
+  & > div > div:last-child {
+    width: calc(1690px - 48px);
+  }
 }
 
 .renvenue-report-detail__form {
-    padding: 40px;
+  padding: 40px;
 
-    & h3 {
-        color: var(--text-stroke-text-and-stroke, #F5F5FF);
-        font-size: 24px;
-        font-weight: 700;
-        line-height: 24px;
-        letter-spacing: -0.048px;
-        text-align: center;
-        padding: 0 30px 30px 30px;
-    }
+  & h3 {
+    color: var(--text-stroke-text-and-stroke, #f5f5ff);
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 24px;
+    letter-spacing: -0.048px;
+    text-align: center;
+    padding: 0 30px 30px 30px;
+  }
 
-    & .form__content {
-        &>p {
-            width: 549px;
-            font-size: 16px;
-            font-weight: 400;
-            line-height: 24px;
-            letter-spacing: -0.032px;
-            text-align: start;
-            opacity: .7;
-        }
+  & .form__content {
+    & > p {
+      width: 549px;
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 24px;
+      letter-spacing: -0.032px;
+      text-align: start;
+      opacity: 0.7;
     }
+  }
 
-    & .form__action {
-        margin-top: 48px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 40px;
-    }
+  & .form__action {
+    margin-top: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+  }
 }

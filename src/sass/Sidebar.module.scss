@@ -160,9 +160,10 @@
     padding: 3.3rem 0 9.6rem 0;
   }
 
-  .active {
-    position: absolute;
-    z-index: 1;
+  .active,
+  .inactive {
+    position: fixed;
+    z-index: 9;
   }
 
   .item-wrapper + .item-wrapper {

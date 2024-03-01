@@ -223,21 +223,19 @@ function DevicePage() {
         >
             <Filter data={filter} search={search} />
             <Table
-                // paginate={{
-                //     dataForPaginate: searchResult,
-                //     setCurrentItems: handleSetCurrentItems
-                // }}
-                // loading={device.loading}
-                // itemsPerPage={itemsPerPage}
-                // setItemsPerPage={handleChange}
-                // headerChildren={<th style={{ padding: '8px 0px 8px 8px' }}><CheckBox checked={checkedAll} onChange={() => handleCheckedAll(checkedAll)} /></th>}
+                paginate={{
+                    dataForPaginate: searchResult,
+                    setCurrentItems: handleSetCurrentItems
+                }}
+                itemsPerPage={itemsPerPage}
+                setItemsPerPage={handleChange}
                 isApprove={true}
                 thead={headerColumn}
                 isCheckedAll={isCheckedAll}
                 className={cx("device-table")}
                 setIsCheckedAll={setIsCheckedAll}
             >
-                {searchResult.map((item, index) => {
+                {currentItems.map((item, index) => {
                     let status = '';
                     let checked = itemsChosen.indexOf(item) > -1;
 

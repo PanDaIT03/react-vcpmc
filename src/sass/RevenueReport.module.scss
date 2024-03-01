@@ -1,111 +1,113 @@
 .revenue-report {
-    &>div:last-child>div:first-child {
-        &>div>div {
-            margin-top: 0;
-        }
+  & > div:last-child > div:first-child {
+    & > div > div {
+      margin-top: 0;
     }
+  }
 }
 
 .renvenue-report__filter {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 
-    &>p {
-        margin-right: 12px;
+  & > p {
+    margin-right: 12px;
+  }
+
+  & > div {
+    height: 48px;
+
+    & input {
+      width: calc(264px - 16px - 24px) !important;
+      height: 48px;
     }
 
-    &>div {
-        height: 48px;
+    & > li {
+      margin-top: 0 !important;
 
-        & input {
-            width: calc(264px - 16px - 24px) !important;
-            height: 48px;
-        }
+      & > div {
+        border-radius: 8px;
+        border: 1px solid var(--text-stroke-text-and-stroke-2, #727288);
+        background: var(--Background-BG, #1e1e2e);
+        position: relative;
+        z-index: 2;
+      }
 
-        &>li {
-            margin-top: 0 !important;
-
-            &>div {
-                border-radius: 8px;
-                border: 1px solid var(--text-stroke-text-and-stroke-2, #727288);
-                background: var(--Background-BG, #1E1E2E);
-                position: relative;
-                z-index: 2;
-            }
-
-            &>ul {
-                width: 264px !important;
-                z-index: 1 !important;
-            }
-        }
-
-        &+div {
-            margin-left: 32px;
-        }
+      & > ul {
+        width: 264px !important;
+        z-index: 1 !important;
+      }
     }
+
+    & + div {
+      margin-left: 32px;
+    }
+  }
 }
 
 .revenue-report__box {
-    width: 1541px;
-    height: auto;
+  width: 100%;
+  max-width: 1541px;
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 16px;
+  background: rgba(47, 47, 65, 0.7);
+  margin-top: 24px;
+  padding: 20px 0;
+
+  & > .box__item {
+    width: 308px;
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-radius: 16px;
-    background: rgba(47, 47, 65, 0.70);
-    margin-top: 24px;
-    padding: 20px 0;
+    justify-content: center;
+    flex-direction: column;
+    gap: 4px;
+    text-align: center;
+    padding: 0 2.2rem;
 
-    &>.box__item {
-        width: 308px;
-        display: flex;
-        justify-content: center;
-        flex-direction: column;
-        gap: 4px;
-        text-align: center;
-
-        &>p:first-child {
-            color: white;
-            font-size: 18px;
-            font-weight: 700;
-            line-height: 24px;
-            letter-spacing: -0.036px;
-            opacity: .5;
-            white-space: nowrap;
-        }
-
-        &>p:last-child {
-            color: var(--orange-3, #FFAC69);
-            font-size: 24px;
-            font-weight: 700;
-            line-height: 24px;
-            letter-spacing: -0.048px;
-            margin-top: 4px;
-        }
-
-        &+div {
-            border-left: 1px solid var(--white);
-        }
+    & > p:first-child {
+      color: white;
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 24px;
+      letter-spacing: -0.036px;
+      opacity: 0.5;
+      white-space: nowrap;
     }
+
+    & > p:last-child {
+      color: var(--orange-3, #ffac69);
+      font-size: 24px;
+      font-weight: 700;
+      line-height: 24px;
+      letter-spacing: -0.048px;
+      margin-top: 4px;
+    }
+
+    & + div {
+      border-left: 1px solid var(--white);
+    }
+  }
 }
 
 .revenue-report-chart {
-    position: relative;
+  position: relative;
 
-    &>p {
-        color: #FFF9F4;
-        font-size: 24px;
-        font-weight: 700;
-        line-height: 24px;
-        letter-spacing: -0.048px;
-        margin: 48px 0 24px 0;
-        text-align: start;
-    }
+  & > p {
+    color: #fff9f4;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 24px;
+    letter-spacing: -0.048px;
+    margin: 48px 0 24px 0;
+    text-align: start;
+  }
 
-    &>div {
-        border-radius: 16px;
-        background: rgba(47, 47, 65, 0.70);
-        width: 1541px;
-        padding: 26px;
-    }
+  & > div {
+    border-radius: 16px;
+    background: rgba(47, 47, 65, 0.7);
+    width: 1541px;
+    padding: 26px;
+  }
 }

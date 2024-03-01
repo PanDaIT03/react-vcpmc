@@ -44,8 +44,9 @@ function EntrustmentContractDetailPage() {
     const etmContract = useSelector((state: RootState) => state.etmContract);
     const role = useSelector((state: RootState) => state.role);
 
-    const [actionData, setActionData] = useState<Array<any>>([]);
     const [edit, setEdit] = useState<boolean>(false);
+    const [contractDetail, setContractDetail] = useState<any[]>([]);
+    const [actionData, setActionData] = useState<Array<any>>([]);
 
     const contractFormik = useFormik({
         initialValues: {
@@ -183,17 +184,25 @@ function EntrustmentContractDetailPage() {
     const { code, distributionValue, effectiveDate, expirationDate, playValue,
         name, status, type, value, companyName, position } = contractFormik.values;
 
+    const formatYMDToMDY = (date: string) => {
+        let dateArray = date.split('/');
+
+        return `${dateArray[2]}-${dateArray[1]}-${dateArray[0]}`;
+    };
+
+    const handleCancelContract = async () => {
+        await dispatch(cancelEntrustmentContract({
+            docId: contractFormik.values.docId,
+            status: 'Đã hủy'
+        }));
+        navigate(routes.ContractPage);
+    };
+
     useEffect(() => {
         if (id === '') return;
 
         dispatch(getETMContractById(id || ''));
     }, [id]);
-
-    const formatYMDToMDY = (date: string) => {
-        let dateArray = date.split('/');
-
-        return `${dateArray[2]}-${dateArray[1]}-${dateArray[0]}`;
-    }
 
     useEffect(() => {
         if (Object.keys(etmContract.etmContract).length <= 0) return;
@@ -216,18 +225,10 @@ function EntrustmentContractDetailPage() {
                     value: etmContract.etmContract.value,
                     distributionValue: etmContract.etmContract.distributionValue
                 });
-        }
+        };
 
         getUser();
     }, [etmContract.etmContract]);
-
-    const handleCancelContract = async () => {
-        await dispatch(cancelEntrustmentContract({
-            docId: contractFormik.values.docId,
-            status: 'Đã hủy'
-        }));
-        navigate(routes.ContractPage);
-    }
 
     useEffect(() => {
         let statusCancel = false;
@@ -252,142 +253,144 @@ function EntrustmentContractDetailPage() {
         ]);
     }, [status]);
 
+    useEffect(() => {
+        setContractDetail([{
+            id: 1,
+            children: [
+                {
+                    id: 1,
+                    title: 'Tên hợp đồng',
+                    tag: <div>{name}</div>
+                }, {
+                    id: 2,
+                    title: 'Số hợp đồng',
+                    tag: <div>{code}</div>
+                }, {
+                    id: 3,
+                    title: 'Ngày hiệu lực',
+                    tag: <div>{effectiveDate}</div>
+                }, {
+                    id: 4,
+                    title: 'Ngày hết hạn',
+                    tag: <div>{expirationDate}</div>
+                }
+            ]
+        }, {
+            id: 2,
+            children: [{
+                id: 1,
+                title: 'Đính kèm tệp',
+                tag: <div>Hợp đồng kinh doanh</div>
+            }]
+        }, {
+            id: 3,
+            children: [{
+                id: 1,
+                title: 'Loại hợp đồng',
+                tag: <div>{type}</div>
+            }, {
+                id: 2,
+                title: type === 'Trọn gói' ? 'Giá trị hợp đồng (VNĐ):' : 'Giá trị lượt phát (VNĐ)/lượt',
+                tag: <div>{type === 'Trọn gói' ? value : playValue}</div>
+            }, {
+                id: 3,
+                title: type === 'Trọn gói' ? 'Giá trị phân phối (VNĐ/ngày):' : '',
+                tag: type === 'Trọn gói' && <div>{type === 'Trọn gói' ? distributionValue : ''}</div>
+            }, {
+                id: 4,
+                title: 'Tình trạng',
+                tag: <div>{status}</div>
+            }]
+        }, {
+            id: 4,
+            children: [{
+                id: 1,
+                title: 'Tên đơn vị sử dụng',
+                tag: <div>{companyName}</div>
+            }, {
+                id: 2,
+                title: 'Người đại diện',
+                tag: <div>{contractFormik.values.fullName}</div>
+            }, {
+                id: 3,
+                title: 'Chức vụ',
+                tag: <div>{position}</div>
+            }, {
+                id: 4,
+                title: 'Ngày sinh',
+                tag: <div>{contractFormik.values.dateOfBirth}</div>
+            }, {
+                id: 5,
+                title: 'Quốc tịch',
+                tag: <div>{contractFormik.values.nationality}</div>
+            }, {
+                id: 6,
+                title: 'Số điện thoại',
+                tag: <div>{contractFormik.values.phoneNumber}</div>
+            }, {
+                id: 7,
+                title: 'Email',
+                tag: <div>{contractFormik.values.email}</div>
+            }]
+        }, {
+            id: 5,
+            children: [{
+                id: 1,
+                title: 'Giới tính',
+                tag: <div>{contractFormik.values.gender}</div>
+            }, {
+                id: 2,
+                title: 'CMND/ CCCD',
+                tag: <div>{contractFormik.values.idNumber}</div>
+            }, {
+                id: 3,
+                title: 'Ngày cấp',
+                tag: <div>{contractFormik.values.dateRange}</div>
+            }, {
+                id: 4,
+                title: 'Nơi cấp',
+                tag: <div>{contractFormik.values.issuedBy}</div>
+            }, {
+                id: 5,
+                title: 'Mã số thuế',
+                tag: <div>{contractFormik.values.taxCode}</div>
+            }, {
+                id: 6,
+                title: 'Nơi cư trú',
+                tag: <div>{contractFormik.values.residence}</div>
+            }]
+        }, {
+            id: 6,
+            children: [{
+                id: 1,
+                title: 'Tên đăng nhập',
+                tag: <div>{contractFormik.values.userName}</div>
+            }, {
+                id: 2,
+                title: 'Mật khẩu',
+                tag: <div>{contractFormik.values.password}</div>
+            }, {
+                id: 3,
+                title: 'Số tài khoản',
+                tag: <div>{contractFormik.values.bankNumber}</div>
+            }, {
+                id: 4,
+                title: 'Ngân hàng',
+                tag: <div>{contractFormik.values.bank}</div>
+            }
+            ]
+        }]);
+    }, [contractFormik.values]);
+
     return (
         <div className={cx('entrustment-detail-container')}>
             <CommonPageContractEdit
-                pagingData={PAGING_ITEMS}
-                title={`Hợp đồng khai thác - ${contractFormik.values.contractCode}`}
                 edit={edit}
-                formikData={contractFormik}
+                data={contractDetail}
                 actionData={actionData}
-                data={
-                    [{
-                        id: 1,
-                        children: [
-                            {
-                                id: 1,
-                                title: 'Tên hợp đồng:',
-                                tag: <div>{name}</div>
-                            }, {
-                                id: 2,
-                                title: 'Số hợp đồng:',
-                                tag: <div>{code}</div>
-                            }, {
-                                id: 3,
-                                title: 'Ngày hiệu lực:',
-                                tag: <div>{effectiveDate}</div>
-                            }, {
-                                id: 4,
-                                title: 'Ngày hết hạn:',
-                                tag: <div>{expirationDate}</div>
-                            }
-                        ]
-                    }, {
-                        id: 2,
-                        children: [{
-                            id: 1,
-                            title: 'Đính kèm tệp:',
-                            tag: <div>Hợp đồng kinh doanh</div>
-                        }]
-                    }, {
-                        id: 3,
-                        children: [{
-                            id: 1,
-                            title: 'Loại hợp đồng:',
-                            tag: <div>{type}</div>
-                        }, {
-                            id: 2,
-                            title: type === 'Trọn gói' ? 'Giá trị hợp đồng (VNĐ):' : 'Giá trị lượt phát (VNĐ)/lượt',
-                            tag: <div>{type === 'Trọn gói' ? value : playValue}</div>
-                        }, {
-                            id: 3,
-                            title: type === 'Trọn gói' ? 'Giá trị phân phối (VNĐ/ngày):' : '',
-                            tag: type === 'Trọn gói' && <div>{type === 'Trọn gói' ? distributionValue : ''}</div>
-                        }, {
-                            id: 4,
-                            title: 'Tình trạng:',
-                            tag: <div>{status}</div>
-                        }]
-                    }, {
-                        id: 4,
-                        children: [{
-                            id: 1,
-                            title: 'Tên đơn vị sử dụng:',
-                            tag: <div>{companyName}</div>
-                        }, {
-                            id: 2,
-                            title: 'Người đại diện:',
-                            tag: <div>{contractFormik.values.fullName}</div>
-                        }, {
-                            id: 3,
-                            title: 'Chức vụ:',
-                            tag: <div>{position}</div>
-                        }, {
-                            id: 4,
-                            title: 'Ngày sinh:',
-                            tag: <div>{contractFormik.values.dateOfBirth}</div>
-                        }, {
-                            id: 5,
-                            title: 'Quốc tịch:',
-                            tag: <div>{contractFormik.values.nationality}</div>
-                        }, {
-                            id: 6,
-                            title: 'Số điện thoại:',
-                            tag: <div>{contractFormik.values.phoneNumber}</div>
-                        }, {
-                            id: 7,
-                            title: 'Email:',
-                            tag: <div>{contractFormik.values.email}</div>
-                        }]
-                    }, {
-                        id: 5,
-                        children: [{
-                            id: 1,
-                            title: 'Giới tính:',
-                            tag: <div>{contractFormik.values.gender}</div>
-                        }, {
-                            id: 2,
-                            title: 'CMND/ CCCD:',
-                            tag: <div>{contractFormik.values.idNumber}</div>
-                        }, {
-                            id: 3,
-                            title: 'Ngày cấp:',
-                            tag: <div>{contractFormik.values.dateRange}</div>
-                        }, {
-                            id: 4,
-                            title: 'Nơi cấp:',
-                            tag: <div>{contractFormik.values.issuedBy}</div>
-                        }, {
-                            id: 5,
-                            title: 'Mã số thuế:',
-                            tag: <div>{contractFormik.values.taxCode}</div>
-                        }, {
-                            id: 6,
-                            title: 'Nơi cư trú:',
-                            tag: <div>{contractFormik.values.residence}</div>
-                        }]
-                    }, {
-                        id: 6,
-                        children: [{
-                            id: 1,
-                            title: 'Tên đăng nhập:',
-                            tag: <div>{contractFormik.values.userName}</div>
-                        }, {
-                            id: 2,
-                            title: 'Mật khẩu:',
-                            tag: <div>{contractFormik.values.password}</div>
-                        }, {
-                            id: 3,
-                            title: 'Số tài khoản:',
-                            tag: <div>{contractFormik.values.bankNumber}</div>
-                        }, {
-                            id: 4,
-                            title: 'Ngân hàng:',
-                            tag: <div>{contractFormik.values.bank}</div>
-                        }
-                        ]
-                    }]
-                }
+                pagingData={PAGING_ITEMS}
+                formikData={contractFormik}
+                title={`Hợp đồng khai thác - ${contractFormik.values.contractCode}`}
             >
                 <div className={cx('form__action')}>
                     <Button

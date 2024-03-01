@@ -68,17 +68,16 @@ function CategoryPage() {
             <div className={cx('category-container')}>
                 <p>Thể loại tác phẩm</p>
                 <Table
-                    // paginate={{
-                    //     dataForPaginate: searchResult,
-                    //     setCurrentItems: handleSetCurrentItems
-                    // }}
-                    // itemsPerPage={itemsPerPage}
-                    // setItemsPerPage={handleChange}
+                    paginate={{
+                        dataForPaginate: searchResult,
+                        setCurrentItems: handleSetCurrentItems
+                    }}
+                    itemsPerPage={itemsPerPage}
+                    setItemsPerPage={handleChange}
                     thead={['STT', 'Tên thể loại', 'Mô tả']}
                     className={cx('category-container__table')}
-                // paginateClass={cx('table__row__paginate')}
                 >
-                    {categoryList.map((item, index) => (
+                    {currentItems.map((item, index) => (
                         <tr key={index} style={{ height: '46px' }}>
                             <td><p>{index + 1}</p></td>
                             <td><p>{item.name}</p></td>

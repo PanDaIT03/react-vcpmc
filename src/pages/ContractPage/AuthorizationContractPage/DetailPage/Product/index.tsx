@@ -1,5 +1,5 @@
 import classNames from "classnames/bind";
-import { Dispatch, SetStateAction, memo, useEffect, useState } from "react";
+import { Dispatch, SetStateAction, memo, useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
 import { images } from "~/assets";
@@ -9,12 +9,12 @@ import { Checkbox } from "~/components/Checkbox";
 import { Dialog } from "~/components/Dialog";
 import { Input } from "~/components/Input";
 import { Loading } from "~/components/Loading";
-import { OptionMenu } from "~/components/OptionMenu";
 import { Table } from "~/components/Table";
 import { CB_APPROVE_ITEMS } from "~/constants";
 import { RootState, useAppDispatch } from "~/state";
 import { getRecordsAction } from "~/state/thunk/record";
 import { IContract, IGlobalConstantsType, IRecord, IUserDetail } from "~/types";
+import { Filter } from "~/components/Filter";
 
 import styles from "~/sass/Product.module.scss";
 const cx = classNames.bind(styles);
@@ -117,14 +117,23 @@ export const Product = ({
 
   const [audioSource, setAudioSource] = useState("");
   const [searchValue, setSearchValue] = useState("");
+  const [itemsPerPage, setItemsPerPage] = useState('8');
+  const [filter, setFilter] = useState<any[]>([]);
+  const [search, setSearch] = useState<Pick<IGlobalConstantsType, "tag">>({});
   const [approveOption, setApproveOption] = useState<IGlobalConstantsType>(initialState);
 
-  const recordState = useSelector((state: RootState) => state.record);
-  const { records, loading } = recordState;
+  const { records, loading } = useSelector((state: RootState) => state.record);
   const [editRecords, setEditRecords] = useState<IRecord[]>([] as IRecord[]);
   const [searchResult, setSearchResult] = useState<IRecord[]>([] as IRecord[]);
+  const [currentItems, setCurrentItems] = useState<IRecord[]>([] as IRecord[]);
 
   useEffect(() => {
+    setFilter([{
+      title: "Tình trạng phê duyệt",
+      data: CB_APPROVE_ITEMS,
+      setState: setApproveOption
+    }]);
+
     contractDetail && dispatch(getRecordsAction(contractDetail.docId));
   }, [contractDetail]);
 
@@ -179,6 +188,18 @@ export const Product = ({
         return itemResult;
       });
 
+      setSearch({
+        tag: <Input
+          id="search"
+          name="search"
+          value={searchValue}
+          placeholder="Tên hợp đồng, số hợp đồng, người uỷ quyền..."
+          size="custom"
+          iconRight={images.search}
+          onChange={(event) => setSearchValue(event.target.value)}
+        />
+      });
+
       setSearchResult(result.filter(item =>
         item.nameRecord.toLowerCase().includes(search) ||
         item.ISRCCode.toLowerCase().includes(search) ||
@@ -195,38 +216,37 @@ export const Product = ({
       : setRecordArray(() => recordArray.filter(item => item.docId !== record.docId))
   };
 
+  const handleSetCurrentItems = useCallback((items: Array<any>) => {
+    setCurrentItems(items);
+  }, []);
+
+  const handleChange = useCallback((value: string) => {
+    setItemsPerPage(value);
+  }, []);
+
+  console.log(search);
+
   return (
     <div className={cx("wrapper")}>
       <div className={cx("action")}>
-        {!approve && <div className={cx("filter")}>
-          <OptionMenu
-            title="Tình trạng phê duyệt"
-            data={CB_APPROVE_ITEMS}
-            setState={setApproveOption}
-          />
-        </div>}
-        <div className={cx("search")}>
-          <Input
-            id="search"
-            name="search"
-            value={searchValue}
-            placeholder="Tên hợp đồng, số hợp đồng, người uỷ quyền..."
-            size="custom"
-            iconRight={images.search}
-            onChange={(event) => setSearchValue(event.target.value)}
-          />
-        </div>
+        <Filter data={filter} search={search} />
       </div>
       <Table
         isApprove={approve}
         isCheckedAll={isCheckedAll}
+        paginate={{
+          dataForPaginate: searchResult,
+          setCurrentItems: handleSetCurrentItems
+        }}
+        itemsPerPage={itemsPerPage}
+        setItemsPerPage={handleChange}
         thead={["STT", "Tên bản ghi", "Mã ISRC", "Ca sĩ", "Tác giả", "Ngày tải",
           "Tình trạng", '']}
         className={cx("contract")}
         setIsCheckedAll={setIsCheckedAll}
       >
         <ProductItem
-          data={!approve ? searchResult : editRecords}
+          data={!approve ? currentItems : editRecords}
           recordArray={recordArray}
           handleCheckBox={handleCheckBox}
           approve={approve}

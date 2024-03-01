@@ -99,17 +99,15 @@ function AuthorizedPartnerPage() {
                     />
                 </div>
                 <Table
-                    // paginate={{
-                    //     dataForPaginate: searchResult,
-                    //     setCurrentItems: handleSetCurrentItems
-                    // }}
-                    // paginateClass={cx('table__row__paginate')}
-                    // loading={authorizedContract.loading}
-                    // itemsPerPage={itemsPerPage}
-                    // setItemsPerPage={handleChange}
+                    paginate={{
+                        dataForPaginate: searchResult,
+                        setCurrentItems: handleSetCurrentItems
+                    }}
+                    itemsPerPage={itemsPerPage}
+                    setItemsPerPage={handleChange}
                     thead={['STT', 'Họ tên', 'Tên đăng nhập', 'Email', 'Ngày hết hạn', 'Số điện thoại', 'Trạng thái', '']}
                 >
-                    {searchResult.map((item, index) => {
+                    {currentItems.map((item, index) => {
                         let isExpirationDate = item.expirationDate > getCurrentDateMDY();
 
                         return (

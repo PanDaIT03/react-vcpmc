@@ -1,19 +1,14 @@
 .wrapper {
-  width: 154.1rem;
+  max-width: var(--max-width);
+
+  .action {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+  }
 
   .playlist {
     margin-top: 2.4rem;
-  }
-}
-
-.action {
-  margin-top: 3.2rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  .search {
-    width: 50.1rem;
   }
 }
 

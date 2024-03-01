@@ -119,21 +119,18 @@ function EditCategoryPage() {
         <CommonWrapper
             title='Thông tin tác phẩm'
             paging={PAGING_ITEMS}
-        // actionData={categoryFormik.values.type === 'edit' ? actionData : []}
         >
             <Form className={cx('category-form')} handleFormSubmit={categoryFormik.handleSubmit}>
                 <p className={cx("title")}>Thể loại tác phẩm</p>
                 <Table
-                    // paginate={{
-                    //     dataForPaginate: categoryFormik.values.categories,
-                    //     setCurrentItems: handleSetCurrentItems
-                    // }}
-                    // loading={category.loading}
-                    // itemsPerPage={itemsPerPage}
-                    // setItemsPerPage={handleChange}
+                    paginate={{
+                        dataForPaginate: categoryFormik.values.categories,
+                        setCurrentItems: handleSetCurrentItems
+                    }}
+                    itemsPerPage={itemsPerPage}
+                    setItemsPerPage={handleChange}
                     thead={['STT', 'Tên thể loại', 'Mô tả']}
                     className={cx('category-form__table')}
-                // paginateClass={cx('table__row__paginate')}
                 >
                     {categoryList.map((item, index) => {
                         return (

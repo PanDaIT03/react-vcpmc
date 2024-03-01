@@ -1,0 +1,50 @@
+.wrapper {
+  width: 100%;
+  margin-top: 4rem;
+
+  .content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+.page-numbers {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+
+  p {
+    color: var(--white);
+    font-style: normal;
+    font-weight: 400;
+    letter-spacing: 0.21px;
+    line-height: 2rem;
+  }
+
+  .number {
+    width: 5.9rem;
+  }
+}
+
+.pagination {
+  color: var(--white);
+  font-style: normal;
+  font-weight: 400;
+  letter-spacing: 0.21px;
+  line-height: 2rem;
+  display: flex;
+  align-items: center;
+  user-select: none;
+  gap: 0.2rem;
+
+  li {
+    cursor: pointer;
+    padding: 0.2rem 0.8rem;
+  }
+
+  .active {
+    border-radius: 50%;
+    background-color: #ff7506;
+  }
+}

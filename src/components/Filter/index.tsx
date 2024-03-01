@@ -66,15 +66,18 @@ export const Filter = ({
     });
 
     const [visible, setVisible] = useState(false);
+    const [filterIcon, setFilterIcon] = useState(false);
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
+    const containerRef = useRef<HTMLDivElement>(null);
     const filterRef = useRef<HTMLDivElement>(null);
+
+    const dataStandardization = data.filter(item => Object.keys(item).length > 0);
 
     useEffect(() => {
         const handleWindowResize = () => {
             setWindowWidth(window.innerWidth);
         };
-
         window.addEventListener('resize', handleWindowResize);
 
         return () => {
@@ -94,9 +97,23 @@ export const Filter = ({
         };
     });
 
+    useEffect(() => {
+        if (!containerRef.current?.clientWidth || !filterRef.current?.clientWidth) return;
+
+        const filterWidth = containerRef.current?.clientWidth - (501 + 24);
+
+        if (filterRef.current?.clientWidth >= filterWidth)
+            filterIcon === false && setFilterIcon(true);
+    });
+
+    useEffect(() => {
+        console.log("re");
+    }, [filterIcon]);
+
     const renderFilter = () => {
         return data.map((item, index) => (
-            Object.keys(item).length > 0 && <OptionMenu
+            Object.keys(item).length > 0
+            && <OptionMenu
                 key={index}
                 title={item.title}
                 data={item.data}
@@ -106,10 +123,10 @@ export const Filter = ({
     };
 
     return (
-        <div className={classes}>
-            {Object.keys(data).length > 0
+        <div className={classes} ref={containerRef}>
+            {Object.keys(dataStandardization).length > 0
                 && <div className={cx("container__left", spaceBetween)} ref={filterRef}>
-                    {(windowWidth && windowWidth <= 1860)
+                    {(windowWidth && (windowWidth <= 1860 && filterIcon))
                         ? <div className={cx("filter")}>
                             <div className={cx("filter__icon")} onClick={() => setVisible(!visible)}>
                                 <img src={images.filter} alt="filter" />
@@ -118,7 +135,7 @@ export const Filter = ({
                                 <div className={cx("title")}>Lọc theo</div>
                                 <div className={cx("content")}>
                                     <div className={cx("dropdown-list")}>
-                                        {data.map((item, index) => (
+                                        {dataStandardization.map((item, index) => (
                                             <div className={cx("item")} key={index}>
                                                 <FilterItem
                                                     title={item.title}

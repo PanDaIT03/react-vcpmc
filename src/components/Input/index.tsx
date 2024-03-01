@@ -117,7 +117,6 @@ export const Input = <E extends React.ElementType = 'input'>({
                     ref={inputRef}
                     onBlur={handleBlur}
                     readOnly={readOnly ? true : false}
-                    // className={cx("text", border && "border", borderColor)}
                     className={cx("text", border)}
                 />
                 {((iconLeft || iconRight) && value !== "") &&

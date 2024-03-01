@@ -57,3 +57,10 @@
 .active {
   display: block;
 }
+
+@media only screen and (max-width: 1440px) {
+  .wrapper > div > div {
+    width: 100%;
+    padding-right: 1.5rem;
+  }
+}

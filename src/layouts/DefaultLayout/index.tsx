@@ -21,7 +21,7 @@ export const DefaultLayout = ({ children }: DefaultLayoutProps) => {
     const navigate = useNavigate();
     const sidebarRef = useRef<HTMLDivElement>(null);
 
-    const { setActive } = useContext(SidebarContext);
+    const { active, setActive } = useContext(SidebarContext);
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
     const { currentUser } = useSelector((state: RootState) => state.user);
 
@@ -111,6 +111,7 @@ export const DefaultLayout = ({ children }: DefaultLayoutProps) => {
                         </div>
                     </div>
                 </div>
+                {(windowWidth <= 1805 && active === true) && <div className={cx("disabled")}></div>}
             </div>
         </ThemeProvider>
     );

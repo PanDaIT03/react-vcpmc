@@ -1,5 +1,3 @@
-import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import classNames from "classnames/bind";
 import { useContext, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
@@ -38,56 +36,55 @@ import styles from "~/sass/Record.module.scss";
 const cx = classNames.bind(styles);
 
 const initialState = {
-    id: 0,
-    title: ""
+    id: 1,
+    title: "Tất cả"
 };
 
 function RecordPage() {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
-    const { setCurrentPage } = useContext(SidebarContext);
     const [isGridView, setIsGridView] = useState(true);
     const [audioVisible, setAudioVisible] = useState(false);
-    const [cancelVisible, setCancelVisible] = useState(false);
-
-    const [approveOption, setApproveOption] = useState(false);
     const [isCheckedAll, setIsCheckedAll] = useState(false);
+    const [cancelVisible, setCancelVisible] = useState(false);
+    const [approveOption, setApproveOption] = useState(false);
+    const { setCurrentPage } = useContext(SidebarContext);
 
     const [cancel, setCancel] = useState('');
     const [audioSource, setAudioSource] = useState('');
     const [searchValue, setSearchValue] = useState('');
+    const [itemsPerPage, setItemsPerPage] = useState<string>('2');
+
     const [filter, setFilter] = useState<IOptionMenu[]>([]);
     const [approveArr, setApproveArr] = useState<IRecord[]>([]);
-    const [searchResult, setSearchResult] = useState<IRecord[]>([]);
     const [editRecords, setEditRecords] = useState<IRecord[]>([]);
-
-    const [format, setFormat] = useState<IGlobalConstantsType>(initialState);
-    const [approve, setApprove] = useState<IGlobalConstantsType>(initialState);
+    const [searchResult, setSearchResult] = useState<IRecord[]>([]);
+    const [currentItems, setCurrentItems] = useState<IRecord[]>([]);
+    const [search, setSearch] = useState<Pick<IGlobalConstantsType, "tag">>({});
     const [musicKind, setMusicKind] = useState<IGlobalConstantsType>(initialState);
-    const [vadilityMusic, setVadilityMusic] = useState<IGlobalConstantsType>(initialState);
 
-    const recordState = useSelector((state: RootState) => state.record);
-    const { records, loading } = recordState;
-    const userState = useSelector((state: RootState) => state.user);
-    const { currentUser } = userState;
-
-    const search = {
-        tag: <Input
-            id="search"
-            name="search"
-            value={searchValue}
-            placeholder="Tên bản ghi, ca sĩ,..."
-            size="custom"
-            iconRight={images.search}
-            onChange={(event) => handleChange(event)}
-        />
-    };
+    const { currentUser } = useSelector((state: RootState) => state.user);
+    const { records, loading } = useSelector((state: RootState) => state.record);
 
     useEffect(() => {
         setCurrentPage(1);
         dispatch(getRecordsAction(""));
     }, []);
+
+    useEffect(() => {
+        setSearch({
+            tag: <Input
+                id="search"
+                name="search"
+                value={searchValue}
+                placeholder="Tên bản ghi, ca sĩ,..."
+                size="custom"
+                iconRight={images.search}
+                onChange={(event) => handleChange(event)}
+            />
+        });
+    }, [searchValue]);
 
     useEffect(() => {
         setSearchResult(records);
@@ -98,8 +95,10 @@ function RecordPage() {
     }, [audioVisible]);
 
     useEffect(() => {
-        const musicKindValue = musicKind.title || "";
+        const musicKindValue = musicKind.title;
         const search = searchValue.toLowerCase().trim();
+
+        if (!musicKindValue) return;
 
         const result = records.filter(record => {
             let itemResult;
@@ -133,7 +132,7 @@ function RecordPage() {
     }, [isCheckedAll]);
 
     useEffect(() => {
-        const fiterData: IOptionMenu[] = [
+        setFilter([
             {
                 title: "Thể loại",
                 data: CB_MUSIC_KIND,
@@ -142,23 +141,19 @@ function RecordPage() {
             }, {
                 title: "Định dạng",
                 data: CB_FORMAT,
-                boxSize: "small",
-                setState: setFormat
+                boxSize: "small"
             },
             !approveOption ? {
                 title: "Thời hạn sử dụng",
-                data: CB_VADILITY_MUSIC,
-                setState: setVadilityMusic
+                data: CB_VADILITY_MUSIC
             } : {} as IOptionMenu,
             !approveOption ? {
                 title: "Trạng thái",
                 data: CB_APPROVE,
-                boxSize: "small-pl",
-                setState: setApprove
+                boxSize: "small-pl"
             } : {} as IOptionMenu
-        ];
+        ]);
 
-        setFilter(fiterData);
         setEditRecords(records.filter(record => record.status === "Chưa phê duyệt"));
     }, [approveOption]);
 
@@ -187,6 +182,14 @@ function RecordPage() {
         });
     };
 
+    const handleSetCurrentItems = (items: any[]) => {
+        setCurrentItems(items);
+    };
+
+    const handleItemsPerPage = (value: string) => {
+        setItemsPerPage(value);
+    };
+
     return (
         <div className={cx("wrapper")}>
             <CommonWrapper title="Kho bản ghi">
@@ -196,7 +199,7 @@ function RecordPage() {
                             data={filter}
                             search={search}
                             searchPosition="top"
-                            spaceBetween={approveOption ? "default" : "auto"}
+                            spaceBetween={approveOption ? "auto" : "default"}
                             width={approveOption ? "max-content" : "max-width-100pc"}
                         />
                         {(approveOption && isGridView)
@@ -216,8 +219,14 @@ function RecordPage() {
                         thead={["STT", "Tên bản ghi", "Mã ISRC", "Thời lượng", "Ca sĩ", "Tác giả",
                             "Thể loại", "Định dạng", "Thời hạn sử dụng", '', '']}
                         setIsCheckedAll={setIsCheckedAll}
+                        paginate={{
+                            dataForPaginate: searchResult,
+                            setCurrentItems: handleSetCurrentItems
+                        }}
+                        itemsPerPage={itemsPerPage}
+                        setItemsPerPage={handleItemsPerPage}
                     >
-                        {(approveOption ? editRecords : searchResult).map((record, index) => {
+                        {(approveOption ? editRecords : currentItems).map((record, index) => {
                             let expiryDateRecord = new Date(formatDateMDY(record.expirationDate) || "");
                             let currentDate = new Date(getCurrentDate("mm/dd/yyyy"));
                             let isExpiry = expiryDateRecord < currentDate;
@@ -274,30 +283,19 @@ function RecordPage() {
                     </Table>
                     : <>
                         <GridView
-                            data={approveOption ? editRecords : searchResult}
+                            data={approveOption ? editRecords : currentItems}
                             isApprove={approveOption}
-                            setAudioSource={setAudioSource}
                             approveArray={approveArr}
+                            paginate={{
+                                dataForPaginate: searchResult,
+                                setCurrentItems: handleSetCurrentItems
+                            }}
+                            itemsPerPage={itemsPerPage}
+                            setItemsPerPage={handleItemsPerPage}
                             setState={setAudioVisible}
+                            setAudioSource={setAudioSource}
                             handleClick={handleClickApproveArr}
                         />
-                        <div className={cx("action-bottom")}>
-                            <div className={cx("show", "--center-flex")}>
-                                <div className={cx("title")}>Hiển thị</div>
-                                <input name="pageNumber" value="13" onChange={handleChange} />
-                                <div className={cx("sub-title")}>hàng trong mỗi trang</div>
-                            </div>
-                            <div className={cx("pagination")}>
-                                <FontAwesomeIcon icon={faChevronLeft} />
-                                <div className={cx("page-num", "--center-flex")}>
-                                    <div className={cx("active", "--center-flex")}>1</div>
-                                    <div>2</div>
-                                    <div>...</div>
-                                    <div>10</div>
-                                </div>
-                                <FontAwesomeIcon icon={faChevronRight} />
-                            </div>
-                        </div>
                     </>
                 }
                 <ActionBar visible={true}>

@@ -1,16 +1,16 @@
 .wrapper {
-  width: 154.1rem;
+  max-width: 154.1rem;
 
   .actions {
     display: flex;
-    align-items: end;
+    align-items: flex-end;
     gap: 6.4rem;
   }
 }
 
 .actions__filter {
   display: flex;
-  align-items: end;
+  align-items: flex-end;
   flex: 1;
   gap: 6.4rem;
 
