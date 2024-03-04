@@ -134,6 +134,7 @@
 .content-information {
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-between;
   row-gap: 16.4rem;
 
   & > div {

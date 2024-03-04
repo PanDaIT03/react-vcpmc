@@ -37,7 +37,6 @@ function CategoryPage() {
 
     const { setActive, setCurrentPage } = useContext(SidebarContext);
     const [itemsPerPage, setItemsPerPage] = useState<string>('10');
-    const [actionData, setActionData] = useState<any[]>([] as any[]);
 
     const [currentItems, setCurrentItems] = useState<Array<ICategory>>([] as Array<ICategory>);
     const [searchResult, setSearchResult] = useState<Array<ICategory>>([] as Array<ICategory>);

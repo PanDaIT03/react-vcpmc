@@ -20,8 +20,6 @@
 }
 
 .history-for-control__table {
-  width: 1541px;
-
   & .action {
     color: var(--orange-4-default);
     text-align: center;
@@ -30,6 +28,10 @@
     letter-spacing: -0.024px;
     text-decoration-line: underline;
     user-select: none;
+  }
+
+  & > div {
+    width: 1541px;
   }
 }
 
@@ -52,7 +54,8 @@
 }
 
 .history-for-control__filter {
-  width: 1541px;
+  width: 100%;
+  max-width: 1541px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -79,9 +82,5 @@
 
   & > div:last-child {
     width: max-content;
-  }
-
-  & input[type="text"] {
-    width: 685px;
   }
 }

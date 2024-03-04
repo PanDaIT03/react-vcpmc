@@ -62,34 +62,13 @@ function DevicePage() {
         isActive: true
     });
 
+    const [filter, setFilter] = useState<IOptionMenu[]>([]);
     const [headerColumn, setHeaderColumn] = useState<string[]>([]);
+    const [search, setSearch] = useState<Pick<IGlobalConstantsType, "tag">>({});
     const [searchResult, setSearchResult] = useState<IDevice[]>([] as IDevice[]);
     const [currentItems, setCurrentItems] = useState<IDevice[]>([] as IDevice[]);
     const [itemsChosen, setItemsChosen] = useState<IDevice[]>([] as IDevice[]);
     const [accountGroup, setAccountGroup] = useState<IGlobalConstantsType>(initialState);
-
-    const filter: IOptionMenu[] = [
-        {
-            title: 'Công ty',
-            data: CB_ACCOUNT_GROUP,
-            setState: setAccountGroup
-        }, {
-            title: 'Cột',
-            data: CB_SHOW_COLUNMS
-        }
-    ];
-
-    const search = {
-        tag: <Input
-            id="search"
-            name="search"
-            value={searchValue}
-            placeholder="Tên thiết bị, địa điểm, Mac Address..."
-            size="custom"
-            iconRight={images.search}
-            onChange={(event) => setSearchValue(event.target.value)}
-        />
-    };
 
     const deviceFormik = useFormik({
         initialValues: {
@@ -103,8 +82,29 @@ function DevicePage() {
     });
 
     useEffect(() => {
-        setActive(true);
-        setCurrentPage(4)
+        setCurrentPage(4);
+        setFilter([
+            {
+                title: "Công ty",
+                boxSize: "large-pl",
+                data: CB_ACCOUNT_GROUP,
+                setState: setAccountGroup
+            }, {
+                title: "Cột",
+                data: CB_SHOW_COLUNMS
+            }
+        ]);
+        setSearch({
+            tag: <Input
+                id="search"
+                name="search"
+                value={searchValue}
+                placeholder="Tên thiết bị, địa điểm, Mac Address..."
+                size="custom"
+                iconRight={images.search}
+                onChange={(event) => setSearchValue(event.target.value)}
+            />
+        });
         setSearchResult(devices);
         setHeaderColumn(['STT', 'Tên thiết bị', 'Trạng thái', 'Địa điểm', 'Hạn hợp đồng', 'MAC Addresss', 'Memory']);
         !devices.length && dispatch(getDeviceList());

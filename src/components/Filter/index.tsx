@@ -100,26 +100,20 @@ export const Filter = ({
     useEffect(() => {
         if (!containerRef.current?.clientWidth || !filterRef.current?.clientWidth) return;
 
-        const filterWidth = containerRef.current?.clientWidth - (501 + 24);
+        const filterWidth = containerRef.current?.clientWidth
+            - (((searchPosition === "top" || searchPosition === "bottom") ? 0 : 501) + 24);
+
+        console.log("(containerRef", containerRef.current?.clientWidth);
+        console.log("(filterRef", filterRef.current?.clientWidth);
+        console.log("(filterWidth", filterWidth);
 
         if (filterRef.current?.clientWidth >= filterWidth)
             filterIcon === false && setFilterIcon(true);
     });
 
-    useEffect(() => {
-        console.log("re");
-    }, [filterIcon]);
-
     const renderFilter = () => {
-        return data.map((item, index) => (
-            Object.keys(item).length > 0
-            && <OptionMenu
-                key={index}
-                title={item.title}
-                data={item.data}
-                setState={item.setState}
-            />
-        ));
+        return data.map((item, index) =>
+            Object.keys(item).length > 0 && <OptionMenu key={index} {...item} />);
     };
 
     return (
@@ -149,7 +143,7 @@ export const Filter = ({
                         : renderFilter()}
                 </div>}
             <div className={cx("container__right")}>
-                {Object.keys(search).length > 0 && <Input {...search.tag.props} />}
+                {(Object.keys(search).length > 0 && search !== null) && <Input {...search.tag.props} />}
             </div>
         </div>
     );

@@ -37,9 +37,8 @@ function EditCategoryPage() {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
 
-    const { categoryList, loading } = useSelector((state: RootState) => state.category);
+    const { categoryList } = useSelector((state: RootState) => state.category);
 
-    // const [paging, setPaging] = useState<Array<PagingItemType>>([] as Array<PagingItemType>);
     const [currentItems, setCurrentItems] = useState<ICategory[]>([] as ICategory[]);
     const [itemActive, setItemActive] = useState<ICategory>({
         docId: '',
@@ -47,7 +46,6 @@ function EditCategoryPage() {
         description: ''
     });
     const [itemsPerPage, setItemsPerPage] = useState<string>('10');
-    const [actionData, setActionData] = useState<any[]>([] as any[]);
 
     const categoryFormik = useFormik({
         initialValues: {
@@ -95,7 +93,6 @@ function EditCategoryPage() {
 
         categoryFormik.setValues({ categories: [...categories, newCategory], type: 'add' });
         setItemActive(newCategory);
-        setActionData([]);
     }, []);
 
     const handleSetCurrentItems = useCallback((items: Array<any>) => {
@@ -132,7 +129,7 @@ function EditCategoryPage() {
                     thead={['STT', 'Tên thể loại', 'Mô tả']}
                     className={cx('category-form__table')}
                 >
-                    {categoryList.map((item, index) => {
+                    {currentItems.map((item, index) => {
                         return (
                             itemActive.docId !== item.docId
                                 ? <tr

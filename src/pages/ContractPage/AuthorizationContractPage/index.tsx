@@ -41,41 +41,20 @@ function AuthorizationContractPage() {
     const { setCurrentPage } = useContext(SidebarContext);
 
     const [visible, setVisible] = useState(false);
+    const [contractId, setContractId] = useState('');
     const [searchValue, setSearchValue] = useState('');
     const [itemsPerPage, setItemsPerPage] = useState('8');
+    const [contractReason, setContractReason] = useState('');
+
+    const [filter, setFilter] = useState<IOptionMenu[]>([]);
+    const [search, setSearch] = useState<Pick<IGlobalConstantsType, "tag">>({});
     const [ownership, setOwnerShip] = useState<IGlobalConstantsType>(initialState);
     const [validity, setValidity] = useState<IGlobalConstantsType>(initialState);
-    const [currentItems, setCurrentItems] = useState<(IContract & IUserDetail)[]>([]);
-    const [searchResult, setSearchResult] = useState<(IContract & IUserDetail)[]>([]);
 
-    const [contractId, setContractId] = useState('');
-    const [contractReason, setContractReason] = useState('');
     const contractState = useSelector((state: RootState) => state.contract);
     const { contracts, loading } = contractState;
-
-    const filter: IOptionMenu[] = [
-        {
-            title: "Quyền sở hữu",
-            data: CB_OWNER_ITEMS,
-            setState: setOwnerShip
-        }, {
-            title: "Hiệu lực hợp đồng",
-            data: VALIDITY_CONTRACT_ITEMS,
-            setState: setValidity
-        }
-    ];
-
-    const search = {
-        tag: <Input
-            id="search"
-            name="search"
-            value={searchValue}
-            placeholder="Tên hợp đồng, số hợp đồng, người uỷ quyền..."
-            size="custom"
-            iconRight={images.search}
-            onChange={(event) => handleChange(event)}
-        />
-    };
+    const [currentItems, setCurrentItems] = useState<(IContract & IUserDetail)[]>([]);
+    const [searchResult, setSearchResult] = useState<(IContract & IUserDetail)[]>([]);
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSearchValue(event.target.value);
@@ -91,6 +70,18 @@ function AuthorizationContractPage() {
 
     useEffect(() => {
         setCurrentPage(4);
+        setFilter([
+            {
+                title: "Quyền sở hữu",
+                data: CB_OWNER_ITEMS,
+                setState: setOwnerShip
+            }, {
+                title: "Hiệu lực hợp đồng",
+                data: VALIDITY_CONTRACT_ITEMS,
+                setState: setValidity
+            }
+        ]);
+
         dispatch(getContractsAction());
     }, []);
 
@@ -101,6 +92,20 @@ function AuthorizationContractPage() {
     useEffect(() => {
         contractId !== '' && setVisible(true);
     }, [contractId]);
+
+    useEffect(() => {
+        setSearch({
+            tag: <Input
+                id="search"
+                name="search"
+                size="custom"
+                value={searchValue}
+                iconRight={images.search}
+                placeholder="Tên hợp đồng, số hợp đồng, người uỷ quyền..."
+                onChange={(event) => handleChange(event)}
+            />
+        });
+    }, [searchValue]);
 
     useEffect(() => {
         const ownershipValue = ownership.title;

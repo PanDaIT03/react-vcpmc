@@ -66,8 +66,7 @@ function EditRecordPage() {
     const params = useParams();
     const { recordId } = params;
 
-    const recordState = useSelector((state: RootState) => state.record);
-    const { records, loading } = recordState;
+    const { records, loading } = useSelector((state: RootState) => state.record);
 
     const { setCurrentPage } = useContext(SidebarContext);
     const [record, setRecord] = useState<IRecord>({} as IRecord);

@@ -10,7 +10,7 @@ import { CommonWrapper } from "~/components/CommonWrapper";
 import { Dialog } from "~/components/Dialog";
 import { Input } from "~/components/Input";
 import { Loading } from "~/components/Loading";
-import { OptionMenu } from "~/components/OptionMenu";
+import { IOptionMenu, OptionMenu } from "~/components/OptionMenu";
 import { PagingItemType } from "~/components/Paging";
 import { Table } from "~/components/Table";
 import { routes } from "~/config/routes";
@@ -22,6 +22,7 @@ import { IGlobalConstantsType, IRecord } from "~/types";
 import { IPLaylist } from "~/types/PlaylistType";
 
 import styles from "~/sass/AddPlaylistRecord.module.scss";
+import { Filter } from "~/components/Filter";
 const cx = classNames.bind(styles);
 
 const PAGING_ITEMS: Array<PagingItemType> = [
@@ -59,15 +60,17 @@ function AddPlaylistRecordPage() {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
-    const fromPage = localStorage.getItem('fromPage');
+    const fromPage = localStorage.getItem("fromPage");
 
     const { setActive } = useContext(SidebarContext);
     const [visible, setVisible] = useState(false);
     const [audioSource, setAudioSource] = useState("");
+    const [searchValue, setSearchValue] = useState("");
 
+    const [filter, setFilter] = useState<IOptionMenu[]>([]);
+    const [search, setSearch] = useState<Pick<IGlobalConstantsType, "tag">>({});
     const [formatOption, setFormatOption] = useState<IGlobalConstantsType>(initialState);
     const [playlistOption, setPlaylistOption] = useState<IGlobalConstantsType>(CB_PLAYLIST[0]);
-    const [searchValue, setSearchValue] = useState('');
 
     const { playList, loading } = useSelector((state: RootState) => state.playlist);
     const { newRecords } = useSelector((state: RootState) => state.record);
@@ -77,7 +80,33 @@ function AddPlaylistRecordPage() {
 
     useEffect(() => {
         setActive(false);
+        setFilter([
+            {
+                title: "Thể loại",
+                data: CB_FORMAT,
+                setState: setFormatOption
+            }, {
+                title: "Playlist mẫu",
+                boxSize: "small-pl",
+                data: CB_PLAYLIST,
+                setState: setPlaylistOption
+            }
+        ]);
     }, []);
+
+    useEffect(() => {
+        setSearch({
+            tag: <Input
+                id="search"
+                type='text'
+                name='search'
+                size="custom"
+                placeholder="Tên bản ghi, ca sĩ..."
+                value={searchValue}
+                onChange={(e) => setSearchValue(e.target.value)}
+            />
+        });
+    }, [searchValue]);
 
     useEffect(() => {
         if (playList.length <= 0)
@@ -121,30 +150,11 @@ function AddPlaylistRecordPage() {
                 <div className={cx("container")}>
                     <div className={cx("container-left")}>
                         <h2 className={cx("title")}>Kho bản ghi</h2>
-                        <div className={cx("filter")}>
-                            <OptionMenu
-                                title="Thể loại"
-                                data={CB_FORMAT}
-                                setState={setFormatOption}
-                            />
-                            <OptionMenu
-                                title="Playlist mẫu"
-                                boxSize="small-pl"
-                                data={CB_PLAYLIST}
-                                setState={setPlaylistOption}
-                            />
-                        </div>
-                        <div className={cx("search")}>
-                            <Input
-                                id="search"
-                                type='text'
-                                name='search'
-                                size="custom"
-                                placeholder="Tên bản ghi, ca sĩ..."
-                                value={searchValue}
-                                onChange={(e) => setSearchValue(e.target.value)}
-                            />
-                        </div>
+                        <Filter
+                            data={filter}
+                            className={cx("filter")}
+                            search={search} searchPosition="bottom"
+                        />
                         <Table
                             minWidth="100%"
                             className={cx("playlist-records")}
@@ -193,8 +203,8 @@ function AddPlaylistRecordPage() {
                                 type='text'
                                 name='search'
                                 size="custom"
-                                placeholder="Tên bản ghi, ca sĩ..."
                                 value={searchValue}
+                                placeholder="Tên bản ghi, ca sĩ..."
                                 onChange={(e) => setSearchValue(e.target.value)}
                             />
                         </div>

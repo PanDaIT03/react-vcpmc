@@ -246,7 +246,7 @@ function AddPlaylistPage() {
                             setItemsPerPage={handleItemsPerPage}
                             thead={["STT", "Tên bản ghi", "Ca sĩ", "Tác giả"]}
                         >
-                            {newPlaylistRecords.length <= 0
+                            {currentItems.length <= 0
                                 ? <tr>
                                     <td
                                         className={cx("reminder")}
@@ -258,7 +258,7 @@ function AddPlaylistPage() {
                                         </div>
                                     </td>
                                 </tr>
-                                : newPlaylistRecords?.map((record, index) => (
+                                : currentItems?.map((record, index) => (
                                     <tr key={index}>
                                         <td>{index + 1}</td>
                                         <td>{record.nameRecord}</td>

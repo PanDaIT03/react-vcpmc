@@ -13,7 +13,7 @@ export interface IOptionMenu {
     data: IGlobalConstantsType[]
     title?: string
     titlePosition?: "top" | "left"
-    boxSize?: "small" | "medium" | "large" | "small-pl" | "extra-large" | "extra-extra-large" | "custom"
+    boxSize?: "small" | "medium" | "large" | "large-pl" | "small-pl" | "extra-large" | "extra-extra-large" | "custom"
     customDrop?: string
     editable?: boolean
     border?: boolean

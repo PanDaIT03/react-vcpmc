@@ -23,17 +23,18 @@ function ForControlHistoryPage() {
     const dispatch = useAppDispatch();
 
     const { setActive, setCurrentPage } = useContext(SidebarContext);
-
     const etmContract = useSelector((state: RootState) => state.etmContract);
 
-    const [paging, setPaging] = useState<Array<PagingItemType>>([] as Array<PagingItemType>);
     const [date, setDate] = useState<string>('');
     const [searchValue, setSearchValue] = useState<string>('');
-    const [searchResult, setSearchResult] = useState<Array<EtmContractForControl>>([] as Array<EtmContractForControl>);
-    const [currentItems, setCurrentItems] = useState<Array<EtmContractForControl>>([] as Array<EtmContractForControl>);
     const [itemsPerPage, setItemsPerPage] = useState<string>('8');
 
+    const [paging, setPaging] = useState<Array<PagingItemType>>([] as Array<PagingItemType>);
+    const [searchResult, setSearchResult] = useState<Array<EtmContractForControl>>([] as Array<EtmContractForControl>);
+    const [currentItems, setCurrentItems] = useState<Array<EtmContractForControl>>([] as Array<EtmContractForControl>);
+
     useEffect(() => {
+        setCurrentPage(5);
         setPaging([
             {
                 title: 'Doanh thu',
@@ -50,9 +51,6 @@ function ForControlHistoryPage() {
 
         const currentDate = new Date();
         setDate(`${currentDate.getFullYear()}-${currentDate.getMonth() + 1}-${currentDate.getDate()}`)
-
-        setActive(true);
-        setCurrentPage(5);
     }, []);
 
     useEffect(() => {
@@ -90,11 +88,11 @@ function ForControlHistoryPage() {
 
     const handleSearchDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setDate(event.target.value)
-    }
+    };
 
     const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSearchValue(event.target.value)
-    }
+    };
 
     return (
         <CommonWrapper
@@ -115,17 +113,19 @@ function ForControlHistoryPage() {
                             onChange={(event) => handleSearchDateChange(event)}
                         />
                     </div>
-                    <Input
-                        id="search"
-                        name="search"
-                        type='text'
-                        value={searchValue}
-                        placeholder="Nhập tên bài hát"
-                        size="custom"
-                        iconRight={images.search}
-                        onChange={(event) => handleSearchChange(event)}
-                        onIconRightClick={() => { }}
-                    />
+                    <div style={{width: "100%", maxWidth: "37.1rem"}}>
+                        <Input
+                            id="search"
+                            name="search"
+                            type='text'
+                            size="custom"
+                            value={searchValue}
+                            iconRight={images.search}
+                            placeholder="Số hợp đồng, Đơn vị khai thác,..."
+                            onChange={(event) => handleSearchChange(event)}
+                            onIconRightClick={() => { }}
+                        />
+                    </div>
                 </div>
                 <p
                     style={{ fontSize: "24px", fontWeight: "700", margin: "24px 0" }}
@@ -137,9 +137,9 @@ function ForControlHistoryPage() {
                     }}
                     itemsPerPage={itemsPerPage}
                     setItemsPerPage={handleChange}
+                    className={cx('history-for-control__table')}
                     thead={['STT', 'Số hợp đồng', 'Đơn vị khai thác', 'Thời hạn hợp đồng', 'Loại hợp đồng',
                         'Tổng lượt phát', 'Tổng doanh thu', 'Doanh thu chưa phân phối', 'Ngày chốt đối soát', '']}
-                    className={cx('history-for-control__table', 'container-table-data')}
                 >
                     {currentItems.map((item, index) => {
                         let CPM = item.CPM || 0;

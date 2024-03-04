@@ -434,7 +434,7 @@ export const CommonPageContractEdit = memo(({ title, edit, data, pagingData, for
                                             title='Lượt phát'
                                             checked={type !== 'Trọn gói' ? true : false}
                                             onClick={() => formikData.setFieldValue('type', type === 'Trọn gói' ? 'Lượt phát' : 'Trọn gói')}
-                                            // className={cx('type__all__radio-button')}
+                                        // className={cx('type__all__radio-button')}
                                         />
                                     }]} />
                                     <div className={cx('all__value-input')}>
@@ -468,7 +468,7 @@ export const CommonPageContractEdit = memo(({ title, edit, data, pagingData, for
                 }
             </form>
             {!edit && <ActionBar visible={true}>
-                {actionData.map(action => <ActionBarItem {...action} />)}
+                {actionData.map((action, index) => <ActionBarItem {...action} key={index} />)}
             </ActionBar>}
         </CommonWrapper>
     );

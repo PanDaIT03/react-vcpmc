@@ -167,6 +167,20 @@ export const Product = ({
   }, [audioVisible]);
 
   useEffect(() => {
+    setSearch({
+      tag: <Input
+        id="search"
+        name="search"
+        value={searchValue}
+        placeholder="Tên hợp đồng, số hợp đồng, người uỷ quyền..."
+        size="custom"
+        iconRight={images.search}
+        onChange={(event) => setSearchValue(event.target.value)}
+      />
+    });
+  }, [searchValue]);
+
+  useEffect(() => {
     const approveStateOption = approveOption.title;
     const search = searchValue.toLowerCase().trim();
 
@@ -186,18 +200,6 @@ export const Product = ({
         };
 
         return itemResult;
-      });
-
-      setSearch({
-        tag: <Input
-          id="search"
-          name="search"
-          value={searchValue}
-          placeholder="Tên hợp đồng, số hợp đồng, người uỷ quyền..."
-          size="custom"
-          iconRight={images.search}
-          onChange={(event) => setSearchValue(event.target.value)}
-        />
       });
 
       setSearchResult(result.filter(item =>

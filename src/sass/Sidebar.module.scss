@@ -162,8 +162,15 @@
 
   .active,
   .inactive {
-    position: fixed;
     z-index: 9;
+  }
+
+  .active {
+    position: relative;
+  }
+
+  .inactive {
+    position: fixed;
   }
 
   .item-wrapper + .item-wrapper {

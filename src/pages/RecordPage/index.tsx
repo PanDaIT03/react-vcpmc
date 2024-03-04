@@ -54,7 +54,7 @@ function RecordPage() {
     const [cancel, setCancel] = useState('');
     const [audioSource, setAudioSource] = useState('');
     const [searchValue, setSearchValue] = useState('');
-    const [itemsPerPage, setItemsPerPage] = useState<string>('2');
+    const [itemsPerPage, setItemsPerPage] = useState<string>('8');
 
     const [filter, setFilter] = useState<IOptionMenu[]>([]);
     const [approveArr, setApproveArr] = useState<IRecord[]>([]);
@@ -199,7 +199,6 @@ function RecordPage() {
                             data={filter}
                             search={search}
                             searchPosition="top"
-                            spaceBetween={approveOption ? "auto" : "default"}
                             width={approveOption ? "max-content" : "max-width-100pc"}
                         />
                         {(approveOption && isGridView)
@@ -318,6 +317,15 @@ function RecordPage() {
                             />
                         </>}
                 </ActionBar>
+                {approveOption
+                    && <div className={cx("button-actions")}>
+                        <Button
+                            primary
+                            size="large"
+                            value="Huỷ"
+                            onClick={() => setApproveOption(false)}
+                        />
+                    </div>}
                 <Dialog
                     primary
                     visible={audioVisible}

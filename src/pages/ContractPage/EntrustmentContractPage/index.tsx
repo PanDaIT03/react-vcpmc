@@ -13,6 +13,7 @@ import { Table } from "~/components/Table";
 import { routes } from "~/config/routes";
 import { RootState, useAppDispatch } from "~/state";
 import { getEtmContractList } from "~/state/thunk/entrustmentContract";
+import { IGlobalConstantsType } from "~/types";
 import { EtmContract } from "~/types/EntrustmentContractType";
 
 import styles from "~/sass/EntrustmentContract.module.scss";
@@ -26,21 +27,9 @@ function EntrustmentContract() {
 
     const [searchValue, setSearchValue] = useState('');
     const [searchResult, setSearchResult] = useState<EtmContract[]>([]);
+    const [search, setSearch] = useState<Pick<IGlobalConstantsType, "tag">>({});
     const [itemsCurrent, setItemsCurrent] = useState<Array<EtmContract>>([] as Array<EtmContract>);
     const [itemsPerPage, setItemsPerPage] = useState<string>('8');
-
-    const search = {
-        tag: <Input
-            id="search"
-            name="search"
-            value={searchValue}
-            placeholder="Tên hợp đồng, số hợp đồng, người uỷ quyền..."
-            size="custom"
-            iconRight={images.search}
-            onChange={(event) => handleInputChange(event)}
-            className={cx('search-input')}
-        />
-    };
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSearchValue(event.target.value);
@@ -60,7 +49,20 @@ function EntrustmentContract() {
         if (value === '') {
             setSearchResult(entrustmentContract.etmContractList);
             return;
-        }
+        };
+
+        setSearch({
+            tag: <Input
+                id="search"
+                name="search"
+                size="custom"
+                value={searchValue}
+                iconRight={images.search}
+                placeholder="Tên hợp đồng, số hợp đồng, người uỷ quyền..."
+                onChange={(event) => handleInputChange(event)}
+                className={cx('search-input')}
+            />
+        });
 
         setSearchResult(entrustmentContract.etmContractList.filter(contract =>
             contract.code.toLowerCase().includes(value) || contract.name.toLowerCase().includes(value)
@@ -69,7 +71,7 @@ function EntrustmentContract() {
 
     const handleChange = (value: string) => {
         setItemsPerPage(value);
-    }
+    };
 
     const handleSetCurrentItems = useCallback((item: Array<EtmContract>) => {
         setItemsCurrent(item);

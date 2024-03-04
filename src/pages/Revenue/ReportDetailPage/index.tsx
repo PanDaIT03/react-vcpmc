@@ -37,8 +37,6 @@ function RevenueReportDetailPage() {
     const [paging, setPaging] = useState<Array<PagingItemType>>([] as Array<PagingItemType>);
     const [actionData, setActionData] = useState<any[]>([] as any[]);
     const [filter, setFilter] = useState<Filter>({ type: '', data: [], dataActive: '' } as Filter);
-    const [filterTypeActive, setFilterTypeActive] = useState<boolean>(false);
-    const [filterDataActive, setFilterDataActive] = useState<boolean>(false);
     const [currentDate, setCurrentDate] = useState<Date>();
     const [searchResult, setSearchResult] = useState<Array<EtmContractForControl>>([] as Array<EtmContractForControl>);
     const [searchValue, setSearchValue] = useState<string>('');
@@ -81,6 +79,7 @@ function RevenueReportDetailPage() {
             dataActive: `Tháng ${currentDate.getMonth() + 1}/${currentDate.getFullYear()}`
         });
         setMonthActive({ id: currentDate.getMonth() + 1, title: `Tháng ${currentDate.getMonth() + 1}/${currentDate.getFullYear()}` });
+        // setMonthActive({ id: currentDate.getMonth() + 1, title: "Tháng 11" });
         setCurrentDate(currentDate);
 
         etmContract.etmContractForControl.length === 0 && dispatch(getEtmContractForControls());
