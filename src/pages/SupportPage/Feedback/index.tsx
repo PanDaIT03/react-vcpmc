@@ -179,10 +179,6 @@ function FeedbackPage() {
         setCurrentItems(items);
     }, []);
 
-    console.log(feedback.feedbacks);
-    console.log(currentItems);
-    console.log(user.currentUser);
-
     return (
         <CommonWrapper
             title='Feedback'
@@ -209,20 +205,23 @@ function FeedbackPage() {
                     </Form>
                     <Toast
                         message='Gửi feedback thành công'
-                        visible={activeToast} />
+                        visible={activeToast}
+                    />
                 </>
                 : <div className={cx('support-feedback-container')}>
                     <Table
-                        // paginate={{
-                        //     dataForPaginate: feedbacks,
-                        //     setCurrentItems: handleSetCurrentItems
-                        // }}
-                        // itemsPerPage={itemsPerPage}
-                        // setItemsPerPage={setItemsPerPage}
+                        minWidth="500px"
+                        minHeight="834px"
+                        paginate={{
+                            dataForPaginate: feedbacks,
+                            setCurrentItems: handleSetCurrentItems
+                        }}
+                        itemsPerPage={itemsPerPage}
+                        setItemsPerPage={setItemsPerPage}
                         className={cx('container__feedbacks')}
                         thead={['Danh mục hướng dẫn']}
                     >
-                        {feedbacks.map((feedback, index) =>
+                        {currentItems.map((feedback, index) =>
                             <tr key={index} onClick={() => setFeedbackActive(feedback)}>
                                 <td style={{ height: '80px' }}>
                                     {typeof feedback !== "undefined"
@@ -231,8 +230,7 @@ function FeedbackPage() {
                                             className={cx(feedback.docId === feedbackActive.docId && 'active')}
                                         />}
                                 </td>
-                            </tr>
-                        )}
+                            </tr>)}
                     </Table>
                     <div className={cx('container__feedbacks-detail')}>
                         {feedbackActive && feedbackActive.user

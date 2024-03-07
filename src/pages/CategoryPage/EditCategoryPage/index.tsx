@@ -17,6 +17,7 @@ import { routes } from "~/config/routes";
 import { RootState, useAppDispatch } from "~/state";
 import { addCategory, getCategories, updateCategories } from "~/state/thunk/category";
 import { ICategory } from "~/types/CategoryType";
+import { IGlobalConstantsType } from "~/types";
 
 import style from '~/sass/EditCategory.module.scss';
 const cx = classNames.bind(style);
@@ -39,6 +40,7 @@ function EditCategoryPage() {
 
     const { categoryList } = useSelector((state: RootState) => state.category);
 
+    const [actionbar, setActionbar] = useState<Omit<IGlobalConstantsType, "id">[]>([]);
     const [currentItems, setCurrentItems] = useState<ICategory[]>([] as ICategory[]);
     const [itemActive, setItemActive] = useState<ICategory>({
         docId: '',
@@ -70,6 +72,12 @@ function EditCategoryPage() {
     });
 
     useEffect(() => {
+        setActionbar([{
+            title: "Thêm mới",
+            icon: images.addPlaylistIcon,
+            onClick: () => handleAddNewCategory(categoryFormik.values.categories),
+        }]);
+
         categoryList.length <= 0 && dispatch(getCategories());
     }, []);
 
@@ -166,12 +174,12 @@ function EditCategoryPage() {
                         onClick={handleCancelAction} />
                     <Button primary fill value="Lưu" buttonType='submit' />
                 </div>
-                <ActionBar>
-                    <ActionBarItem
+                <ActionBar data={actionbar} />
+                {/* <ActionBarItem
                         icon={images.addPlaylistIcon}
                         title="Thêm mới"
-                        onClick={() => handleAddNewCategory(categoryFormik.values.categories)} />
-                </ActionBar>
+                        onClick={() => handleAddNewCategory(categoryFormik.values.categories)} /> */}
+                {/* </ActionBar> */}
             </Form>
         </CommonWrapper>
     );

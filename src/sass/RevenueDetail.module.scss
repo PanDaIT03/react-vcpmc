@@ -1,64 +1,45 @@
 .table-record__tr__item {
-    cursor: pointer;
+  cursor: pointer;
 
-    &>td>p {
-        opacity: .7;
-        transition: opacity .2s linear;
-    }
+  & > td > p {
+    opacity: 0.7;
+    transition: opacity 0.2s linear;
+  }
 
-    &:hover>td>p {
-        opacity: 1;
-    }
+  &:hover > td > p {
+    opacity: 1;
+  }
 }
 
-.revenue-detail__table {
-    display: flex;
-    align-items: flex-start;
-    gap: 24px;
-
-    &>.revenue-detail__table-record {
-        width: 1017px;
-        margin-top: 24px;
-    }
-
-    &>.table-right {
-        margin-top: -47px;
-        
-        &>.table__record-plays {
-            width: 645px;
-        }
-
-        &>p.table-right__title {
-            color: #E5E5E5;
-            font-size: 24px;
-            font-weight: 700;
-            line-height: 24px;
-            letter-spacing: -0.048px;
-        }
-
-        &>p.table-right__record-name {
-            color: var(--orange-3);
-            font-family: Montserrat;
-            font-size: 28px;
-            font-weight: 700;
-            line-height: 42px;
-            letter-spacing: 0.14px;
-        }
-
-        &>p {
-            text-align: start;
-
-            &+p {
-                margin-top: 5px;
-            }
-        }
-    }
+.content {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2.4rem;
 }
 
-.revenue-detail__filter {
-    margin-top: 24px;
+.content__right {
+  margin-top: 3.2rem;
 
-    &>div {
-        width: 422px;
-    }
+  .title {
+    color: #e5e5e5;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 24px;
+    letter-spacing: -0.048px;
+  }
+
+  .record-name {
+    color: var(--orange-3);
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 42px;
+    letter-spacing: 0.14px;
+  }
+}
+
+@media only screen and (max-width: 1440px) {
+  .content__left,
+  .content__right {
+    width: 100%;
+  }
 }

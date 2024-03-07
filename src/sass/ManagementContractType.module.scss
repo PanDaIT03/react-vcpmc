@@ -1,8 +1,14 @@
 .config-contract-container {
   display: flex;
-  margin-top: 24px;
+  flex-wrap: wrap;
   align-items: flex-start;
+  margin-top: 24px;
   gap: 24px;
+
+  & > div {
+    width: max-content;
+    margin-top: 0;
+  }
 }
 
 .contract-container__expiration {
@@ -32,9 +38,4 @@
       opacity: 0.7;
     }
   }
-}
-
-.contract-container__table-type {
-  width: 868px;
-  height: 168px;
 }

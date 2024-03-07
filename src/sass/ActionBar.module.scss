@@ -69,9 +69,26 @@
   }
 }
 
-@media only screen and (max-width: 1024px) {
+@media only screen and (max-width: 768px) {
   .wrapper {
-    top: 95%;
-    background-color: transparent;
+    width: 6rem;
+    height: 6rem;
+    border-radius: 50%;
+    top: 90%;
+    right: 1%;
+    overflow: unset;
+  }
+
+  .container {
+    width: 100%;
+    padding: 0;
+
+    .title {
+      display: none;
+    }
+
+    .icon {
+      background-color: transparent;
+    }
   }
 }

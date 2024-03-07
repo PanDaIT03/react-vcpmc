@@ -103,10 +103,6 @@ export const Filter = ({
         const filterWidth = containerRef.current?.clientWidth
             - (((searchPosition === "top" || searchPosition === "bottom") ? 0 : 501) + 24);
 
-        console.log("(containerRef", containerRef.current?.clientWidth);
-        console.log("(filterRef", filterRef.current?.clientWidth);
-        console.log("(filterWidth", filterWidth);
-
         if (filterRef.current?.clientWidth >= filterWidth)
             filterIcon === false && setFilterIcon(true);
     });

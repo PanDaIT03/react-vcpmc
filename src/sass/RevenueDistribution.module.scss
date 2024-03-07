@@ -1,71 +1,71 @@
 .revenue-management-container {
-    &>div:last-child {
-        &>div:first-child>div {
-            width: 1541px;
-            display: flex;
-            flex-direction: row-reverse;
-            align-items: center;
-            justify-content: space-between;
+  & > div:last-child {
+    & > div:first-child > div {
+      width: 1541px;
+      display: flex;
+      flex-direction: row-reverse;
+      align-items: center;
+      justify-content: space-between;
 
-            &>div:last-child>div {
-                margin-top: 0;
-            }
-        }
+      & > div:last-child > div {
+        margin-top: 0;
+      }
     }
+  }
 }
 
 .revenue-management-container__table {
+  & > div {
     width: 1541px;
+  }
 
-    & table {
-        & .action {
-            color: var(--orange-4-default);
-            text-align: center;
-            font-size: 1.2rem;
-            font-weight: 600;
-            letter-spacing: -0.024px;
-            text-decoration-line: underline;
-            user-select: none;
-        }
+  & table {
+    & .action {
+      color: var(--orange-4-default);
+      text-align: center;
+      font-size: 1.2rem;
+      font-weight: 600;
+      letter-spacing: -0.024px;
+      text-decoration-line: underline;
+      user-select: none;
     }
+  }
 }
 
 .revenue-management-container__filter {
-    width: 1541px;
+  max-width: 1541px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 24px;
+  gap: 2rem;
+
+  & > div:first-child {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    margin-top: 24px;
+    gap: 4px;
 
-    &>div:first-child {
-        display: flex;
-        align-items: center;
-        gap: 4px;
-
-        &>p {
-            color: white;
-            white-space: nowrap;
-        }
+    & > p {
+      color: white;
+      white-space: nowrap;
     }
-
-    &>div:last-child {
-        width: 649px;
-    }
+  }
 }
 
 .revenue-management-container {
-    input[type='date'] {
-        width: 264px;
-        margin-left: 4px;
-    }
+  input[type="date"] {
+    width: 264px;
+    margin-left: 4px;
+  }
 }
 
 .table__title {
-    color: #E5E5E5;
-    font-size: 24px;
-    font-weight: 700;
-    line-height: 24px;
-    letter-spacing: -0.048px;
-    margin: 24px 0;
-    text-align: start;
+  color: #e5e5e5;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 24px;
+  letter-spacing: -0.048px;
+  margin: 24px 0;
+  text-align: start;
 }

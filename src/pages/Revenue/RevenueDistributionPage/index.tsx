@@ -1,20 +1,16 @@
-import { faFileExport } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import classNames from "classnames/bind";
-import { useCallback, useContext, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 
 import { images } from "~/assets";
 import { ActionBar } from "~/components/ActionBar";
-import { ActionBarItem } from "~/components/ActionBar/ActionBarItem";
 import { CommonWrapper } from "~/components/CommonWrapper";
 import { Input } from "~/components/Input";
 import { Loading } from "~/components/Loading";
 import { PagingItemType } from "~/components/Paging";
 import { Table } from "~/components/Table";
 import { formatDateDMYHPTS, formatDateYMD, formatMoney } from "~/constants";
-import { SidebarContext } from "~/context/Sidebar/SidebarContext";
 import { RootState, useAppDispatch } from "~/state";
 import { setContractsDetail } from "~/state/reducer/contract";
 import { getContractsAction } from "~/state/thunk/contract";
@@ -30,22 +26,22 @@ function RevenueDistributionPage() {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
-    const { setActive } = useContext(SidebarContext);
+    const [date, setDate] = useState<string>('');
+    const [searchValue, setSearchValue] = useState<string>('');
+    const [itemsPerPage, setItemsPerPage] = useState<string>('8');
 
-    const authorized = useSelector((state: RootState) => state.contract);
-    const recordPlay = useSelector((state: RootState) => state.recordPlay);
-    const record = useSelector((state: RootState) => state.record);
-    const user = useSelector((state: RootState) => state.user);
+    const [loading, setLoading] = useState<boolean>(false);
+    const [actionbar, setActionbar] = useState<any[]>([] as any[]);
 
     const [paging, setPaging] = useState<Array<PagingItemType>>([] as Array<PagingItemType>);
-    const [searchValue, setSearchValue] = useState<string>('');
     const [searchResult, setSearchResult] = useState<Array<ContractDetail>>([] as Array<ContractDetail>);
     const [currentItems, setCurrentItems] = useState<Array<ContractDetail>>([] as Array<ContractDetail>);
-    const [actionData, setActionData] = useState<any[]>([] as any[]);
-    const [itemsPerPage, setItemsPerPage] = useState<string>('8');
     const [contractDetailList, setContractDetailList] = useState<Array<ContractDetail>>([] as Array<ContractDetail>);
-    const [loading, setLoading] = useState<boolean>(false);
-    const [date, setDate] = useState<string>('');
+
+    const user = useSelector((state: RootState) => state.user);
+    const record = useSelector((state: RootState) => state.record);
+    const authorized = useSelector((state: RootState) => state.contract);
+    const recordPlay = useSelector((state: RootState) => state.recordPlay);
 
     useEffect(() => {
         setPaging([
@@ -59,14 +55,10 @@ function RevenueDistributionPage() {
                 active: true
             }
         ]);
-
-        setActionData([
-            {
-                icon: <FontAwesomeIcon icon={faFileExport} />,
-                title: 'Xuất dữ liệu',
-                onClick: () => { }
-            }
-        ]);
+        setActionbar([{
+            title: "Xuất dữ liệu",
+            icon: images.fileExport
+        }]);
 
         authorized.contracts.length <= 0 && dispatch(getContractsAction());
         record.records.length <= 0 && dispatch(getRecordsAction(''));
@@ -74,8 +66,6 @@ function RevenueDistributionPage() {
 
         let dateList = new Date().toLocaleString().split(',')[0].split('/');
         setDate(`${dateList[dateList.length - 1]}-${dateList[0]}-${dateList[1]}`);
-
-        setActive(true);
     }, []);
 
     useEffect(() => {
@@ -156,8 +146,7 @@ function RevenueDistributionPage() {
     const handleDetailClick = (id: string) => {
         navigate(`/revenue/distribution/detail/${id}`);
         dispatch(setContractsDetail(contractDetailList));
-        setActive(false);
-    }
+    };
 
     return (
         <CommonWrapper
@@ -171,19 +160,22 @@ function RevenueDistributionPage() {
                     <Input
                         name='date'
                         type='date'
+                        size="custom"
                         value={date}
                         onChange={(e: any) => setDate(e.target.value)}
                     />
                 </div>
-                <Input
-                    id="search"
-                    type='text'
-                    name='search'
-                    size="custom"
-                    placeholder="Tên bản ghi, ca sĩ..."
-                    value={searchValue}
-                    onChange={(e) => setSearchValue(e.target.value)}
-                />
+                <div style={{ width: "100%", maxWidth: "37.1rem" }}>
+                    <Input
+                        id="search"
+                        type='text'
+                        name='search'
+                        size="custom"
+                        placeholder="Tên bản ghi, ca sĩ..."
+                        value={searchValue}
+                        onChange={(e) => setSearchValue(e.target.value)}
+                    />
+                </div>
             </div>
             <p className={cx('table__title')}>Danh sách hợp đồng ủy quyền</p>
             <Table
@@ -211,16 +203,10 @@ function RevenueDistributionPage() {
                     </tr>
                 ))}
             </Table>
-            <ActionBar visible={true}>
-                <ActionBarItem
-                    title="Xuất dữ liệu"
-                    icon={images.fileExport}
-                    onClick={() => { }}
-                />
-            </ActionBar>
+            <ActionBar data={actionbar} />
             <Loading loading={loading} />
         </CommonWrapper >
     );
-}
+};
 
 export default RevenueDistributionPage;

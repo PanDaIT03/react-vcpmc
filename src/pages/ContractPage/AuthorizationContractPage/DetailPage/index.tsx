@@ -1,11 +1,10 @@
 import classNames from "classnames/bind";
-import { useContext, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 
 import { images } from "~/assets";
 import { ActionBar } from "~/components/ActionBar";
-import { ActionBarItem } from "~/components/ActionBar/ActionBarItem";
 import Button from "~/components/Button";
 import { CancleForm } from "~/components/CancelForm";
 import { CommonWrapper } from "~/components/CommonWrapper";
@@ -16,7 +15,6 @@ import { RenewalAuthorization } from "~/components/RenewalAuthorization";
 import { Tab, Tabs } from "~/components/Tabs";
 import { routes } from "~/config/routes";
 import { CAPABILITY } from "~/constants";
-import { SidebarContext } from "~/context/Sidebar/SidebarContext";
 import { RootState, useAppDispatch } from "~/state";
 import { cancelContractAction } from "~/state/thunk/contract";
 import { updateRecordsAction } from "~/state/thunk/record";
@@ -50,7 +48,6 @@ function DetailPage() {
 
     const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
-    const { setActive } = useContext(SidebarContext);
     const [visible, setVisible] = useState(false);
     const [approve, setApprove] = useState(false);
     const [switchPage, setSwitchPage] = useState(false);
@@ -58,16 +55,13 @@ function DetailPage() {
 
     const [cancleArea, setCancleArea] = useState('');
 
+    const [actionbar, setActionbar] = useState<Omit<IGlobalConstantsType, "id">[]>([]);
     const [contractDetail, setContractDetail] = useState<(IContract & IUserDetail)>(initialState);
     const contractState = useSelector((state: RootState) => state.contract);
     const { contracts, status, loading } = contractState;
 
     const [ownerShip, setOwnerShip] = useState<IGlobalConstantsType[]>([]);
     const [recordArray, setRecordArray] = useState<IRecord[]>([] as IRecord[]);
-
-    useEffect(() => {
-        setActive(false);
-    }, []);
 
     useEffect(() => {
         visible && textAreaRef.current?.focus();
@@ -129,6 +123,38 @@ function DetailPage() {
         };
     };
 
+    useEffect(() => {
+        const actionbarData = [
+            {
+                title: !switchPage ? "Chỉnh sửa hợp đồng" : "Chỉnh sửa tác phẩm",
+                icon: images.edit,
+                disable: contractDetail.censored === false,
+                onClick: () => {
+                    switchPage
+                        ? setApprove(true)
+                        : navigate(`/contract-management/detail/edit/${contractDetail.contractCode}`)
+                }
+            }, {
+                title: "Gia hạn hợp đồng",
+                icon: images.clipboardNotes,
+                onClick: handleClick
+            }, {
+                title: "Huỷ hợp đồng",
+                icon: !switchPage ? images.fiX : images.history,
+                onClick: () => setVisible(true)
+            }, switchPage ? {
+                title: "Thêm bản ghi",
+                icon: images.uPlus
+            } : {}, approve ? {
+                title: "Từ chối bản ghi",
+                icon: images.fiX,
+                onClick: () => handleClickApproval("Bị từ chối")
+            } : {}
+        ];
+
+        setActionbar(actionbarData);
+    }, [switchPage, contractDetail]);
+
     return (
         <div className={cx("wrapper")}>
             <CommonWrapper
@@ -161,42 +187,7 @@ function DetailPage() {
                         setApprove={setApprove}
                         handleClickApprove={handleClickApproval}
                     />}
-                <ActionBar visible={true}>
-                    {!approve
-                        ? <>
-                            <ActionBarItem
-                                title={!switchPage ? "Chỉnh sửa hợp đồng" : "Chỉnh sửa tác phẩm"}
-                                icon={images.edit}
-                                disable={contractDetail.censored === false}
-                                onClick={() => {
-                                    switchPage
-                                        ? setApprove(true)
-                                        : navigate(`/contract-management/detail/edit/${contractDetail.contractCode}`);
-                                }}
-                            />
-                            <ActionBarItem
-                                title="Gia hạn hợp đồng"
-                                icon={images.clipboardNotes}
-                                onClick={handleClick}
-                            />
-                            <ActionBarItem
-                                title="Huỷ hợp đồng"
-                                icon={!switchPage ? images.fiX : images.history}
-                                onClick={() => setVisible(true)}
-                            />
-                            {switchPage
-                                && <ActionBarItem
-                                    title="Thêm bản ghi"
-                                    icon={images.uPlus}
-                                />}
-                        </>
-                        : <ActionBarItem
-                            title="Từ chối bản ghi"
-                            icon={images.fiX}
-                            onClick={() => handleClickApproval("Bị từ chối")}
-                        />
-                    }
-                </ActionBar>
+                <ActionBar visible={true} data={actionbar} />
                 <Dialog
                     visible={visible}
                     className={cx("cancel")}

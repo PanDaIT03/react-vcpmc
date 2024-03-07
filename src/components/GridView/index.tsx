@@ -182,6 +182,13 @@ const GridItem = memo(({
         setIsChecked(isItemExisted.length > 0);
     }, [approveArray]);
 
+    const handleClickAudio = () => {
+        if (!isApprove) {
+            setState && setState(true);
+            setAudioSource && setAudioSource(item.audioLink);
+        };
+    };
+
     return (
         <div
             className={classes}
@@ -196,12 +203,7 @@ const GridItem = memo(({
                     backgroundSize: 'cover',
                     backgroundPosition: 'center'
                 }}
-                onClick={() => {
-                    if (!isApprove) {
-                        setState && setState(true);
-                        setAudioSource && setAudioSource(item.audioLink);
-                    };
-                }}
+                onClick={handleClickAudio}
             >
                 {type === "record"
                     && <div className={cx("pause")}>

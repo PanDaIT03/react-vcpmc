@@ -41,7 +41,6 @@ type InitType =
 
 function AddPage() {
     const dispatch = useAppDispatch();
-    const navigate = useNavigate();
     const params = useParams();
     const { contractCode: code } = params;
 
@@ -79,28 +78,6 @@ function AddPage() {
         password: "",
         bankNumber: "",
         bank: ""
-        // contractCode: "HDA",
-        // customer: "Hợp đồng uỷ quyền bài hát",
-        // companyName: "PD Software",
-        // position: "Chủ tịch",
-        // authorizingLegalEntity: "Tổ chức",
-        // effectiveDate: getCurrentDate("yyyy-mm-dd"),
-        // expirationDate: getCurrentDate("yyyy-mm-dd"),
-        // fullName: "Dương Đại",
-        // dateOfBirth: "2003-10-05",
-        // gender: "Nam",
-        // nationality: "Việt Nam",
-        // phoneNumber: "0987164519",
-        // idNumber: "123123123123",
-        // dateRange: getCurrentDate("yyyy-mm-dd"),
-        // issuedBy: "TP. Sadec",
-        // taxCode: "123123123123",
-        // residence: "Sadec",
-        // email: "pandaid03@gmail.com",
-        // userName: "pandaid03@gmail.com",
-        // password: "12345678",
-        // bankNumber: "123123123123",
-        // bank: "Agribank"
     };
 
     const formik = useFormik({
@@ -115,14 +92,9 @@ function AddPage() {
             dateOfBirth: Yup.string().required(),
             gender: Yup.string().required(),
             nationality: Yup.string().required(),
-            // phoneNumber: Yup.string()
-            //     .required()
-            //     .matches(/(84|0[3|5|7|8|9])+([0-9]{8})\b/g),
             idNumber: Yup.string().required(),
             dateRange: Yup.string().required(),
             issuedBy: Yup.string().required(),
-            // taxCode: Yup.string().required(),
-            // residence: Yup.string().required(),
             email: Yup.string()
                 .required("Không được để trống")
                 .matches(/^\S+@\S+\.\S+$/, "Vui lòng nhập địa chỉ đúng định dạng"),
@@ -132,10 +104,6 @@ function AddPage() {
             password: Yup.string()
                 .required()
                 .min(8),
-            // bankNumber: Yup.string()
-            //     .required()
-            //     .matches(/^[0-9]*$/),
-            // bank: Yup.string().required()
         }),
         onSubmit: values => {
             const { contractCode, authorizingLegalEntity, customer,
@@ -160,7 +128,6 @@ function AddPage() {
                 dateCreated: getCurrentDateTimeDMY(),
                 effectiveDate: formatDateDMY(effectiveDate),
                 expirationDate: formatDateDMY(expirationDate),
-                // ownerShips: "Người biểu diễn",
                 ownerShips: [],
                 reason: "",
                 status: "Mới",

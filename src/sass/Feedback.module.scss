@@ -125,6 +125,10 @@
   gap: 32px;
   margin-right: 5.9rem;
 
+  & > div {
+    width: 35%;
+  }
+
   & > .container__feedbacks {
     width: 571px;
     height: 834px;
@@ -133,9 +137,8 @@
   }
 
   & > .container__feedbacks-detail {
+    width: 75%;
     color: var(--white);
-    width: 1014px;
-    height: 834px;
     padding: 32px;
     border-radius: 16px;
     margin-top: 24px;

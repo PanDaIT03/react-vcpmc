@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 
 import { images } from "~/assets";
 import { ActionBar } from "~/components/ActionBar";
-import { ActionBarItem } from "~/components/ActionBar/ActionBarItem";
 import { AudioDialog } from "~/components/AudioDialog";
 import Button from "~/components/Button";
 import { CancleForm } from "~/components/CancelForm";
@@ -55,6 +54,7 @@ function RecordPage() {
     const [audioSource, setAudioSource] = useState('');
     const [searchValue, setSearchValue] = useState('');
     const [itemsPerPage, setItemsPerPage] = useState<string>('8');
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
     const [filter, setFilter] = useState<IOptionMenu[]>([]);
     const [approveArr, setApproveArr] = useState<IRecord[]>([]);
@@ -63,14 +63,49 @@ function RecordPage() {
     const [currentItems, setCurrentItems] = useState<IRecord[]>([]);
     const [search, setSearch] = useState<Pick<IGlobalConstantsType, "tag">>({});
     const [musicKind, setMusicKind] = useState<IGlobalConstantsType>(initialState);
+    const [actionbar, setActionbar] = useState<Omit<IGlobalConstantsType, "id">[]>([]);
 
     const { currentUser } = useSelector((state: RootState) => state.user);
     const { records, loading } = useSelector((state: RootState) => state.record);
 
     useEffect(() => {
+        const handleWindowResize = () => {
+            setWindowWidth(window.innerWidth);
+        };
+
+        window.addEventListener('resize', handleWindowResize);
+
+        return () => {
+            window.removeEventListener('resize', handleWindowResize);
+        };
+    });
+
+    useEffect(() => {
+        windowWidth <= 1440 ? setItemsPerPage('9') : setItemsPerPage('8');
+    }, [windowWidth]);
+
+    useEffect(() => {
         setCurrentPage(1);
         dispatch(getRecordsAction(""));
     }, []);
+
+    useEffect(() => {
+        setActionbar(!approveOption ? [{
+            title: "Quản lý phê duyệt",
+            icon: images.edit,
+            onClick: () => setApproveOption(true)
+        }] : [
+            {
+                title: "Từ chối",
+                icon: images.fiX,
+                onClick: () => setCancelVisible(true)
+            }, {
+                title: "Phê duyệt",
+                icon: images.checkGreen,
+                onClick: () => handleClickApprove("Đã phê duyệt")
+            }
+        ]);
+    }, [approveOption])
 
     useEffect(() => {
         setSearch({
@@ -297,26 +332,7 @@ function RecordPage() {
                         />
                     </>
                 }
-                <ActionBar visible={true}>
-                    {!approveOption
-                        ? <ActionBarItem
-                            title="Quản lý phê duyệt"
-                            icon={images.edit}
-                            onClick={() => setApproveOption(true)}
-                        />
-                        : <>
-                            <ActionBarItem
-                                title="Phê duyệt"
-                                icon={images.checkGreen}
-                                onClick={() => handleClickApprove("Đã phê duyệt")}
-                            />
-                            <ActionBarItem
-                                title="Từ chối"
-                                icon={images.fiX}
-                                onClick={() => setCancelVisible(true)}
-                            />
-                        </>}
-                </ActionBar>
+                <ActionBar data={actionbar} />
                 {approveOption
                     && <div className={cx("button-actions")}>
                         <Button

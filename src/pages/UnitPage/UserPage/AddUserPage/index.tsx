@@ -247,7 +247,12 @@ function AddUserOfUnitPage() {
         >
             <form className={cx('form__body')}>
                 {USER_INPUT_ITEMS.map((item, index) =>
-                    <BlockDetail key={index} editable={true} data={item.children} />)}
+                    <BlockDetail
+                        key={index}
+                        editable={true}
+                        data={item.children}
+                        maxWidth="custom"
+                    />)}
             </form>
             <div className={cx('form__action')}>
                 <Button

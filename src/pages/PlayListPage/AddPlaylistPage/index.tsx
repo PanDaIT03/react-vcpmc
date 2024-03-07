@@ -8,7 +8,6 @@ import * as Yup from "yup";
 
 import { images } from "~/assets";
 import { ActionBar } from "~/components/ActionBar";
-import { ActionBarItem } from "~/components/ActionBar/ActionBarItem";
 import { AudioDialog } from "~/components/AudioDialog";
 import Button from "~/components/Button";
 import { CommonWrapper } from "~/components/CommonWrapper";
@@ -23,7 +22,7 @@ import { getCurrentDateDMY, getTotalMoment } from "~/constants";
 import { SidebarContext } from "~/context/Sidebar/SidebarContext";
 import { RootState, useAppDispatch } from "~/state";
 import { addPlaylistAction } from "~/state/thunk/playlist";
-import { IRecord } from "~/types";
+import { IGlobalConstantsType, IRecord } from "~/types";
 import { IPLaylist } from "~/types/PlaylistType";
 
 import styles from "~/sass/AddPlaylist.module.scss";
@@ -61,10 +60,10 @@ function AddPlaylistPage() {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
-    const { setActive } = useContext(SidebarContext);
     const [visible, setVisible] = useState(false);
     const [audioSource, setAudioSource] = useState("");
     const [itemsPerPage, setItemsPerPage] = useState('8');
+    const [actionbar, setActionbar] = useState<Omit<IGlobalConstantsType, "id">[]>([]);
 
     const { loading, status } = useSelector((state: RootState) => state.playlist);
     const { currentUser } = useSelector((state: RootState) => state.user);
@@ -103,7 +102,11 @@ function AddPlaylistPage() {
     const { title, description, topics, isPublic } = values;
 
     useEffect(() => {
-        setActive(false);
+        setActionbar([{
+            title: "Thêm bản ghi",
+            icon: images.uPlus,
+            onClick: handleClickAddPlaylistsRecords
+        }]);
     }, []);
 
     useEffect(() => {
@@ -307,13 +310,7 @@ function AddPlaylistPage() {
                         setVisible={setVisible}
                     />
                 </Dialog>
-                <ActionBar>
-                    <ActionBarItem
-                        title="Thêm bản ghi"
-                        icon={images.uPlus}
-                        onClick={handleClickAddPlaylistsRecords}
-                    />
-                </ActionBar>
+                <ActionBar data={actionbar} />
                 <Loading loading={loading} />
             </CommonWrapper>
         </div>

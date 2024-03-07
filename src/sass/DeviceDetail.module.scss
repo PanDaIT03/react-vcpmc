@@ -1,8 +1,6 @@
 .device-detail-container {
-  width: 1682px;
-  height: 480px;
-  height: auto;
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: flex-start;
   border-radius: 8px;
@@ -10,6 +8,13 @@
   background: var(---bg-lighter);
   padding: 24px 125px;
   margin-top: 40px;
+  gap: 6rem;
+
+  .content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
 }
 
 .device-detail__info-left {
@@ -205,4 +210,16 @@
 
 .edit-dialog {
   padding: 32px 40px 40px 40px;
+}
+
+@media only screen and (max-width: 1024px) {
+  .content {
+    gap: 13rem;
+  }
+}
+
+@media only screen and (max-width: 1440px) {
+  .content {
+    width: 100%;
+  }
 }

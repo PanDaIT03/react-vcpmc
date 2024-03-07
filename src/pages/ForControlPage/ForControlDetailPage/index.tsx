@@ -15,10 +15,10 @@ function ForControlHistoryDetailPage() {
 
     const etmContract = useSelector((state: RootState) => state.etmContract);
 
-    const [paging, setPaging] = useState<Array<PagingItemType>>([] as Array<PagingItemType>);
-    const [actionData, setActionData] = useState<any[]>([] as any[]);
-    const [entrustmentContract, setEntrustmentContract] = useState<EtmContractForControl>({} as EtmContractForControl);
     const [monthPeriod, setMonthPeriod] = useState<string>('');
+    const [actionData, setActionData] = useState<any[]>([] as any[]);
+    const [paging, setPaging] = useState<Array<PagingItemType>>([] as Array<PagingItemType>);
+    const [entrustmentContract, setEntrustmentContract] = useState<EtmContractForControl>({} as EtmContractForControl);
 
     useEffect(() => {
         setPaging([
@@ -57,12 +57,12 @@ function ForControlHistoryDetailPage() {
 
     return (
         <CommonDetailPage
-            title={`Doanh thu theo hợp đồng - ${entrustmentContract.code} - Kỳ Tháng ${monthPeriod}`}
             pagingData={paging}
             actionData={actionData}
             style={{ margin: "24px 0" }}
+            title={`Doanh thu theo hợp đồng - ${entrustmentContract.code} - Kỳ Tháng ${monthPeriod}`}
         />
-    )
-}
+    );
+};
 
 export default ForControlHistoryDetailPage;

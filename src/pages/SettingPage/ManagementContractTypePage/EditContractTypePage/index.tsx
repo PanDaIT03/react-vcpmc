@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 
 import { images } from "~/assets";
 import { ActionBar } from "~/components/ActionBar";
-import { ActionBarItem } from "~/components/ActionBar/ActionBarItem";
 import Button from "~/components/Button";
 import { CommonWrapper } from "~/components/CommonWrapper";
 import { Form } from "~/components/Form";
@@ -18,6 +17,7 @@ import { routes } from "~/config/routes";
 import { Yup } from "~/constants";
 import { RootState, useAppDispatch } from "~/state";
 import { addEtmContractType, deleteEtmContractType, updateEtmContractTypes } from "~/state/thunk/entrustmentContract";
+import { IGlobalConstantsType } from "~/types";
 import { ETMContractType } from "~/types/EntrustmentContractType";
 
 import style from '~/sass/EditContractType.module.scss';
@@ -28,6 +28,7 @@ function EditContractTypePage() {
     const navigate = useNavigate();
 
     const etmContract = useSelector((state: RootState) => state.etmContract);
+    const [actionbar, setActionbar] = useState<Omit<IGlobalConstantsType, "id">[]>([]);
 
     const [itemsPerPage, setItemsPerPage] = useState<string>('8');
     const [itemActive, setItemActive] = useState<ETMContractType>({
@@ -98,6 +99,17 @@ function EditContractTypePage() {
                 active: true
             }
         ]);
+        setActionbar([
+            {
+                icon: images.uPlus,
+                title: "Thêm lịch áp dụng",
+                onClick: () => handleAddNewType(contractTypeFormik.values.types)
+            }, {
+                title: "Xóa",
+                icon: images.trash,
+                onClick: () => dispatch(deleteEtmContractType({ id: itemActive.docId }))
+            }
+        ]);
 
         contractTypeFormik.setFieldValue('types', etmContract.types);
         setItemActive(etmContract.types[0]);
@@ -153,6 +165,7 @@ function EditContractTypePage() {
                 className={cx('type-contract__form')}
             >
                 <Table
+                    minHeight="280px"
                     paginate={{
                         dataForPaginate: contractTypeFormik.values.types,
                         setCurrentItems: handleSetCurrentItems
@@ -215,16 +228,7 @@ function EditContractTypePage() {
                         onClick={() => contractTypeFormik.handleSubmit()} />
                 </div>
             </Form >
-            <ActionBar>
-                <ActionBarItem
-                    icon={images.uPlus}
-                    title="Thêm lịch áp dụng"
-                    onClick={() => handleAddNewType(contractTypeFormik.values.types)} />
-                <ActionBarItem
-                    icon={images.trash}
-                    title="Xóa"
-                    onClick={() => dispatch(deleteEtmContractType({ id: itemActive.docId }))} />
-            </ActionBar>
+            <ActionBar data={actionbar} />
             <Loading loading={etmContract.loading} />
         </CommonWrapper>
     );

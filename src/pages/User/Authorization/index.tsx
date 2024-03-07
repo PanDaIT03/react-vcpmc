@@ -5,7 +5,6 @@ import { useNavigate } from "react-router";
 
 import { images } from "~/assets";
 import { ActionBar } from "~/components/ActionBar";
-import { ActionBarItem } from "~/components/ActionBar/ActionBarItem";
 import { CommonWrapper } from "~/components/CommonWrapper";
 import { Input } from "~/components/Input";
 import { Loading } from "~/components/Loading";
@@ -19,7 +18,7 @@ import { RootState, useAppDispatch } from "~/state";
 import { getFunctionalTypes, getFunctionals } from "~/state/thunk/functional";
 import { deleteRole, getRoleList } from "~/state/thunk/role/role";
 import { getUsers } from "~/state/thunk/user/user";
-import { Role, User } from "~/types";
+import { IGlobalConstantsType, Role, User } from "~/types";
 
 import style from '~/sass/AuthorizationUser.module.scss';
 const cx = classNames.bind(style);
@@ -28,22 +27,25 @@ function UserAuthorizationPage() {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
-    const { setActive, setCurrentPage } = useContext(SidebarContext);
+    const { setCurrentPage } = useContext(SidebarContext);
+    const [loading, setLoading] = useState<boolean>(false);
+    const [displayUserTable, setDisplayUserTable] = useState<boolean>(true);
 
     const user = useSelector((state: RootState) => state.user);
     const role = useSelector((state: RootState) => state.role);
 
-    const [paging, setPaging] = useState<Array<PagingItemType>>([] as Array<PagingItemType>);
     const [searchValue, setSearchValue] = useState<string>('');
+    const [itemsPerPage, setItemsPerPage] = useState<string>('8');
+    const [actionbar, setActionbar] = useState<Omit<IGlobalConstantsType, "id">[]>([]);
+
     const [searchResult, setSearchResult] = useState<Array<User>>([] as Array<User>);
     const [currentItems, setCurrentItems] = useState<Array<User>>([] as Array<User>);
+    const [paging, setPaging] = useState<Array<PagingItemType>>([] as Array<PagingItemType>);
     const [searchRoleResult, setSearchRoleResult] = useState<Array<Role>>([] as Array<Role>);
     const [currentRoleItems, setCurrentRoleItems] = useState<Array<Role>>([] as Array<Role>);
-    const [itemsPerPage, setItemsPerPage] = useState<string>('8');
-    const [displayUserTable, setDisplayUserTable] = useState<boolean>(true);
-    const [loading, setLoading] = useState<boolean>(false);
 
     useEffect(() => {
+        setCurrentPage(6);
         setPaging([
             {
                 title: 'Cài đặt',
@@ -55,14 +57,22 @@ function UserAuthorizationPage() {
                 active: true
             }
         ]);
+        setActionbar([
+            displayUserTable ? {
+                title: "Thêm người dùng",
+                icon: images.userPlus,
+                onClick: () => navigate(routes.AuthorizedAddUserPage)
+            } : {
+                title: "Thêm vai trò",
+                icon: images.users,
+                onClick: () => navigate(routes.AuthorizedAddRolePage)
+            }
+        ]);
 
         dispatch(getUsers());
         dispatch(getRoleList());
         dispatch(getFunctionalTypes());
         dispatch(getFunctionals());
-
-        setActive(true);
-        setCurrentPage(6)
     }, []);
 
     useEffect(() => {
@@ -167,7 +177,7 @@ function UserAuthorizationPage() {
                         <td><p>{item.expirationDate}</p></td>
                         <td><p
                             className={cx('action')}
-                            onClick={() => { navigate(`/authorization/user/${item.docId}/edit`); setActive(false); }}
+                            onClick={() => navigate(`/authorization/user/${item.docId}/edit`)}
                         >
                             Chỉnh sửa
                         </p></td>
@@ -191,32 +201,19 @@ function UserAuthorizationPage() {
                         <td><p>{user.users.filter(user => user.rolesId === item.docId).length}</p></td>
                         <td><p>{item.role}</p></td>
                         <td><p className={cx('table__col__description')}>{item.description}</p></td>
-                        <td><p className={cx('action')} onClick={() => {
-                            navigate(`/authorization/role/edit/${item.docId}`);
-                            setActive(false);
-                        }}>Cập nhật</p></td>
+                        <td><p className={cx('action')} onClick={() => navigate(`/authorization/role/edit/${item.docId}`)}>
+                            Cập nhật
+                        </p></td>
                         <td>{item.allowDelete
                             && <p className={cx('action')} onClick={() => { dispatch(deleteRole(item.docId)) }}>Xóa</p>
                         }</td>
                     </tr>
                 ))}
             </Table>
-            <ActionBar visible={true}>
-                {displayUserTable
-                    ? <ActionBarItem
-                        title="Thêm người dùng"
-                        icon={images.userPlus}
-                        onClick={() => navigate(routes.AuthorizedAddUserPage)}
-                    />
-                    : <ActionBarItem
-                        title="Thêm vai trò"
-                        icon={images.users}
-                        onClick={() => navigate(routes.AuthorizedAddRolePage)}
-                    />}
-            </ActionBar>
+            <ActionBar data={actionbar} />
             <Loading loading={loading} />
         </CommonWrapper>
     );
-}
+};
 
 export default UserAuthorizationPage;

@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 
 import { images } from "~/assets";
 import { ActionBar } from "~/components/ActionBar";
-import { ActionBarItem } from "~/components/ActionBar/ActionBarItem";
 import Button from "~/components/Button";
 import { CancleForm } from "~/components/CancelForm";
 import { Dialog } from "~/components/Dialog";
@@ -48,6 +47,7 @@ function AuthorizationContractPage() {
 
     const [filter, setFilter] = useState<IOptionMenu[]>([]);
     const [search, setSearch] = useState<Pick<IGlobalConstantsType, "tag">>({});
+    const [actionbar, setActionbar] = useState<Omit<IGlobalConstantsType, "id">[]>([]);
     const [ownership, setOwnerShip] = useState<IGlobalConstantsType>(initialState);
     const [validity, setValidity] = useState<IGlobalConstantsType>(initialState);
 
@@ -81,6 +81,11 @@ function AuthorizationContractPage() {
                 setState: setValidity
             }
         ]);
+        setActionbar([{
+            title: "Thêm hợp đồng",
+            icon: images.uPlus,
+            onClick: () => navigate(routes.AddPage)
+        }]);
 
         dispatch(getContractsAction());
     }, []);
@@ -212,13 +217,7 @@ function AuthorizationContractPage() {
                         </td>
                     </tr>))}
             </Table>
-            <ActionBar visible={true}>
-                <ActionBarItem
-                    title="Thêm hợp đồng"
-                    icon={images.uPlus}
-                    onClick={() => navigate(routes.AddPage)}
-                />
-            </ActionBar>
+            <ActionBar visible={true} data={actionbar} />
             <Dialog
                 visible={visible}
                 className={cx("cancel")}

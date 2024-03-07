@@ -12,6 +12,7 @@
 
   .container_right {
     width: calc(100% - 4rem);
+    padding-bottom: 2rem;
   }
 
   .disabled {
@@ -96,3 +97,9 @@
     width: 4rem !important;
   }
 }
+
+// @media only screen and (orientation: portrait) {
+//   .wrapper {
+//     background: #000;
+//   }
+// }

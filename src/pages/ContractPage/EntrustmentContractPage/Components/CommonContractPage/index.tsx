@@ -9,9 +9,9 @@ import { Loading } from "~/components/Loading";
 import { PagingItemType } from "~/components/Paging";
 import { Table } from "~/components/Table";
 import { formatDateYMD, formatMoney } from "~/constants";
+import { SidebarContext } from "~/context/Sidebar/SidebarContext";
 import { RootState } from "~/state";
 import { EtmContractForControl, OwnRecord } from "~/types/EntrustmentContractType";
-import { SidebarContext } from "~/context/Sidebar/SidebarContext";
 
 import style from '~/sass/EntrustmentContractCommon.module.scss';
 const cx = classNames.bind(style);
@@ -150,6 +150,7 @@ export const CommonDetailPage = memo(({ title, pagingData, actionData, style }: 
                                 />
                             </div>
                             <Table
+                                minWidth="1180px"
                                 thead={['STT', 'Tên bài hát', 'Tổng số lượt phát', 'Tổng doanh thu',
                                     'Quyền biểu diễn', 'Quyền sản xuất', 'VCPMC']}
                                 paginate={{

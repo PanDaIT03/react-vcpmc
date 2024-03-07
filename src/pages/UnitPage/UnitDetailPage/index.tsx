@@ -1,11 +1,10 @@
 import classNames from "classnames/bind";
-import { useCallback, useContext, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router";
 
 import { images } from "~/assets";
 import { ActionBar } from "~/components/ActionBar";
-import { ActionBarItem } from "~/components/ActionBar/ActionBarItem";
 import { Checkbox } from "~/components/Checkbox";
 import { CommonWrapper } from "~/components/CommonWrapper";
 import { Filter } from "~/components/Filter";
@@ -15,12 +14,11 @@ import { PagingItemType } from "~/components/Paging";
 import { Table } from "~/components/Table";
 import { Toast } from "~/components/Toast";
 import { routes } from "~/config/routes";
-import { SidebarContext } from "~/context/Sidebar/SidebarContext";
 import { RootState, useAppDispatch } from "~/state";
 import { setStatus } from "~/state/reducer/entrustmentContract";
 import { deleteEmployees } from "~/state/thunk/entrustmentContract";
 import { getUsers } from "~/state/thunk/user/user";
-import { User } from "~/types";
+import { IGlobalConstantsType, User } from "~/types";
 import { EtmContractDetail } from "~/types/EntrustmentContractType";
 
 import style from '~/sass/UnitUsedDetail.module.scss';
@@ -28,8 +26,6 @@ const cx = classNames.bind(style);
 
 function UnitUsedDetailPage() {
     const { id } = useParams();
-
-    const { setActive } = useContext(SidebarContext);
 
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
@@ -44,6 +40,7 @@ function UnitUsedDetailPage() {
     const [itemsChosen, setItemsChosen] = useState<Array<User>>([] as Array<User>);
     const [searchResult, setSearchResult] = useState<Array<User>>([] as Array<User>);
     const [currentItems, setCurrentItems] = useState<Array<User>>([] as Array<User>);
+    const [actionbar, setActionbar] = useState<Omit<IGlobalConstantsType, "id">[]>([]);
     const [paging, setPaging] = useState<Array<PagingItemType>>([] as Array<PagingItemType>);
     const [contractDetail, setContractDetail] = useState<EtmContractDetail>({} as EtmContractDetail);
 
@@ -78,9 +75,25 @@ function UnitUsedDetailPage() {
         ]);
 
         user.users.length <= 0 && dispatch(getUsers());
-
-        setActive(false);
     }, []);
+
+    useEffect(() => {
+        setActionbar([
+            {
+                title: "Thêm người dùng",
+                icon: images.uPlus,
+                onClick: () => navigate(`/unit-used-management/detail/${contractDetail.docId}/user/add`)
+            }, {
+                title: "Xóa",
+                icon: images.fiX,
+                disable: itemsChosen.length <= 0,
+                onClick: handleDeleteEmployees
+            }, {
+                title: "Vai trò",
+                icon: images.uPlus
+            }
+        ]);
+    }, [itemsChosen]);
 
     const handleDeleteEmployees = useCallback(() => {
         if (typeof contractDetail === 'undefined') return;
@@ -129,7 +142,7 @@ function UnitUsedDetailPage() {
     const handleSuccessToast = () => {
         setToastVisible(false);
         dispatch(setStatus(''));
-    }
+    };
 
     const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSearchValue(event.target.value);
@@ -181,32 +194,16 @@ function UnitUsedDetailPage() {
                                 <td><p>{item.userName}</p></td>
                                 <td><p>{item.userName}</p></td>
                                 <td><p className={cx(isActive ? 'active' : 'deactive')}>{isActive ? 'Đang hoạt động' : 'Ngưng hoạt động'}</p></td>
-                                <td><p className={cx('action')} onClick={() => {
-                                    navigate(`/unit-used-management/detail/${contractDetail.docId}/user/${item.docId}`);
-                                    setActive(false);
-                                }}>Xem chi tiết</p></td>
+                                <td><p
+                                    className={cx('action')}
+                                    onClick={() => navigate(`/unit-used-management/detail/${contractDetail.docId}/user/${item.docId}`)}
+                                >Xem chi tiết
+                                </p></td>
                             </tr>
                         )
                     })}
                 </Table>
-                <ActionBar visible={true}>
-                    <ActionBarItem
-                        title="Thêm người dùng"
-                        icon={images.uPlus}
-                        onClick={() => navigate(`/unit-used-management/detail/${contractDetail.docId}/user/add`)}
-                    />
-                    <ActionBarItem
-                        title="Xóa"
-                        icon={images.fiX}
-                        onClick={handleDeleteEmployees}
-                        disable={itemsChosen.length <= 0}
-                    />
-                    <ActionBarItem
-                        title="Vai trò"
-                        icon={images.uPlus}
-                        onClick={() => navigate('')}
-                    />
-                </ActionBar>
+                <ActionBar data={actionbar} />
                 <Toast
                     message='Thêm người dùng thành công!'
                     visible={etmContract.status === 'add successfully'}
@@ -215,6 +212,6 @@ function UnitUsedDetailPage() {
             </CommonWrapper>
         }</>
     );
-}
+};
 
 export default UnitUsedDetailPage;

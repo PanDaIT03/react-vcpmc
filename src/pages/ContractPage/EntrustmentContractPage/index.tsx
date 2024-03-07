@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 
 import { images } from "~/assets";
 import { ActionBar } from "~/components/ActionBar";
-import { ActionBarItem } from "~/components/ActionBar/ActionBarItem";
 import { Filter } from "~/components/Filter";
 import { Input } from "~/components/Input";
 import { Loading } from "~/components/Loading";
@@ -26,16 +25,24 @@ function EntrustmentContract() {
     const entrustmentContract = useSelector((state: RootState) => state.etmContract);
 
     const [searchValue, setSearchValue] = useState('');
+    const [itemsPerPage, setItemsPerPage] = useState<string>('8');
+
     const [searchResult, setSearchResult] = useState<EtmContract[]>([]);
     const [search, setSearch] = useState<Pick<IGlobalConstantsType, "tag">>({});
+    const [actionbar, setActionbar] = useState<Omit<IGlobalConstantsType, "id">[]>([]);
     const [itemsCurrent, setItemsCurrent] = useState<Array<EtmContract>>([] as Array<EtmContract>);
-    const [itemsPerPage, setItemsPerPage] = useState<string>('8');
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSearchValue(event.target.value);
     };
 
     useEffect(() => {
+        setActionbar([{
+            icon: images.uPlus,
+            title: "Thêm hợp đồng",
+            onClick: () => navigate(routes.AddEntrustmentContractPage)
+        }]);
+
         dispatch(getEtmContractList());
     }, []);
 
@@ -44,13 +51,6 @@ function EntrustmentContract() {
     }, [entrustmentContract.etmContractList]);
 
     useEffect(() => {
-        let value = searchValue.trim().toLowerCase();
-
-        if (value === '') {
-            setSearchResult(entrustmentContract.etmContractList);
-            return;
-        };
-
         setSearch({
             tag: <Input
                 id="search"
@@ -63,6 +63,15 @@ function EntrustmentContract() {
                 className={cx('search-input')}
             />
         });
+    }, [searchValue]);
+
+    useEffect(() => {
+        let value = searchValue.trim().toLowerCase();
+
+        if (value === '') {
+            setSearchResult(entrustmentContract.etmContractList);
+            return;
+        };
 
         setSearchResult(entrustmentContract.etmContractList.filter(contract =>
             contract.code.toLowerCase().includes(value) || contract.name.toLowerCase().includes(value)
@@ -115,16 +124,10 @@ function EntrustmentContract() {
                     );
                 })}
             </Table>
-            <ActionBar visible={true}>
-                <ActionBarItem
-                    title="Thêm hợp đồng"
-                    icon={images.uPlus}
-                    onClick={() => navigate(routes.AddEntrustmentContractPage)}
-                />
-            </ActionBar>
+            <ActionBar visible={true} data={actionbar} />
             <Loading loading={entrustmentContract.loading} />
         </div>
     );
-}
+};
 
 export default EntrustmentContract;

@@ -13,7 +13,7 @@ interface ActionBarItemOwnProps<E extends React.ElementType> {
     onClick?: (event: React.MouseEvent<HTMLDivElement>) => void
 };
 
-type ActionBarItemProps<E extends React.ElementType> = ActionBarItemOwnProps<E> &
+export type ActionBarItemProps<E extends React.ElementType> = ActionBarItemOwnProps<E> &
     Omit<React.ComponentProps<E>, keyof ActionBarItemOwnProps<E>>
 
 export const ActionBarItem = <E extends React.ElementType = 'div'>({
@@ -25,9 +25,8 @@ export const ActionBarItem = <E extends React.ElementType = 'div'>({
     onClick,
     ...passprops
 }: ActionBarItemProps<E>) => {
-    let Component = as || 'div';
-
     if (!className) className = "";
+    let Component = as || 'div';
 
     const classes = cx("container", {
         disable

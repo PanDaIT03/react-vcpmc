@@ -5,7 +5,6 @@ import { useNavigate } from "react-router";
 
 import { images } from "~/assets";
 import { ActionBar } from "~/components/ActionBar";
-import { ActionBarItem } from "~/components/ActionBar/ActionBarItem";
 import Button from "~/components/Button";
 import { CommonWrapper } from "~/components/CommonWrapper";
 import { Dialog } from "~/components/Dialog";
@@ -32,17 +31,18 @@ function RevenueReportDetailPage() {
 
     const etmContract = useSelector((state: RootState) => state.etmContract);
 
+    const [currentDate, setCurrentDate] = useState<Date>();
+    const [toastActive, setToastActive] = useState<boolean>(false);
     const { setActive, setCurrentPage } = useContext(SidebarContext);
 
-    const [paging, setPaging] = useState<Array<PagingItemType>>([] as Array<PagingItemType>);
-    const [actionData, setActionData] = useState<any[]>([] as any[]);
-    const [filter, setFilter] = useState<Filter>({ type: '', data: [], dataActive: '' } as Filter);
-    const [currentDate, setCurrentDate] = useState<Date>();
-    const [searchResult, setSearchResult] = useState<Array<EtmContractForControl>>([] as Array<EtmContractForControl>);
     const [searchValue, setSearchValue] = useState<string>('');
-    const [currentItems, setCurrentItems] = useState<Array<EtmContractForControl>>([] as Array<EtmContractForControl>);
     const [itemsPerPage, setItemsPerPage] = useState<string>('8');
-    const [toastActive, setToastActive] = useState<boolean>(false);
+
+    const [actionbar, setActionbar] = useState<Omit<IGlobalConstantsType, "id">[]>([]);
+    const [paging, setPaging] = useState<Array<PagingItemType>>([] as Array<PagingItemType>);
+    const [filter, setFilter] = useState<Filter>({ type: '', data: [], dataActive: '' } as Filter);
+    const [searchResult, setSearchResult] = useState<Array<EtmContractForControl>>([] as Array<EtmContractForControl>);
+    const [currentItems, setCurrentItems] = useState<Array<EtmContractForControl>>([] as Array<EtmContractForControl>);
     const [monthActive, setMonthActive] = useState<IGlobalConstantsType>({
         id: 1,
         title: 'Tháng 1'
@@ -68,6 +68,17 @@ function RevenueReportDetailPage() {
                 active: false
             }
         ]);
+        setActionbar([
+            {
+                title: "Chốt doanh thu",
+                icon: images.checkAll,
+                onClick: () => setToastActive(true)
+            }, {
+                title: "Xuất dữ liệu",
+                icon: images.fileExport,
+                onClick: () => setToastActive(true)
+            }
+        ]);
 
         let currentDate = new Date();
         let months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map(month => `Tháng ${month}`);
@@ -79,7 +90,6 @@ function RevenueReportDetailPage() {
             dataActive: `Tháng ${currentDate.getMonth() + 1}/${currentDate.getFullYear()}`
         });
         setMonthActive({ id: currentDate.getMonth() + 1, title: `Tháng ${currentDate.getMonth() + 1}/${currentDate.getFullYear()}` });
-        // setMonthActive({ id: currentDate.getMonth() + 1, title: "Tháng 11" });
         setCurrentDate(currentDate);
 
         etmContract.etmContractForControl.length === 0 && dispatch(getEtmContractForControls());
@@ -229,7 +239,7 @@ function RevenueReportDetailPage() {
                         setState={setMonthActive}
                     />
                 </div>
-                <div>
+                <div style={{ width: "100%", maxWidth: "37.1rem" }}>
                     <Input
                         id="search"
                         name="search"
@@ -279,21 +289,10 @@ function RevenueReportDetailPage() {
                     <Button primary fill onClick={handleForControlSubmit} value="Tiếp tục" />
                 </div>
             </Dialog>
-            <ActionBar visible={true}>
-                <ActionBarItem
-                    title="Chốt doanh thu"
-                    icon={images.checkAll}
-                    onClick={() => setToastActive(true)}
-                />
-                <ActionBarItem
-                    title="Xuất dữ liệu"
-                    icon={images.fileExport}
-                    onClick={() => setToastActive(true)}
-                />
-            </ActionBar>
+            <ActionBar data={actionbar} />
             <Loading loading={etmContract.loading} />
         </CommonWrapper>
     );
-}
+};
 
 export default RevenueReportDetailPage;

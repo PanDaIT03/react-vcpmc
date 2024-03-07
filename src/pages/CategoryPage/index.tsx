@@ -15,6 +15,7 @@ import { Loading } from "~/components/Loading";
 import { Table } from "~/components/Table";
 import { ICategory } from "~/types/CategoryType";
 import { SidebarContext } from "~/context/Sidebar/SidebarContext";
+import { IGlobalConstantsType } from "~/types";
 
 import style from '~/sass/ProductInfomation.module.scss';
 const cx = classNames.bind(style);
@@ -38,12 +39,19 @@ function CategoryPage() {
     const { setActive, setCurrentPage } = useContext(SidebarContext);
     const [itemsPerPage, setItemsPerPage] = useState<string>('10');
 
+    const [actionbar, setActionbar] = useState<Omit<IGlobalConstantsType, "id">[]>([]);
     const [currentItems, setCurrentItems] = useState<Array<ICategory>>([] as Array<ICategory>);
     const [searchResult, setSearchResult] = useState<Array<ICategory>>([] as Array<ICategory>);
 
     useEffect(() => {
         setActive(true);
         setCurrentPage(6);
+        setActionbar([{
+            icon: images.edit,
+            title: "Chỉnh sửa",
+            onClick: () => navigate(routes.EditCategoryPage)
+        }]);
+
         dispatch(getCategories());
     }, []);
 
@@ -84,12 +92,7 @@ function CategoryPage() {
                         </tr>
                     ))}
                 </Table>
-                <ActionBar>
-                    <ActionBarItem
-                        icon={images.edit}
-                        title="Chỉnh sửa"
-                        onClick={() => navigate(routes.EditCategoryPage)} />
-                </ActionBar>
+                <ActionBar data={ actionbar} />
                 <Loading loading={loading} />
             </div>
         </CommonWrapper>

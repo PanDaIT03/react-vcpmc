@@ -54,12 +54,13 @@
 }
 
 .history-for-control__filter {
-  width: 100%;
   max-width: 1541px;
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
   align-items: center;
   margin-top: 24px;
+  gap: 2rem;
 
   & > div:first-child {
     display: flex;

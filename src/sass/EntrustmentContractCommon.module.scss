@@ -1,8 +1,7 @@
-.history-for-control {
-  .history-for-control__content {
-    display: flex;
-    gap: 24px;
-  }
+.history-for-control__content {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
 }
 
 .history-for-control__container-left {
@@ -11,17 +10,10 @@
   gap: 24px;
 }
 
-.container-left__contract-info {
-  height: 432px;
-}
-
-.container-left__for-control-info {
-  height: 386px;
-}
-
 .container-left__contract-info,
 .container-left__for-control-info {
-  width: 571px;
+  min-width: 471px;
+  max-width: 571px;
   border-radius: 16px;
   background: var(--bg-lighter, #2b2b3f);
   padding: 24px;
@@ -68,14 +60,6 @@
 }
 
 .history-for-control__container-right {
-  width: 1095px;
-
-  & table {
-    width: 1095px;
-  }
-}
-
-.history-for-control__container-right {
   & > p {
     color: #e5e5e5;
     font-size: 24px;
@@ -103,5 +87,24 @@
     & > div:last-child {
       margin-top: 0;
     }
+  }
+}
+
+@media only screen and (max-width: 1440px) {
+  .history-for-control__container-left {
+    width: 100%;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-between;
+
+    .container-left__contract-info,
+    .container-left__for-control-info {
+      width: calc((100% - 24px) / 2);
+    }
+  }
+
+  .history-for-control__container-right {
+    width: 100%;
+    max-width: 100%;
   }
 }

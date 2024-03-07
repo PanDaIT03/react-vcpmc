@@ -105,9 +105,10 @@
   }
 
   & > div {
+    width: 100%;
+    max-width: 1541px;
     border-radius: 16px;
     background: rgba(47, 47, 65, 0.7);
-    width: 1541px;
     padding: 26px;
   }
 }

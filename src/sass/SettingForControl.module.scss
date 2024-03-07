@@ -1,111 +1,118 @@
 .container {
-    width: 1611px;
-    height: 750px;
-    border-radius: 16px;
-    background: var(--middle-bg, rgba(47, 47, 65, 0.70));
-    padding: 40px;
+  max-width: var(--max-width);
+  height: 750px;
+  padding: 40px;
+  margin-top: 2rem;
+  border-radius: 16px;
+  background: var(--middle-bg, rgba(47, 47, 65, 0.7));
 
-    &>.container__title {
-        color: #E5E5E5;
-        font-size: 24px;
-        font-weight: 700;
-        line-height: 24px;
-        letter-spacing: -0.048px;
-        text-align: start;
-    }
+  & > .container__title {
+    color: #e5e5e5;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 24px;
+    letter-spacing: -0.048px;
+    text-align: start;
+  }
 }
 
 .for-control-circle {
-    & form>div:last-child {
-        margin-top: 40px;
-        display: flex;
-        justify-content: center;
-    }
+  & form > div:last-child {
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+  }
 }
 
 .container__type-for-control {
-    margin-top: 54px;
+  margin-top: 54px;
 
-    &>div+div {
-        margin-top: 32px;
-    }
+  & > div + div {
+    margin-top: 32px;
+  }
 }
 
 .type-for-control__quarterly {
-    &>.quarterly__content {
-        display: flex;
-        align-items: flex-start;
-        flex-direction: column;
-        width: max-content;
-        height: 0;
-        margin-top: 20px;
-        padding-left: 28px;
-        overflow-y: hidden;
-        transition: height .2s linear;
+  & > .quarterly__content {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    width: max-content;
+    height: 0;
+    margin-top: 20px;
+    padding-left: 28px;
+    overflow-y: hidden;
+    transition: height 0.2s linear;
 
-        &>.quarterly__content__item {
-            display: flex;
-            align-items: center;
-            gap: 29px;
+    & > .quarterly__content__item {
+      display: flex;
+      align-items: center;
+      gap: 29px;
 
-            &>p {
-                &:first-child {
-                    color: white;
-                    font-size: 16px;
-                    font-weight: 600;
-                    line-height: 24px;
-                    letter-spacing: -0.032px;
-                }
-
-                &:last-child {
-                    color: white;
-                    font-size: 16px;
-                    font-weight: 400;
-                    line-height: 24px;
-                    letter-spacing: -0.032px;
-                    opacity: .7;
-                }
-            }
-
-            &+div {
-                margin-top: 16px;
-            }
+      & > p {
+        &:first-child {
+          color: white;
+          font-size: 16px;
+          font-weight: 600;
+          line-height: 24px;
+          letter-spacing: -0.032px;
         }
 
-        &.active {
-            height: 144px;
+        &:last-child {
+          color: white;
+          font-size: 16px;
+          font-weight: 400;
+          line-height: 24px;
+          letter-spacing: -0.032px;
+          opacity: 0.7;
         }
+      }
+
+      & + div {
+        margin-top: 16px;
+      }
     }
+
+    &.active {
+      height: 144px;
+    }
+  }
 }
 
 .type-for-control__monthly {
-    &>.monthly__input {
-        display: flex;
-        align-items: center;
-        gap: 172px;
-        margin-top: 20px;
-        padding-left: 28px;
-        width: max-content;
-        height: 0;
-        overflow-y: hidden;
-        transition: height .2s linear;
+  & > .monthly__input {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 172px;
+    margin-top: 20px;
+    padding-left: 28px;
+    height: 0;
+    overflow-y: hidden;
+    transition: height 0.2s linear;
 
-        &>.monthly__input__item {
-            display: flex;
-            align-items: center;
-            gap: 85px;
+    & > .monthly__input__item {
+      display: flex;
+      align-items: center;
+      gap: 85px;
 
-            & p {
-                color: white;
-            }
-
-            & input[type='date'] {
-                width: 370px;
-            }
-        }
-
-        &.active {
-            height: 55px;
-        }
+      & p {
+        color: white;
+      }
     }
+
+    &.active {
+      height: 55px;
+    }
+  }
+}
+
+@media only screen and (max-width: 1440px) {
+  .monthly__input {
+    gap: 5rem !important;
+
+    &.active {
+      height: 100% !important;
+    }
+  }
 }

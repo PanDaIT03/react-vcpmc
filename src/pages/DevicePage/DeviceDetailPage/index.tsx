@@ -25,6 +25,7 @@ import { InputProps } from "~/types/InputType";
 import { Dialog } from "~/components/Dialog";
 
 import style from '~/sass/DeviceDetail.module.scss';
+import { IGlobalConstantsType } from "~/types";
 const cx = classNames.bind(style);
 
 const PAGING_ITEMS: PagingItemType[] = [
@@ -46,8 +47,9 @@ function DeviceDetailPage() {
 
     const device = useSelector((state: RootState) => state.device);
 
-    const [devicePasswordInputs, setDevicePasswordInputs] = useState<InputProps[]>([] as InputProps[]);
+    const [actionbar, setActionbar] = useState<Omit<IGlobalConstantsType, "id">[]>([]);
     const [deviceInputs, setDeviceInputs] = useState<InputProps[]>([] as InputProps[]);
+    const [devicePasswordInputs, setDevicePasswordInputs] = useState<InputProps[]>([] as InputProps[]);
 
     const { setActive } = useContext(SidebarContext);
     const [isCPassword, setIsCPassword] = useState(true);
@@ -138,6 +140,28 @@ function DeviceDetailPage() {
 
     useEffect(() => {
         setActive(false);
+        setActionbar([
+            {
+                title: "Chỉnh sửa",
+                icon: images.edit,
+                onClick: () => {
+                    setActiveDialog(true)
+                    setCurrentAction('Chỉnh sửa')
+                }
+            }, {
+                title: "Khôi phục mật khẩu",
+                icon: images.lock,
+                onClick: () => {
+                    setActiveDialogPassword(true)
+                    setCurrentAction('Khôi phục mật khẩu')
+                }
+            }, {
+                title: "Khôi phục bộ nhớ",
+                icon: images.refresh,
+                onClick: () => dispatch(restoreMemory({ docId: id || '', memory: `0.00GB/${deviceFormik.values.memory.split('/')[1]}` }))
+            }
+        ]);
+
         dispatch(getDeviceList());
     }, []);
 
@@ -259,7 +283,7 @@ function DeviceDetailPage() {
         setTimeout(() => {
             setToastActive(false);
         }, 1000);
-    }
+    };
 
     return (
         <CommonWrapper
@@ -276,53 +300,55 @@ function DeviceDetailPage() {
                         <p>{deviceFormik.values.note}</p>
                     </div>
                 </div>
-                <div className={cx('device-detail__info-middle')}>
-                    <p className={cx('info-title')}>{deviceFormik.values.name}</p>
-                    <div className={cx('info-content')}>
-                        <div className={cx('info-content__left')}>
-                            <p>SKU/ID:</p>
-                            <p>Địa chỉ Mac:</p>
-                            <p>Tên đăng nhập:</p>
-                            <p>Định dạng:</p>
-                            <p>Vị trí:</p>
-                            <p>Thời hạn bảo hành:</p>
-                            <p>Trạng thái thiết bị:</p>
-                        </div>
-                        <div className={cx('content-right')}>
-                            <p>{deviceFormik.values.SKUID}</p>
-                            <p>{deviceFormik.values.macAddress}</p>
-                            <p>{deviceFormik.values.userName}</p>
-                            <p>{deviceFormik.values.format}</p>
-                            <p>{deviceFormik.values.operatingLocation}</p>
-                            <p>{deviceFormik.values.SKUID}</p>
-                            <p>{deviceFormik.values.status}</p>
-                        </div>
-                    </div>
-                </div>
-                <div className={cx('device-detail__info-right')}>
-                    <div className={cx('info-right__version')}>
-                        <p className={cx('info-title')}>Thông tin phiên bản</p>
-                        <div className={cx('version__content')}>
-                            <div className={cx('version__content__left')}>
-                                <p>Phiên bản cũ nhất:</p>
+                <div className={cx("content")}>
+                    <div className={cx('device-detail__info-middle')}>
+                        <p className={cx('info-title')}>{deviceFormik.values.name}</p>
+                        <div className={cx('info-content')}>
+                            <div className={cx('info-content__left')}>
+                                <p>SKU/ID:</p>
+                                <p>Địa chỉ Mac:</p>
+                                <p>Tên đăng nhập:</p>
+                                <p>Định dạng:</p>
+                                <p>Vị trí:</p>
+                                <p>Thời hạn bảo hành:</p>
+                                <p>Trạng thái thiết bị:</p>
                             </div>
                             <div className={cx('content-right')}>
-                                {deviceFormik.values.lastestVersion && deviceFormik.values.lastestVersion.map((version) => <p key={version}>{version}</p>)}
+                                <p>{deviceFormik.values.SKUID}</p>
+                                <p>{deviceFormik.values.macAddress}</p>
+                                <p>{deviceFormik.values.userName}</p>
+                                <p>{deviceFormik.values.format}</p>
+                                <p>{deviceFormik.values.operatingLocation}</p>
+                                <p>{deviceFormik.values.SKUID}</p>
+                                <p>{deviceFormik.values.status}</p>
                             </div>
                         </div>
                     </div>
-                    <div className={cx('info-right__memory')}>
-                        <p className={cx('info-title')}>Dung lượng bộ nhớ</p>
-                        <div className={cx('memory__content')}>
-                            <div className={cx('memory__content__left')}>
-                                <p>Dung lượng</p>
-                                <p>Còn trống</p>
+                    <div className={cx('device-detail__info-right')}>
+                        <div className={cx('info-right__version')}>
+                            <p className={cx('info-title')}>Thông tin phiên bản</p>
+                            <div className={cx('version__content')}>
+                                <div className={cx('version__content__left')}>
+                                    <p>Phiên bản cũ nhất:</p>
+                                </div>
+                                <div className={cx('content-right')}>
+                                    {deviceFormik.values.lastestVersion && deviceFormik.values.lastestVersion.map((version) => <p key={version}>{version}</p>)}
+                                </div>
                             </div>
-                            <div className={cx('content-right')}>
-                                <p>{deviceFormik.values.memory !== '' && typeof deviceFormik.values.memory !== 'undefined'
-                                    && deviceFormik.values.memory.split('/')[1]}</p>
-                                <p>{deviceFormik.values.memory !== '' && typeof deviceFormik.values.memory !== 'undefined'
-                                    && (parseFloat(deviceFormik.values.memory.split('/')[1]) - parseFloat(deviceFormik.values.memory.split('/')[0].split('.')[0]))}GB</p>
+                        </div>
+                        <div className={cx('info-right__memory')}>
+                            <p className={cx('info-title')}>Dung lượng bộ nhớ</p>
+                            <div className={cx('memory__content')}>
+                                <div className={cx('memory__content__left')}>
+                                    <p>Dung lượng</p>
+                                    <p>Còn trống</p>
+                                </div>
+                                <div className={cx('content-right')}>
+                                    <p>{deviceFormik.values.memory !== '' && typeof deviceFormik.values.memory !== 'undefined'
+                                        && deviceFormik.values.memory.split('/')[1]}</p>
+                                    <p>{deviceFormik.values.memory !== '' && typeof deviceFormik.values.memory !== 'undefined'
+                                        && (parseFloat(deviceFormik.values.memory.split('/')[1]) - parseFloat(deviceFormik.values.memory.split('/')[0].split('.')[0]))}GB</p>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -374,27 +400,7 @@ function DeviceDetailPage() {
                     </div>
                 </Form>
             </Dialog>
-            <ActionBar>
-                <ActionBarItem
-                    title="Chỉnh sửa"
-                    icon={images.edit}
-                    onClick={() => {
-                        setActiveDialog(true);
-                        setCurrentAction('Chỉnh sửa');
-                    }}
-                    disable={deviceFormik.values.status === 'blocked'} />
-                <ActionBarItem
-                    title="Khôi phục mật khẩu"
-                    icon={images.lock}
-                    onClick={() => {
-                        setActiveDialogPassword(true);
-                        setCurrentAction('Khôi phục mật khẩu')
-                    }} />
-                <ActionBarItem
-                    title="Khôi phục bộ nhớ"
-                    icon={images.refresh}
-                    onClick={() => dispatch(restoreMemory({ docId: id || '', memory: `0.00GB/${deviceFormik.values.memory.split('/')[1]}` }))} />
-            </ActionBar>
+            <ActionBar data={actionbar} />
             <Loading loading={device.loading} />
             <Toast message="Đổi mật khẩu thành công!" visible={toastActive} />
         </CommonWrapper>

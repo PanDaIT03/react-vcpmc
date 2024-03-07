@@ -124,8 +124,9 @@ function SettingForControlPage() {
                                 <div className={cx('monthly__input__item')}>
                                     <p>Ngày bắt đầu:</p>
                                     <Input
-                                        name='startDate'
                                         type='date'
+                                        size="small"
+                                        name='startDate'
                                         value={forControlFormik.values.startDate}
                                         onChange={(e: any) => {
                                             forControlFormik.setFieldValue('startDate', e.target.value);
@@ -136,8 +137,9 @@ function SettingForControlPage() {
                                 <div className={cx('monthly__input__item')}>
                                     <p>Ngày bắt đầu:</p>
                                     <Input
-                                        name='endDate'
                                         type='date'
+                                        size="small"
+                                        name='endDate'
                                         value={forControlFormik.values.endDate}
                                         onChange={(e: any) => {
                                             forControlFormik.setFieldValue('endDate', e.target.value);

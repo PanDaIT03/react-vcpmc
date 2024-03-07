@@ -13,11 +13,12 @@
 }
 
 .renvenue-report-detail__filter {
-  width: 1690px;
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
   margin: 24px 0;
+  gap: 2rem;
 
   & > div:first-child {
     display: flex;
@@ -58,16 +59,10 @@
       }
     }
   }
-
-  & > div:last-child {
-    & input {
-      width: 436px;
-    }
-  }
 }
 
 .renvenue-report-detail__table {
-  width: 1690px !important;
+  max-width: 1541px;
 
   & tbody > tr > td > p {
     white-space: nowrap;

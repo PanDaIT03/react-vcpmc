@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 
 import { images } from "~/assets";
 import { ActionBar } from "~/components/ActionBar";
-import { ActionBarItem } from "~/components/ActionBar/ActionBarItem";
 import Button from "~/components/Button";
 import { Checkbox } from "~/components/Checkbox";
 import { CommonWrapper } from "~/components/CommonWrapper";
@@ -26,12 +25,10 @@ import { IDevice } from "~/types/DeviceType";
 import style from '~/sass/Device.module.scss';
 const cx = classNames.bind(style);
 
-const CB_SHOW_COLUNMS: IGlobalConstantsType[] = [
-    {
-        id: 1,
-        title: 'Ẩn hiện cột'
-    }
-];
+const CB_SHOW_COLUNMS: IGlobalConstantsType[] = [{
+    id: 1,
+    title: 'Ẩn hiện cột'
+}];
 
 const initialState: IGlobalConstantsType = {
     id: 1,
@@ -64,6 +61,7 @@ function DevicePage() {
 
     const [filter, setFilter] = useState<IOptionMenu[]>([]);
     const [headerColumn, setHeaderColumn] = useState<string[]>([]);
+    const [actionbar, setActionbar] = useState<Omit<IGlobalConstantsType, "id">[]>([]);
     const [search, setSearch] = useState<Pick<IGlobalConstantsType, "tag">>({});
     const [searchResult, setSearchResult] = useState<IDevice[]>([] as IDevice[]);
     const [currentItems, setCurrentItems] = useState<IDevice[]>([] as IDevice[]);
@@ -76,7 +74,6 @@ function DevicePage() {
         },
         onSubmit: () => {
             setActiveConfirmDialog(false);
-
             dispatch(deleteDevices(itemsChosen.map(itemChosen => ({ docId: itemChosen.docId }))));
         }
     });
@@ -94,21 +91,43 @@ function DevicePage() {
                 data: CB_SHOW_COLUNMS
             }
         ]);
+        setActionbar([
+            {
+                icon: images.uPlus,
+                title: "Thêm thiết bị"
+            }, {
+                icon: images.power,
+                title: power.title,
+                disable: !power.isActive
+            }, {
+                icon: images.lock,
+                title: lock.title,
+                disable: !lock.isActive
+            }, {
+                icon: images.trash,
+                title: "Xoá thiết bị",
+                onClick: () => { itemsChosen.length > 0 && setActiveConfirmDialog(true) }
+            }
+        ]);
+        setSearchResult(devices);
+        setHeaderColumn(['STT', 'Tên thiết bị', 'Trạng thái', 'Địa điểm', 'Hạn hợp đồng', 'MAC Addresss', 'Memory']);
+
+        !devices.length && dispatch(getDeviceList());
+    }, []);
+
+    useEffect(() => {
         setSearch({
             tag: <Input
                 id="search"
                 name="search"
-                value={searchValue}
-                placeholder="Tên thiết bị, địa điểm, Mac Address..."
                 size="custom"
+                value={searchValue}
                 iconRight={images.search}
+                placeholder="Tên thiết bị, địa điểm, Mac Address..."
                 onChange={(event) => setSearchValue(event.target.value)}
             />
         });
-        setSearchResult(devices);
-        setHeaderColumn(['STT', 'Tên thiết bị', 'Trạng thái', 'Địa điểm', 'Hạn hợp đồng', 'MAC Addresss', 'Memory']);
-        !devices.length && dispatch(getDeviceList());
-    }, []);
+    }, [searchValue]);
 
     useEffect(() => {
         isCheckedAll ? setItemsChosen(devices) : setItemsChosen([]);
@@ -265,23 +284,7 @@ function DevicePage() {
                     );
                 })}
             </Table>
-            <ActionBar>
-                <ActionBarItem
-                    icon={images.uPlus}
-                    title="Thêm thiết bị" />
-                <ActionBarItem
-                    icon={images.power}
-                    title={power.title}
-                    disable={!power.isActive} />
-                <ActionBarItem
-                    icon={images.lock}
-                    title={lock.title}
-                    disable={!lock.isActive} />
-                <ActionBarItem
-                    icon={images.trash}
-                    title="Xoá thiết bị"
-                    onClick={() => { itemsChosen.length > 0 && setActiveConfirmDialog(true) }} />
-            </ActionBar>
+            <ActionBar data={actionbar} />
             <Dialog
                 visible={activeConfirmDialog}
                 className={cx("remove-device")}

@@ -39,8 +39,6 @@ const playListSlice = createSlice({
         state.loading = true;
       })
       .addCase(getPlayListAction.fulfilled, (state, action) => {
-        console.log(action);
-
         state.playList = action.payload;
         state.loading = false;
         state.status = "get successfully";

@@ -20,6 +20,7 @@ import { IPLaylist } from "~/types/PlaylistType";
 import { PlaybackCycle, PlaylistSchedule, SchedulePlaylist, SchedulePlaylistDetail } from "~/types/PlaylistSchedule";
 
 import style from "~/sass/PlaylistScheduleDetail.module.scss";
+import { IGlobalConstantsType } from "~/types";
 const cx = classNames.bind(style);
 
 const initialSchedule: PlaylistSchedule = {
@@ -42,8 +43,8 @@ const PAGING_ITEMS: Array<PagingItemType> = [
 ];
 
 function PlaylistScheduleDetailPage() {
-    const dispatch = useAppDispatch();
     const navigate = useNavigate();
+    const dispatch = useAppDispatch();
     const { playlistScheduleCode } = useParams();
 
     const [itemsPerPage, setItemsPerPage] = useState('8');
@@ -53,8 +54,8 @@ function PlaylistScheduleDetailPage() {
     const playlistsRecords = useSelector((state: RootState) => state.playlistsRecords);
     const [currentItems, setCurrentItems] = useState<SchedulePlaylist[]>([]);
 
-    const { setActive } = useContext(SidebarContext);
     const [loading, setLoading] = useState<boolean>(false);
+    const [actionbar, setActionbar] = useState<Omit<IGlobalConstantsType, "id">[]>([]);
     const [scheduleDetail, setScheduleDetail] = useState<SchedulePlaylistDetail>({
         id: '',
         name: '',
@@ -63,7 +64,12 @@ function PlaylistScheduleDetailPage() {
     } as SchedulePlaylistDetail);
 
     useEffect(() => {
-        setActive(false);
+        setActionbar([{
+            icon: images.edit,
+            title: "Chỉnh sửa lịch phát",
+            onClick: () => navigate(`/playlist-schedule/detail/edit/${playlistScheduleCode}`)
+        }]);
+
         dispatch(getPlaylistsRecordsList());
         dispatch(getPlayListAction());
     }, []);
@@ -136,13 +142,7 @@ function PlaylistScheduleDetailPage() {
                         )
                     })}
                 </Table>
-                <ActionBar>
-                    <ActionBarItem
-                        icon={images.edit}
-                        title="Chỉnh sửa lịch phát"
-                        onClick={() => navigate(`/playlist-schedule/detail/edit/${playlistScheduleCode}`)}
-                    />
-                </ActionBar>
+                <ActionBar data={actionbar} />
                 <Loading loading={loading} />
             </CommonWrapper>
         </div>

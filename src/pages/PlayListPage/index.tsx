@@ -5,9 +5,9 @@ import { useNavigate } from "react-router-dom";
 
 import { images } from "~/assets";
 import { ActionBar } from "~/components/ActionBar";
-import { ActionBarItem } from "~/components/ActionBar/ActionBarItem";
 import { BoxItem } from "~/components/BoxItem";
 import { CommonWrapper } from "~/components/CommonWrapper";
+import { Filter } from "~/components/Filter";
 import { GridView } from "~/components/GridView";
 import { Input } from "~/components/Input";
 import { Loading } from "~/components/Loading";
@@ -21,7 +21,6 @@ import { getPlayListAction } from "~/state/thunk/playlist";
 import { resetNewRecordsAction } from "~/state/thunk/record";
 import { IGlobalConstantsType, IRecord } from "~/types";
 import { IPLaylist } from "~/types/PlaylistType";
-import { Filter } from "~/components/Filter";
 
 import styles from "~/sass/PlayList.module.scss";
 const cx = classNames.bind(styles);
@@ -30,20 +29,27 @@ function PlayListPage() {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
 
-    const [search, setSearch] = useState<Pick<IGlobalConstantsType, "tag">>({});
     const [isGridView, setIsGridView] = useState(true);
+    const { setCurrentPage } = useContext(SidebarContext);
+
     const [searchValue, setSearchValue] = useState('');
     const [itemsPerPage, setItemsPerPage] = useState('8');
-    const { setActive, setCurrentPage } = useContext(SidebarContext);
+    const [search, setSearch] = useState<Pick<IGlobalConstantsType, "tag">>({});
+    const [actionbar, setActionbar] = useState<Omit<IGlobalConstantsType, "id">[]>([]);
 
     const { playList, loading } = useSelector((state: RootState) => state.playlist);
     const [currentItems, setCurrentItems] = useState<IPLaylist[]>([]);
 
     useEffect(() => {
         setCurrentPage(2);
+        setActionbar([{
+            icon: images.addPlaylistIcon,
+            title: "Thêm Playlist",
+            onClick: () => navigate(routes.AddPlaylistPage)
+        }]);
+
         dispatch(getPlayListAction());
         dispatch(resetNewRecordsAction());
-        setActive(true);
     }, []);
 
     useEffect(() => {
@@ -130,13 +136,7 @@ function PlayListPage() {
                         setItemsPerPage={handleItemsPerPage}
                         handleClick={handlePlaylistClick}
                     />}
-                <ActionBar>
-                    <ActionBarItem
-                        icon={images.addPlaylistIcon}
-                        title="Thêm Playlist"
-                        onClick={() => navigate(routes.AddPlaylistPage)}
-                    />
-                </ActionBar>
+                <ActionBar data={actionbar} />
                 <Loading loading={loading} />
             </CommonWrapper>
         </div>

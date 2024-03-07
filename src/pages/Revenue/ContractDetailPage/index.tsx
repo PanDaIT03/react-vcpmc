@@ -46,7 +46,7 @@ function RevenueContractReportDetailPage() {
             pagingData={paging}
             actionData={actionData}
         />
-    )
-}
+    );
+};
 
 export default RevenueContractReportDetailPage;

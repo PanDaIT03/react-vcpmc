@@ -27,18 +27,26 @@ interface CommonPageContractEditProps {
     children?: ReactNode;
 };
 
-export const CommonPageContractEdit = memo(({ title, edit, data, pagingData, formikData, actionData = [], children }: CommonPageContractEditProps) => {
-    const navigate = useNavigate();
-
+export const CommonPageContractEdit = memo(({
+    title,
+    edit,
+    data,
+    pagingData,
+    formikData,
+    actionData = [],
+    children
+}: CommonPageContractEditProps) => {
     const [passwordType, setPasswordType] = useState<boolean>(true);
+    const [visibleComboBox, setVisibleComboBox] = useState<boolean>(false);
+
     const [blockInput1, setBlockDetail1] = useState<Array<any>>([]);
     const [blockInput2, setBlockDetail2] = useState<Array<any>>([]);
     const [blockInput3, setBlockDetail3] = useState<Array<any>>([]);
     const [blockInput4, setBlockDetail4] = useState<Array<any>>([]);
     const [blockInput5, setBlockDetail5] = useState<Array<any>>([]);
-    const [nationality, setNationality] = useState<string>(formikData.values.nationality || 'Việt Nam');
-    const [visibleComboBox, setVisibleComboBox] = useState<boolean>(false);
+
     const [country, setCountry] = useState<IGlobalConstantsType>({ id: 1, title: 'Việt Nam' });
+    const [nationality, setNationality] = useState<string>(formikData.values.nationality || 'Việt Nam');
 
     const { type } = formikData.values;
 
@@ -434,7 +442,6 @@ export const CommonPageContractEdit = memo(({ title, edit, data, pagingData, for
                                             title='Lượt phát'
                                             checked={type !== 'Trọn gói' ? true : false}
                                             onClick={() => formikData.setFieldValue('type', type === 'Trọn gói' ? 'Lượt phát' : 'Trọn gói')}
-                                        // className={cx('type__all__radio-button')}
                                         />
                                     }]} />
                                     <div className={cx('all__value-input')}>
@@ -463,13 +470,11 @@ export const CommonPageContractEdit = memo(({ title, edit, data, pagingData, for
                         {children && children}
                     </div>
                     : <div className={cx('content-information')}>
-                        {data.map(item => <BlockDetail key={item.id} data={item.children} />)}
+                        {data.map((item, index) => <BlockDetail key={index} data={item.children} />)}
                     </div>
                 }
             </form>
-            {!edit && <ActionBar visible={true}>
-                {actionData.map((action, index) => <ActionBarItem {...action} key={index} />)}
-            </ActionBar>}
-        </CommonWrapper>
+            {!edit && <ActionBar visible={true} data={actionData} />}
+        </CommonWrapper >
     );
 });

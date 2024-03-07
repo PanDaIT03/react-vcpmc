@@ -226,8 +226,6 @@ export const Product = ({
     setItemsPerPage(value);
   }, []);
 
-  console.log(search);
-
   return (
     <div className={cx("wrapper")}>
       <div className={cx("action")}>

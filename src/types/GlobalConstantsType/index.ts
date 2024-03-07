@@ -13,4 +13,6 @@ export interface IGlobalConstantsType {
   isChecked?: boolean;
   setState?: any;
   subTitle?: string;
-}
+  disable?: boolean
+  onClick?: () => void
+};

@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 
 import { images } from "~/assets";
 import { ActionBar } from "~/components/ActionBar";
-import { ActionBarItem } from "~/components/ActionBar/ActionBarItem";
 import { CommonWrapper } from "~/components/CommonWrapper";
 import { Loading } from "~/components/Loading";
 import { PagingItemType } from "~/components/Paging";
@@ -14,6 +13,7 @@ import { routes } from "~/config/routes";
 import { SidebarContext } from "~/context/Sidebar/SidebarContext";
 import { RootState, useAppDispatch } from "~/state";
 import { getEtmContractTypes } from "~/state/thunk/entrustmentContract";
+import { IGlobalConstantsType } from "~/types";
 
 import style from '~/sass/ManagementContractType.module.scss';
 const cx = classNames.bind(style);
@@ -25,9 +25,11 @@ function ManagementConctractPage() {
     const etmContract = useSelector((state: RootState) => state.etmContract);
 
     const { setCurrentPage } = useContext(SidebarContext);
+    const [actionbar, setActionbar] = useState<Omit<IGlobalConstantsType, "id">[]>([]);
     const [paging, setPaging] = useState<Array<PagingItemType>>([] as Array<PagingItemType>);
 
     useEffect(() => {
+        setCurrentPage(6);
         setPaging([
             {
                 title: 'Cài đặt',
@@ -39,8 +41,18 @@ function ManagementConctractPage() {
                 active: true
             }
         ]);
+        setActionbar([
+            {
+                icon: images.editAlt,
+                title: "Chỉnh sửa loại hợp đồng",
+                onClick: () => navigate(routes.EditContractTypePage)
+            }, {
+                icon: images.editCalendar,
+                title: "Chỉnh sửa cảnh báo hết hạn",
+                onClick: () => navigate(routes.EditWarningExpirePage)
+            }
+        ]);
 
-        setCurrentPage(6);
         dispatch(getEtmContractTypes());
     }, []);
 
@@ -51,6 +63,8 @@ function ManagementConctractPage() {
         >
             <div className={cx('config-contract-container')}>
                 <Table
+                    minWidth="861px"
+                    minHeight="168px"
                     thead={['STT', 'Loại hợp đồng', 'Doanh thu VCPCM/hợp đồng (Đơn vị: %)']}
                     className={cx('contract-container__table-type')}
                 >
@@ -69,16 +83,7 @@ function ManagementConctractPage() {
                     </div>
                 </div>
                 <Loading loading={etmContract.loading} />
-                <ActionBar>
-                    <ActionBarItem
-                        icon={images.editAlt}
-                        title="Chỉnh sửa loại hợp đồng"
-                        onClick={() => navigate(routes.EditContractTypePage)} />
-                    <ActionBarItem
-                        icon={images.editCalendar}
-                        title="Chỉnh sửa cảnh báo hết hạn"
-                        onClick={() => navigate(routes.EditWarningExpirePage)} />
-                </ActionBar>
+                <ActionBar data={actionbar} />
             </div>
         </CommonWrapper>
     );

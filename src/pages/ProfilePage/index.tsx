@@ -1,23 +1,21 @@
 import classNames from "classnames/bind";
 import { useFormik } from "formik";
-import { useContext, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 
-import { useNavigate } from "react-router-dom";
 import { images } from "~/assets";
 import { ActionBar } from "~/components/ActionBar";
-import { ActionBarItem } from "~/components/ActionBar/ActionBarItem";
 import Button from "~/components/Button";
 import { Form } from "~/components/Form";
 import { Input } from "~/components/Input";
 import { Toast } from "~/components/Toast";
 import { routes } from "~/config/routes";
-import { SidebarContext } from "~/context/Sidebar/SidebarContext";
 import { RootState, useAppDispatch } from "~/state";
 import { setInitialUser } from "~/state/reducer/user";
 import { resetPasswordAction, updateUserAction } from "~/state/thunk/user/user";
-import { IUser } from "~/types";
+import { IGlobalConstantsType, IUser } from "~/types";
 
 import styles from "~/sass/BasicInfomation.module.scss";
 const cx = classNames.bind(styles);
@@ -35,18 +33,18 @@ function ProfilePage() {
     const firstNameRef = useRef<HTMLDivElement>(null);
     const passwordRef = useRef<HTMLDivElement>(null);
 
-    const { setActive } = useContext(SidebarContext);
     const [isNewPassword, setIsNewPassword] = useState(true);
     const [isCurrentPassword, setIsCurrentPassword] = useState(true);
     const [isConfirmPassword, setIsConfirmPassword] = useState(true);
 
+    const [isEditInfo, setIsEditInfo] = useState(false);
     const [isChangePass, setIsChangePass] = useState(false);
     const [isChangePassSuccess, setIsChangePassSuccess] = useState(false);
-    const [isEditInfo, setIsEditInfo] = useState(false);
 
     const [errorMessage, setErrorMessage] = useState('');
     const userState = useSelector((state: RootState) => state.user);
     const { currentUser, status, loading } = userState;
+    const [actionbar, setActionbar] = useState<Omit<IGlobalConstantsType, "id">[]>([]);
 
     const initialInfoVales = {
         id: currentUser.docId,
@@ -117,7 +115,30 @@ function ProfilePage() {
         handleSubmit: handleSubmitPasswordForm } = passwordFormik;
 
     useEffect(() => {
-        setActive(true);
+        setActionbar([
+            {
+                icon: images.edit,
+                title: "Sửa thông tin",
+                onClick: () => {
+                    setIsEditInfo(true);
+                    firstNameRef.current?.focus();
+                }
+            }, {
+                icon: images.lock,
+                title: "Đổi mật khẩu",
+                onClick: () => {
+                    setIsChangePass(true);
+                    passwordRef.current?.focus();
+                }
+            }, {
+                icon: images.logOut,
+                title: "Đăng xuất",
+                onClick: () => {
+                    dispatch(setInitialUser());
+                    navigate(routes.LoginPage);
+                }
+            }
+        ]);
     }, []);
 
     useEffect(() => {
@@ -253,32 +274,7 @@ function ProfilePage() {
                                 />
                             </Form>
                         </div>
-                        <ActionBar visible={!isEditInfo && !isChangePass}>
-                            <ActionBarItem
-                                icon={images.edit}
-                                title="Sửa thông tin"
-                                onClick={() => {
-                                    setIsEditInfo(true);
-                                    firstNameRef.current?.focus();
-                                }}
-                            />
-                            <ActionBarItem
-                                icon={images.lock}
-                                title="Đổi mật khẩu"
-                                onClick={() => {
-                                    setIsChangePass(true);
-                                    passwordRef.current?.focus();
-                                }}
-                            />
-                            <ActionBarItem
-                                icon={images.logOut}
-                                title="Đăng xuất"
-                                onClick={() => {
-                                    dispatch(setInitialUser());
-                                    navigate(routes.LoginPage);
-                                }}
-                            />
-                        </ActionBar>
+                        <ActionBar visible={!isEditInfo && !isChangePass} data={actionbar} />
                     </div>
                 </div>
                 <div className={cx("button-actions", isEditInfo && "active")}>

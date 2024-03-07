@@ -1,24 +1,21 @@
-import { faXmark } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import classNames from "classnames/bind";
-import { useCallback, useContext, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 
 import { images } from "~/assets";
 import { ActionBar } from "~/components/ActionBar";
-import { ActionBarItem } from "~/components/ActionBar/ActionBarItem";
 import { Checkbox } from "~/components/Checkbox";
 import { CommonWrapper } from "~/components/CommonWrapper";
 import { Input } from "~/components/Input";
+import { Loading } from "~/components/Loading";
 import { PagingItemType } from "~/components/Paging";
 import { Switch } from "~/components/Switch";
 import { Table } from "~/components/Table";
 import { RootState, useAppDispatch } from "~/state";
-import { Loading } from "~/components/Loading";
-import { SidebarContext } from "~/context/Sidebar/SidebarContext";
-import { EtmContractDetail } from "~/types/EntrustmentContractType";
 import { deleteContracts, getEtmContractListDetail } from "~/state/thunk/entrustmentContract";
+import { IGlobalConstantsType } from "~/types";
+import { EtmContractDetail } from "~/types/EntrustmentContractType";
 
 import style from '~/sass/UnitManagement.module.scss';
 const cx = classNames.bind(style);
@@ -27,22 +24,19 @@ function UnitUsedManagementPage() {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
 
-    const { setActive } = useContext(SidebarContext);
-
     const entrustmentContract = useSelector((state: RootState) => state.etmContract);
     const { etmContractsDetail } = entrustmentContract;
 
     const [searchValue, setSearchValue] = useState<string>('');
-    const [actionData, setActionData] = useState<any[]>([] as any[]);
-    const [searchResult, setSearchResult] = useState<Array<EtmContractDetail>>([] as Array<EtmContractDetail>);
     const [itemsPerPage, setItemsPerPage] = useState<string>('8');
-    const [currentItems, setCurrentItems] = useState<Array<EtmContractDetail>>([] as Array<EtmContractDetail>);
+    const [actionbar, setActionbar] = useState<Omit<IGlobalConstantsType, "id">[]>([]);
+
     const [paging, setPaging] = useState<Array<PagingItemType>>([] as Array<PagingItemType>);
     const [itemsChosen, setItemsChosen] = useState<Array<EtmContractDetail>>([] as Array<EtmContractDetail>);
+    const [searchResult, setSearchResult] = useState<Array<EtmContractDetail>>([] as Array<EtmContractDetail>);
+    const [currentItems, setCurrentItems] = useState<Array<EtmContractDetail>>([] as Array<EtmContractDetail>);
 
     useEffect(() => {
-        setActive(true);
-
         setPaging([
             {
                 title: 'Quản lý',
@@ -64,14 +58,12 @@ function UnitUsedManagementPage() {
     }, []);
 
     useEffect(() => {
-        setActionData([
-            {
-                icon: <FontAwesomeIcon icon={faXmark} className={cx('action__remove')} />,
-                title: 'Xóa',
-                onClick: () => handleDeleteContract(itemsChosen),
-                disable: itemsChosen.length === 0
-            }
-        ]);
+        setActionbar([{
+            title: 'Xóa',
+            icon: images.fiX,
+            disable: itemsChosen.length === 0,
+            onClick: () => handleDeleteContract(itemsChosen)
+        }]);
     }, [itemsChosen]);
 
     useEffect(() => {
@@ -172,27 +164,18 @@ function UnitUsedManagementPage() {
                                     status={item.user.status === 'active'}
                                     onClick={() => { }} />
                                 }</td>
-                                <td><p className={cx('action')} onClick={() => {
-                                    navigate(`/unit-used-management/detail/${item.docId}`);
-                                    setActive(false);
-                                }}>
+                                <td><p className={cx('action')} onClick={() => navigate(`/unit-used-management/detail/${item.docId}`)}>
                                     Xem chi tiết
                                 </p></td>
                             </tr>
                         )
                     })}
                 </Table>
-                <ActionBar visible={true}>
-                    <ActionBarItem
-                        title="Xóa"
-                        icon={images.fiX}
-                        onClick={() => { }}
-                    />
-                </ActionBar>
+                <ActionBar data={actionbar} />
                 <Loading loading={entrustmentContract.loading} />
             </CommonWrapper>
         </div>
     );
-}
+};
 
 export default UnitUsedManagementPage;

@@ -1,12 +1,11 @@
 import classNames from "classnames/bind";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router";
+import { useParams } from "react-router";
 
 import { useFormik } from "formik";
 import { images } from "~/assets";
 import { ActionBar } from "~/components/ActionBar";
-import { ActionBarItem } from "~/components/ActionBar/ActionBarItem";
 import { BlockDetail } from "~/components/BlockDetail";
 import Button from "~/components/Button";
 import { CommonWrapper } from "~/components/CommonWrapper";
@@ -25,19 +24,24 @@ import style from '~/sass/UserOfUnitDetail.module.scss';
 const cx = classNames.bind(style);
 
 function UserOfUnitDetailPage() {
+    const dispatch = useAppDispatch();
     const { userId, contractId } = useParams();
 
-    const dispatch = useAppDispatch();
-    const navigate = useNavigate();
+    const [editable, setEditable] = useState<boolean>(false);
+    const [actionbar, setActionbar] = useState<Omit<IGlobalConstantsType, "id">[]>([]);
+    const [paging, setPaging] = useState<Array<PagingItemType>>([] as Array<PagingItemType>);
+    const [userRole, setUserRole] = useState<IGlobalConstantsType>({
+        id: 0,
+        title: ''
+    });
+    const [passwordType, setPasswordType] = useState<{ password: boolean; confirmPassword: boolean }>({
+        password: true,
+        confirmPassword: true,
+    });
 
     const user = useSelector((state: RootState) => state.user);
     const role = useSelector((state: RootState) => state.role);
     const etmContract = useSelector((state: RootState) => state.etmContract);
-
-    const [paging, setPaging] = useState<Array<PagingItemType>>([] as Array<PagingItemType>);
-    const [editable, setEditable] = useState<boolean>(false);
-    const [userRole, setUserRole] = useState<IGlobalConstantsType>({ id: 0, title: '' });
-    const [passwordType, setPasswordType] = useState<{ password: boolean; confirmPassword: boolean }>({ password: true, confirmPassword: true, });
 
     const userFormik = useFormik({
         initialValues: {
@@ -113,6 +117,13 @@ function UserOfUnitDetailPage() {
                 to: '#',
                 active: true
             }
+        ]);
+        setActionbar([
+            !editable ? {
+                title: "Chỉnh sửa",
+                icon: images.edit,
+                onClick: () => setEditable(true)
+            } : {}
         ]);
 
         !user.users.length && dispatch(getUsers());
@@ -320,18 +331,10 @@ function UserOfUnitDetailPage() {
                     onClick={() => userFormik.handleSubmit()}
                 />
             </div>}
-            {!editable &&
-                <ActionBar visible={true}>
-                    <ActionBarItem
-                        title="Chỉnh sửa"
-                        icon={images.edit}
-                        onClick={() => setEditable(true)}
-                    />
-                </ActionBar>
-            }
+            <ActionBar data={actionbar} />
             <Loading loading={etmContract.loading} />
         </CommonWrapper>
     );
-}
+};
 
 export default UserOfUnitDetailPage;

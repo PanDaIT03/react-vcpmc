@@ -1,0 +1,33 @@
+.wrapper {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  & > img {
+    width: 6rem;
+    padding: 1.4rem;
+    border-radius: 50%;
+    position: relative;
+    transition: all 0.2s ease;
+    background-color: var(--text-stroke-fill);
+    z-index: 1;
+  }
+}
+
+.rotate {
+  transform: rotate(45deg);
+}
+
+.action-bar-items {
+  width: 6rem;
+  border-radius: 3rem;
+  bottom: 0;
+  position: absolute;
+  background-color: var(--text-stroke-fill);
+  overflow: hidden;
+  transition: height 0.2s ease-in-out;
+}

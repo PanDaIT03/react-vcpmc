@@ -7,7 +7,6 @@ import { useNavigate } from "react-router";
 
 import { images } from "~/assets";
 import { ActionBar } from "~/components/ActionBar";
-import { ActionBarItem } from "~/components/ActionBar/ActionBarItem";
 import { CommonWrapper } from "~/components/CommonWrapper";
 import { Loading } from "~/components/Loading";
 import { OptionMenu } from "~/components/OptionMenu";
@@ -78,10 +77,8 @@ function RevenueReportPage() {
     const recordPlay = useSelector((state: RootState) => state.recordPlay);
 
     const [paging, setPaging] = useState<Array<PagingItemType>>([] as Array<PagingItemType>);
-    const [actionData, setActionData] = useState<any[]>([] as any[]);
+    const [actionbar, setActionbar] = useState<any[]>([] as any[]);
     const [filter, setFilter] = useState<Filter>({ type: '', data: [], dataActive: '' } as Filter);
-    const [filterTypeActive, setFilterTypeActive] = useState<boolean>(false);
-    const [filterDataActive, setFilterDataActive] = useState<boolean>(false);
     const [currentDate, setCurrentDate] = useState<Date>();
     const [contracts, setContracts] = useState<Array<EtmContractForControl & { recordPlay: IRecordPlay[] }>>([] as Array<EtmContractForControl & { recordPlay: IRecordPlay[] }>);
     const [revenueInfo, setRevenueInfo] = useState<RevenueInfo>({
@@ -209,7 +206,18 @@ function RevenueReportPage() {
         onHover: (event: any, chartElement: any) => {
             event.native.target.style.cursor = chartElement[0] ? 'pointer' : 'default';
         }
-    }
+    };
+
+    useEffect(() => {
+        setActionbar([{
+            title: "Báo cáo chi tiết",
+            icon: images.receipt,
+            onClick: () => {
+                navigate(routes.RevenueReportDetailPage);
+                setActive(false);
+            }
+        }]);
+    }, []);
 
     useEffect(() => {
         if (!contracts.length) return;
@@ -403,19 +411,10 @@ function RevenueReportPage() {
                 }</p>
                 <div style={{ color: 'white' }}><Line data={chartData} options={options}></Line></div>
             </div>
-            <ActionBar visible={true}>
-                <ActionBarItem
-                    title="Báo cáo chi tiết"
-                    icon={images.receipt}
-                    onClick={() => {
-                        navigate(routes.RevenueReportDetailPage);
-                        setActive(false);
-                    }}
-                />
-            </ActionBar>
+            <ActionBar data={actionbar} />
             <Loading loading={etmContract.loading} />
         </CommonWrapper>
     );
-}
+};
 
 export default RevenueReportPage;

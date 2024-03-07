@@ -11,6 +11,7 @@ import { ContractEdit } from "../ContractEdit";
 import { BlockDetail } from "../BlockDetail";
 import { Loading } from "../Loading";
 import { IContract, IGlobalConstantsType, IUserDetail } from "~/types";
+import { routes } from "~/config/routes";
 
 import style from '~/sass/ActionContract.module.scss';
 const cx = classNames.bind(style);
@@ -189,7 +190,7 @@ export const ActionContract = memo(({
                             return (
                                 <React.Fragment key={item.id}>
                                     {isItem
-                                        && <div className={cx("contract-validity")}>
+                                        && <div className={cx("contract-validity")} key={item.id}>
                                             <img src={`${item.icon}`} alt="icon" />
                                             <div>{item.title}</div>
                                         </div>}
@@ -632,7 +633,11 @@ export const ActionContract = memo(({
                         primary
                         size="large"
                         value="Huỷ"
-                        onClick={() => navigate(`/contract-management/detail/${contractDetail?.contractCode}`)}
+                        onClick={() =>
+                            type === "add"
+                                ? navigate(routes.ContractPage)
+                                : navigate(`/contract-management/detail/${contractDetail?.contractCode}`)
+                        }
                     />
                     <Button
                         primary

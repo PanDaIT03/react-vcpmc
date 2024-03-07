@@ -5,12 +5,12 @@ import { useNavigate } from "react-router-dom";
 
 import { images } from "~/assets";
 import { ActionBar } from "~/components/ActionBar";
-import { ActionBarItem } from "~/components/ActionBar/ActionBarItem";
 import { CommonWrapper } from "~/components/CommonWrapper";
 import { Table } from "~/components/Table";
 import { SidebarContext } from "~/context/Sidebar/SidebarContext";
 import { RootState, useAppDispatch } from "~/state";
 import { getScheduleList } from "~/state/thunk/playlistSchedule";
+import { IGlobalConstantsType } from "~/types";
 import { PlaylistSchedule } from "~/types/PlaylistSchedule";
 
 import style from '~/sass/PlaylistSchedule.module.scss';
@@ -20,21 +20,25 @@ function PlaylistSchedulePage() {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
 
-    const { setActive, setCurrentPage } = useContext(SidebarContext);
+    const { setCurrentPage } = useContext(SidebarContext);
     const { listSchedule } = useSelector((state: RootState) => state.playlistSchedule);
 
     const [itemsPerPage, setItemsPerPage] = useState('8');
     const [currentItems, setCurrentItems] = useState<PlaylistSchedule[]>([]);
+    const [actionbar, setActionbar] = useState<Omit<IGlobalConstantsType, "id">[]>([]);
 
     useEffect(() => {
-        setActive(true);
         setCurrentPage(3);
+        setActionbar([{
+            icon: images.addPlaylistIcon,
+            title: "Thêm lịch phát"
+        }]);
+
         dispatch(getScheduleList());
     }, []);
 
     const handleNavigate = (id: string) => {
         navigate(`/playlist-schedule/detail/${id}`);
-        setActive(false);
     };
 
     const handleCurrentItems = (items: any[]) => {
@@ -68,11 +72,7 @@ function PlaylistSchedulePage() {
                         </tr>
                     ))}
                 </Table>
-                <ActionBar>
-                    <ActionBarItem
-                        icon={images.addPlaylistIcon}
-                        title="Thêm lịch phát" />
-                </ActionBar>
+                <ActionBar data={actionbar} />
             </CommonWrapper>
         </div>
     );

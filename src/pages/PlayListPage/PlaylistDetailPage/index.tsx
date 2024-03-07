@@ -21,7 +21,7 @@ import { routes } from "~/config/routes";
 import { RootState, useAppDispatch } from "~/state";
 import { deletePlaylistAction, getPlayListAction, removePlaylistRecordAction, updatePlaylistAction, updatePlaylistsRecordsAction } from "~/state/thunk/playlist";
 import { resetNewRecordsAction } from "~/state/thunk/record";
-import { IRecord } from "~/types";
+import { IGlobalConstantsType, IRecord } from "~/types";
 import { IPLaylist } from "~/types/PlaylistType";
 
 import styles from "~/sass/PlaylistDetail.module.scss";
@@ -60,20 +60,42 @@ const initialValues = {
 function PlaylistDetailPage() {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
+
     const params = useParams();
     const { playlistId } = params;
 
-    const [visible, setVisible] = useState(false);
     const [isEdit, setIsEdit] = useState(false);
-
+    const [visible, setVisible] = useState(false);
     const [audioSource, setAudioSource] = useState("");
     const [itemsPerPage, setItemsPerPage] = useState('8');
 
-    const { playList, loading, status } = useSelector((state: RootState) => state.playlist);
     const { newRecords } = useSelector((state: RootState) => state.record);
+    const { playList, loading, status } = useSelector((state: RootState) => state.playlist);
 
     const [currentItems, setCurrentItems] = useState<IRecord[]>([]);
     const [playlistDetails, setPlaylistDetails] = useState<IPLaylist>(initialState);
+    const [actionbar, setActionbar] = useState<Omit<IGlobalConstantsType, "id">[]>([]);
+
+    useEffect(() => {
+        setActionbar(!isEdit ?
+            [
+                {
+                    title: "Chỉnh sửa",
+                    icon: images.edit,
+                    onClick: () => setIsEdit(true)
+                }, {
+                    title: "Xóa Playlist",
+                    icon: images.trash,
+                    onClick: () =>
+                        dispatch(deletePlaylistAction(playlistId || ''))
+                            .then(() => navigate(routes.PlaylistPage))
+                }
+            ] : [{
+                title: "Thêm bản ghi",
+                icon: images.uPlus,
+                onClick: handleClickAddRecord
+            }]);
+    }, [isEdit]);
 
     useEffect(() => {
         if (newRecords.length > 0)
@@ -243,28 +265,6 @@ function PlaylistDetailPage() {
                             </div>}
                     </div>
                 </div>
-                <ActionBar>
-                    {!isEdit
-                        ? <>
-                            <ActionBarItem
-                                title="Chỉnh sửa"
-                                icon={images.edit}
-                                onClick={() => setIsEdit(true)}
-                            />
-                            <ActionBarItem
-                                title="Xóa Playlist"
-                                icon={images.trash}
-                                onClick={() =>
-                                    dispatch(deletePlaylistAction(playlistId || ''))
-                                        .then(() => navigate(routes.PlaylistPage))}
-                            />
-                        </>
-                        : <ActionBarItem
-                            title="Thêm bản ghi"
-                            icon={images.uPlus}
-                            onClick={handleClickAddRecord}
-                        />}
-                </ActionBar>
                 <Dialog
                     primary
                     visible={visible}
@@ -276,6 +276,7 @@ function PlaylistDetailPage() {
                         setVisible={setVisible}
                     />
                 </Dialog>
+                <ActionBar data={actionbar} />
                 <Loading loading={loading} />
             </CommonWrapper>
         </div>

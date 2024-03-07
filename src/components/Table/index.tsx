@@ -15,6 +15,7 @@ interface TableProps {
     children?: ReactNode
     isScroll?: boolean
     minWidth?: string
+    minHeight?: string
     border?: "none" | "default-border"
     headerChildren?: ReactNode
     setIsCheckedAll?: Dispatch<SetStateAction<boolean>>
@@ -31,6 +32,7 @@ export const Table = ({
     setItemsPerPage,
     isScroll = false,
     minWidth = "1184px",
+    minHeight = "510px",
     border = "default-border",
     headerChildren,
     setIsCheckedAll
@@ -44,7 +46,10 @@ export const Table = ({
     return (
         <div className={cx("wrapper")}>
             <div className={classes}>
-                <div className={cx("content")} style={{minWidth: `${minWidth}`}}>
+                <div
+                    className={cx("content")}
+                    style={{ minWidth: minWidth, minHeight: minHeight }}
+                >
                     <table>
                         <thead>
                             <tr className={cx("title")}>
@@ -64,11 +69,12 @@ export const Table = ({
                             {children}
                         </tbody>
                     </table>
-                    <Paginate
-                        paginate={paginate}
-                        itemsPerPage={per}
-                        setItemsPerPage={setItemsPerPage}
-                    />
+                    {typeof paginate !== "undefined"
+                        && <Paginate
+                            paginate={paginate}
+                            itemsPerPage={per}
+                            setItemsPerPage={setItemsPerPage}
+                        />}
                 </div>
             </div>
         </div>
