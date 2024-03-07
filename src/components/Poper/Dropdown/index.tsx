@@ -1,8 +1,8 @@
 import classNames from "classnames/bind";
 import { memo } from "react";
 
-import { DropdownItem } from "./DropdownItem";
 import { IGlobalConstantsType } from "~/types";
+import { DropdownItem } from "./DropdownItem";
 
 import style from "~/sass/Menu.module.scss";
 const cx = classNames.bind(style);

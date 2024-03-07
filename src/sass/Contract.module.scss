@@ -26,6 +26,12 @@
   }
 }
 
+@media only screen and (max-width: 768px) {
+  .container {
+    padding-left: 1.5rem;
+  }
+}
+
 @media only screen and (min-width: 786px) and (max-width: 1440px) {
   .container {
     padding-right: 0;

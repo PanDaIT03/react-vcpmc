@@ -3,6 +3,7 @@ import { ReactNode, useContext, useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
+import { ReRotate } from "~/components/ReRotate";
 import { routes } from "~/config/routes";
 import { SidebarContext } from "~/context/Sidebar/SidebarContext";
 import { ThemeProvider } from "~/context/Theme/ThemeContext";
@@ -86,6 +87,7 @@ export const DefaultLayout = ({ children }: DefaultLayoutProps) => {
         <ThemeProvider>
             <div className={cx("wrapper")}>
                 <div className={cx("container")}>
+                    <ReRotate />
                     <div className={cx("container_left")}>
                         <Sidebar
                             sidebarRef={sidebarRef}

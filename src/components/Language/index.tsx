@@ -1,10 +1,10 @@
 import classNames from "classnames/bind";
 import { useCallback, useEffect, useRef, useState } from "react";
 
-import { Dropdown } from "../Poper/Dropdown";
+import { images } from "~/assets";
 import { LANGUAGE_ITEMS, handleClickDropDown } from "~/constants";
 import { IGlobalConstantsType } from "~/types";
-import { images } from "~/assets";
+import { Dropdown } from "../Poper/Dropdown";
 
 import styles from "~/sass/Language.module.scss";
 const cx = classNames.bind(styles);
@@ -58,15 +58,14 @@ export const Language = () => {
                     onClick={() => setOpen(!open)}
                 >
                     <div className={cx("title")}>{language.title}</div>
-                    <img src={language.icon} className={cx("language-icon")} />
+                    <img src={language.icon} className={cx("language-icon")} alt="language" />
                     <img src={images.angleDown} alt="agle down" />
                 </div>
                 <Dropdown
                     items={languages}
                     className={cx("language-dropdown")}
                     onClick={handleItemClick}
-                    visible={open}
-                />
+                    visible={open} />
             </div>
         </div>
     );

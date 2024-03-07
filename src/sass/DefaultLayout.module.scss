@@ -98,6 +98,17 @@
   }
 }
 
+@media only screen and (max-width: 1024px) {
+  .account {
+    width: max-content;
+    max-width: 13.2rem;
+
+    .info {
+      display: none;
+    }
+  }
+}
+
 // @media only screen and (orientation: portrait) {
 //   .wrapper {
 //     background: #000;

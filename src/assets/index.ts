@@ -75,5 +75,6 @@ export const images = {
   editAlt: require('./images/u_file-edit-alt.png'),
   editCalendar: require('./images/edit_calendar.png'),
   filter: require('./images/filter.png'),
+  mobilePhone: require('./images/mobile-phone.png'),
   // aaaa: require('./images/aaaa.png'),
 };

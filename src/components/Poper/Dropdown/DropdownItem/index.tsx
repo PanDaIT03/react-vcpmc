@@ -19,7 +19,7 @@ export const DropdownItem = memo(({ data, className, handleClickOption }: Dropdo
 
     return (
         <li className={cx("menu-item", className)} onClick={() => handleClick(data)}>
-            <a>{title}</a>
+            <p>{title}</p>
         </li>
     );
 });

@@ -14,7 +14,7 @@ import { Loading } from "~/components/Loading";
 import { OptionMenu } from "~/components/OptionMenu";
 import { PagingItemType } from "~/components/Paging";
 import { routes } from "~/config/routes";
-import { CB_MUSIC_KIND, VALIDITY_CONTRACT_ITEMS, formatDateMDY, getCurrentDate } from "~/constants";
+import { CB_MUSIC_KIND, VALIDITY_CONTRACT_ITEMS, formatDateMDY, getCurrentDate, removeAccents, removeSpaces } from "~/constants";
 import { SidebarContext } from "~/context/Sidebar/SidebarContext";
 import { RootState, useAppDispatch } from "~/state";
 import { updateRecordAction } from "~/state/thunk/record";
@@ -225,6 +225,8 @@ function EditRecordPage() {
         setFieldValue("category", kind.title);
     }, [kind]);
 
+    console.log(removeSpaces(removeAccents("Bản ghi")));
+
     return (
         <div className={cx("wrapper")}>
             <CommonWrapper
@@ -249,7 +251,7 @@ function EditRecordPage() {
                             </div>
                             <div className={cx("file-name")}>
                                 <img src={images.musicIcon} alt="music icon" />
-                                <p>Matem.mp3</p>
+                                <p>{removeSpaces(removeAccents(record.nameRecord || ""))}.mp3</p>
                             </div>
                             <div className={cx("detail")}>
                                 <div className={cx("detail_item")}>

@@ -1,5 +1,5 @@
 import classNames from "classnames/bind";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { IGlobalConstantsType } from "~/types";
 import { FloatingActionButon } from "../FloatingActionButton";
@@ -14,6 +14,8 @@ interface ActionBarProps {
 };
 
 export const ActionBar = ({ visible = true, data }: ActionBarProps) => {
+    const floatingButtonRef = useRef<HTMLDivElement>(null);
+
     const [show, setShow] = useState(false);
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
@@ -29,10 +31,27 @@ export const ActionBar = ({ visible = true, data }: ActionBarProps) => {
         };
     });
 
+    useEffect(() => {
+        let handler = (event: MouseEvent) => {
+            if (!floatingButtonRef.current?.contains(event.target as Node))
+                setShow(false);
+        };
+        document.addEventListener("mousedown", handler);
+
+        return () => {
+            document.removeEventListener("mousedown", handler);
+        };
+    });
+
     return (
         <div className={cx("wrapper", visible && "active")}>
             {windowWidth <= 768
-                ? <FloatingActionButon data={data} visible={show} setState={setShow} />
+                ? <FloatingActionButon
+                    data={data}
+                    visible={show}
+                    setState={setShow}
+                    forwardedRef={floatingButtonRef}
+                />
                 : <div className={cx("action-bar-items")}>
                     {data.length > 0 && data.map((item, index) =>
                         item.title && <ActionBarItem key={index} {...item} />)}

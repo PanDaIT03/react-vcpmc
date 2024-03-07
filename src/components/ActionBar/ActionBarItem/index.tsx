@@ -1,5 +1,4 @@
 import classNames from "classnames/bind";
-import React from "react";
 
 import styles from "~/sass/ActionBar.module.scss";
 const cx = classNames.bind(styles);
@@ -13,7 +12,7 @@ interface ActionBarItemOwnProps<E extends React.ElementType> {
     onClick?: (event: React.MouseEvent<HTMLDivElement>) => void
 };
 
-export type ActionBarItemProps<E extends React.ElementType> = ActionBarItemOwnProps<E> &
+type ActionBarItemProps<E extends React.ElementType> = ActionBarItemOwnProps<E> &
     Omit<React.ComponentProps<E>, keyof ActionBarItemOwnProps<E>>
 
 export const ActionBarItem = <E extends React.ElementType = 'div'>({

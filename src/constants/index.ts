@@ -630,87 +630,135 @@ const DOWNLOAD_ITEMS: IDownloadItem[] = [
 
 const USER_MANUAL_ITEMS: Array<UserManualItem> = [
   {
-      title: 'Lorem ipsum dolor sit amet',
-      content: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Plate
+    title: "Lorem ipsum dolor sit amet",
+    content: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Plate
       sit placerat odio lorem. Cum eleifend bibendum ipsum quis scelerisque du 
       nibh odio id. Nam cras nec non posuere etiam diam sed lacus lacus. In eget
       morbi eros, vitae enim nunc, cursus. Nisl eleifend lectus nunc massa aliquam,
       tellus in imperdiet. Malesuada suspendisse gravida tortor neque quis accumsan
       et posuere. Ac turpis urna ipsum pretium nisi aenean. Facilisis scelerisque
-      placerat eget lorem eget maecenas.`
-  }, {
-      title: 'Consectetur adipiscing elit sed do',
-      content: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Platea
+      placerat eget lorem eget maecenas.`,
+  },
+  {
+    title: "Consectetur adipiscing elit sed do",
+    content: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Platea
       sit placerat odio lorem. Cum eleifend bibendum ipsum quis scelerisque dui
       nibh odio id. Nam cras nec non posuere etiam diam sed lacus lacus. In eget
       morbi eros, vitae enim nunc, cursus. Nisl eleifend lectus nunc massa aliquam,
       tellus in imperdiet. Malesuada suspendisse gravida tortor neque quis accumsan
       et posuere. Ac turpis urna ipsum pretium nisi aenean. Facilisis scelerisque
-      placerat eget lorem eget maecenas.`
-  }, {
-      title: 'Iusmod tempor incididunt ut labo',
-      content: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Platea
+      placerat eget lorem eget maecenas.`,
+  },
+  {
+    title: "Iusmod tempor incididunt ut labo",
+    content: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Platea
       sit placerat odio lorem. Cum eleifend bibendum ipsum quis scelerisque dui
       nibh odio id. Nam cras nec non posuere etiam diam sed lacus lacus. In eget
       morbi eros, vitae enim nunc, cursus. Nisl eleifend lectus nunc massa aliquam,
       tellus in imperdiet. Malesuada suspendisse gravida tortor neque quis accumsan
       et posuere. Ac turpis urna ipsum pretium nisi aenean. Facilisis scelerisque
-      placerat eget lorem eget maecenas.`
-  }, {
-      title: 'Ut enim ad minim veniam',
-      content: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Platea
+      placerat eget lorem eget maecenas.`,
+  },
+  {
+    title: "Ut enim ad minim veniam",
+    content: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Platea
       sit placerat odio lorem. Cum eleifend bibendum ipsum quis scelerisque dui
       nibh odio id. Nam cras nec non posuere etiam diam sed lacus lacus. In eget
       morbi eros, vitae enim nunc, cursus. Nisl eleifend lectus nunc massa aliquam,
       tellus in imperdiet. Malesuada suspendisse gravida tortor neque quis accumsan
       et posuere. Ac turpis urna ipsum pretium nisi aenean. Facilisis scelerisque
-      placerat eget lorem eget maecenas.`
-  }, {
-      title: 'Quis nostrud exercitation ullamco',
-      content: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Platea
+      placerat eget lorem eget maecenas.`,
+  },
+  {
+    title: "Quis nostrud exercitation ullamco",
+    content: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Platea
       sit placerat odio lorem. Cum eleifend bibendum ipsum quis scelerisque dui
       nibh odio id. Nam cras nec non posuere etiam diam sed lacus lacus. In eget
       morbi eros, vitae enim nunc, cursus. Nisl eleifend lectus nunc massa aliquam,
       tellus in imperdiet. Malesuada suspendisse gravida tortor neque quis accumsan
       et posuere. Ac turpis urna ipsum pretium nisi aenean. Facilisis scelerisque
-      placerat eget lorem eget maecenas.`
-  }, {
-      title: 'Excepteur sint occaecat cupidatats',
-      content: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Platea
+      placerat eget lorem eget maecenas.`,
+  },
+  {
+    title: "Excepteur sint occaecat cupidatats",
+    content: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Platea
       sit placerat odio lorem. Cum eleifend bibendum ipsum quis scelerisque dui
       nibh odio id. Nam cras nec non posuere etiam diam sed lacus lacus. In eget
       morbi eros, vitae enim nunc, cursus. Nisl eleifend lectus nunc massa aliquam,
       tellus in imperdiet. Malesuada suspendisse gravida tortor neque quis accumsan
       et posuere. Ac turpis urna ipsum pretium nisi aenean. Facilisis scelerisque
-      placerat eget lorem eget maecenas.`
-  }, {
-      title: 'Sunt in culpa qui officiat',
-      content: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Platea
+      placerat eget lorem eget maecenas.`,
+  },
+  {
+    title: "Sunt in culpa qui officiat",
+    content: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Platea
       sit placerat odio lorem. Cum eleifend bibendum ipsum quis scelerisque dui
       nibh odio id. Nam cras nec non posuere etiam diam sed lacus lacus. In eget
       morbi eros, vitae enim nunc, cursus. Nisl eleifend lectus nunc massa aliquam,
       tellus in imperdiet. Malesuada suspendisse gravida tortor neque quis accumsan
       et posuere. Ac turpis urna ipsum pretium nisi aenean. Facilisis scelerisque
-      placerat eget lorem eget maecenas.`
-  }, {
-      title: 'Sed ut perspiciatis unde omnis iste',
-      content: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Platea
+      placerat eget lorem eget maecenas.`,
+  },
+  {
+    title: "Sed ut perspiciatis unde omnis iste",
+    content: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Platea
       sit placerat odio lorem. Cum eleifend bibendum ipsum quis scelerisque dui
       nibh odio id. Nam cras nec non posuere etiam diam sed lacus lacus. In eget
       morbi eros, vitae enim nunc, cursus. Nisl eleifend lectus nunc massa aliquam,
       tellus in imperdiet. Malesuada suspendisse gravida tortor neque quis accumsan
       et posuere. Ac turpis urna ipsum pretium nisi aenean. Facilisis scelerisque
-      placerat eget lorem eget maecenas.`
-  }
+      placerat eget lorem eget maecenas.`,
+  },
 ];
+
+const removeAccents = (data: string) => {
+  return data.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+};
+
+const removeSpaces = (data: string) => {
+  return data.replace(/\s/g, "");
+};
 
 export * as Yup from "yup";
 
 export {
-  ACTION_INFO_USER, CAPABILITY, CB_ACCOUNT_GROUP, CB_APPROVE, CB_APPROVE_ITEMS, CB_FORMAT, CB_MUSIC_KIND, CB_NATIONALITY, CB_OWNER_ITEMS, CB_PLAYLIST, CB_ROLES, CB_VADILITY_MUSIC, DAYS,
-  DAYSNUM, DOWNLOAD_ITEMS, LANGUAGE_ITEMS, QUARTERLY, SIDEBAR_ITEMS, THEME_IMAGES, VALIDITY_CONTRACT_ITEMS, USER_MANUAL_ITEMS,
-  formatDate, formatDateDMY, formatDateDMYHPTS, formatDateMDY, formatDateYMD, formatMoney, formatTime, formatToLocalStringCurrentDate, getCurrentDate,
-  getCurrentDateDMY, getCurrentDateMDY, getCurrentDateTimeDMY, getTotalMoment, handleClickDropDown,
-  regexOnlyNumer, theFollowingDays
+  ACTION_INFO_USER,
+  CAPABILITY,
+  CB_ACCOUNT_GROUP,
+  CB_APPROVE,
+  CB_APPROVE_ITEMS,
+  CB_FORMAT,
+  CB_MUSIC_KIND,
+  CB_NATIONALITY,
+  CB_OWNER_ITEMS,
+  CB_PLAYLIST,
+  CB_ROLES,
+  CB_VADILITY_MUSIC,
+  DAYS,
+  DAYSNUM,
+  DOWNLOAD_ITEMS,
+  LANGUAGE_ITEMS,
+  QUARTERLY,
+  SIDEBAR_ITEMS,
+  THEME_IMAGES,
+  VALIDITY_CONTRACT_ITEMS,
+  USER_MANUAL_ITEMS,
+  formatDate,
+  formatDateDMY,
+  formatDateDMYHPTS,
+  formatDateMDY,
+  formatDateYMD,
+  formatMoney,
+  formatTime,
+  formatToLocalStringCurrentDate,
+  getCurrentDate,
+  getCurrentDateDMY,
+  getCurrentDateMDY,
+  getCurrentDateTimeDMY,
+  getTotalMoment,
+  handleClickDropDown,
+  regexOnlyNumer,
+  theFollowingDays,
+  removeAccents,
+  removeSpaces
 };
-
